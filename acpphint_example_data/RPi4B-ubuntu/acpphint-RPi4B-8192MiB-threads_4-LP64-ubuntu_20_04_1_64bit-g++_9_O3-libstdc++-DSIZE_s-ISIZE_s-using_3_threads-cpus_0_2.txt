@@ -1,0 +1,7 @@
+# filename: ./acpphint-RPi4B-8192MiB-threads_4-LP64-ubuntu_20_04_1_64bit-g++_9_O3-libstdc++-DSIZE_s-ISIZE_s-using_3_threads-cpus_0_2.txt
+# acpphint_main version: 0.1.23
+
+0.000133295 77810.3 10.3717 528
+0.000131665 98491.2 12.9678 606
+0.00013011 119261 15.5171 684
+0.000132092 136667 18.0526 762

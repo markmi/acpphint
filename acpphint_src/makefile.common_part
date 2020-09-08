@@ -1,0 +1,410 @@
+#
+# acpphint's makefile.common_part (as of requiring c++17 or later)
+#
+#  Copyright (c) 2015-2020 Mark Millard
+#  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
+#
+#  Note: Any acpphint*.{h,cpp} code or makefile code
+#        that is insufficiently original comes under
+#        the Iowa State University Research Foundation,
+#        Inc. copyright.
+#
+#        This does not apply to cpp_*.{h,cpp} or
+#        sys_*.{h,cpp} code: that is strictly mine.
+#
+#  This program is free software; you can redistribute it
+#  and/or modify it under the terms of the GNU General
+#  version 2 Public License as published by the Free
+#  Software Foundation.
+#
+#  This program is distributed in the hope that it will
+#  be useful, but WITHOUT ANY WARRANTY; without even the
+#  implied warranty of MERCHANTABILITY or FITNESS FOR A
+#  PARTICULAR PURPOSE.  See the GNU General Public
+#  License for more details.
+#
+#  You should have received a copy of the GNU General
+#  Public License version 2 along with this program; if
+#  not, write to:
+#
+#  Free Software Foundation, Inc.
+#  51 Franklin Street, Fifth Floor,
+#  Boston, MA  02110-1301, USA.
+#
+
+# Edit ACPPHINT_VERS's definition to update the version number
+# that the 4 ACPPHINT_FILENAME_INFO related programs report on
+# their 2nd std::cout line.
+ACPPHINT_VERS=                  0.1.23
+CPPCLOCKINFO_VERS=              acpphint_${ACPPHINT_VERS}
+ACPPHINTKERNELSURVEYORS_VERS=   ${ACPPHINT_VERS}
+ACPPHINTKERNELSAMPLERS_VERS=    ${ACPPHINT_VERS}
+
+#
+# acpphint's makefile.*'s are very tailored to my use but may be
+# used to see how to build the investigative programs and the
+# benchmark program and what they in turn require.
+#
+# Before including this file:
+# Adjust CXXLIB, CXX, OPT, CPULOCKDOWN_OPT, LDCXX, COMPILER_DESC, 
+# LIBRARY_DESC, COMPUTER, RAM, THREADS, CPP_DATA_MODEL, OS,
+# and SUFFIX as appropriate.
+# as appropriate.
+#
+# The major targets are: build gather-info
+#
+# The makefile.*'s are not set up for cross-build use.
+#
+# The naming used does require (relative to POSIX):
+# "allow other characters in target names as extensions"
+
+#
+# Example values . . .
+#
+# Indicating structure:
+#COMPILER_LIBRARY= ${COMPILER_DESC}-${LIBRARY_DESC}
+#ACPPHINT_FILENAME_INFO= ${COMPUTER}-${RAM}-${THREADS}-${CPP_DATA_MODEL}-${OS}-${COMPILER_LIBRARY}${SUFFIX}
+#
+# Examples:
+#
+#CXXLIB=
+#CXXLIB= -stdlib=libc++
+#CXXLIB= -stdlib=libstdc++
+#
+#CXX= g++9 -v -std=c++17 -Wno-psabi
+#CXX= clang++9 -std=c++17 ${CXXLIB}
+#CXX= clang++-9 -std=c++17 ${CXXLIB}
+#CXX= g++ -v -std=c++17 -Wno-psabi
+#CXX= g++9 -v -std=c++17 -Wno-psabi -nostdinc -nostdinc++ -I/usr/include/c++/v1 -I/usr/include
+#
+#OPT= -O3 -mcpu=cortex-a72
+#CPULOCKDOWN_OPT=  -DWANT_CPU_LOCKDOWN
+# The below is for other_src_used/sys_cpubinding_lgplv2_1_okay.cpp that I do not
+# distribute (but I proved could be implemented on a Linux):
+#CPULOCKDOWN_OPT+= -DLGPLv2_1_OKAY
+#
+#LDCXX=
+#LDCXX=  -nodefaultlibs -lc++ -lcxxrt -lthr -lm -lc -lgcc_s
+#LDCXX+= -Wl,-rpath=/usr/local/lib/gcc9
+# For Linux NUMA use:
+#LDCXX+= -lnuma
+#
+#COMPILER_DESC=      clang++_9_O3
+#COMPILER_DESC=      g++_9_O3
+#LIBRARY_DESC=       libc++
+#LIBRARY_DESC=       libstdc++
+#COMPILER_LIBRARY=   ${COMPILER_DESC}-${LIBRARY_DESC}
+#
+#COMPUTER=           OverDrive_1000
+#RAM=                8192MiB
+#THREADS=            threads_4
+#CPP_DATA_MODEL=     LP64
+#OS=                 FreeBSD_13_r363590M_64bit
+#SUFFIX=
+#SUFFIX=             -cpulockdown
+#ACPPHINT_FILENAME_INFO= ${COMPUTER}-${RAM}-${THREADS}-${CPP_DATA_MODEL}-${OS}-${COMPILER_LIBRARY}${SUFFIX}
+#
+# Note: The "threads_4" is what the hardware has for
+# HW threads --or as presented by the likes of HyperV.
+# acpphint will also add using_N_threads to file names
+# recording benchmark results.
+
+RM= rm -fr
+
+CXXFLAGS= ${CXXLIB} \
+          -I../other_src_used \
+          -pedantic \
+          -g3 ${OPT} ${CPULOCKDOWN_OPT} -pthread
+
+#
+# Headers usage . . .
+#
+
+CPP_THOUSANDSLOCALE_HEADERS=        ../other_src_used/cpp_thousandslocale.h
+
+CPP_CLOCKINFO_HEADERS=              ${CPP_THOUSANDSLOCALE_HEADERS} \
+                                    ../other_src_used/cpp_clockinfo.h
+
+SYS_CPUBINDING_HEADERS=            ../other_src_used/sys_cpubinding.h
+                                
+ACPPHINT_KERNELS_HEADERS=           ${CPP_CLOCKINFO_HEADERS} \
+                                    acpphint_kernels.h
+                                
+ACPPHINT_KERNELRUNNERS_HEADERS=     ${ACPPHINT_KERNELS_HEADERS} \
+                                    ${SYS_CPUBINDING_HEADERS} \
+                                    acpphint_kernelrunners.h
+
+ACPPHINT_KERNELSURVEYORS_HEADERS=   ${ACPPHINT_KERNELRUNNERS_HEADERS} \
+                                    acpphint_kernelsurveyors.h
+
+ACPPHINT_KERNELSAMPLERS_HEADERS=    ${ACPPHINT_SURVEYORS_HEADERS} \
+                                    acpphint_kernelsamplers.h
+                                
+#
+# Objects usage . . .
+#
+
+CPP_THOUSANDSLOCALE_OBJS=       ../objs/cpp_thousandslocale-${COMPILER_LIBRARY}${SUFFIX}.o
+
+CPP_CLOCKINFO_OBJS=             ${CPP_THOUSANDSLOCALE_OBJS} \
+                                ../objs/cpp_clockinfo-${COMPILER_LIBRARY}${SUFFIX}.o
+
+SYS_CPUBINDING_OBJS=           ../objs/sys_cpubinding-${COMPILER_LIBRARY}${SUFFIX}.o
+
+ACPPHINT_KERNELS_OBJS=          ${CPP_CLOCKINFO_OBJS} \
+                                ../objs/acpphint_kernels-${COMPILER_LIBRARY}${SUFFIX}.o
+
+ACPPHINT_KERNELRUNNERS_OBJS=	${ACPPHINT_KERNELS_OBJS} \
+                                ${SYS_CPUBINDING_OBJS} \
+                                ../objs/acpphint_kernelrunners-${COMPILER_LIBRARY}${SUFFIX}.o
+
+ACPPHINT_KERNELSURVEYORS_OBJS=	${ACPPHINT_KERNELRUNNERS_OBJS} \
+                                ../objs/acpphint_kernelsurveyors-${COMPILER_LIBRARY}${SUFFIX}.o
+
+ACPPHINT_KERNELSAMPLERS_OBJS=	${ACPPHINT_KERNELSURVEYORS_OBJS} \
+                                ../objs/acpphint_kernelsamplers-${COMPILER_LIBRARY}${SUFFIX}.o
+
+#
+# The investigative programs are for:
+#    A) exploring how things are working, for example time measurement
+#    B) looking into adjusting "Edit as needed" items
+#    C) testing
+#
+# However, the exploration may involve "Edit as needed" adjustments to
+# source code.
+#
+INVESTIGATIVE_PROGRAMS= \
+  ../cpp_clockinfo_main-${ACPPHINT_FILENAME_INFO} \
+  ../acpphint_kernelsurveyors_main-${ACPPHINT_FILENAME_INFO} \
+  ../acpphint_kernelsamplers_main-${ACPPHINT_FILENAME_INFO}
+
+ACPPHINT_BENCHMARK= ../acpphint-${ACPPHINT_FILENAME_INFO}
+
+#
+# Programs . . .
+#                             
+
+build: investigative-programs acpphint-benchmark
+investigative-programs: ${INVESTIGATIVE_PROGRAMS}
+acpphint-benchmark:     ${ACPPHINT_BENCHMARK}
+
+#
+# cpp_clockinfo_main and related (from ../other_src_used)
+#   A supporting program for exploring c++ time measurement results.
+#
+../cpp_clockinfo_main-${ACPPHINT_FILENAME_INFO}: \
+                    makefile.common_part ${THE_MAKEFILE} \
+                    ${CPP_CLOCKINFO_HEADERS} \
+                    ${CPP_CLOCKINFO_OBJS} \
+                    ../other_src_used/cpp_clockinfo_main.cpp
+	${CXX} ${CXXFLAGS} ${LDCXX} ${CPP_CLOCKINFO_OBJS} -o $@ \
+	       -DCPPCLOCKINFO_VERS='"${CPPCLOCKINFO_VERS}"' \
+                     ../other_src_used/cpp_clockinfo_main.cpp
+	chmod a+x $@
+
+../objs/cpp_thousandslocale-${COMPILER_LIBRARY}${SUFFIX}.o: \
+                    makefile.common_part ${THE_MAKEFILE} \
+                    ${CPP_THOUSANDSLOCALE_HEADERS} \
+                    ../other_src_used/cpp_thousandslocale.cpp
+	${CXX} ${CXXFLAGS} -c -o $@ ../other_src_used/cpp_thousandslocale.cpp
+
+../objs/cpp_clockinfo-${COMPILER_LIBRARY}${SUFFIX}.o: \
+                    makefile.common_part ${THE_MAKEFILE} \
+                    ${CPP_CLOCKINFO_HEADERS} \
+                    ../other_src_used/cpp_clockinfo.cpp
+	${CXX} ${CXXFLAGS} -c -o $@ ../other_src_used/cpp_clockinfo.cpp
+
+#
+# acpphint_kernelsurveyors_main and related
+#   A supporting program for exploring kernel surveyor results
+#
+../acpphint_kernelsurveyors_main-${ACPPHINT_FILENAME_INFO}: \
+                    makefile.common_part ${THE_MAKEFILE} \
+                    ${ACPPHINT_KERNELSURVEYORS_HEADERS} \
+                    ${ACPPHINT_KERNELSURVEYORS_OBJS} \
+                    acpphint_kernelsurveyors_main.cpp
+	${CXX} ${CXXFLAGS} ${LDCXX} ${ACPPHINT_KERNELSURVEYORS_OBJS} -o $@ \
+	       -DACPPHINTKERNELSURVEYORS_VERS='"${ACPPHINTKERNELSURVEYORS_VERS}"' \
+                       acpphint_kernelsurveyors_main.cpp
+	chmod a+x $@
+	
+# cpp_thousandslocale and cpp_clockinfo in ../objs/ covered earlier.
+
+../objs/sys_cpubinding-${COMPILER_LIBRARY}${SUFFIX}.o: \
+                    makefile.common_part ${THE_MAKEFILE} \
+                    ${SYS_CPUBINDING_HEADERS} \
+                    ../other_src_used/sys_cpubinding.cpp
+	${CXX} ${CXXFLAGS} -c -o $@ ../other_src_used/sys_cpubinding.cpp
+
+../objs/acpphint_kernels-${COMPILER_LIBRARY}${SUFFIX}.o: \
+                    makefile.common_part ${THE_MAKEFILE} \
+                    ${ACPPHINT_KERNELS_HEADERS} \
+                    acpphint_kernels.cpp
+	${CXX} ${CXXFLAGS} -c -o $@ acpphint_kernels.cpp
+
+../objs/acpphint_kernelrunners-${COMPILER_LIBRARY}${SUFFIX}.o: \
+                    makefile.common_part ${THE_MAKEFILE} \
+                    ${ACPPHINT_KERNELRUNNERS_HEADERS} \
+                    acpphint_kernelrunners.cpp
+	${CXX} ${CXXFLAGS} -c -o $@ acpphint_kernelrunners.cpp
+
+../objs/acpphint_kernelsurveyors-${COMPILER_LIBRARY}${SUFFIX}.o: \
+                    makefile.common_part ${THE_MAKEFILE} \
+                    ${ACPPHINT_KERNELSURVEYORS_HEADERS} \
+                    acpphint_kernelsurveyors.cpp
+	${CXX} ${CXXFLAGS} -c -o $@ acpphint_kernelsurveyors.cpp
+
+#
+# acpphint_kernelsamplers_main and related
+#   A supporting program for exploring kernel sampler results
+#
+../acpphint_kernelsamplers_main-${ACPPHINT_FILENAME_INFO}: \
+                    makefile.common_part ${THE_MAKEFILE} \
+                    ${ACPPHINT_KERNELSAMPLERS_HEADERS} \
+                    ${ACPPHINT_KERNELSAMPLERS_OBJS} \
+                    acpphint_kernelsamplers_main.cpp
+	${CXX} ${CXXFLAGS} ${LDCXX} ${ACPPHINT_KERNELSAMPLERS_OBJS} -o $@ \
+	       -DACPPHINTKERNELSAMPLERS_VERS='"${ACPPHINTKERNELSAMPLERS_VERS}"' \
+                       acpphint_kernelsamplers_main.cpp
+	chmod a+x $@
+	
+# cpp_thousandslocale, cpp_clockinfo, and sys_cpubinding covered earlier.
+# acpphint_kernels, acpphint_kernelrunners, and acpphint_kernelsurveyors
+# covered earlier.
+
+../objs/acpphint_kernelsamplers-${COMPILER_LIBRARY}${SUFFIX}.o: \
+                    makefile.common_part ${THE_MAKEFILE} \
+                    ${ACPPHINT_KERNELSURVEYORS_HEADERS} \
+                    acpphint_kernelsamplers.cpp
+	${CXX} ${CXXFLAGS} ${KERNELSAMPLERS_OVERRIDES} \
+	       -c -o $@ acpphint_kernelsamplers.cpp
+
+#
+# acpphint and related
+#   The benchmark, generates files for gnuplot.
+#
+# Note: The "Edit as needed" can have outputs for
+#       various types for DSIZE and ISIZE. In fact
+#       the default does such.
+#
+../acpphint-${ACPPHINT_FILENAME_INFO}:  \
+                    makefile.common_part ${THE_MAKEFILE} \
+                    ${ACPPHINT_KERNELSAMPLERS_HEADERS} \
+                    ${ACPPHINT_KERNELSAMPLERS_OBJS} \
+                    acpphint_main.cpp
+	${CXX} ${CXXFLAGS} ${LDCXX} ${ACPPHINT_KERNELSAMPLERS_OBJS} -o $@ \
+	       -DACPPHINT_VERS='"${ACPPHINT_VERS}"' acpphint_main.cpp
+
+# cpp_thousandslocale, cpp_clockinfo, and sys_cpubinding covered earlier.
+# acpphint_kernels, acpphint_kernelrunners, acpphint_kernelsurveyors,
+# and acpphint_kernelsamplers covered earlier.
+
+#
+# clean and clean-programs
+#
+# On macOS the programs can also have *.dSYM
+# directory trees.
+#
+clean:
+	${RM} ../objs/*.o ../*.dSYM
+	
+clean-programs:
+	${RM} ${INVESTIGATIVE_PROGRAMS} \
+          ${ACPPHINT_BENCHMARK}
+
+gather-info:    cpp_clockinfo_main-run \
+                acpphint_kernelsurveyors_main-run \
+                acpphint_kernelsamplers_main-run \
+                acpphint-run
+
+#
+# Run investigative programs
+#
+cpp_clockinfo_main-run:
+	cd .. && ./${@:-run=}-${ACPPHINT_FILENAME_INFO} \
+                > ${@:-run=}-${ACPPHINT_FILENAME_INFO}-output.txt
+
+acpphint_kernelsurveyors_main-run:
+	cd .. && ./${@:-run=}-${ACPPHINT_FILENAME_INFO} \
+                > ${@:-run=}-${ACPPHINT_FILENAME_INFO}-output.txt
+
+acpphint_kernelsamplers_main-run:
+	cd .. && ./${@:-run=}-${ACPPHINT_FILENAME_INFO} \
+                > ${@:-run=}-${ACPPHINT_FILENAME_INFO}-output.txt
+
+#
+# Run the benchmark (can generate multiple data files for gnuplot)
+#
+acpphint-run:
+	cd .. && ./${@:-run=}-${ACPPHINT_FILENAME_INFO}
+
+#
+# Other potential combinations, for examples reference:
+#
+# amd64:
+#ACPPHINT_FILENAME_INFO= ThreadRipper1950X-131072MiB-threads_32-LP64-Windows_10_2004_wsl2_ubuntu-${COMPILER_LIBRARY}
+#ACPPHINT_FILENAME_INFO= MacBookPro11,3-16384MiB-threads_8-LP64-macOS_10.14.6-${COMPILER_LIBRARY}
+#
+# powerpc64 (Possible 32-bit powerpc chroot use too? Possible 32-bit OS use too):
+#ACPPHINT_FILENAME_INFO= PowerMac11,2-2048MiB-threads_4-ILP32-FreeBSD_13_r363590M_32bit-${COMPILER_LIBRARY}
+#ACPPHINT_FILENAME_INFO= PowerMac7,2-8192MiB-threads_2-LP64-FreeBSD_13_r363590M_64bit-${COMPILER_LIBRARY}
+#ACPPHINT_FILENAME_INFO= PowerMac7,2-2048MiB-threads_2-ILP32-FreeBSD_13_r363590M_32bit-${COMPILER_LIBRARY}
+#
+# powerpc:
+#ACPPHINT_FILENAME_INFO= PowerMac3,5-1536MiB-threads_1-ILP32-FreeBSD_13_r363590M_32bit-${COMPILER_LIBRARY}
+#ACPPHINT_FILENAME_INFO= PowerMac3,4-1536MiB-threads_1-ILP32-FreeBSD_13_r363590M_32bit-${COMPILER_LIBRARY}
+#ACPPHINT_FILENAME_INFO= PowerMac4,1-1024MiB-threads_1-ILP32-FreeBSD_13_r363590M_32bit-${COMPILER_LIBRARY}
+#
+# aarch64 (Possible 32-bit armv7 chroot use too?):
+#ACPPHINT_FILENAME_INFO= OverDrive_1000-8192MiB-threads_4-LP64-openSUSE_Tumbleweed-${COMPILER_LIBRARY}
+#ACPPHINT_FILENAME_INFO= Rock64-4096MiB-threads_4-LP64-Armbian_Buster_4.4y-${COMPILER_LIBRARY}
+#ACPPHINT_FILENAME_INFO= RPi4B-4096MiB-threads_4-ILP32-Raspian_10_4.19.58_v7l+-${COMPILER_LIBRARY}
+#ACPPHINT_FILENAME_INFO= RPI4B-8192MiB-threads_4-LP64-NetBSD_10-${COMPILER_LIBRARY}
+#ACPPHINT_FILENAME_INFO= ODroidC2-2048MiB-threads_4-LP64-NetBSD_10-${COMPILER_LIBRARY}
+#ACPPHINT_FILENAME_INFO= MacchDblShot-16384MiB-threads_4-LP64-Armbian_Buster_4.4y-${COMPILER_LIBRARY}
+#
+# armv7:
+#ACPPHINT_FILENAME_INFO= OPi+2E-2048MiB-threads_4-ILP32-Armbian_Buster_4.19y-${COMPILER_LIBRARY}
+#ACPPHINT_FILENAME_INFO= BPi-M3-2048MiB-threads_4-ILP32-FreeBSD_13_r363590M-${COMPILER_LIBRARY}
+#ACPPHINT_FILENAME_INFO= BPi-M3-2048MiB-threads_4-ILP32-Armbian_Buster_4.19y-${COMPILER_LIBRARY}
+
+#
+# For reference:
+# acpphint output file names are of the form
+# (.txt being a default suffix):
+#
+# acpphint-${ACPPHINT_FILENAME_INFO}-${DSIZE_DESC}-${ISIZE_DESC}-${USING_THREADS}.txt
+#
+# with ${DSIZE_DESC}-${ISIZE_DESC}-${USING_THREADS} based
+# on the likes of:
+#
+#DSIZE_DESC= DSIZE_ld
+#DSIZE_DESC= DSIZE_d
+#DSIZE_DESC= DSIZE_f
+#DSIZE_DESC= DSIZE_ull
+#DSIZE_DESC= DSIZE_ll
+#DSIZE_DESC= DSIZE_ul
+#DSIZE_DESC= DSIZE_l
+#DSIZE_DESC= DSIZE_ui
+#DSIZE_DESC= DSIZE_i
+#DSIZE_DESC= DSIZE_us
+#DSIZE_DESC= DSIZE_s
+#
+#ISIZE_DESC= ISIZE_ull
+#ISIZE_DESC= ISIZE_ll
+#ISIZE_DESC= ISIZE_ul
+#ISIZE_DESC= ISIZE_l
+#ISIZE_DESC= ISIZE_ui
+#ISIZE_DESC= ISIZE=i
+#ISIZE_DESC= ISIZE=us
+#ISIZE_DESC= ISIZE=s
+#
+#USING_THREADS=   using_1_threads
+#USING_THREADS=   using_2_threads
+#USING_THREADS=   using_4_threads
+#USING_THREADS=   using_7_threads
+#USING_THREADS=   using_8_threads
+#USING_THREADS=   using_14_threads
+#USING_THREADS=   using_16_threads
+#USING_THREADS=   using_28_threads
+#USING_THREADS=   using_32_threads

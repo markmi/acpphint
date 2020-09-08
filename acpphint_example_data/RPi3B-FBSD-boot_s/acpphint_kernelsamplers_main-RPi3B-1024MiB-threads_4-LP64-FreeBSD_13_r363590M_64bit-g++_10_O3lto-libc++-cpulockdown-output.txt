@@ -1,0 +1,404 @@
+os domain 0 affinity #cpus: 4
+./acpphint_kernelsamplers_main-RPi3B-1024MiB-threads_4-LP64-FreeBSD_13_r363590M_64bit-g++_10_O3lto-libc++-cpulockdown . . .
+acpphint_kernelsamplers_main version: 0.1.23
+
+./acpphint_kernelsamplers_main-RPi3B-1024MiB-threads_4-LP64-FreeBSD_13_r363590M_64bit-g++_10_O3lto-libc++-cpulockdown . . .
+
+
+DSIZE=float, ISIZE=unsigned short:
+
+serial. . .
+
+nproc:      1
+scx:        256
+scy:        256
+dmax:       65'535
+initial_dx: 256
+
+2.85105e-07 3.53499e+06 1.00784 168
+4.18875e-07 4.79574e+06 2.00881 216
+5.67111e-07 5.31763e+06 3.01569 264
+7.03143e-07 5.70615e+06 4.01224 312
+8.42e-07 5.95918e+06 5.01763 360
+9.843e-07 6.12009e+06 6.02401 408
+1.11988e-06 6.27871e+06 7.03137 456
+1.39767e-06 6.45681e+06 9.02447 552
+1.67533e-06 6.56585e+06 11 648
+2.0835e-06 6.71945e+06 14 792
+2.5e-06 6.7842e+06 16.9605 936
+3.0475e-06 6.89089e+06 21 1'128
+3.75e-06 6.90967e+06 25.9113 1'368
+4.5575e-06 6.97915e+06 31.8075 1'656
+5.677e-06 6.99215e+06 39.6944 2'040
+7.084e-06 6.98612e+06 49.4897 2'520
+8.854e-06 7.00422e+06 62.0154 3'144
+1.1042e-05 6.98186e+06 77.0937 3'912
+1.3802e-05 6.95836e+06 96.0393 4'872
+1.7239e-05 6.97825e+06 120.298 6'072
+2.1562e-05 6.93406e+06 149.512 7'608
+2.6927e-05 6.96353e+06 187.507 9'528
+3.3906e-05 6.86761e+06 232.853 11'976
+
+ n:                        stopped for 256.000000 == initial_dx <= (next n) == 312.000000
+ eflag:                    stopped with eflag normal (1)
+ median_mean_sec_per_lap:  stopped with 0.000034 == median_mean_sec_per_lap < STOPTM == 1.000000
+ vectors_total_bytes:      stopped with 11976 == vectors_total_bytes < VECTS_BYTES_LIMIT == 9223372036854775807
+ quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 0.980496
+ qdata.size():             stopped with 23 == qdata.size() < NSAMP == 80
+ HI/(scx*scy) == ? * approx.: 1.005857 * 0.386294
+ LO/(scx*scy) == ? * approx.: 0.994787 * 0.386294
+
+threaded. . .
+
+nproc:          3
+scx:            192
+scy:            256
+dmax:           49'151
+initial_dx:     16
+
+NCHUNK(nproc):  4
+
+0.000125469 87'795.8 11.0156 792
+0.000128854 108'461 13.9756 936
+0.000119896 141'497 16.9649 1'080
+0.000124948 159'685 19.9523 1'224
+0.000120209 190'042 22.8448 1'368
+0.000125521 228'344 28.662 1'656
+0.00013823 249'689 34.5145 1'944
+0.000125417 344'397 43.1932 2'376
+
+ n:                        stopped for 16.000000 == initial_dx <= (next n) == 18.000000
+ eflag:                    stopped with eflag normal (1)
+ median_mean_sec_per_lap:  stopped with 0.000125 == median_mean_sec_per_lap < STOPTM == 1.000000
+ vectors_total_bytes:      stopped with 2376 == vectors_total_bytes < VECTS_BYTES_LIMIT == 9223372036854775807
+ quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 1.000000
+ qdata.size():             stopped with 8 == qdata.size() < NSAMP == 80
+ HI/(scx*scy) == ? * approx.: 1.029837 * 0.386294
+ LO/(scx*scy) == ? * approx.: 0.971260 * 0.386294
+
+DSIZE=float, ISIZE=short:
+
+serial. . .
+
+nproc:      1
+scx:        128
+scy:        181
+dmax:       23'167
+initial_dx: 128
+
+2.85105e-07 3.56271e+06 1.01575 168
+4.21e-07 4.79259e+06 2.01768 216
+5.64278e-07 5.37235e+06 3.0315 264
+7.03143e-07 5.72364e+06 4.02453 312
+8.42083e-07 5.97965e+06 5.03536 360
+9.844e-07 6.14403e+06 6.04818 408
+1.11988e-06 6.30695e+06 7.06299 456
+1.39767e-06 6.47441e+06 9.04907 552
+1.66683e-06 6.64177e+06 11.0707 648
+2.09625e-06 6.69396e+06 14.0322 792
+2.5e-06 6.7869e+06 16.9673 936
+3.073e-06 6.8178e+06 20.9511 1'128
+3.75e-06 6.89409e+06 25.8528 1'368
+4.583e-06 6.90485e+06 31.645 1'656
+5.678e-06 6.92939e+06 39.3451 2'040
+7.083e-06 6.94725e+06 49.2074 2'520
+8.854e-06 7.05262e+06 62.4439 3'144
+1.1041e-05 6.99402e+06 77.221 3'912
+1.3698e-05 6.96649e+06 95.427 4'872
+1.7083e-05 6.89882e+06 117.853 6'072
+
+ n:                        stopped for 128.000000 == initial_dx <= (next n) == 157.000000
+ eflag:                    stopped with eflag normal (1)
+ median_mean_sec_per_lap:  stopped with 0.000017 == median_mean_sec_per_lap < STOPTM == 1.000000
+ vectors_total_bytes:      stopped with 6072 == vectors_total_bytes < VECTS_BYTES_LIMIT == 9223372036854775807
+ quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 0.978192
+ qdata.size():             stopped with 20 == qdata.size() < NSAMP == 80
+ HI/(scx*scy) == ? * approx.: 1.011446 * 0.386294
+ LO/(scx*scy) == ? * approx.: 0.989665 * 0.386294
+
+threaded. . .
+
+nproc:          3
+scx:            96
+scy:            181
+dmax:           17'375
+initial_dx:     8
+
+NCHUNK(nproc):  4
+
+0.000124167 88'529.2 10.9924 792
+0.000128542 108'466 13.9425 936
+0.000133646 126'582 16.9172 1'080
+0.000129739 153'288 19.8874 1'224
+
+ n:                        stopped for 8.000000 == initial_dx <= (next n) == 8.000000
+ eflag:                    stopped with eflag normal (1)
+ median_mean_sec_per_lap:  stopped with 0.000130 == median_mean_sec_per_lap < STOPTM == 1.000000
+ vectors_total_bytes:      stopped with 1224 == vectors_total_bytes < VECTS_BYTES_LIMIT == 9223372036854775807
+ quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 1.000000
+ qdata.size():             stopped with 4 == qdata.size() < NSAMP == 80
+ HI/(scx*scy) == ? * approx.: 1.063034 * 0.386294
+ LO/(scx*scy) == ? * approx.: 0.939098 * 0.386294
+
+DSIZE=unsigned short, ISIZE=unsigned short:
+
+serial. . .
+
+nproc:      1
+scx:        256
+scy:        256
+dmax:       65'535
+initial_dx: 256
+
+1.83129e-07 5.46063e+06 1 124
+2.6825e-07 7.40139e+06 1.98542 150
+3.61133e-07 8.22132e+06 2.96899 176
+4.47e-07 8.803e+06 3.93494 202
+5.261e-07 9.31765e+06 4.90202 228
+6.0875e-07 9.64679e+06 5.87248 254
+6.92e-07 9.85086e+06 6.81679 280
+8.6375e-07 1.00529e+07 8.68322 332
+1.0313e-06 1.02182e+07 10.538 384
+1.28262e-06 1.03474e+07 13.2718 462
+1.5365e-06 1.03422e+07 15.8907 540
+1.87525e-06 1.03336e+07 19.3781 644
+2.30475e-06 1.024e+07 23.6006 774
+2.8125e-06 1.0103e+07 28.4147 930
+3.4895e-06 9.8983e+06 34.5401 1'138
+4.323e-06 9.66414e+06 41.7781 1'398
+5.417e-06 9.32657e+06 50.522 1'736
+6.771e-06 8.89804e+06 60.2486 2'152
+8.438e-06 8.45408e+06 71.3355 2'672
+1.0573e-05 7.89309e+06 83.4536 3'322
+1.3334e-05 7.24982e+06 96.6692 4'154
+1.6771e-05 6.6088e+06 110.836 5'194
+2.1302e-05 5.89228e+06 125.517 6'520
+
+ n:                        stopped for 256 == initial_dx <= (next n) == 312
+ eflag:                    stopped with eflag normal (1)
+ median_mean_sec_per_lap:  stopped with 0.000021 == median_mean_sec_per_lap < STOPTM == 1.000000
+ vectors_total_bytes:      stopped with 6520 == vectors_total_bytes < VECTS_BYTES_LIMIT == 9223372036854775807
+ quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 0.569448
+ qdata.size():             stopped with 23 == qdata.size() < NSAMP == 80
+ HI/(scx*scy) == ? * approx.: 1.010737 * 0.386294
+ LO/(scx*scy) == ? * approx.: 0.990276 * 0.386294
+
+threaded. . .
+
+nproc:          3
+scx:            192
+scy:            256
+dmax:           49'151
+initial_dx:     16
+
+NCHUNK(nproc):  4
+
+0.000128073 82'706.4 10.5925 528
+0.000122604 108'656 13.3217 606
+0.000128386 124'409 15.9724 684
+0.000115781 160'902 18.6294 762
+0.000122553 172'827 21.1805 840
+0.000120678 216'492 26.1258 996
+0.00011599 265'835 30.8342 1'152
+0.000109479 343'824 37.6415 1'386
+
+ n:                        stopped for 16 == initial_dx <= (next n) == 18
+ eflag:                    stopped with eflag normal (1)
+ median_mean_sec_per_lap:  stopped with 0.000109 == median_mean_sec_per_lap < STOPTM == 1.000000
+ vectors_total_bytes:      stopped with 1386 == vectors_total_bytes < VECTS_BYTES_LIMIT == 9223372036854775807
+ quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 1.000000
+ qdata.size():             stopped with 8 == qdata.size() < NSAMP == 80
+ HI/(scx*scy) == ? * approx.: 1.034595 * 0.386294
+ LO/(scx*scy) == ? * approx.: 0.967602 * 0.386294
+
+DSIZE=unsigned short, ISIZE=short:
+
+serial. . .
+
+nproc:      1
+scx:        128
+scy:        181
+dmax:       23'167
+initial_dx: 128
+
+1.81452e-07 5.51111e+06 1 124
+2.6565e-07 7.45125e+06 1.97942 150
+3.542e-07 8.34637e+06 2.95628 176
+4.4275e-07 8.82772e+06 3.90847 202
+5.2345e-07 9.28904e+06 4.86235 228
+6.0875e-07 9.57731e+06 5.83019 254
+6.91929e-07 9.74568e+06 6.74332 280
+8.59417e-07 9.95763e+06 8.55776 332
+1.0312e-06 1.00435e+07 10.3569 384
+1.2825e-06 1.01289e+07 12.9903 462
+1.5365e-06 1.00888e+07 15.5014 540
+1.875e-06 1.00096e+07 18.7679 644
+2.29175e-06 9.92155e+06 22.7377 774
+2.8125e-06 9.66575e+06 27.1849 930
+3.464e-06 9.43257e+06 32.6744 1'138
+4.323e-06 9.07292e+06 39.2222 1'398
+5.417e-06 8.61561e+06 46.6708 1'736
+6.719e-06 8.15992e+06 54.8265 2'152
+8.49e-06 7.54754e+06 64.0787 2'672
+1.0677e-05 6.92866e+06 73.9773 3'322
+
+ n:                        stopped for 128 == initial_dx <= (next n) == 157
+ eflag:                    stopped with eflag normal (1)
+ median_mean_sec_per_lap:  stopped with 0.000011 == median_mean_sec_per_lap < STOPTM == 1.000000
+ vectors_total_bytes:      stopped with 3322 == vectors_total_bytes < VECTS_BYTES_LIMIT == 9223372036854775807
+ quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 0.684048
+ qdata.size():             stopped with 20 == qdata.size() < NSAMP == 80
+ HI/(scx*scy) == ? * approx.: 1.017021 * 0.386294
+ LO/(scx*scy) == ? * approx.: 0.982495 * 0.386294
+
+threaded. . .
+
+nproc:          3
+scx:            96
+scy:            181
+dmax:           17'375
+initial_dx:     8
+
+NCHUNK(nproc):  4
+
+0.000126199 82'185.5 10.3717 528
+0.000128334 101'048 12.9678 606
+0.000129375 119'939 15.5171 684
+0.000126563 142'638 18.0526 762
+
+ n:                        stopped for 8 == initial_dx <= (next n) == 8
+ eflag:                    stopped with eflag normal (1)
+ median_mean_sec_per_lap:  stopped with 0.000127 == median_mean_sec_per_lap < STOPTM == 1.000000
+ vectors_total_bytes:      stopped with 762 == vectors_total_bytes < VECTS_BYTES_LIMIT == 9223372036854775807
+ quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 1.000000
+ qdata.size():             stopped with 4 == qdata.size() < NSAMP == 80
+ HI/(scx*scy) == ? * approx.: 1.067898 * 0.386294
+ LO/(scx*scy) == ? * approx.: 0.932027 * 0.386294
+
+DSIZE=short, ISIZE=unsigned short:
+
+serial. . .
+
+nproc:      1
+scx:        128
+scy:        181
+dmax:       23'167
+initial_dx: 128
+
+2.12036e-07 4.71619e+06 1 124
+3.04263e-07 6.50563e+06 1.97942 150
+4.01786e-07 7.35786e+06 2.95628 176
+4.97182e-07 7.86126e+06 3.90847 202
+5.845e-07 8.31882e+06 4.86235 228
+6.77125e-07 8.61021e+06 5.83019 254
+7.66429e-07 8.79836e+06 6.74332 280
+9.48e-07 9.02717e+06 8.55776 332
+1.13288e-06 9.14211e+06 10.3569 384
+1.40633e-06 9.23703e+06 12.9903 462
+1.6755e-06 9.25182e+06 15.5014 540
+2.0445e-06 9.17971e+06 18.7679 644
+2.5e-06 9.09508e+06 22.7377 774
+3.047e-06 8.92186e+06 27.1849 930
+3.776e-06 8.65318e+06 32.6744 1'138
+4.6875e-06 8.36741e+06 39.2222 1'398
+5.886e-06 7.92912e+06 46.6708 1'736
+7.344e-06 7.46548e+06 54.8265 2'152
+9.323e-06 6.87318e+06 64.0787 2'672
+1.1719e-05 6.3126e+06 73.9773 3'322
+
+ n:                        stopped for 128 == initial_dx <= (next n) == 157
+ eflag:                    stopped with eflag normal (1)
+ median_mean_sec_per_lap:  stopped with 0.000012 == median_mean_sec_per_lap < STOPTM == 1.000000
+ vectors_total_bytes:      stopped with 3322 == vectors_total_bytes < VECTS_BYTES_LIMIT == 9223372036854775807
+ quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 0.682309
+ qdata.size():             stopped with 20 == qdata.size() < NSAMP == 80
+ HI/(scx*scy) == ? * approx.: 1.017021 * 0.386294
+ LO/(scx*scy) == ? * approx.: 0.982495 * 0.386294
+
+threaded. . .
+
+nproc:          3
+scx:            96
+scy:            181
+dmax:           17'375
+initial_dx:     8
+
+NCHUNK(nproc):  4
+
+0.000129688 79'974.5 10.3717 528
+0.000117813 110'071 12.9678 606
+0.000122968 126'188 15.5171 684
+0.000118698 152'089 18.0526 762
+
+ n:                        stopped for 8 == initial_dx <= (next n) == 8
+ eflag:                    stopped with eflag normal (1)
+ median_mean_sec_per_lap:  stopped with 0.000119 == median_mean_sec_per_lap < STOPTM == 1.000000
+ vectors_total_bytes:      stopped with 762 == vectors_total_bytes < VECTS_BYTES_LIMIT == 9223372036854775807
+ quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 1.000000
+ qdata.size():             stopped with 4 == qdata.size() < NSAMP == 80
+ HI/(scx*scy) == ? * approx.: 1.067898 * 0.386294
+ LO/(scx*scy) == ? * approx.: 0.932027 * 0.386294
+
+DSIZE=short, ISIZE=short:
+
+serial. . .
+
+nproc:      1
+scx:        128
+scy:        181
+dmax:       23'167
+initial_dx: 128
+
+2.04759e-07 4.8838e+06 1 124
+2.96053e-07 6.68605e+06 1.97942 150
+3.94357e-07 7.49646e+06 2.95628 176
+4.87727e-07 8.01365e+06 3.90847 202
+5.75778e-07 8.44483e+06 4.86235 228
+6.64125e-07 8.77875e+06 5.83019 254
+7.59e-07 8.88447e+06 6.74332 280
+9.375e-07 9.12827e+06 8.55776 332
+1.11338e-06 9.30222e+06 10.3569 384
+1.389e-06 9.3523e+06 12.9903 462
+1.658e-06 9.34947e+06 15.5014 540
+2.03125e-06 9.23959e+06 18.7679 644
+2.474e-06 9.19066e+06 22.7377 774
+3.021e-06 8.99865e+06 27.1849 930
+3.75e-06 8.71318e+06 32.6744 1'138
+4.6615e-06 8.41408e+06 39.2222 1'398
+5.834e-06 7.99979e+06 46.6708 1'736
+7.292e-06 7.51872e+06 54.8265 2'152
+9.219e-06 6.95072e+06 64.0787 2'672
+1.1563e-05 6.39776e+06 73.9773 3'322
+
+ n:                        stopped for 128 == initial_dx <= (next n) == 157
+ eflag:                    stopped with eflag normal (1)
+ median_mean_sec_per_lap:  stopped with 0.000012 == median_mean_sec_per_lap < STOPTM == 1.000000
+ vectors_total_bytes:      stopped with 3322 == vectors_total_bytes < VECTS_BYTES_LIMIT == 9223372036854775807
+ quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 0.684085
+ qdata.size():             stopped with 20 == qdata.size() < NSAMP == 80
+ HI/(scx*scy) == ? * approx.: 1.017021 * 0.386294
+ LO/(scx*scy) == ? * approx.: 0.982495 * 0.386294
+
+threaded. . .
+
+nproc:          3
+scx:            96
+scy:            181
+dmax:           17'375
+initial_dx:     8
+
+NCHUNK(nproc):  4
+
+0.000125729 82'492.7 10.3717 528
+0.0001275 101'709 12.9678 606
+0.000122292 126'886 15.5171 684
+0.000126771 142'403 18.0526 762
+
+ n:                        stopped for 8 == initial_dx <= (next n) == 8
+ eflag:                    stopped with eflag normal (1)
+ median_mean_sec_per_lap:  stopped with 0.000127 == median_mean_sec_per_lap < STOPTM == 1.000000
+ vectors_total_bytes:      stopped with 762 == vectors_total_bytes < VECTS_BYTES_LIMIT == 9223372036854775807
+ quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 1.000000
+ qdata.size():             stopped with 4 == qdata.size() < NSAMP == 80
+ HI/(scx*scy) == ? * approx.: 1.067898 * 0.386294
+ LO/(scx*scy) == ? * approx.: 0.932027 * 0.386294

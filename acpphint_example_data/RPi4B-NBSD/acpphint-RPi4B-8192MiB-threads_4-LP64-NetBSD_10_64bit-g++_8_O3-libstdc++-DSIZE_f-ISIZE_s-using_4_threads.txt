@@ -1,0 +1,7 @@
+# filename: ./acpphint-RPi4B-8192MiB-threads_4-LP64-NetBSD_10_64bit-g++_8_O3-libstdc++-DSIZE_f-ISIZE_s-using_4_threads.txt
+# acpphint_main version: 0.1.23
+
+7.548e-05 199214 15.0367 1056
+7.5684e-05 250510 18.9596 1248
+7.5314e-05 303308 22.8433 1440
+7.437e-05 360185 26.787 1632

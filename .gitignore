@@ -1,0 +1,5 @@
+/*.dSYM/
+/acpphint-*
+/acpphint_kernel*_main-*
+/cpp_clockinfo_main-*
+.DS_Store

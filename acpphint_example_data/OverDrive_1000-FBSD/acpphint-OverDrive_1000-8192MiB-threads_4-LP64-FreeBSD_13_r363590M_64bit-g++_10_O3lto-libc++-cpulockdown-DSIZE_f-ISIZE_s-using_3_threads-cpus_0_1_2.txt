@@ -1,0 +1,7 @@
+# filename: ./acpphint-OverDrive_1000-8192MiB-threads_4-LP64-FreeBSD_13_r363590M_64bit-g++_10_O3lto-libc++-cpulockdown-DSIZE_f-ISIZE_s-using_3_threads-cpus_0_1_2.txt
+# acpphint_main version: 0.1.23
+
+8.6937e-05 126441 10.9924 792
+8.8393e-05 157733 13.9425 936
+8.6153e-05 196363 16.9172 1080
+8.2322e-05 241581 19.8874 1224

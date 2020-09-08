@@ -1,0 +1,785 @@
+./acpphint_kernelsurveyors_main-OPi+2E-2048MiB-threads_4-ILP32-FreeBSD_13_r363590M-g++_10_O3lto-libc++ . . .
+acpphint_kernelsurveyors_main version: 0.1.23
+
+./acpphint_kernelsurveyors_main-OPi+2E-2048MiB-threads_4-ILP32-FreeBSD_13_r363590M-g++_10_O3lto-libc++ . . .
+
+DSIZE=long double, ISIZE=unsigned long long:
+
+serial. . .
+
+nproc:      1
+scx:        65'536
+scy:        65'536
+dmax:       4.29497e+09
+initial_dx: 65'536
+
+nscout:                                 2
+krr.kernel_result.result_bounds.HI:     2.86328e+09
+krr.kernel_result.result_bounds.LO:     7.15828e+08
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           1
+krr.kernel_result.ixes_errs_maxiq:      2
+krr.kernel_result.RECT_total_used:      2
+krr.kernel_result.ixes_errs_used_each:  3
+krr.total_sec_for_laps_for_median:      2.001e-06
+krr.tscout():                           6.67e-07
+krr.vectors_total_bytes:                244
+VectorsUsedBytes:                       228
+
+approx HI normal scale:     0.666659
+approx LO normal scale:     0.166667
+
+threaded. . .
+
+nproc:          4
+scx:            65'536
+scy:            65'536
+dmax:           4.29497e+09
+initial_dx:     4'096
+
+NCHUNK(nproc):  4
+
+nscout:                                 4
+krr.kernel_result.result_bounds.HI:     1.79544e+09
+krr.kernel_result.result_bounds.LO:     1.527e+09
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           3
+krr.kernel_result.ixes_errs_maxiq:      3
+krr.kernel_result.RECT_total_used:      16
+krr.kernel_result.ixes_errs_used_each:  16
+krr.total_sec_for_laps_for_median:      0.000823846
+krr.tscout():                           0.000274615
+krr.vectors_total_bytes:                1'808
+VectorsUsedBytes:                       1'444
+
+approx HI normal scale: 0.418032
+approx LO normal scale: 0.355532
+
+DSIZE=long double, ISIZE=unsigned long:
+
+serial. . .
+
+nproc:      1
+scx:        65'536
+scy:        65'536
+dmax:       4.29497e+09
+initial_dx: 65'536
+
+nscout:                                 2
+krr.kernel_result.result_bounds.HI:     2.86328e+09
+krr.kernel_result.result_bounds.LO:     7.15828e+08
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           1
+krr.kernel_result.ixes_errs_maxiq:      2
+krr.kernel_result.RECT_total_used:      2
+krr.kernel_result.ixes_errs_used_each:  3
+krr.total_sec_for_laps_for_median:      1.793e-06
+krr.tscout():                           5.97667e-07
+krr.vectors_total_bytes:                228
+VectorsUsedBytes:                       216
+
+approx HI normal scale:     0.666659
+approx LO normal scale:     0.166667
+
+threaded. . .
+
+nproc:          4
+scx:            65'536
+scy:            65'536
+dmax:           4.29497e+09
+initial_dx:     4'096
+
+NCHUNK(nproc):  4
+
+nscout:                                 4
+krr.kernel_result.result_bounds.HI:     1.79544e+09
+krr.kernel_result.result_bounds.LO:     1.527e+09
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           3
+krr.kernel_result.ixes_errs_maxiq:      3
+krr.kernel_result.RECT_total_used:      16
+krr.kernel_result.ixes_errs_used_each:  16
+krr.total_sec_for_laps_for_median:      0.000819971
+krr.tscout():                           0.000273324
+krr.vectors_total_bytes:                1'680
+VectorsUsedBytes:                       1'380
+
+approx HI normal scale: 0.418032
+approx LO normal scale: 0.355532
+
+DSIZE=unsigned long long, ISIZE=unsigned long long:
+
+serial. . .
+
+nproc:      1
+scx:        65'536
+scy:        65'536
+dmax:       4'294'967'295
+initial_dx: 65'536
+
+nscout:                                 2
+krr.kernel_result.result_bounds.HI:     2'863'300'608
+krr.kernel_result.result_bounds.LO:     715'816'960
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           1
+krr.kernel_result.ixes_errs_maxiq:      2
+krr.kernel_result.RECT_total_used:      2
+krr.kernel_result.ixes_errs_used_each:  3
+krr.total_sec_for_laps_for_median:      3.293e-06
+krr.tscout():                           1.09767e-06
+krr.vectors_total_bytes:                244
+VectorsUsedBytes:                       228
+
+approx HI normal scale:     0.666664
+approx LO normal scale:     0.166664
+
+threaded. . .
+
+nproc:          4
+scx:            65'536
+scy:            65'536
+dmax:           4'294'967'295
+initial_dx:     4'096
+
+NCHUNK(nproc):  4
+
+nscout:                                 4
+krr.kernel_result.result_bounds.HI:     1'795'469'312
+krr.kernel_result.result_bounds.LO:     1'526'976'512
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           3
+krr.kernel_result.ixes_errs_maxiq:      3
+krr.kernel_result.RECT_total_used:      16
+krr.kernel_result.ixes_errs_used_each:  16
+krr.total_sec_for_laps_for_median:      0.000841595
+krr.tscout():                           0.000280532
+krr.vectors_total_bytes:                1'808
+VectorsUsedBytes:                       1'444
+
+approx HI normal scale: 0.41804
+approx LO normal scale: 0.355527
+
+DSIZE=unsigned long, ISIZE=unsigned long:
+
+serial. . .
+
+nproc:      1
+scx:        65'536
+scy:        65'536
+dmax:       4'294'967'295
+initial_dx: 65'536
+
+nscout:                                 2
+krr.kernel_result.result_bounds.HI:     2'863'300'608
+krr.kernel_result.result_bounds.LO:     715'816'960
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           1
+krr.kernel_result.ixes_errs_maxiq:      2
+krr.kernel_result.RECT_total_used:      2
+krr.kernel_result.ixes_errs_used_each:  3
+krr.total_sec_for_laps_for_median:      1.042e-06
+krr.tscout():                           3.47333e-07
+krr.vectors_total_bytes:                140
+VectorsUsedBytes:                       132
+
+approx HI normal scale:     0.666664
+approx LO normal scale:     0.166664
+
+threaded. . .
+
+nproc:          4
+scx:            65'536
+scy:            65'536
+dmax:           4'294'967'295
+initial_dx:     4'096
+
+NCHUNK(nproc):  4
+
+nscout:                                 4
+krr.kernel_result.result_bounds.HI:     1'795'469'312
+krr.kernel_result.result_bounds.LO:     1'526'976'512
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           3
+krr.kernel_result.ixes_errs_maxiq:      3
+krr.kernel_result.RECT_total_used:      16
+krr.kernel_result.ixes_errs_used_each:  16
+krr.total_sec_for_laps_for_median:      0.000807304
+krr.tscout():                           0.000269101
+krr.vectors_total_bytes:                976
+VectorsUsedBytes:                       740
+
+approx HI normal scale: 0.41804
+approx LO normal scale: 0.355527
+
+DSIZE=double, ISIZE=unsigned long long:
+
+serial. . .
+
+nproc:      1
+scx:        65'536
+scy:        65'536
+dmax:       4.29497e+09
+initial_dx: 65'536
+
+nscout:                                 2
+krr.kernel_result.result_bounds.HI:     2.86328e+09
+krr.kernel_result.result_bounds.LO:     7.15828e+08
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           1
+krr.kernel_result.ixes_errs_maxiq:      2
+krr.kernel_result.RECT_total_used:      2
+krr.kernel_result.ixes_errs_used_each:  3
+krr.total_sec_for_laps_for_median:      1.959e-06
+krr.tscout():                           6.53e-07
+krr.vectors_total_bytes:                244
+VectorsUsedBytes:                       228
+
+approx HI normal scale:     0.666659
+approx LO normal scale:     0.166667
+
+threaded. . .
+
+nproc:          4
+scx:            65'536
+scy:            65'536
+dmax:           4.29497e+09
+initial_dx:     4'096
+
+NCHUNK(nproc):  4
+
+nscout:                                 4
+krr.kernel_result.result_bounds.HI:     1.79544e+09
+krr.kernel_result.result_bounds.LO:     1.527e+09
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           3
+krr.kernel_result.ixes_errs_maxiq:      3
+krr.kernel_result.RECT_total_used:      16
+krr.kernel_result.ixes_errs_used_each:  16
+krr.total_sec_for_laps_for_median:      0.00083922
+krr.tscout():                           0.00027974
+krr.vectors_total_bytes:                1'808
+VectorsUsedBytes:                       1'444
+
+approx HI normal scale: 0.418032
+approx LO normal scale: 0.355532
+
+DSIZE=double, ISIZE=unsigned long:
+
+serial. . .
+
+nproc:      1
+scx:        65'536
+scy:        65'536
+dmax:       4.29497e+09
+initial_dx: 65'536
+
+nscout:                                 2
+krr.kernel_result.result_bounds.HI:     2.86328e+09
+krr.kernel_result.result_bounds.LO:     7.15828e+08
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           1
+krr.kernel_result.ixes_errs_maxiq:      2
+krr.kernel_result.RECT_total_used:      2
+krr.kernel_result.ixes_errs_used_each:  3
+krr.total_sec_for_laps_for_median:      1.793e-06
+krr.tscout():                           5.97667e-07
+krr.vectors_total_bytes:                228
+VectorsUsedBytes:                       216
+
+approx HI normal scale:     0.666659
+approx LO normal scale:     0.166667
+
+threaded. . .
+
+nproc:          4
+scx:            65'536
+scy:            65'536
+dmax:           4.29497e+09
+initial_dx:     4'096
+
+NCHUNK(nproc):  4
+
+nscout:                                 4
+krr.kernel_result.result_bounds.HI:     1.79544e+09
+krr.kernel_result.result_bounds.LO:     1.527e+09
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           3
+krr.kernel_result.ixes_errs_maxiq:      3
+krr.kernel_result.RECT_total_used:      16
+krr.kernel_result.ixes_errs_used_each:  16
+krr.total_sec_for_laps_for_median:      0.000820346
+krr.tscout():                           0.000273449
+krr.vectors_total_bytes:                1'680
+VectorsUsedBytes:                       1'380
+
+approx HI normal scale: 0.418032
+approx LO normal scale: 0.355532
+
+DSIZE=double, ISIZE=unsigned int:
+
+serial. . .
+
+nproc:      1
+scx:        65'536
+scy:        65'536
+dmax:       4.29497e+09
+initial_dx: 65'536
+
+nscout:                                 2
+krr.kernel_result.result_bounds.HI:     2.86328e+09
+krr.kernel_result.result_bounds.LO:     7.15828e+08
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           1
+krr.kernel_result.ixes_errs_maxiq:      2
+krr.kernel_result.RECT_total_used:      2
+krr.kernel_result.ixes_errs_used_each:  3
+krr.total_sec_for_laps_for_median:      1.834e-06
+krr.tscout():                           6.11333e-07
+krr.vectors_total_bytes:                228
+VectorsUsedBytes:                       216
+
+approx HI normal scale:     0.666659
+approx LO normal scale:     0.166667
+
+threaded. . .
+
+nproc:          4
+scx:            65'536
+scy:            65'536
+dmax:           4.29497e+09
+initial_dx:     4'096
+
+NCHUNK(nproc):  4
+
+nscout:                                 4
+krr.kernel_result.result_bounds.HI:     1.79544e+09
+krr.kernel_result.result_bounds.LO:     1.527e+09
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           3
+krr.kernel_result.ixes_errs_maxiq:      3
+krr.kernel_result.RECT_total_used:      16
+krr.kernel_result.ixes_errs_used_each:  16
+krr.total_sec_for_laps_for_median:      0.000821179
+krr.tscout():                           0.000273726
+krr.vectors_total_bytes:                1'680
+VectorsUsedBytes:                       1'380
+
+approx HI normal scale: 0.418032
+approx LO normal scale: 0.355532
+
+DSIZE=unsigned int, ISIZE=unsigned int:
+
+serial. . .
+
+nproc:      1
+scx:        65'536
+scy:        65'536
+dmax:       4'294'967'295
+initial_dx: 65'536
+
+nscout:                                 2
+krr.kernel_result.result_bounds.HI:     2'863'300'608
+krr.kernel_result.result_bounds.LO:     715'816'960
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           1
+krr.kernel_result.ixes_errs_maxiq:      2
+krr.kernel_result.RECT_total_used:      2
+krr.kernel_result.ixes_errs_used_each:  3
+krr.total_sec_for_laps_for_median:      1.043e-06
+krr.tscout():                           3.47667e-07
+krr.vectors_total_bytes:                140
+VectorsUsedBytes:                       132
+
+approx HI normal scale:     0.666664
+approx LO normal scale:     0.166664
+
+threaded. . .
+
+nproc:          4
+scx:            65'536
+scy:            65'536
+dmax:           4'294'967'295
+initial_dx:     4'096
+
+NCHUNK(nproc):  4
+
+nscout:                                 4
+krr.kernel_result.result_bounds.HI:     1'795'469'312
+krr.kernel_result.result_bounds.LO:     1'526'976'512
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           3
+krr.kernel_result.ixes_errs_maxiq:      3
+krr.kernel_result.RECT_total_used:      16
+krr.kernel_result.ixes_errs_used_each:  16
+krr.total_sec_for_laps_for_median:      0.000815887
+krr.tscout():                           0.000271962
+krr.vectors_total_bytes:                976
+VectorsUsedBytes:                       740
+
+approx HI normal scale: 0.41804
+approx LO normal scale: 0.355527
+
+DSIZE=float, ISIZE=unsigned int:
+
+serial. . .
+
+nproc:      1
+scx:        4'096
+scy:        4'096
+dmax:       1.67772e+07
+initial_dx: 4'096
+
+nscout:                                 2
+krr.kernel_result.result_bounds.HI:     1.11828e+07
+krr.kernel_result.result_bounds.LO:     2.7962e+06
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           1
+krr.kernel_result.ixes_errs_maxiq:      2
+krr.kernel_result.RECT_total_used:      2
+krr.kernel_result.ixes_errs_used_each:  3
+krr.total_sec_for_laps_for_median:      1.459e-06
+krr.tscout():                           4.86333e-07
+krr.vectors_total_bytes:                140
+VectorsUsedBytes:                       132
+
+approx HI normal scale:     0.666545
+approx LO normal scale:     0.166667
+
+threaded. . .
+
+nproc:          4
+scx:            4'096
+scy:            4'096
+dmax:           1.67772e+07
+initial_dx:     256
+
+NCHUNK(nproc):  4
+
+nscout:                                 4
+krr.kernel_result.result_bounds.HI:     7.01342e+06
+krr.kernel_result.result_bounds.LO:     5.96484e+06
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           3
+krr.kernel_result.ixes_errs_maxiq:      3
+krr.kernel_result.RECT_total_used:      16
+krr.kernel_result.ixes_errs_used_each:  16
+krr.total_sec_for_laps_for_median:      0.000814763
+krr.tscout():                           0.000271588
+krr.vectors_total_bytes:                976
+VectorsUsedBytes:                       740
+
+approx HI normal scale: 0.418032
+approx LO normal scale: 0.355532
+
+DSIZE=float, ISIZE=unsigned short:
+
+serial. . .
+
+nproc:      1
+scx:        256
+scy:        256
+dmax:       65'535
+initial_dx: 256
+
+nscout:                                 2
+krr.kernel_result.result_bounds.HI:     43'562.7
+krr.kernel_result.result_bounds.LO:     10'922.7
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           1
+krr.kernel_result.ixes_errs_maxiq:      2
+krr.kernel_result.RECT_total_used:      2
+krr.kernel_result.ixes_errs_used_each:  3
+krr.total_sec_for_laps_for_median:      1.459e-06
+krr.tscout():                           4.86333e-07
+krr.vectors_total_bytes:                132
+VectorsUsedBytes:                       126
+
+approx HI normal scale:     0.664714
+approx LO normal scale:     0.166667
+
+threaded. . .
+
+nproc:          4
+scx:            256
+scy:            256
+dmax:           65'535
+initial_dx:     16
+
+NCHUNK(nproc):  4
+
+nscout:                                 4
+krr.kernel_result.result_bounds.HI:     27'396.2
+krr.kernel_result.result_bounds.LO:     23'300.2
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           3
+krr.kernel_result.ixes_errs_maxiq:      3
+krr.kernel_result.RECT_total_used:      16
+krr.kernel_result.ixes_errs_used_each:  16
+krr.total_sec_for_laps_for_median:      0.000842387
+krr.tscout():                           0.000280796
+krr.vectors_total_bytes:                912
+VectorsUsedBytes:                       708
+
+approx HI normal scale: 0.418032
+approx LO normal scale: 0.355532
+
+DSIZE=float, ISIZE=short:
+
+serial. . .
+
+nproc:      1
+scx:        128
+scy:        181
+dmax:       23'167
+initial_dx: 128
+
+nscout:                                 2
+krr.kernel_result.result_bounds.HI:     15'354.8
+krr.kernel_result.result_bounds.LO:     3'861.33
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           1
+krr.kernel_result.ixes_errs_maxiq:      2
+krr.kernel_result.RECT_total_used:      2
+krr.kernel_result.ixes_errs_used_each:  3
+krr.total_sec_for_laps_for_median:      1.459e-06
+krr.tscout():                           4.86333e-07
+krr.vectors_total_bytes:                132
+VectorsUsedBytes:                       126
+
+approx HI normal scale:     0.66276
+approx LO normal scale:     0.166667
+
+threaded. . .
+
+nproc:          4
+scx:            128
+scy:            181
+dmax:           23'167
+initial_dx:     8
+
+NCHUNK(nproc):  4
+
+nscout:                                 4
+krr.kernel_result.result_bounds.HI:     9'681.66
+krr.kernel_result.result_bounds.LO:     8'236.98
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           3
+krr.kernel_result.ixes_errs_maxiq:      3
+krr.kernel_result.RECT_total_used:      16
+krr.kernel_result.ixes_errs_used_each:  16
+krr.total_sec_for_laps_for_median:      0.000830887
+krr.tscout():                           0.000276962
+krr.vectors_total_bytes:                912
+VectorsUsedBytes:                       708
+
+approx HI normal scale: 0.417889
+approx LO normal scale: 0.355532
+
+DSIZE=unsigned short, ISIZE=unsigned short:
+
+serial. . .
+
+nproc:      1
+scx:        256
+scy:        256
+dmax:       65'535
+initial_dx: 256
+
+nscout:                                 2
+krr.kernel_result.result_bounds.HI:     43'648
+krr.kernel_result.result_bounds.LO:     10'880
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           1
+krr.kernel_result.ixes_errs_maxiq:      2
+krr.kernel_result.RECT_total_used:      2
+krr.kernel_result.ixes_errs_used_each:  3
+krr.total_sec_for_laps_for_median:      1.043e-06
+krr.tscout():                           3.47667e-07
+krr.vectors_total_bytes:                88
+VectorsUsedBytes:                       84
+
+approx HI normal scale:     0.666016
+approx LO normal scale:     0.166016
+
+threaded. . .
+
+nproc:          4
+scx:            256
+scy:            256
+dmax:           65'535
+initial_dx:     16
+
+NCHUNK(nproc):  4
+
+nscout:                                 4
+krr.kernel_result.result_bounds.HI:     27'536
+krr.kernel_result.result_bounds.LO:     23'216
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           3
+krr.kernel_result.ixes_errs_maxiq:      3
+krr.kernel_result.RECT_total_used:      16
+krr.kernel_result.ixes_errs_used_each:  16
+krr.total_sec_for_laps_for_median:      0.00082747
+krr.tscout():                           0.000275823
+krr.vectors_total_bytes:                560
+VectorsUsedBytes:                       388
+
+approx HI normal scale: 0.420166
+approx LO normal scale: 0.354248
+
+DSIZE=unsigned short, ISIZE=short:
+
+serial. . .
+
+nproc:      1
+scx:        128
+scy:        181
+dmax:       23'167
+initial_dx: 128
+
+nscout:                                 2
+krr.kernel_result.result_bounds.HI:     15'424
+krr.kernel_result.result_bounds.LO:     3'840
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           1
+krr.kernel_result.ixes_errs_maxiq:      2
+krr.kernel_result.RECT_total_used:      2
+krr.kernel_result.ixes_errs_used_each:  3
+krr.total_sec_for_laps_for_median:      1.084e-06
+krr.tscout():                           3.61333e-07
+krr.vectors_total_bytes:                88
+VectorsUsedBytes:                       84
+
+approx HI normal scale:     0.665746
+approx LO normal scale:     0.165746
+
+threaded. . .
+
+nproc:          4
+scx:            128
+scy:            181
+dmax:           23'167
+initial_dx:     8
+
+NCHUNK(nproc):  4
+
+nscout:                                 4
+krr.kernel_result.result_bounds.HI:     9'720
+krr.kernel_result.result_bounds.LO:     8'160
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           3
+krr.kernel_result.ixes_errs_maxiq:      3
+krr.kernel_result.RECT_total_used:      16
+krr.kernel_result.ixes_errs_used_each:  16
+krr.total_sec_for_laps_for_median:      0.000810763
+krr.tscout():                           0.000270254
+krr.vectors_total_bytes:                560
+VectorsUsedBytes:                       388
+
+approx HI normal scale: 0.419544
+approx LO normal scale: 0.35221
+
+DSIZE=short, ISIZE=unsigned short:
+
+serial. . .
+
+nproc:      1
+scx:        128
+scy:        181
+dmax:       23'167
+initial_dx: 128
+
+nscout:                                 2
+krr.kernel_result.result_bounds.HI:     15'424
+krr.kernel_result.result_bounds.LO:     3'840
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           1
+krr.kernel_result.ixes_errs_maxiq:      2
+krr.kernel_result.RECT_total_used:      2
+krr.kernel_result.ixes_errs_used_each:  3
+krr.total_sec_for_laps_for_median:      1.084e-06
+krr.tscout():                           3.61333e-07
+krr.vectors_total_bytes:                88
+VectorsUsedBytes:                       84
+
+approx HI normal scale:     0.665746
+approx LO normal scale:     0.165746
+
+threaded. . .
+
+nproc:          4
+scx:            128
+scy:            181
+dmax:           23'167
+initial_dx:     8
+
+NCHUNK(nproc):  4
+
+nscout:                                 4
+krr.kernel_result.result_bounds.HI:     9'720
+krr.kernel_result.result_bounds.LO:     8'160
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           3
+krr.kernel_result.ixes_errs_maxiq:      3
+krr.kernel_result.RECT_total_used:      16
+krr.kernel_result.ixes_errs_used_each:  16
+krr.total_sec_for_laps_for_median:      0.000804971
+krr.tscout():                           0.000268324
+krr.vectors_total_bytes:                560
+VectorsUsedBytes:                       388
+
+approx HI normal scale: 0.419544
+approx LO normal scale: 0.35221
+
+DSIZE=short, ISIZE=short:
+
+serial. . .
+
+nproc:      1
+scx:        128
+scy:        181
+dmax:       23'167
+initial_dx: 128
+
+nscout:                                 2
+krr.kernel_result.result_bounds.HI:     15'424
+krr.kernel_result.result_bounds.LO:     3'840
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           1
+krr.kernel_result.ixes_errs_maxiq:      2
+krr.kernel_result.RECT_total_used:      2
+krr.kernel_result.ixes_errs_used_each:  3
+krr.total_sec_for_laps_for_median:      1.126e-06
+krr.tscout():                           3.75333e-07
+krr.vectors_total_bytes:                88
+VectorsUsedBytes:                       84
+
+approx HI normal scale:     0.665746
+approx LO normal scale:     0.165746
+
+threaded. . .
+
+nproc:          4
+scx:            128
+scy:            181
+dmax:           23'167
+initial_dx:     8
+
+NCHUNK(nproc):  4
+
+nscout:                                 4
+krr.kernel_result.result_bounds.HI:     9'720
+krr.kernel_result.result_bounds.LO:     8'160
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           3
+krr.kernel_result.ixes_errs_maxiq:      3
+krr.kernel_result.RECT_total_used:      16
+krr.kernel_result.ixes_errs_used_each:  16
+krr.total_sec_for_laps_for_median:      0.000816971
+krr.tscout():                           0.000272324
+krr.vectors_total_bytes:                560
+VectorsUsedBytes:                       388
+
+approx HI normal scale: 0.419544
+approx LO normal scale: 0.35221
+
