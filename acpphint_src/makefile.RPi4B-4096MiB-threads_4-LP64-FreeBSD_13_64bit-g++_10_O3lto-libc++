@@ -1,5 +1,5 @@
 #
-# acpphint's makefile.OverDrive_1000-8192MiB-threads_4-LP64-FreeBSD_13_64bit-g++_10_O3lto-libc++
+# acpphint's makefile.RPi4B-4096MiB-threads_4-LP64-FreeBSD_13_64bit-g++_10_O3lto-libc++
 # example (as of requiring c++17 or later)
 #
 #  Copyright (c) 2015-2020 Mark Millard
@@ -35,7 +35,7 @@
 .POSIX:
 .SUFFIXES:
 
-THE_MAKEFILE= makefile.OverDrive_1000-8192MiB-threads_4-LP64-FreeBSD_13_64bit-g++_10_O3lto-libc++
+THE_MAKEFILE= makefile.RPi4B-4096MiB-threads_4-LP64-FreeBSD_13_64bit-g++_10_O3lto-libc++
 
 #
 # acpphint's makefile.*'s are very tailored to my use but may be
@@ -62,7 +62,7 @@ THE_MAKEFILE= makefile.OverDrive_1000-8192MiB-threads_4-LP64-FreeBSD_13_64bit-g+
 CXXLIB=
 CXX=            g++10 -v -std=c++17 -Wpedantic -Wall -Wextra
 CXX+=           -Wno-psabi -nostdinc -nostdinc++ -I/usr/include/c++/v1 -I/usr/include
-OPT=            -O3 -mcpu=cortex-a57 -mno-outline-atomics -flto
+OPT=            -O3 -mcpu=cortex-a72 -mno-outline-atomics -flto
 CPULOCKDOWN_OPT=
 #CPULOCKDOWN_OPT=        -DWANT_CPU_LOCKDOWN
 # Note for FreeBSD: WANT_NUMA_TOO is implicit/automatic; not so for Linux
@@ -87,8 +87,8 @@ COMPILER_DESC=      g++_10_O3lto
 LIBRARY_DESC=       libc++
 COMPILER_LIBRARY=   ${COMPILER_DESC}-${LIBRARY_DESC}
 
-COMPUTER=               OverDrive_1000
-RAM=                    8192MiB
+COMPUTER=               RPi4B
+RAM=                    4096MiB
 THREADS=                threads_4
 CPP_DATA_MODEL=         LP64
 OS=                     FreeBSD_13_r365932M_64bit
