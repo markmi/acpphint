@@ -1,0 +1,7 @@
+# filename: ./acpphint-RPi4B-4096MiB-threads_4-LP64-FreeBSD_13_r365932M_64bit-g++_10_O3lto-libc++-DSIZE_s-ISIZE_us-using_4_threads.txt
+# acpphint_main version: 0.1.23
+
+7.6555e-05 180932 13.8513 704
+7.4425e-05 230524 17.1567 808
+7.8667e-05 258974 20.3727 912
+7.8611e-05 299479 23.5424 1016
