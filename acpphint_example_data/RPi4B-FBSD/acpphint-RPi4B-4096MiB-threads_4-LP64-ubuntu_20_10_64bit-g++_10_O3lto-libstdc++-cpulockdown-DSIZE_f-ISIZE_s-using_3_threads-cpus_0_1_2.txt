@@ -1,0 +1,7 @@
+# filename: ./acpphint-RPi4B-4096MiB-threads_4-LP64-ubuntu_20_10_64bit-g++_10_O3lto-libstdc++-cpulockdown-DSIZE_f-ISIZE_s-using_3_threads-cpus_0_1_2.txt
+# acpphint_main version: 0.1.23
+
+0.000160978 68285.2 10.9924 792
+0.000162238 85938.5 13.9425 936
+0.000161627 104668 16.9172 1080
+0.000162442 122428 19.8874 1224
