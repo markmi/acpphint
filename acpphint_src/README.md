@@ -46,7 +46,7 @@ The builds are done from `acpphint/acpphint_src/`, even for the one program that
 ```
 make -f makefile.NAME build
 ```
-The source code for such a build is pure C++, not system specific code. (C++17 when this was written.) The executables are placed in files with paths matching the pattern:
+The source code for such a build is pure C++, not system specific code. (C++20 when this was written.) The executables are placed in files with paths matching the pattern:
 ```
 ../*-NAME
 ```

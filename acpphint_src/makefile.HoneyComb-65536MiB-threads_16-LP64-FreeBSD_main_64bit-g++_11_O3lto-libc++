@@ -1,0 +1,149 @@
+#
+# acpphint's makefile.HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_64bit-g++_11_O3lto-libc++
+# example (as of requiring C++20 or later)
+#
+#  Copyright (c) 2015-2021 Mark Millard
+#  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
+#
+#  Note: Any acpphint*.{h,cpp} code or makefile code
+#        that is insufficiently original comes under
+#        the Iowa State University Research Foundation,
+#        Inc. copyright.
+#
+#        This does not apply to cpp_*.{h,cpp} or
+#        sys_*.{h,cpp} code: that is strictly mine.
+#
+#  This program is free software; you can redistribute it
+#  and/or modify it under the terms of the GNU General
+#  version 2 Public License as published by the Free
+#  Software Foundation.
+#
+#  This program is distributed in the hope that it will
+#  be useful, but WITHOUT ANY WARRANTY; without even the
+#  implied warranty of MERCHANTABILITY or FITNESS FOR A
+#  PARTICULAR PURPOSE.  See the GNU General Public
+#  License for more details.
+#
+#  You should have received a copy of the GNU General
+#  Public License version 2 along with this program; if
+#  not, write to:
+#
+#  Free Software Foundation, Inc.
+#  51 Franklin Street, Fifth Floor,
+#  Boston, MA  02110-1301, USA.
+#
+.POSIX:
+.SUFFIXES:
+
+THE_MAKEFILE= makefile.HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_64bit-g++_11_O3lto-libc++
+
+#
+# acpphint's makefile.*'s are very tailored to my use but may be
+# used to see how to build the investigative programs and the
+# benchmark program and what they in turn require.
+#
+# Before including makefile.common_part :
+# Adjust CXXLIB, CXX, OPT, CPULOCKDOWN_OPT, LDCXX, COMPILER_DESC, 
+# LIBRARY_DESC, COMPUTER, RAM, THREADS, CPP_DATA_MODEL, OS,
+# and SUFFIX as appropriate.
+#
+# The major targets are: build gather-info gather-NOPREFER-info
+#
+# The makefile.*'s are not set up for cross-build use.
+#
+# The naming used does require (relative to POSIX):
+# "allow other characters in target names as extensions"
+#
+
+#
+# This file presumes FreeBSD port lang/g++11 is installed.
+#
+
+CXXLIB=
+CXX=            g++11 -v -std=c++20 -Wpedantic -Wall -Wextra
+CXX+=           -Wno-psabi -nostdinc -nostdinc++ -I/usr/include/c++/v1 -I/usr/include
+OPT=            -O3 -mcpu=cortex-a72 -flto
+OPT+=           -mno-outline-atomics
+CPULOCKDOWN_OPT=
+#CPULOCKDOWN_OPT=        -DWANT_CPU_LOCKDOWN
+# Note for FreeBSD: WANT_NUMA_TOO is implicit/automatic; not so for Linux
+#CPULOCKDOWN_OPT+=       -DWANT_NUMA_TOO
+LDCXX=          -nodefaultlibs -lc++ -lcxxrt -lthr -lm -lc -lgcc_s
+LDCXX+=         -Wl,-rpath=/usr/local/lib/gcc11
+# For Linux NUMA use:
+#LDCXX+=         -lnuma
+
+# Note: head FreeBSD's libgcc_s was missing at least
+#       __floatunditf@GCC_4.2.0 at runtime so, for gcc*,
+#       I've used -Wl,-rpath=/usr/local/lib/gcc* in order
+#       to pick up definition(s). So far I've only had
+#       such an issue for targeting aarch64 and armv7.
+
+COMPILER_DESC=      g++_11_O3lto
+LIBRARY_DESC=       libc++
+COMPILER_LIBRARY=   ${COMPILER_DESC}-${LIBRARY_DESC}
+
+COMPUTER=               HoneyComb
+RAM=                    65536MiB
+THREADS=                threads_16
+CPP_DATA_MODEL=         LP64
+OS=                     FreeBSD_main_n247756_348c41d1815d_64bit
+SUFFIX=
+#SUFFIX=                 -cpulockdown
+ACPPHINT_FILENAME_INFO= ${COMPUTER}-${RAM}-${THREADS}-${CPP_DATA_MODEL}-${OS}-${COMPILER_LIBRARY}${SUFFIX}
+#
+# Note: The "threads_16" is what the hardware has for
+# HW threads --or as presented by the likes of HyperV.
+# acpphint will also add using_N_threads to file names
+# recording benchmark results.
+
+include makefile.common_part
+
+#
+#  Support some special NOPREFER-related information gathering:
+#
+gather-NOPREFER-info: \
+		cpp_clockinfo_main-run \
+		acpphint_kernelsurveyors_main-run \
+		acpphint_kernelsamplers_main-run \
+		acpphint-NOPREFER-run
+
+acpphint-NOPREFER-run:
+	cd .. && cpuset -l1                                          ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_1.txt"                      1
+	cd .. && cpuset -l6                                          ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_6.txt"                      1
+	cd .. && cpuset -l11                                         ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_11.txt"                     1
+	cd .. && cpuset -l1,2,4,6                                    ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx2sn0_1_6.txt"             4
+	cd .. && cpuset -l1,2,8,10                                   ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx8_kx8p2n0_1_2_8_10.txt"   4
+	cd .. && cpuset -l1,3,5,7                                    ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx2sp1_1_7.txt"             4
+	cd .. && cpuset -l1,3,9,11                                   ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx8p1_kx8p3_1_3_9_11.txt"   4
+	cd .. && cpuset -l1,4,8,12                                   ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4sn0_1_12.txt"            4
+	cd .. && cpuset -l2,3,4,5                                    ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kp2_2_5.txt"                4
+	cd .. && cpuset -l2,3,8,9                                    ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_2_3_8_9.txt"                4
+	cd .. && cpuset -l3,7,11,15                                  ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4p3s_3_15.txt"            4
+	cd .. && cpuset -l1,2,4,6,8,10,12,14                         ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx2sn0_1_14.txt"            4
+	cd .. && cpuset -l1,2,5,6,9,10,13,14                         ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4p1_kx4p2_1_14.txt"       4
+	cd .. && cpuset -l1,3,4,7,8,11,12,15                         ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4_kx4p3n0_1_15.txt"       4
+	cd .. && cpuset -l1,3,5,7,9,11,13,15                         ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4p1_kx4p3_1_15.txt"       4
+	cd .. && cpuset -l1,2,4,6,8,10,12,14                         ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx2sn0_1_14.txt"            8
+	cd .. && cpuset -l1,2,5,6,9,10,13,14                         ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4p1_kx4p2_1_14.txt"       8
+	cd .. && cpuset -l1,3,4,7,8,11,12,15                         ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4_kx4p3n0_1_15.txt"       8
+	cd .. && cpuset -l1,3,5,7,9,11,13,15                         ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4p1_kx4p3_1_15.txt"       8
+	cd .. && cpuset -l1,2,3,4,5,6,7,8,9,10,11,12,13,14,15        ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kp1_1_15.txt"              15
+	cd .. && cpuset -l0                                          ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0.txt"                      1
+	cd .. && cpuset -l0,2,4,6                                    ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx2s_0_6.txt"               4
+	cd .. && cpuset -l2,0,8,10                                   ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx8_kx8p2_0_2_8_10.txt"     4
+	cd .. && cpuset -l3,5,0,7                                    ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx2sp1w0_0_7.txt"           4
+	cd .. && cpuset -l0,3,9,11                                   ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx8p1_kx8p3w0_0_3_9_11.txt" 4
+	cd .. && cpuset -l4,8,12,0                                   ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4s_0_12.txt"              4
+	cd .. && cpuset -l0,1,4,5                                    ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kp2w01_0_5.txt"             4
+	cd .. && cpuset -l0,1,8,9                                    ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_1_8_9.txt"                4
+	cd .. && cpuset -l0,7,11,15                                  ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4p3sw0_0_15.txt"          4
+	cd .. && cpuset -l2,4,6,8,10,0,12,14                         ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx2s_0_14.txt"              4
+	cd .. && cpuset -l0,2,5,6,9,10,13,14                         ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4p1_kx4p2w0_0_14.txt"     4
+	cd .. && cpuset -l0,3,4,7,8,11,12,15                         ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4_kx4p3_0_15.txt"         4
+	cd .. && cpuset -l0,3,5,7,9,11,13,15                         ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4p1_kx4p1w0_0_15.txt"     4
+	cd .. && cpuset -l2,4,6,0,8,10,12,14                         ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx2s_0_14.txt"              8
+	cd .. && cpuset -l0,2,5,6,9,10,13,14                         ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4p1_kx4p2w0_0_14.txt"     8
+	cd .. && cpuset -l0,3,4,7,8,11,12,15                         ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4_kx4p3_0_15.txt"         8
+	cd .. && cpuset -l3,5,7,9,11,13,15,0                         ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4p1_kx4p1w0_0_15.txt"     8
+	cd .. && cpuset -l0,2,3,4,5,6,7,8,9,10,11,12,13,14,15        ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_2_15.txt"                15

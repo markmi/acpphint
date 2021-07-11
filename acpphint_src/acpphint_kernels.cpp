@@ -2,7 +2,7 @@
 //  acpphint_kernels.cpp
 //  acpphint (a C++ variation on the old HINT benchmark)
 //
-//  Copyright (c) 2015-2020 Mark Millard
+//  Copyright (c) 2015-2021 Mark Millard
 //  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
 //
 //  Note: Any acpphint*.{h,cpp} code or makefile code
@@ -45,6 +45,14 @@
 
 #include <cmath>        // trunc
 
+#include <version>      // __cpp_lib_integer_comparison_functions
+
+#if 202002L <= __cpp_lib_integer_comparison_functions
+#include <utility>      // cmp_less_equal
+#else
+#include <type_traits>  // std::make_unsigned_t<. . .>
+#endif
+
 template<typename DSIZE, typename ISIZE>
 PrimaryKernelInputs<DSIZE,ISIZE>::PrimaryKernelInputs
                                             (HwConcurrencyCount const threads)
@@ -70,7 +78,7 @@ PrimaryKernelInputs<DSIZE,ISIZE>::PrimaryKernelInputs
         while (DSIZE{1u}==tm1-tm2)
         {
             tm=     tm2;
-            tm2+=   tm2;
+            tm2=    tm2+tm2;
             tm1=    tm2+1;
         }
         
@@ -130,9 +138,18 @@ PrimaryKernelInputs<DSIZE,ISIZE>::PrimaryKernelInputs
     }
 
     ISIZE imax;
-    if constexpr (   std::numeric_limits<ISIZE>::max()
-                  <= std::numeric_limits<std::size_t>::max()
+
+#if 202002L <= __cpp_lib_integer_comparison_functions
+    if constexpr ( std::cmp_less_equal( std::numeric_limits<ISIZE>::max()
+                                      , std::numeric_limits<std::size_t>::max()
+                                      )
                  )
+#else
+    if constexpr ( static_cast<std::make_unsigned_t<ISIZE>>
+                            (std::numeric_limits<ISIZE>::max())
+                    <= std::numeric_limits<std::size_t>::max()
+                 )
+#endif
         imax= std::numeric_limits<ISIZE>::max();
     else
         imax= std::numeric_limits<std::size_t>::max();
@@ -612,7 +629,7 @@ char copyright_and_license_for_acpphint_kernels[]
 {
     "Context for this Copyright: acpphint_kernels\n"
     "\n"
-    "Copyright (c) 2015-2020 Mark Millard\n"
+    "Copyright (c) 2015-2021 Mark Millard\n"
     "Copyright (C) 1994 by Iowa State University Research Foundation, Inc.\n"
     "\n"
     "Note: Any acpphint*.{h,cpp} code  or makefile code\n"

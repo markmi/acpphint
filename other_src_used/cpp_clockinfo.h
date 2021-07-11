@@ -1,7 +1,7 @@
 //
-//  cpp_clockinfo.h (c++17 currently)
+//  cpp_clockinfo.h (c++20 currently)
 //
-//  Copyright (c) 2019-2020 Mark Millard
+//  Copyright (c) 2019-2021 Mark Millard
 //
 //  Permission to use, copy, modify, and distribute this software for any
 //  purpose with or without fee is hereby granted, provided that the above
@@ -25,13 +25,13 @@
 //  Started by Mark Millard on 2019-08-20.
 //
 //  Isolated test as a.out (line continuations implicit via indenting):
-//      c++ -std=c++17 -pedantic -g -O3 -c cpp_thousandslocale.cpp
-//      c++ -std=c++17 -pedantic -pthread -g -O3 -c cpp_clockinfo.cpp
-//      c++ -std=c++17 -pedantic -pthread -g -O3 -DCPPCLOCKINFO_VERS='"test"'
+//      c++ -std=c++20 -pedantic -g -O3 -c cpp_thousandslocale.cpp
+//      c++ -std=c++20 -pedantic -pthread -g -O3 -c cpp_clockinfo.cpp
+//      c++ -std=c++20 -pedantic -pthread -g -O3 -DCPPCLOCKINFO_VERS='"test"'
 //                                      cpp_thousandslocale.o cpp_clockinfo.o
 //                                                      cpp_clockinfo_main.cpp
 //  Just cpp_clockinfo.o (c++ may need to be some clang++*): 
-//      c++ -std=c++17 -pedantic -pthread -g -O3 -c cpp_clockinfo.cpp
+//      c++ -std=c++20 -pedantic -pthread -g -O3 -c cpp_clockinfo.cpp
 //
 
 #ifndef cpp_clockinfo_guard

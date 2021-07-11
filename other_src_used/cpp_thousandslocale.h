@@ -1,7 +1,7 @@
 //
-//  cpp_thousandslocale.h (c++17 currently)
+//  cpp_thousandslocale.h (c++20 currently)
 //
-//  Copyright (c) 2019 Mark Millard
+//  Copyright (c) 2019-2021 Mark Millard
 //
 //  Permission to use, copy, modify, and distribute this software for any
 //  purpose with or without fee is hereby granted, provided that the above
@@ -25,7 +25,7 @@
 //  Started by Mark Millard on 2019-08-20.
 //
 //  Just cpp_thousandslocale.o: 
-//      c++ -std=c++17 -pedantic -g -O3 -c cpp_thousandslocale.cpp
+//      c++ -std=c++20 -pedantic -g -O3 -c cpp_thousandslocale.cpp
 //
 
 #ifndef cpp_thousandslocale_guard

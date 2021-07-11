@@ -2,7 +2,7 @@
 //  acpphint_kernelsamplers.cpp
 //  acpphint (a C++ variation on the old HINT benchmark)
 //
-//  Copyright (c) 2015-2020 Mark Millard
+//  Copyright (c) 2015-2021 Mark Millard
 //  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
 //
 //  Note: Any acpphint*.{h,cpp} code or makefile code
@@ -52,7 +52,17 @@
 
 //#include <cstddef>      // size_t
 //#include <limits>       // numeric_limits<>::max()
-//#include <string>       // std::to_string and such
+//#include <string>       // to_string and such
+
+#include <version>      // __cpp_lib_to_chars
+
+#include <cmath>        // nexttowardl
+
+#if 201611L <= __cpp_lib_to_chars
+#include <charconv>     // to_chars and such
+#include <string_view>  // string_view
+#include <array>        // array
+#endif
 
 template<typename DSIZE, typename ISIZE>
 auto KernelSampler  ( ClkInfo                               const&  clock_info
@@ -348,27 +358,93 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
               + "NSAMP == " + std::to_string(NSAMP)
               + "\n";
 
-    qdata.back().how_stopped_notes
-        +=    " HI/(scx*scy) == ? * approx.: "
-            + std::to_string
-                (   ( static_cast<long double>(run_result.kernel_result.result_bounds.HI)
-                        / ki.scx / ki.scy
-                    )
-                 / approx_answer_floating_form
-                )
-            + " * " + std::to_string(approx_answer_floating_form)
-            + "\n";
+    auto const answer_lower_bound_floating_form
+        {std::nexttowardl(approx_answer_floating_form, 0.0L)};
 
-    qdata.back().how_stopped_notes
-        +=    " LO/(scx*scy) == ? * approx.: "
-            + std::to_string
-                (   ( static_cast<long double>(run_result.kernel_result.result_bounds.LO)
-                        / ki.scx / ki.scy
-                    )
-                 / approx_answer_floating_form
-                )
-            + " * " + std::to_string(approx_answer_floating_form)
-            + "\n";
+    auto const answer_upper_bound_floating_form
+        {std::nexttowardl(approx_answer_floating_form, 1.0L)};
+
+    auto const scale_factor_for_hi // an upper bound on scale factor
+        ( ( static_cast<long double>(run_result.kernel_result.result_bounds.HI)
+                                                              / ki.scx / ki.scy
+          ) 
+         / answer_lower_bound_floating_form
+        );
+    auto const scale_factor_for_lo // a lower bound on scale factor
+        ( ( static_cast<long double>(run_result.kernel_result.result_bounds.LO)
+                                                              / ki.scx / ki.scy
+          )
+         / answer_upper_bound_floating_form
+        );
+
+#if (201611L <= __cpp_lib_to_chars)
+        std::array<char, 128> lower_approx;
+        auto const [after_lower_approx_chars, lower_approx_err_code]
+            ( std::to_chars( lower_approx.data(), lower_approx.data() + lower_approx.size()
+                           , answer_lower_bound_floating_form
+                           )
+            );
+        std::array<char, 128> upper_approx;
+        auto const [after_upper_approx_chars, upper_approx_err_code]
+            ( std::to_chars( upper_approx.data(), upper_approx.data() + upper_approx.size()
+                           , answer_upper_bound_floating_form
+                           )
+            );
+    
+        std::array<char, 128> scale_factor; // For HI's context then reused for LO's.
+    
+        qdata.back().how_stopped_notes += " HI/(scx*scy) == ? * approx. lower bound: ";
+        auto const [after_scale_hi_chars, scale_hi_err_code]
+            ( std::to_chars( scale_factor.data(), scale_factor.data() + scale_factor.size()
+                           , scale_factor_for_hi, std::chars_format::fixed
+                           )
+            );
+        if (scale_hi_err_code == std::errc() && lower_approx_err_code == std::errc())
+        {
+            qdata.back().how_stopped_notes
+                +=  std::string_view(scale_factor.data(), after_scale_hi_chars);
+            qdata.back().how_stopped_notes += " * ";
+            qdata.back().how_stopped_notes
+                += std::string_view(lower_approx.data(), after_lower_approx_chars);
+        }
+        else
+            qdata.back().how_stopped_notes
+                +=  std::to_string(scale_factor_for_hi)
+                  + " * " + std::to_string(answer_lower_bound_floating_form);
+        qdata.back().how_stopped_notes += "\n";
+    
+        qdata.back().how_stopped_notes += " LO/(scx*scy) == ? * approx. upper bound: ";
+        auto [after_scale_lo_chars, scale_lo_err_code]
+            ( std::to_chars( scale_factor.data(), scale_factor.data() + scale_factor.size()
+                           , scale_factor_for_lo, std::chars_format::fixed
+                           )
+            );
+        if (scale_lo_err_code == std::errc() && upper_approx_err_code == std::errc())
+        {
+            qdata.back().how_stopped_notes
+                +=  std::string_view(scale_factor.data(), after_scale_lo_chars);
+            qdata.back().how_stopped_notes += " * ";
+            qdata.back().how_stopped_notes
+                += std::string_view(upper_approx.data(), after_upper_approx_chars);
+        }
+        else
+            qdata.back().how_stopped_notes
+                +=  std::to_string(scale_factor_for_lo)
+                  + " * " + std::to_string(answer_upper_bound_floating_form);
+        qdata.back().how_stopped_notes += "\n";
+#else
+        qdata.back().how_stopped_notes += " HI/(scx*scy) == ? * approx. lower bound: ";
+        qdata.back().how_stopped_notes
+            +=  std::to_string(scale_factor_for_hi)
+              + " * " + std::to_string(answer_lower_bound_floating_form);
+        qdata.back().how_stopped_notes += "\n";
+
+        qdata.back().how_stopped_notes += " LO/(scx*scy) == ? * approx. upper bound: ";
+        qdata.back().how_stopped_notes
+            +=  std::to_string(scale_factor_for_lo)
+              + " * " + std::to_string(answer_upper_bound_floating_form);
+        qdata.back().how_stopped_notes += "\n";
+#endif
 
     return qdata;
 }
@@ -507,7 +583,7 @@ char copyright_and_license_for_acpphint_kernelsamplers[]
 {
     "Context for this Copyright: acpphint_kernelsamplers\n"
     "\n"
-    "Copyright (c) 2015-2020 Mark Millard\n"
+    "Copyright (c) 2015-2021 Mark Millard\n"
     "Copyright (C) 1994 by Iowa State University Research Foundation, Inc.\n"
     "\n"
     "Note: Any acpphint*.{h,cpp} code  or makefile code\n"

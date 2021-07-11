@@ -13,7 +13,7 @@ This covers:
 
 ##### General code notes . . .
 
-The code is C++17 code at the time this is being written.
+The code is C++20 code at the time this is being written.
 I generally will not make detailed comments on this
 aspect. The HINT kernel code has the smallest of the
 textual changes.

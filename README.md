@@ -48,7 +48,39 @@ See the `other_src_used/LICENSE.md` for the OpenBSD-vintage ISC license text tha
 
 Note: The original HINT's copyright holder, Iowa State University Research Foundation, Inc., reported that, despite how HINT was mistakenly distributed back then, the intended license was GPLv2 without any "or later" status: exactly GPLv2. This is what sets the license for the source code in `acpphint_src/`. (I did not bother to make distinct licensing for the `acpphint_src/makefile.*` examples.) That code's license in turn sets the overall license to also be GLPv2 (no earlier, no later), despite OpenBSD_vintage ISC licensed source in `other_src_used/` also being built and linked in.
 ##### Changelog . . .
-###### [0.1.23] 2020-Aug-03 (start) . . . 2020-Aug-?? (final)
+###### [0.1.24] 2021-Jul-06 (start) . . . 2021-???-?? (final)
+Additions
+- Add HoneyComb tests for at least FreeBSD.
+
+- Add code based on C++20 --and some C++17 that is now
+  available: The output of the scales vs. the known
+  approximation to the result now uses std::to_chars
+  for the floating point output when available.
+
+- Pending: Start a round of updating to more modern
+  FreeBSD and other OS vintages.
+
+- Pending: Add some gnuplot .gp files for exploring
+  the new data.
+
+Changes
+- Update minor things in the sources to silence new
+  warnings.
+
+Removals
+- The OverDrive 1000 and the other PowerMac11,2 "bit
+  the dust". I'll keep some plots around that involve
+  the OverDrive 1000, but possibly not the data files
+  and certainly not the makefile.OverDrive* files.
+  Similarly for the PowerMac11,2's now that I've no
+  access to working systems of that kind.
+
+- Pending: Various older example data files, makefile.*
+  files, *.gp files, and the like will be removed.
+  Some of the old makefile.* files may end up still
+  around as examples.
+
+###### [0.1.23] 2020-Aug-03 (start) . . . 2020-Oct-30 (final)
 Additions
 - Actaully get the FreeBSD and Linux cpu lock down
   code to be part of such builds and make the code

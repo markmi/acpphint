@@ -1,0 +1,99 @@
+#
+# acpphint's makefile.HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_64bit-g++_11_O3lto-libstdc++-cpulockdown
+# example (as of requiring C++20 or later)
+#
+#  Copyright (c) 2015-2021 Mark Millard
+#  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
+#
+#  Note: Any acpphint*.{h,cpp} code or makefile code
+#        that is insufficiently original comes under
+#        the Iowa State University Research Foundation,
+#        Inc. copyright.
+#
+#        This does not apply to cpp_*.{h,cpp} or
+#        sys_*.{h,cpp} code: that is strictly mine.
+#
+#  This program is free software; you can redistribute it
+#  and/or modify it under the terms of the GNU General
+#  version 2 Public License as published by the Free
+#  Software Foundation.
+#
+#  This program is distributed in the hope that it will
+#  be useful, but WITHOUT ANY WARRANTY; without even the
+#  implied warranty of MERCHANTABILITY or FITNESS FOR A
+#  PARTICULAR PURPOSE.  See the GNU General Public
+#  License for more details.
+#
+#  You should have received a copy of the GNU General
+#  Public License version 2 along with this program; if
+#  not, write to:
+#
+#  Free Software Foundation, Inc.
+#  51 Franklin Street, Fifth Floor,
+#  Boston, MA  02110-1301, USA.
+#
+.POSIX:
+.SUFFIXES:
+
+THE_MAKEFILE= makefile.HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_64bit-g++_11_O3lto-libstdc++-cpulockdown
+
+#
+# acpphint's makefile.*'s are very tailored to my use but may be
+# used to see how to build the investigative programs and the
+# benchmark program and what they in turn require.
+#
+# Before including makefile.common_part :
+# Adjust CXXLIB, CXX, OPT, CPULOCKDOWN_OPT, LDCXX, COMPILER_DESC, 
+# LIBRARY_DESC, COMPUTER, RAM, THREADS, CPP_DATA_MODEL, OS,
+# and SUFFIX as appropriate.
+#
+# The major targets are: build gather-info
+#
+# The makefile.*'s are not set up for cross-build use.
+#
+# The naming used does require (relative to POSIX):
+# "allow other characters in target names as extensions"
+#
+
+#
+# This file presumes FreeBSD port lang/g++11 is installed.
+#
+
+CXXLIB=
+CXX=            g++11 -v -std=c++20 -Wpedantic -Wall -Wextra
+#CXX+=           -Wno-psabi -nostdinc -nostdinc++ -I/usr/include/c++/v1 -I/usr/include
+OPT=            -O3 -mcpu=cortex-a72 -flto
+#OPT+=           -mno-outline-atomics
+#CPULOCKDOWN_OPT=
+CPULOCKDOWN_OPT=        -DWANT_CPU_LOCKDOWN
+# Note for FreeBSD: WANT_NUMA_TOO is implicit/automatic; not so for Linux
+#CPULOCKDOWN_OPT+=       -DWANT_NUMA_TOO
+#LDCXX=          -nodefaultlibs -lc++ -lcxxrt -lthr -lm -lc -lgcc_s
+LDCXX+=         -Wl,-rpath=/usr/local/lib/gcc11
+# For Linux NUMA use:
+#LDCXX+=         -lnuma
+
+COMPILER_DESC=      g++_11_O3lto
+LIBRARY_DESC=       libstdc++
+COMPILER_LIBRARY=   ${COMPILER_DESC}-${LIBRARY_DESC}
+
+COMPUTER=               HoneyComb
+RAM=                    65536MiB
+THREADS=                threads_16
+CPP_DATA_MODEL=         LP64
+OS=                     FreeBSD_main_n247756_348c41d1815d_64bit
+#SUFFIX=
+SUFFIX=                 -cpulockdown
+ACPPHINT_FILENAME_INFO= ${COMPUTER}-${RAM}-${THREADS}-${CPP_DATA_MODEL}-${OS}-${COMPILER_LIBRARY}${SUFFIX}
+#
+# Note: The "threads_16" is what the hardware has for
+# HW threads --or as presented by the likes of HyperV.
+# acpphint will also add using_N_threads to file names
+# recording benchmark results.
+
+include makefile.common_part
+
+#
+#  Ignore any special NOPREFER-related information gathering request:
+#
+gather-NOPREFER-info:

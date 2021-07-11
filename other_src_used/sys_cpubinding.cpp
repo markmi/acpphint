@@ -1,7 +1,7 @@
 //
-//  sys_cpubinding.cpp (c++17 currently)
+//  sys_cpubinding.cpp (c++20 currently)
 //
-//  Copyright (c) 2019-2020 Mark Millard
+//  Copyright (c) 2019-2021 Mark Millard
 //
 //  Permission to use, copy, modify, and distribute this software for any
 //  purpose with or without fee is hereby granted, provided that the above
@@ -271,7 +271,7 @@ char copyright_and_license_for_sys_cpubinding[]
 {
     "Context for this Copyright: sys_cpubinding\n"
     "\n"
-    "Copyright (c) 2019-2020 Mark Millard\n"
+    "Copyright (c) 2019-2021 Mark Millard\n"
     "\n"
     "Permission to use, copy, modify, and distribute this software for any\n"
     "purpose with or without fee is hereby granted, provided that the above\n"
