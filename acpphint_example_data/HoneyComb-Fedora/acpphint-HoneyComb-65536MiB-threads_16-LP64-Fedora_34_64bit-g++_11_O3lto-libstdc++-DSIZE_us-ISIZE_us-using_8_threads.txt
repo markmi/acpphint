@@ -1,0 +1,7 @@
+# filename: ./acpphint-HoneyComb-65536MiB-threads_16-LP64-Fedora_34_64bit-g++_11_O3lto-libstdc++-DSIZE_us-ISIZE_us-using_8_threads.txt
+# acpphint_main version: 0.1.24
+
+0.000446144 61960.6 27.6434 1408
+0.000444864 75945.8 33.7856 1616
+0.000447464 88621.8 39.6551 1824
+0.000445184 101716 45.2825 2032
