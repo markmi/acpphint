@@ -24,20 +24,20 @@ set xtics border mirror in TIMELOGSCALE rotate by -45
 set mxtics TIMELOGSCALE-1
 set grid xtics mxtics ytics mytics
 plot [TIMELOWERBOUND:TIMEUPPERBOUND][0:QUIPSUPPERBOUND] \
- FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_0.txt" using 1:2 with linespoints linecolor rgb "light-red" \
-,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_0.txt"   using 1:2 with linespoints linecolor rgb "light-red" \
-,FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_1.txt" using 1:2 with linespoints linecolor rgb "light-green" \
-,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_1.txt"   using 1:2 with linespoints linecolor rgb "light-green" \
-,FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_2.txt" using 1:2 with linespoints linecolor rgb "light-blue" \
-,FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_2.txt" using 1:2 with linespoints linecolor rgb "light-blue" \
-,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_2.txt"   using 1:2 with linespoints linecolor rgb "light-grey" \
-,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_2.txt"   using 1:2 with linespoints linecolor rgb "light-grey" \
-,FNAMEPREFIX  . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_0.txt" using 1:2 with linespoints linecolor rgb "dark-red" \
-,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_0.txt"   using 1:2 with linespoints linecolor rgb "dark-red" \
-,FNAMEPREFIX  . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_1.txt" using 1:2 with linespoints linecolor rgb "dark-green" \
-,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_1.txt"   using 1:2 with linespoints linecolor rgb "dark-green" \
-,FNAMEPREFIX  . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_2.txt" using 1:2 with linespoints linecolor rgb "dark-blue" \
-,FNAMEPREFIX  . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_2.txt" using 1:2 with linespoints linecolor rgb "dark-blue" \
-,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_2.txt"   using 1:2 with linespoints linecolor rgb "dark-grey" \
-,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpu_2.txt"    using 1:2 with linespoints linecolor rgb "dark-grey"
+ FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_0.txt"  using 1:2 with linespoints linecolor rgb "light-red" \
+,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_0.txt"    using 1:2 with linespoints linecolor rgb "light-red" \
+,FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_1.txt"  using 1:2 with linespoints linecolor rgb "light-green" \
+,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_1.txt"    using 1:2 with linespoints linecolor rgb "light-green" \
+,FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_2.txt"  using 1:2 with linespoints linecolor rgb "light-blue" \
+,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_2.txt"    using 1:2 with linespoints linecolor rgb "light-grey" \
+,FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_3.txt"  using 1:2 with linespoints linecolor rgb "light-blue" \
+,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_3.txt"    using 1:2 with linespoints linecolor rgb "light-grey" \
+,FNAMEPREFIX  . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_0.txt"  using 1:2 with linespoints linecolor rgb "dark-red" \
+,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_0.txt"    using 1:2 with linespoints linecolor rgb "dark-red" \
+,FNAMEPREFIX  . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_1.txt"  using 1:2 with linespoints linecolor rgb "dark-green" \
+,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_1.txt"    using 1:2 with linespoints linecolor rgb "dark-green" \
+,FNAMEPREFIX  . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_6.txt"  using 1:2 with linespoints linecolor rgb "dark-blue" \
+,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_6.txt"    using 1:2 with linespoints linecolor rgb "dark-grey" \
+,FNAMEPREFIX  . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_11.txt" using 1:2 with linespoints linecolor rgb "dark-blue" \
+,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_11.txt"   using 1:2 with linespoints linecolor rgb "dark-grey"
 #    EOF
