@@ -1,12 +1,12 @@
 reset session
 GNUTERM = "x11"
-COMPILERLIBRARY= "g++_9_O3-libstdc++-cpulockdown"
-FNAMEPREFIX=     "RPi4B-ubuntu/acpphint-RPi4B-8192MiB-threads_4-LP64-ubuntu_20_04_1_64bit-" . COMPILERLIBRARY
-COMPILERLIBRARY2="g++_9_O3-libstdc++"
-FNAME2PREFIX=    "RPi4B-ubuntu/acpphint-RPi4B-8192MiB-threads_4-LP64-ubuntu_20_04_1_64bit-" . COMPILERLIBRARY2
+COMPILERLIBRARY= "g++_10_O3lto-libstdc++-cpulockdown"
+FNAMEPREFIX=     "RPi4B-ubuntu/acpphint-RPi4B-4096MiB-threads_4-LP64-ubuntu_20_10_64bit-" . COMPILERLIBRARY
+COMPILERLIBRARY2="g++_10_O3lto-libstdc++"
+FNAME2PREFIX=    "RPi4B-ubuntu/acpphint-RPi4B-4096MiB-threads_4-LP64-ubuntu_20_10_64bit-" . COMPILERLIBRARY2
 RAMLOWERBOUND=   64
 RAMUPPERBOUND=   2**34
-QUIPSUPPERBOUND= 3e7
+QUIPSUPPERBOUND= 5e7
 TIMELOWERBOUND=  1e-8
 TIMEUPPERBOUND=  1.6
 set title "FNAME2PREFIX= " . FNAME2PREFIX . "\nFNAMEPREFIX= " . FNAMEPREFIX noenhanced
