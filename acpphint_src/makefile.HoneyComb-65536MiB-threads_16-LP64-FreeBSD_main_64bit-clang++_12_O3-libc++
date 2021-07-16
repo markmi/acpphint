@@ -1,5 +1,5 @@
 #
-# acpphint's makefile.HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_64bit-clang++_12_O3lto-libc++
+# acpphint's makefile.HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_64bit-clang++_12_O3-libc++
 # example (as of requiring C++20 or later)
 #
 #  Copyright (c) 2015-2021 Mark Millard
@@ -35,7 +35,7 @@
 .POSIX:
 .SUFFIXES:
 
-THE_MAKEFILE= makefile.HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_64bit-clang++_12_O3lto-libc++
+THE_MAKEFILE= makefile.HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_64bit-clang++_12_O3-libc++
 
 #
 # acpphint's makefile.*'s are very tailored to my use but may be
@@ -63,7 +63,7 @@ CXXLIB=
 CXX=            clang++ -v -std=c++20 -Wpedantic -Wall -Wextra
 #CXX+=           -Wno-psabi -nostdinc -nostdinc++ -I/usr/include/c++/v1 -I/usr/include
 OPT=            -O3 -mcpu=cortex-a72
-OPT+=           -flto
+#OPT+=           -flto
 #OPT+=           -mno-outline-atomics
 CPULOCKDOWN_OPT=
 #CPULOCKDOWN_OPT=        -DWANT_CPU_LOCKDOWN
@@ -74,7 +74,7 @@ CPULOCKDOWN_OPT=
 # For Linux NUMA use:
 #LDCXX+=         -lnuma
 
-COMPILER_DESC=      clang++_12_O3lto
+COMPILER_DESC=      clang++_12_O3
 LIBRARY_DESC=       libc++
 COMPILER_LIBRARY=   ${COMPILER_DESC}-${LIBRARY_DESC}
 
