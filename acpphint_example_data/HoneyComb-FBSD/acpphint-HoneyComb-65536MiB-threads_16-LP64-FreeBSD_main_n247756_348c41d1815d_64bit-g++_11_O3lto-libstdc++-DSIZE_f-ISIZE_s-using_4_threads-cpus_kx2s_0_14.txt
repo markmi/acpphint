@@ -1,7 +1,0 @@
-# filename: ./acpphint-HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_n247756_348c41d1815d_64bit-g++_11_O3lto-libstdc++-DSIZE_f-ISIZE_s-using_4_threads-cpus_kx2s_0_14.txt
-# acpphint_main version: 0.1.24
-
-0.000144555 104021 15.0367 1056
-0.000149835 126537 18.9596 1248
-0.000148515 153812 22.8433 1440
-0.000149316 179398 26.787 1632

@@ -41,6 +41,8 @@
 
 #include "acpphint_kernelsurveyors.h"
 
+#include <climits>     // ULONG_MAX, UINT_MAX, ULLONG_MAX
+
 template<typename DSIZE, typename ISIZE>
 auto KernelSurveyor ( ClkInfo                           const&  clock_info
                     , PrimaryKernelInputs<DSIZE,ISIZE>  const&  ki
@@ -100,7 +102,7 @@ auto KernelSurveyor ( ClkInfo                           const&  clock_info
 
 // Edit as needed to add more alternatives (or disable some):
 
-// DSIZE=short:
+// DSIZE=short: // Always included
 
 template
 auto KernelSurveyor<short,short>
@@ -115,7 +117,7 @@ auto KernelSurveyor<short,unsigned short>
                                                             const&  ki
                     ) -> KernelSurveyorResults<short,unsigned short>;
 
-// DSIZE=unsigned short:
+// DSIZE=unsigned short: // Always included
 
 template
 auto KernelSurveyor<unsigned short,short>
@@ -131,6 +133,7 @@ auto KernelSurveyor<unsigned short,unsigned short>
                                                             const&  ki
                     ) -> KernelSurveyorResults<unsigned short,unsigned short>;
 
+#if ULONG_MAX == UINT_MAX || defined(DSIZE_ALL_ISIZE_ALL)
 // DSIZE=unsigned int:
 
 template
@@ -139,8 +142,9 @@ auto KernelSurveyor<unsigned int,unsigned int>
                     , PrimaryKernelInputs<unsigned int,unsigned int>
                                                             const&  ki
                     ) -> KernelSurveyorResults<unsigned int,unsigned int>;
+#endif
                     
-// DSIZE=unsigned long:
+// DSIZE=unsigned long: // Always included
 
 template
 auto KernelSurveyor<unsigned long,unsigned long>
@@ -152,6 +156,7 @@ auto KernelSurveyor<unsigned long,unsigned long>
                                                 , unsigned long
                                                 >;
 
+#if ULONG_MAX == ULLONG_MAX || defined(DSIZE_ALL_ISIZE_ALL)
 // DSIZE=unsigned long long:
 
 template
@@ -163,6 +168,7 @@ auto KernelSurveyor<unsigned long long,unsigned long long>
                     ) -> KernelSurveyorResults  < unsigned long long
                                                 , unsigned long long
                                                 >;
+#endif
 
 // DSIZE=float:
 
@@ -186,6 +192,7 @@ auto KernelSurveyor<float,unsigned int>
                                                             const&  ki
                     ) -> KernelSurveyorResults<float,unsigned int>;
 
+#ifdef DSIZE_ALL_ISIZE_ALL
 // DSIZE=double:
             
 template
@@ -224,6 +231,7 @@ auto KernelSurveyor<long double,unsigned long long>
                     , PrimaryKernelInputs<long double,unsigned long long>
                                                             const&  ki
                     ) -> KernelSurveyorResults<long double,unsigned long long>;
+#endif
 
 
 char copyright_and_license_for_acpphint_kernelsurveyors[]

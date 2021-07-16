@@ -1,0 +1,83 @@
+#
+# acpphint's makefile.MacMini8,1-65536MiB-threads_12-LP64-macOS-apple_clang++_12.0.5_O3-libc++
+# example (as of requiring c++20 or later)
+#
+#  Copyright (c) 2015-2020 Mark Millard
+#  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
+#
+#  Note: Any acpphint*.{h,cpp} code or makefile code
+#        that is insufficiently original comes under
+#        the Iowa State University Research Foundation,
+#        Inc. copyright.
+#
+#        This does not apply to cpp_*.{h,cpp} or
+#        sys_*.{h,cpp} code: that is strictly mine.
+#
+#  This program is free software; you can redistribute it
+#  and/or modify it under the terms of the GNU General
+#  version 2 Public License as published by the Free
+#  Software Foundation.
+#
+#  This program is distributed in the hope that it will
+#  be useful, but WITHOUT ANY WARRANTY; without even the
+#  implied warranty of MERCHANTABILITY or FITNESS FOR A
+#  PARTICULAR PURPOSE.  See the GNU General Public
+#  License for more details.
+#
+#  You should have received a copy of the GNU General
+#  Public License version 2 along with this program; if
+#  not, write to:
+#
+#  Free Software Foundation, Inc.
+#  51 Franklin Street, Fifth Floor,
+#  Boston, MA  02110-1301, USA.
+#
+.POSIX:
+.SUFFIXES:
+
+THE_MAKEFILE= makefile.MacMini8,1-65536MiB-threads_12-LP64-macOS-apple_clang++_12.0.5_O3-libc++
+
+#
+# acpphint's makefile.*'s are very tailored to my use but may be
+# used to see how to build the investigative programs and the
+# benchmark program and what they in turn require.
+#
+# Before including makefile.common_part :
+# Adjust CXXLIB, CXX, OPT, CPULOCKDOWN_OPT, LDCXX, COMPILER_DESC,
+# LIBRARY_DESC, COMPUTER, RAM, THREADS, CPP_DATA_MODEL, OS,
+# and SUFFIX as appropriate.
+#
+# The major targets are: build gather-info
+# (Some examples may add other major targets.)
+#
+# The makefile.*'s are not set up for cross-build use.
+#
+# The naming used does require (relative to POSIX):
+# "allow other characters in target names as extensions"
+#
+
+CXXLIB=
+CXX=            c++ -std=c++20
+OPT=            -O3
+CPULOCKDOWN_OPT=
+LDCXX=
+
+COMPILER_DESC=      apple_clang++_12.0.5_O3
+LIBRARY_DESC=       libc++
+COMPILER_LIBRARY=   ${COMPILER_DESC}-${LIBRARY_DESC}
+
+COMPUTER=               MacMIni8,1
+RAM=                    65536MiB
+THREADS=                threads_12
+CPP_DATA_MODEL=         LP64
+OS=                     macOS_11.4
+SUFFIX=
+#SUFFIX=                 -cpulockdown
+ACPPHINT_FILENAME_INFO= ${COMPUTER}-${RAM}-${THREADS}-${CPP_DATA_MODEL}-${OS}-${COMPILER_LIBRARY}${SUFFIX}
+#
+# Note: The "threads_12" is what the hardware has for
+# HW threads --or as presented by the likes of HyperV.
+# acpphint will also add using_N_threads to file names
+# recording benchmark results.
+
+include makefile.common_part

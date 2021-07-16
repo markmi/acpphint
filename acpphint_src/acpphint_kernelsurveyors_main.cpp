@@ -65,6 +65,8 @@
 
 #include <exception>    // exception
 
+#include <climits>     // ULONG_MAX, UINT_MAX, ULLONG_MAX
+
 template<typename DSIZE,typename ISIZE>
 static void report_survey(ClkInfo const& clock_info)
 {
@@ -283,6 +285,7 @@ try
 
     // Edit as needed to add more alternatives (or disable some):
     
+#ifdef DSIZE_ALL_ISIZE_ALL
     std::cout
         << "DSIZE=long double, ISIZE=unsigned long long:\n"
         << "\n";
@@ -294,15 +297,19 @@ try
         << "\n";
     
     report_survey<long double,unsigned long>(clock_info);
+#endif
 
  
+#if ULONG_MAX == ULLONG_MAX || defined(DSIZE_ALL_ISIZE_ALL)
     std::cout
         << "DSIZE=unsigned long long, ISIZE=unsigned long long:\n"
         << "\n";
     
     report_survey<unsigned long long,unsigned long long>(clock_info);
+#endif
 
 
+    // Always included
     std::cout
         << "DSIZE=unsigned long, ISIZE=unsigned long:\n"
         << "\n";
@@ -310,6 +317,7 @@ try
     report_survey<unsigned long,unsigned long>(clock_info);
 
 
+#ifdef DSIZE_ALL_ISIZE_ALL
     std::cout
         << "DSIZE=double, ISIZE=unsigned long long:\n"
         << "\n";
@@ -329,15 +337,19 @@ try
         << "\n";
     
     report_survey<double,unsigned int>(clock_info);
+#endif
 
 
+#if ULONG_MAX == UINT_MAX || defined(DSIZE_ALL_ISIZE_ALL)
     std::cout
         << "DSIZE=unsigned int, ISIZE=unsigned int:\n"
         << "\n";
     
     report_survey<unsigned int,unsigned int>(clock_info);
+#endif
 
 
+#ifdef DSIZE_ALL_ISIZE_ALL
     std::cout
         << "DSIZE=float, ISIZE=unsigned int:\n"
         << "\n";
@@ -385,6 +397,7 @@ try
         << "\n";
     
     report_survey<short,short>(clock_info);
+#endif
 }
 catch(std::exception& e)
 {

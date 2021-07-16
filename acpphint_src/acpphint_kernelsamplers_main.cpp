@@ -50,7 +50,7 @@
 // The default has been set to 3 when at least that many
 // threads are available.
 //
-// The non-small tests are in a #if 0 . . . #endif .
+// The non-small tests are generally in a #if 0 . . . #endif .
 //
 // Also large thread_counts can not handle smaller DSIZE
 // or ISIZE types like unsigned short or short, given
@@ -67,6 +67,8 @@
 #include <ostream>      // flush
 
 #include <exception>    // exception
+
+#include <climits>     // ULONG_MAX, UINT_MAX, ULLONG_MAX
 
 template<typename DSIZE,typename ISIZE>
 static void report_sampler(ClkInfo const& clock_info)
@@ -200,6 +202,7 @@ try
 
 // Edit as needed to add more alternatives (or disable some):
 #if 0
+#ifdef DSIZE_ALL_ISIZE_ALL
     std::cout
         << "\n"
         << "DSIZE=long double, ISIZE=unsigned long long:\n"
@@ -269,7 +272,8 @@ try
         << "\n";
     
     report_sampler<float,unsigned int>(clock_info);
- #endif
+#endif
+#endif
  
     std::cout
         << "\n"

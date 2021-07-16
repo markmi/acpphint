@@ -47,6 +47,8 @@
 
 #include <version>      // __cpp_lib_integer_comparison_functions
 
+#include <climits>     // ULONG_MAX, UINT_MAX, ULLONG_MAX
+
 #if 202002L <= __cpp_lib_integer_comparison_functions
 #include <utility>      // cmp_less_equal
 #else
@@ -490,6 +492,7 @@ auto Kernel<unsigned short,unsigned short>
             , KernelVectors<unsigned short,unsigned short>&                 kv
             ) -> KernelResults<unsigned short,unsigned short>;
 
+#if ULONG_MAX == UINT_MAX || defined(DSIZE_ALL_ISIZE_ALL)
 // DSIZE=unsigned int:
 
 template
@@ -502,8 +505,9 @@ auto Kernel<unsigned int,unsigned int>
             , PrimaryKernelInputs<unsigned int,unsigned int>    const&  ki
             , KernelVectors<unsigned int,unsigned int>&                 kv
             ) -> KernelResults<unsigned int,unsigned int>;
+#endif
 
-// DSIZE=unsigned long:
+// DSIZE=unsigned long: // Always included
 
 template
 PrimaryKernelInputs<unsigned long,unsigned long>::PrimaryKernelInputs
@@ -516,6 +520,7 @@ auto Kernel<unsigned long,unsigned long>
             , KernelVectors<unsigned long,unsigned long>&               kv
             ) -> KernelResults<unsigned long,unsigned long>;
 
+#if ULONG_MAX == ULLONG_MAX || defined(DSIZE_ALL_ISIZE_ALL)
 // DSIZE=unsigned long long:
 
 template
@@ -529,6 +534,7 @@ auto Kernel<unsigned long long,unsigned long long>
                                                                     const& ki
             , KernelVectors<unsigned long long,unsigned long long>&        kv
             ) -> KernelResults<unsigned long long,unsigned long long>;
+#endif
 
 // DSIZE=float:
 
@@ -565,6 +571,7 @@ auto Kernel<float,unsigned int>
             , KernelVectors<float,unsigned int>&                kv
             ) -> KernelResults<float,unsigned int>;
 
+#ifdef DSIZE_ALL_ISIZE_ALL
 // DSIZE=double:
 
 template
@@ -623,6 +630,7 @@ auto Kernel<long double,unsigned long long>
             , PrimaryKernelInputs<long double,unsigned long long>   const& ki
             , KernelVectors<long double,unsigned long long>&               kv
             ) -> KernelResults<long double,unsigned long long>;
+#endif
 
 
 char copyright_and_license_for_acpphint_kernels[]

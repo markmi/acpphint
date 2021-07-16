@@ -64,6 +64,8 @@
 #include <array>        // array
 #endif
 
+#include <climits>     // ULONG_MAX, UINT_MAX, ULLONG_MAX
+
 template<typename DSIZE, typename ISIZE>
 auto KernelSampler  ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<DSIZE,ISIZE>      const&  ki
@@ -485,6 +487,7 @@ auto KernelSampler<unsigned short,unsigned short>
                     ) -> KernelSamplerResultsVect
                                             <unsigned short,unsigned short>;
 
+#if ULONG_MAX == UINT_MAX || defined(DSIZE_ALL_ISIZE_ALL)
 // DSIZE=unsigned int:
 
 template
@@ -493,8 +496,9 @@ auto KernelSampler<unsigned int,unsigned int>
                     , PrimaryKernelInputs<unsigned int,unsigned int>
                                                             const&  ki
                     ) -> KernelSamplerResultsVect<unsigned int,unsigned int>;
+#endif
                     
-// DSIZE=unsigned long:
+// DSIZE=unsigned long: // Always included
 
 template
 auto KernelSampler<unsigned long,unsigned long>
@@ -503,6 +507,7 @@ auto KernelSampler<unsigned long,unsigned long>
                                                             const&  ki
                     ) -> KernelSamplerResultsVect<unsigned long,unsigned long>;
 
+#if ULONG_MAX == ULLONG_MAX || defined(DSIZE_ALL_ISIZE_ALL)
 // DSIZE=unsigned long long:
 
 template
@@ -514,6 +519,7 @@ auto KernelSampler<unsigned long long,unsigned long long>
                     ) -> KernelSamplerResultsVect   < unsigned long long
                                                     , unsigned long long
                                                     >;
+#endif
 
 // DSIZE=float:
 
@@ -537,6 +543,7 @@ auto KernelSampler<float,unsigned int>
                                                             const&  ki
                     ) -> KernelSamplerResultsVect<float,unsigned int>;
 
+#ifdef DSIZE_ALL_ISIZE_ALL
 // DSIZE=double:
             
 template
@@ -578,6 +585,7 @@ auto KernelSampler<long double,unsigned long long>
                     ) -> KernelSamplerResultsVect   < long double
                                                     , unsigned long long
                                                     >;
+#endif
 
 char copyright_and_license_for_acpphint_kernelsamplers[]
 {

@@ -5,7 +5,7 @@ cpp_clockinfo_main version: acpphint_0.1.24
 is_steady:                           true
 period 'resolution' :              1 ns
 duration max        :   9.223372e+18 ns
-now (from epoch)    :  1.3315493e+12 ns
+now (from epoch)    :  8.3281703e+13 ns
 
 
 main thread by itself:
@@ -27,146 +27,147 @@ Other information for reference:
 
 small scale duration variability     :             41 ns
 
-largest observed duration            :         30'599 ns
+largest observed duration            :         30'959 ns
 (with min duration still included)
 
 
       list  #Examples       duration   fraction
   position  of durat.           (ns)    with <=
 
-         0     25'248             39 0.01262400
-         1    600'966             40 0.31310700
-         2     24'153             41 0.32518350
-         3     77'644             79 0.36400550
-         4  1'194'362             80 0.96118650
-         5     73'563             81 0.99796800
-         6          6            120 0.99797100
-         7          1            200 0.99797150
-         8          1          1'119 0.99797200
-         9         23          1'120 0.99798350
-        10          2          1'121 0.99798450
-        11          3          1'159 0.99798600
-        12         54          1'160 0.99801300
-        13          2          1'199 0.99801400
-        14         20          1'200 0.99802400
-        15          1          1'201 0.99802450
-        16          8          1'240 0.99802850
-        17          7          1'280 0.99803200
-        18          5          1'320 0.99803450
-        19          1          1'321 0.99803500
-        20          2          1'360 0.99803600
-        21          1          1'400 0.99803650
-        22          3          1'440 0.99803800
-        23          1          1'480 0.99803850
-        24          1          1'520 0.99803900
-        25          2          1'560 0.99804000
-        26          3          1'600 0.99804150
-        27          1          1'640 0.99804200
-        28          1          1'680 0.99804250
-        29          1          1'720 0.99804300
-        30          2          1'759 0.99804400
-        31         23          1'760 0.99805550
-        32         18          1'799 0.99806450
-        33        183          1'800 0.99815600
-        34         30          1'839 0.99817100
-        35        242          1'840 0.99829200
-        36          5          1'841 0.99829450
-        37         30          1'879 0.99830950
-        38        231          1'880 0.99842500
-        39          8          1'881 0.99842900
-        40         11          1'919 0.99843450
-        41        142          1'920 0.99850550
-        42         14          1'959 0.99851250
-        43        224          1'960 0.99862450
-        44         20          1'999 0.99863450
-        45        277          2'000 0.99877300
-        46          4          2'001 0.99877500
-        47         30          2'039 0.99879000
-        48        250          2'040 0.99891500
-        49          9          2'041 0.99891950
-        50         36          2'079 0.99893750
-        51        327          2'080 0.99910100
-        52          4          2'081 0.99910300
-        53         24          2'119 0.99911500
-        54        274          2'120 0.99925200
-        55         11          2'159 0.99925750
-        56        152          2'160 0.99933350
-        57         12          2'199 0.99933950
-        58        125          2'200 0.99940200
-        59          9          2'239 0.99940650
-        60        120          2'240 0.99946650
-        61          2          2'241 0.99946750
-        62         17          2'279 0.99947600
-        63         94          2'280 0.99952300
-        64          1          2'281 0.99952350
-        65         11          2'319 0.99952900
-        66        113          2'320 0.99958550
-        67          8          2'359 0.99958950
-        68        101          2'360 0.99964000
-        69         16          2'399 0.99964800
-        70        131          2'400 0.99971350
-        71          1          2'401 0.99971400
-        72         37          2'439 0.99973250
-        73        152          2'440 0.99980850
-        74          9          2'441 0.99981300
-        75         12          2'479 0.99981900
-        76        106          2'480 0.99987200
-        77          1          2'481 0.99987250
-        78          3          2'519 0.99987400
-        79         42          2'520 0.99989500
-        80          3          2'559 0.99989650
-        81         34          2'560 0.99991350
-        82          4          2'599 0.99991550
-        83         29          2'600 0.99993000
-        84          5          2'639 0.99993250
-        85         20          2'640 0.99994250
-        86          1          2'679 0.99994300
-        87         16          2'680 0.99995100
-        88          1          2'681 0.99995150
-        89          1          2'719 0.99995200
-        90         18          2'720 0.99996100
-        91         13          2'760 0.99996750
-        92          1          2'799 0.99996800
-        93          8          2'800 0.99997200
-        94          1          2'839 0.99997250
-        95          6          2'840 0.99997550
-        96          1          2'841 0.99997600
-        97          1          2'880 0.99997650
-        98          3          2'920 0.99997800
-        99          5          2'960 0.99998050
-       100          1          3'040 0.99998100
-       101          1          3'079 0.99998150
-       102          2          3'080 0.99998250
-       103          2          3'119 0.99998350
-       104          1          3'120 0.99998400
-       105          1          3'160 0.99998450
-       106          1          3'240 0.99998500
-       107          1          3'320 0.99998550
-       108          1          3'399 0.99998600
-       109          3          3'440 0.99998750
-       110          1          3'480 0.99998800
-       111          1          3'520 0.99998850
-       112          1          3'560 0.99998900
-       113          1          3'680 0.99998950
-       114          1          3'720 0.99999000
-       115          3          3'880 0.99999150
-       116          1          3'920 0.99999200
-       117          1          4'040 0.99999250
-       118          1          4'080 0.99999300
-       119          1          4'240 0.99999350
-       120          1          4'360 0.99999400
-       121          1          4'520 0.99999450
-       122          1          4'560 0.99999500
-       123          1          4'760 0.99999550
-       124          1          4'800 0.99999600
-       125          1          9'560 0.99999650
-       126          1         29'479 0.99999700
-       127          1         29'519 0.99999750
-       128          1         29'718 0.99999800
-       129          1         29'999 0.99999850
-       130          1         30'119 0.99999900
-       131          1         30'279 0.99999950
-       132          1         30'599 1.00000000
+         0     25'286             39 0.01264300
+         1    600'869             40 0.31307750
+         2     24'264             41 0.32520950
+         3     77'563             79 0.36399100
+         4  1'194'551             80 0.96126650
+         5     73'395             81 0.99796400
+         6          1            119 0.99796450
+         7         13            120 0.99797100
+         8          1            200 0.99797150
+         9          1          1'000 0.99797200
+        10          2          1'040 0.99797300
+        11          1          1'119 0.99797350
+        12         26          1'120 0.99798650
+        13          3          1'159 0.99798800
+        14         56          1'160 0.99801600
+        15         10          1'200 0.99802100
+        16          1          1'239 0.99802150
+        17         11          1'240 0.99802700
+        18          1          1'241 0.99802750
+        19          2          1'279 0.99802850
+        20          5          1'280 0.99803100
+        21          3          1'320 0.99803250
+        22          1          1'359 0.99803300
+        23          4          1'360 0.99803500
+        24          3          1'400 0.99803650
+        25          1          1'439 0.99803700
+        26          1          1'440 0.99803750
+        27          2          1'480 0.99803850
+        28          2          1'560 0.99803950
+        29          1          1'599 0.99804000
+        30          1          1'600 0.99804050
+        31          3          1'640 0.99804200
+        32          2          1'680 0.99804300
+        33          3          1'720 0.99804450
+        34          2          1'759 0.99804550
+        35         23          1'760 0.99805700
+        36         21          1'799 0.99806750
+        37        276          1'800 0.99820550
+        38          3          1'801 0.99820700
+        39         34          1'839 0.99822400
+        40        431          1'840 0.99843950
+        41         13          1'841 0.99844600
+        42         27          1'879 0.99845950
+        43        228          1'880 0.99857350
+        44          3          1'881 0.99857500
+        45          7          1'919 0.99857850
+        46        150          1'920 0.99865350
+        47         31          1'959 0.99866900
+        48        275          1'960 0.99880650
+        49         31          1'999 0.99882200
+        50        315          2'000 0.99897950
+        51          4          2'001 0.99898150
+        52         26          2'039 0.99899450
+        53        215          2'040 0.99910200
+        54          9          2'041 0.99910650
+        55         41          2'079 0.99912700
+        56        274          2'080 0.99926400
+        57          8          2'081 0.99926800
+        58         19          2'119 0.99927750
+        59        221          2'120 0.99938800
+        60          7          2'159 0.99939150
+        61        112          2'160 0.99944750
+        62          8          2'199 0.99945150
+        63        115          2'200 0.99950900
+        64          2          2'201 0.99951000
+        65         16          2'239 0.99951800
+        66        106          2'240 0.99957100
+        67          3          2'241 0.99957250
+        68         11          2'279 0.99957800
+        69         90          2'280 0.99962300
+        70          2          2'281 0.99962400
+        71          8          2'319 0.99962800
+        72         78          2'320 0.99966700
+        73          6          2'359 0.99967000
+        74         66          2'360 0.99970300
+        75         12          2'399 0.99970900
+        76        124          2'400 0.99977100
+        77          2          2'401 0.99977200
+        78         19          2'439 0.99978150
+        79        154          2'440 0.99985850
+        80          4          2'441 0.99986050
+        81          2          2'479 0.99986150
+        82         62          2'480 0.99989250
+        83          2          2'481 0.99989350
+        84          6          2'519 0.99989650
+        85         24          2'520 0.99990850
+        86          6          2'559 0.99991150
+        87         27          2'560 0.99992500
+        88          1          2'599 0.99992550
+        89         17          2'600 0.99993400
+        90          2          2'639 0.99993500
+        91         16          2'640 0.99994300
+        92          1          2'679 0.99994350
+        93         16          2'680 0.99995150
+        94          2          2'719 0.99995250
+        95         29          2'720 0.99996700
+        96          8          2'760 0.99997100
+        97          6          2'800 0.99997400
+        98          2          2'839 0.99997500
+        99          4          2'840 0.99997700
+       100          5          2'880 0.99997950
+       101          1          2'919 0.99998000
+       102          2          2'920 0.99998100
+       103          2          3'000 0.99998200
+       104          1          3'039 0.99998250
+       105          2          3'040 0.99998350
+       106          1          3'160 0.99998400
+       107          1          3'199 0.99998450
+       108          1          3'320 0.99998500
+       109          1          3'400 0.99998550
+       110          4          3'440 0.99998750
+       111          1          3'520 0.99998800
+       112          1          3'640 0.99998850
+       113          2          3'680 0.99998950
+       114          1          3'760 0.99999000
+       115          1          3'839 0.99999050
+       116          2          3'880 0.99999150
+       117          1          3'999 0.99999200
+       118          1          4'120 0.99999250
+       119          1          4'160 0.99999300
+       120          1          4'360 0.99999350
+       121          1          4'400 0.99999400
+       122          1          4'440 0.99999450
+       123          1          4'480 0.99999500
+       124          1          4'560 0.99999550
+       125          1          4'600 0.99999600
+       126          1          4'959 0.99999650
+       127          1         28'559 0.99999700
+       128          1         29'079 0.99999750
+       129          1         30'199 0.99999800
+       130          1         30'279 0.99999850
+       131          1         30'719 0.99999900
+       132          1         30'839 0.99999950
+       133          1         30'959 1.00000000
 
 Other threads (parallel, if any):
 
@@ -187,7 +188,7 @@ Other information for reference:
 
 small scale duration variability     :             41 ns
 
-largest observed duration            :        694'013 ns
+largest observed duration            :        227'671 ns
 (with min duration still included)
 
 
@@ -208,7 +209,7 @@ Other information for reference:
 
 small scale duration variability     :             41 ns
 
-largest observed duration            :        181'233 ns
+largest observed duration            :        176'753 ns
 (with min duration still included)
 
 
@@ -229,7 +230,7 @@ Other information for reference:
 
 small scale duration variability     :             41 ns
 
-largest observed duration            :        160'194 ns
+largest observed duration            :        180'953 ns
 (with min duration still included)
 
 
@@ -250,7 +251,7 @@ Other information for reference:
 
 small scale duration variability     :             41 ns
 
-largest observed duration            :        196'152 ns
+largest observed duration            :        368'866 ns
 (with min duration still included)
 
 
@@ -271,7 +272,7 @@ Other information for reference:
 
 small scale duration variability     :             41 ns
 
-largest observed duration            :        252'830 ns
+largest observed duration            :        198'632 ns
 (with min duration still included)
 
 
@@ -292,7 +293,7 @@ Other information for reference:
 
 small scale duration variability     :             41 ns
 
-largest observed duration            :        271'710 ns
+largest observed duration            :        147'715 ns
 (with min duration still included)
 
 
@@ -313,7 +314,7 @@ Other information for reference:
 
 small scale duration variability     :             41 ns
 
-largest observed duration            :        675'414 ns
+largest observed duration            :        223'151 ns
 (with min duration still included)
 
 
@@ -334,7 +335,7 @@ Other information for reference:
 
 small scale duration variability     :             41 ns
 
-largest observed duration            :        232'951 ns
+largest observed duration            :        254'550 ns
 (with min duration still included)
 
 
@@ -355,7 +356,7 @@ Other information for reference:
 
 small scale duration variability     :             41 ns
 
-largest observed duration            :        237'431 ns
+largest observed duration            :        212'792 ns
 (with min duration still included)
 
 
@@ -376,7 +377,7 @@ Other information for reference:
 
 small scale duration variability     :             41 ns
 
-largest observed duration            :        243'110 ns
+largest observed duration            :        182'033 ns
 (with min duration still included)
 
 
@@ -397,7 +398,7 @@ Other information for reference:
 
 small scale duration variability     :             41 ns
 
-largest observed duration            :        308'628 ns
+largest observed duration            :        150'914 ns
 (with min duration still included)
 
 
@@ -418,7 +419,7 @@ Other information for reference:
 
 small scale duration variability     :             41 ns
 
-largest observed duration            :        622'176 ns
+largest observed duration            :        343'066 ns
 (with min duration still included)
 
 
@@ -439,7 +440,7 @@ Other information for reference:
 
 small scale duration variability     :             41 ns
 
-largest observed duration            :        281'989 ns
+largest observed duration            :        241'670 ns
 (with min duration still included)
 
 
@@ -460,7 +461,7 @@ Other information for reference:
 
 small scale duration variability     :             41 ns
 
-largest observed duration            :        208'592 ns
+largest observed duration            :        236'871 ns
 (with min duration still included)
 
 
@@ -481,7 +482,7 @@ Other information for reference:
 
 small scale duration variability     :             41 ns
 
-largest observed duration            :        747'331 ns
+largest observed duration            :        181'673 ns
 (with min duration still included)
 
 
@@ -502,7 +503,7 @@ Other information for reference:
 
 small scale duration variability     :             41 ns
 
-largest observed duration            :        871'166 ns
+largest observed duration            :        174'273 ns
 (with min duration still included)
 
 
@@ -525,6 +526,6 @@ Other information for reference:
 
 small scale duration variability     :             41 ns
 
-largest observed duration            :        871'166 ns
+largest observed duration            :        368'866 ns
 (with min duration still included)
 

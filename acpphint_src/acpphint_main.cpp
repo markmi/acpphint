@@ -71,6 +71,8 @@
 #include <cerrno>       // errno, ERANGE
 #include <limits>       // numeric_limits<>::max()
 
+#include <climits>     // ULONG_MAX, UINT_MAX, ULLONG_MAX
+
 template<typename DSIZE,typename ISIZE>
 static void report_samples  ( std::string                       const& filename
                             , ClkInfo                           const& clock_info
@@ -314,6 +316,7 @@ try
     
     // Edit as needed to add more alternatives (or disable some):
     
+#ifdef DSIZE_ALL_ISIZE_ALL
     report_varying_threading<short,short>         (filename_prefix,clock_info);
     report_varying_threading<short,unsigned short>(filename_prefix,clock_info);
     
@@ -324,25 +327,35 @@ try
     report_varying_threading<float,short>         (filename_prefix,clock_info);
     report_varying_threading<float,unsigned short>(filename_prefix,clock_info);
     report_varying_threading<float,unsigned int>  (filename_prefix,clock_info);
+#endif
     
+#if ULONG_MAX == UINT_MAX || defined(DSIZE_ALL_ISIZE_ALL)
     report_varying_threading<unsigned int,unsigned int>
                                                   (filename_prefix,clock_info);
+#endif
     
+#ifdef DSIZE_ALL_ISIZE_ALL
     report_varying_threading<double,unsigned int> (filename_prefix,clock_info);
     report_varying_threading<double,unsigned long>(filename_prefix,clock_info);
     report_varying_threading<double,unsigned long long>
                                                   (filename_prefix,clock_info);
+#endif
 
+    // Always included
     report_varying_threading<unsigned long,unsigned long>
                                                   (filename_prefix,clock_info);
     
+#if ULONG_MAX == ULLONG_MAX || defined(DSIZE_ALL_ISIZE_ALL)
     report_varying_threading<unsigned long long,unsigned long long>
                                                   (filename_prefix,clock_info);
+#endif
 
+#ifdef DSIZE_ALL_ISIZE_ALL
     report_varying_threading<long double,unsigned long>
                                                   (filename_prefix,clock_info);
     report_varying_threading<long double,unsigned long long>
                                                   (filename_prefix,clock_info);
+#endif
 }
 catch(std::exception& e)
 {

@@ -48,6 +48,7 @@ THE_MAKEFILE= makefile.HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_64bit-cla
 # and SUFFIX as appropriate.
 #
 # The major targets are: build gather-info
+# But acpphint-run just runs the basic acpphint benchmarks, but no cpuset, taskset, etc. used.
 #
 # The makefile.*'s are not set up for cross-build use.
 #

@@ -2,7 +2,7 @@
 //  acpphint_kernelrunners.cpp
 //  acpphint (a C++ variation on the old HINT benchmark)
 //
-//  Copyright (c) 2015-2020 Mark Millard
+//  Copyright (c) 2015-2021 Mark Millard
 //  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
 //
 //  Note: Any acpphint*.{h,cpp} code or makefile code
@@ -51,6 +51,8 @@
 #include <new>          // bad_alloc
 
 //#include <system_error> // system_error
+
+#include <climits>     // ULONG_MAX, UINT_MAX, ULLONG_MAX
 
 template<typename DSIZE, typename ISIZE>
 using TrialCount = typename std::vector<KernelRunnerResults<DSIZE,ISIZE>>::size_type;
@@ -396,6 +398,7 @@ auto KernelRunner<unsigned short,unsigned short>
                                                             const   ki
                     ) -> KernelRunnerResults<unsigned short,unsigned short>;
 
+#if ULONG_MAX == UINT_MAX || defined(DSIZE_ALL_ISIZE_ALL)
 // DSIZE=unsigned int:
 
 template
@@ -406,8 +409,9 @@ auto KernelRunner<unsigned int,unsigned int>
                     , PrimaryKernelInputs<unsigned int,unsigned int>
                                                             const   ki
                     ) -> KernelRunnerResults<unsigned int,unsigned int>;
+#endif
 
-// DSIZE=unsigned long:
+// DSIZE=unsigned long: // Always included
 
 template
 auto KernelRunner<unsigned long,unsigned long>
@@ -418,6 +422,7 @@ auto KernelRunner<unsigned long,unsigned long>
                                                             const   ki
                     ) -> KernelRunnerResults<unsigned long,unsigned long>;
 
+#if ULONG_MAX == ULLONG_MAX || defined(DSIZE_ALL_ISIZE_ALL)
 // DSIZE=unsigned long long:
 
 template
@@ -431,6 +436,7 @@ auto KernelRunner<unsigned long long,unsigned long long>
                     ) -> KernelRunnerResults< unsigned long long
                                             , unsigned long long
                                             >;
+#endif
 
 // DSIZE=float:
 
@@ -460,6 +466,7 @@ auto KernelRunner<float,unsigned int>
                                                             const   ki
                     ) -> KernelRunnerResults<float,unsigned int>;
 
+#ifdef DSIZE_ALL_ISIZE_ALL
 // DSIZE=double:
             
 template
@@ -508,13 +515,14 @@ auto KernelRunner<long double,unsigned long long>
                     , PrimaryKernelInputs<long double,unsigned long long>
                                                             const   ki
                     ) -> KernelRunnerResults<long double,unsigned long long>;
+#endif
 
 
 char copyright_and_license_for_acpphint_kernelrunners[]
 {
     "Context for this Copyright: acpphint_kernelrunners\n"
     "\n"
-    "Copyright (c) 2015-2020 Mark Millard\n"
+    "Copyright (c) 2015-2021 Mark Millard\n"
     "Copyright (C) 1994 by Iowa State University Research Foundation, Inc.\n"
     "\n"
     "Note: Any acpphint*.{h,cpp} code  or makefile code\n"
