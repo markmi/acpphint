@@ -70,6 +70,8 @@ OPT+=           -flto
 CPULOCKDOWN_OPT=        -DWANT_CPU_LOCKDOWN
 # Note for FreeBSD: WANT_NUMA_TOO is implicit/automatic; not so for Linux
 #CPULOCKDOWN_OPT+=       -DWANT_NUMA_TOO
+LDCXX=
+LDCXX+=          -fuse-ld=lld
 #LDCXX=          -nodefaultlibs -lc++ -lcxxrt -lthr -lm -lc -lgcc_s
 #LDCXX+=         -Wl,-rpath=/usr/local/lib/gcc11
 # For Linux NUMA use:
