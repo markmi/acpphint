@@ -26,8 +26,8 @@ set grid xtics mxtics ytics mytics
 plot [TIMELOWERBOUND:TIMEUPPERBOUND][0:QUIPSUPPERBOUND] \
  FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_4_threads.txt"          using 1:2 with linespoints linecolor rgb "grey" \
 ,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_4_threads.txt"            using 1:2 with linespoints linecolor rgb "grey" \
-,FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_2_threads-cpus_0_2.txt" using 1:2 with linespoints linecolor rgb "purple" \
-,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_2_threads-cpus_0_2.txt"   using 1:2 with linespoints linecolor rgb "purple" \
+,FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_2_threads-cpus_0_2.txt" using 1:2 with linespoints linecolor rgb "light-turquoise" \
+,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_2_threads-cpus_0_2.txt"   using 1:2 with linespoints linecolor rgb "light-turquoise" \
 ,FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_2.txt"   using 1:2 with linespoints linecolor rgb "light-magenta" \
 ,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_2.txt"     using 1:2 with linespoints linecolor rgb "light-magenta" \
 ,FNAMEPREFIX  . "-DSIZE_ull-ISIZE_ull-using_8_threads-cpus_kx4p1_kx4p2_1_14.txt"     using 1:2 with linespoints linecolor rgb "dark-red" \
@@ -40,6 +40,10 @@ plot [TIMELOWERBOUND:TIMEUPPERBOUND][0:QUIPSUPPERBOUND] \
 ,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_4_threads-cpus_kx8p1_kx8p3_1_3_9_11.txt"   using 1:2 with linespoints linecolor rgb "dark-goldenrod" \
 ,FNAMEPREFIX  . "-DSIZE_ull-ISIZE_ull-using_4_threads-cpus_2_3_8_9.txt"              using 1:2 with linespoints linecolor rgb "dark-grey" \
 ,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_4_threads-cpus_2_3_8_9.txt"                using 1:2 with linespoints linecolor rgb "dark-grey" \
+,FNAMEPREFIX  . "-DSIZE_ull-ISIZE_ull-using_2_threads-cpus_2_3.txt"  using 1:2 with linespoints linecolor rgb "dark-orange" \
+,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_2_threads-cpus_2_3.txt"    using 1:2 with linespoints linecolor rgb "dark-orange" \
+,FNAMEPREFIX  . "-DSIZE_ull-ISIZE_ull-using_2_threads-cpus_2_10.txt" using 1:2 with linespoints linecolor rgb "dark-turquoise" \
+,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_2_threads-cpus_2_10.txt"   using 1:2 with linespoints linecolor rgb "dark-turquoise" \
 ,FNAMEPREFIX  . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_6.txt"  using 1:2 with linespoints linecolor rgb "dark-magenta" \
 ,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_6.txt"    using 1:2 with linespoints linecolor rgb "dark-magenta"
 #    EOF
