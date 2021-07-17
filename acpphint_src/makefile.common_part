@@ -1,5 +1,5 @@
 #
-# acpphint's makefile.common_part (as of requiring c++17 or later)
+# acpphint's makefile.common_part (as of requiring c++20 or later)
 #
 #  Copyright (c) 2015-2021 Mark Millard
 #  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
@@ -71,11 +71,11 @@ ACPPHINTKERNELSAMPLERS_VERS=    ${ACPPHINT_VERS}
 #CXXLIB= -stdlib=libc++
 #CXXLIB= -stdlib=libstdc++
 #
-#CXX= g++9 -v -std=c++17 -Wno-psabi
-#CXX= clang++9 -std=c++17 ${CXXLIB}
-#CXX= clang++-9 -std=c++17 ${CXXLIB}
-#CXX= g++ -v -std=c++17 -Wno-psabi
-#CXX= g++9 -v -std=c++17 -Wno-psabi -nostdinc -nostdinc++ -I/usr/include/c++/v1 -I/usr/include
+#CXX= g++9 -v -std=c++20 -Wno-psabi
+#CXX= clang++9 -std=c++20 ${CXXLIB}
+#CXX= clang++-9 -std=c++20 ${CXXLIB}
+#CXX= g++ -v -std=c++20 -Wno-psabi
+#CXX= g++9 -v -std=c++20 -Wno-psabi -nostdinc -nostdinc++ -I/usr/include/c++/v1 -I/usr/include
 #
 #OPT= -O3 -mcpu=cortex-a72
 #CPULOCKDOWN_OPT=  -DWANT_CPU_LOCKDOWN
