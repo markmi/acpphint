@@ -56,7 +56,7 @@ THE_MAKEFILE= makefile.ThreadRipper1950X-131072MiB-threads_32-LP64-FreeBSD_main_
 #
 
 #
-# This file presumes FreeBSD port lang/g++11 is installed.
+# This file presumes FreeBSD port lang/gcc11 is installed.
 #
 
 CXXLIB=

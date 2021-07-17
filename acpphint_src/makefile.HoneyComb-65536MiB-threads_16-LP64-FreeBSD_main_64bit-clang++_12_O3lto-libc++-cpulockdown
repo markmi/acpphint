@@ -102,3 +102,5 @@ include makefile.common_part
 #  Ignore any special NOPREFER-related information gathering request:
 #
 gather-NOPREFER-info:
+
+acpphint-NOPREFER-run:

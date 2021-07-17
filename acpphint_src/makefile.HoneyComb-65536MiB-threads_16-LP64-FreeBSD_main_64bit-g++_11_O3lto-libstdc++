@@ -58,7 +58,7 @@ THE_MAKEFILE= makefile.HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_64bit-g++
 #
 
 #
-# This file presumes FreeBSD port lang/g++11 is installed.
+# This file presumes FreeBSD port lang/gcc11 is installed.
 #
 
 CXXLIB=

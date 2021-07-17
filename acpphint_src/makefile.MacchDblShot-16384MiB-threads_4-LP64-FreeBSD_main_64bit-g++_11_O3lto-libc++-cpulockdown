@@ -48,6 +48,7 @@ THE_MAKEFILE= makefile.MacchDblShot-16384MiB-threads_4-LP64-FreeBSD_main_64bit-g
 # and SUFFIX as appropriate.
 #
 # The major targets are: build gather-info
+# But acpphint-run just runs the basic acpphint benchmarks, but no cpuset, taskset, etc. used.
 #
 # The makefile.*'s are not set up for cross-build use.
 #
@@ -62,6 +63,7 @@ THE_MAKEFILE= makefile.MacchDblShot-16384MiB-threads_4-LP64-FreeBSD_main_64bit-g
 CXXLIB=
 CXX=            g++11 -v -std=c++20 -Wpedantic -Wall -Wextra
 CXX+=           -Wno-psabi -nostdinc -nostdinc++ -I/usr/include/c++/v1 -I/usr/include
+#CXX+=           -DDSIZE_ALL_ISIZE_ALL
 OPT=            -O3 -mcpu=cortex-a72 -flto
 OPT+=           -mno-outline-atomics
 #CPULOCKDOWN_OPT=
@@ -69,7 +71,7 @@ CPULOCKDOWN_OPT=        -DWANT_CPU_LOCKDOWN
 # Note for FreeBSD: WANT_NUMA_TOO is implicit/automatic; not so for Linux
 #CPULOCKDOWN_OPT+=       -DWANT_NUMA_TOO
 LDCXX=          -nodefaultlibs -lc++ -lcxxrt -lthr -lm -lc -lgcc_s
-LDCXX+=          -Wl,-rpath=/usr/local/lib/gcc11
+LDCXX+=         -Wl,-rpath=/usr/local/lib/gcc11
 # For Linux NUMA use:
 #LDCXX+=         -lnuma
 
@@ -96,10 +98,6 @@ ACPPHINT_FILENAME_INFO= ${COMPUTER}-${RAM}-${THREADS}-${CPP_DATA_MODEL}-${OS}-${
 # HW threads --or as presented by the likes of HyperV.
 # acpphint will also add using_N_threads to file names
 # recording benchmark results.
-#
-# Note: FreeBSD powerpc64 has the same representation
-# for long double as for double. This is not true for
-# aarch64 or amd64, which use more bytes for long double.
 
 include makefile.common_part
 
@@ -107,3 +105,5 @@ include makefile.common_part
 #  Support some special NOPREFER-related information gathering:
 #
 gather-NOPREFER-info:
+
+acpphint-NOPREFER-run:
