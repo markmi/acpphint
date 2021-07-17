@@ -1,7 +1,0 @@
-# filename: ./acpphint-MacchDblShot-16384MiB-threads_4-LP64-FreeBSD_main_n247756_348c41d1815d_64bit-g++_11_O3lto-libc++-DSIZE_us-ISIZE_s-using_3_threads-cpus_1_2_3.txt
-# acpphint_main version: 0.1.24
-
-7.7965e-05 133031 10.3717 528
-7.7606e-05 167098 12.9678 606
-7.6646e-05 202452 15.5171 684
-8.0006e-05 225641 18.0526 762
