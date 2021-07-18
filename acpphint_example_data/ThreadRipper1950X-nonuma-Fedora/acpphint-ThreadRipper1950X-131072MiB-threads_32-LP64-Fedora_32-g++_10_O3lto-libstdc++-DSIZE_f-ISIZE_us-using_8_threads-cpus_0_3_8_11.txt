@@ -1,7 +1,0 @@
-# filename: ./acpphint-ThreadRipper1950X-131072MiB-threads_32-LP64-Fedora_32-g++_10_O3lto-libstdc++-DSIZE_f-ISIZE_us-using_8_threads-cpus_0_3_8_11.txt
-# acpphint_main version: 0.1.23
-
-0.000367343 84050.8 30.8755 2112
-0.000341324 113409 38.7092 2496
-0.000307478 151497 46.5818 2880
-0.000317718 170733 54.2449 3264

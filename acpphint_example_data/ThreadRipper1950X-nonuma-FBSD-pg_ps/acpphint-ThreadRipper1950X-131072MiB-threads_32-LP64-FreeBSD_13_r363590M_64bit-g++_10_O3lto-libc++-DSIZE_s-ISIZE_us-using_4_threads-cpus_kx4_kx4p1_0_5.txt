@@ -1,7 +1,0 @@
-# filename: ./acpphint-ThreadRipper1950X-131072MiB-threads_32-LP64-FreeBSD_13_r363590M_64bit-g++_10_O3lto-libc++-DSIZE_s-ISIZE_us-using_4_threads-cpus_kx4_kx4p1_0_5.txt
-# acpphint_main version: 0.1.23
-
-0.000129027 107352 13.8513 704
-0.000128726 133281 17.1567 808
-0.000128887 158066 20.3727 912
-0.000128516 183186 23.5424 1016

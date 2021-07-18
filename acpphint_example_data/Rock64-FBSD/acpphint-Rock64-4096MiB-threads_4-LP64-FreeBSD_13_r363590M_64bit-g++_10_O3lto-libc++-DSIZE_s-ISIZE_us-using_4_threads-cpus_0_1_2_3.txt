@@ -1,7 +1,0 @@
-# filename: ./acpphint-Rock64-4096MiB-threads_4-LP64-FreeBSD_13_r363590M_64bit-g++_10_O3lto-libc++-DSIZE_s-ISIZE_us-using_4_threads-cpus_0_1_2_3.txt
-# acpphint_main version: 0.1.23
-
-0.00025491 54337.9 13.8513 704
-0.000244994 70029.2 17.1567 808
-0.000240037 84873.1 20.3727 912
-0.000242078 97251.2 23.5424 1016

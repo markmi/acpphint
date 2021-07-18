@@ -1,7 +1,0 @@
-# filename: ./acpphint-RPi4B-8192MiB-threads_4-LP64-Fedora_33br_64bit-g++_10_O3lto-libstdc++-cpulockdown-DSIZE_us-ISIZE_s-using_4_threads-cpus_0_1_2_3.txt
-# acpphint_main version: 0.1.23
-
-0.000211998 65336.9 13.8513 704
-0.000210998 81312.3 17.1567 808
-0.000210239 96902.5 20.3727 912
-0.00021922 107392 23.5424 1016

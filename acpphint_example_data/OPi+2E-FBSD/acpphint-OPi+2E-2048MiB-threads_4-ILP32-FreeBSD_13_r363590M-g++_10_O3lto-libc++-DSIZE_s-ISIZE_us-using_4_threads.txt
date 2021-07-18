@@ -1,7 +1,0 @@
-# filename: ./acpphint-OPi+2E-2048MiB-threads_4-ILP32-FreeBSD_13_r363590M-g++_10_O3lto-libc++-DSIZE_s-ISIZE_us-using_4_threads.txt
-# acpphint_main version: 0.1.23
-
-0.000267859 51711.1 13.8513 560
-0.000264693 64817.5 17.1567 664
-0.000268276 75939.3 20.3727 768
-0.000252152 93365.8 23.5424 872
