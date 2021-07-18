@@ -32,6 +32,8 @@ plot [RAMLOWERBOUND:RAMUPPERBOUND][0:QUIPSUPPERBOUND] \
 ,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_2.txt"    using 4:2 with linespoints linecolor rgb "light-blue" \
 ,FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_3.txt"  using 4:2 with linespoints linecolor rgb "light-grey" \
 ,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_3.txt"    using 4:2 with linespoints linecolor rgb "light-grey" \
+,FNAME2PREFIX . "-cpulockdown-DSIZE_ull-ISIZE_ull-using_1_threads.txt"  using 4:2 with linespoints linecolor rgb "light-pink" \
+,FNAME2PREFIX . "-cpulockdown-DSIZE_ul-ISIZE_ul-using_1_threads.txt"    using 4:2 with linespoints linecolor rgb "light-pink" \
 ,FNAMEPREFIX  . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_0.txt"  using 4:2 with linespoints linecolor rgb "dark-red" \
 ,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_0.txt"    using 4:2 with linespoints linecolor rgb "dark-red" \
 ,FNAMEPREFIX  . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_1.txt"  using 4:2 with linespoints linecolor rgb "dark-green" \
@@ -39,5 +41,7 @@ plot [RAMLOWERBOUND:RAMUPPERBOUND][0:QUIPSUPPERBOUND] \
 ,FNAMEPREFIX  . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_6.txt"  using 4:2 with linespoints linecolor rgb "dark-blue" \
 ,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_6.txt"    using 4:2 with linespoints linecolor rgb "dark-blue" \
 ,FNAMEPREFIX  . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_11.txt" using 4:2 with linespoints linecolor rgb "dark-grey" \
-,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_11.txt"   using 4:2 with linespoints linecolor rgb "dark-grey"
+,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_11.txt"   using 4:2 with linespoints linecolor rgb "dark-grey" \
+,FNAMEPREFIX  . "-cpulockdown-DSIZE_ull-ISIZE_ull-using_1_threads.txt"  using 4:2 with linespoints linecolor rgb "dark-pink" \
+,FNAMEPREFIX  . "-cpulockdown-DSIZE_ul-ISIZE_ul-using_1_threads.txt"    using 4:2 with linespoints linecolor rgb "dark-pink"
 #    EOF
