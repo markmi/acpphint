@@ -48,8 +48,10 @@ THE_MAKEFILE= makefile.HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_64bit-g++
 # and SUFFIX as appropriate.
 #
 # The major targets are: build gather-info gather-NOPREFER-info
-# But acpphint-run just runs the basic acpphint benchmarks, but no cpuset, taskset, etc. used.
-# But gather-NOPREFER-run just runs the NOPREFER accphint benchmarks, cpuset, taskset, etc. used.
+# But acpphint-run just runs the basic acpphint benchmarks, but no
+# cpuset, taskset, etc. used.
+# But acpphint-NOPREFER-run just runs the NOPREFER accphint
+# benchmarks, cpuset, taskset, etc. possibly used.
 #
 # The makefile.*'s are not set up for cross-build use.
 #
