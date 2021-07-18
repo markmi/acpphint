@@ -99,6 +99,11 @@ include makefile.common_part
 #
 #  Ignore any special NOPREFER-related information gathering request:
 #
-gather-NOPREFER-info:
+gather-NOPREFER-info: \
+		cpp_clockinfo_main-run \
+		acpphint_kernelsurveyors_main-run \
+		acpphint_kernelsamplers_main-run \
+		acpphint-NOPREFER-run
 
 acpphint-NOPREFER-run:
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} ".txt" 2
