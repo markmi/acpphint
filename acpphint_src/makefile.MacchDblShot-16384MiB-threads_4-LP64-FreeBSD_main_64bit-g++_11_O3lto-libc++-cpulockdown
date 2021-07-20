@@ -2,7 +2,7 @@
 # acpphint's makefile.MacchDblShot-16384MiB-threads_4-LP64-FreeBSD_main_64bit-g++_11_O3lto-libc++-cpulockdown
 # example (as of requiring c++20 or later)
 #
-#  Copyright (c) 2015-2020 Mark Millard
+#  Copyright (c) 2015-2021 Mark Millard
 #  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
 #
 #  Note: Any acpphint*.{h,cpp} code or makefile code

@@ -1,5 +1,5 @@
 #
-# acpphint's makefile.HoneyComb-65536MiB-threads_16-LP64-ubuntu_21_04_64bit-g++_11_O3lto-libstdc++
+# acpphint's makefile.MacchDblShot-16384MiB-threads_4-LP64-Fedora_34_64bit-g++_11_O3lto-libstdc++
 # example (as of requiring C++20 or later)
 #
 #  Copyright (c) 2015-2021 Mark Millard
@@ -35,7 +35,7 @@
 .POSIX:
 .SUFFIXES:
 
-THE_MAKEFILE= makefile.HoneyComb-65536MiB-threads_16-LP64-ubuntu_21_04_64bit-g++_11_O3lto-libstdc++
+THE_MAKEFILE= makefile.MacchDblShot-16384MiB-threads_4-LP64-Fedora_34_64bit-g++_11_O3lto-libstdc++
 
 #
 # acpphint's makefile.*'s are very tailored to my use but may be
@@ -49,7 +49,7 @@ THE_MAKEFILE= makefile.HoneyComb-65536MiB-threads_16-LP64-ubuntu_21_04_64bit-g++
 #
 # The major targets are: build gather-info gather-NOPREFER-info
 # But acpphint-run just runs the basic acpphint benchmarks, but no cpuset, taskset, etc. used.
-# But gather-NOPREFER-run just runs the NOPREFER accphint benchmarks, cupset, taskset, etc. used.
+# But gather-NOPREFER-run just runs the NOPREFER accphint benchmarks, cpuset, taskset, etc. used.
 #
 # The makefile.*'s are not set up for cross-build use.
 #
@@ -58,11 +58,11 @@ THE_MAKEFILE= makefile.HoneyComb-65536MiB-threads_16-LP64-ubuntu_21_04_64bit-g++
 #
 
 #
-# This file presumes ubuntu has g++ v11 installed as g++-11 and has make.
+# This file presumes Fedora has g++ v11 installed as g++ and has make.
 #
 
 CXXLIB=
-CXX=            g++-11 -v -std=c++20 -Wpedantic -Wall -Wextra
+CXX=            g++ -v -std=c++20 -Wpedantic -Wall -Wextra
 #CXX+=           -Wno-psabi -nostdinc -nostdinc++ -I/usr/include/c++/v1 -I/usr/include
 #CXX+=           -DDSIZE_ALL_ISIZE_ALL
 OPT=            -O3 -mcpu=cortex-a72 -flto
@@ -85,16 +85,16 @@ COMPILER_DESC=      g++_11_O3lto
 LIBRARY_DESC=       libstdc++
 COMPILER_LIBRARY=   ${COMPILER_DESC}-${LIBRARY_DESC}
 
-COMPUTER=               HoneyComb
-RAM=                    65536MiB
-THREADS=                threads_16
+COMPUTER=               MacchDblShot
+RAM=                    16384MiB
+THREADS=                threads_4
 CPP_DATA_MODEL=         LP64
-OS=                     ubuntu_21_04_64bit
+OS=                     Fedora_34_64bit
 SUFFIX=
 #SUFFIX=                 -cpulockdown
 ACPPHINT_FILENAME_INFO= ${COMPUTER}-${RAM}-${THREADS}-${CPP_DATA_MODEL}-${OS}-${COMPILER_LIBRARY}${SUFFIX}
 #
-# Note: The "threads_16" is what the hardware has for
+# Note: The "threads_4" is what the hardware has for
 # HW threads --or as presented by the likes of HyperV.
 # acpphint will also add using_N_threads to file names
 # recording benchmark results.
@@ -111,14 +111,17 @@ gather-NOPREFER-info: \
 		acpphint-NOPREFER-run
 
 acpphint-NOPREFER-run:
-	cd .. && taskset -c 1                                          ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_1.txt"                      1
-	cd .. && taskset -c 6                                          ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_6.txt"                      1
-	cd .. && taskset -c 11                                         ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_11.txt"                     1
-	cd .. && taskset -c 2,3                                        ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_2_3.txt"                    2
-	cd .. && taskset -c 2,10                                       ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_2_10.txt"                   2
-	cd .. && taskset -c 1,3,9,11                                   ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx8p1_kx8p3_1_3_9_11.txt"   4
-	cd .. && taskset -c 2,3,8,9                                    ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_2_3_8_9.txt"                4
-	cd .. && taskset -c 1,2,5,6,9,10,13,14                         ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4p1_kx4p2_1_14.txt"       8
-	cd .. && taskset -c 2,3,6,7,10,11,14,15                        ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4p2_kx4p3_2_15.txt"       8
-	cd .. && taskset -c 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15        ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kp1_1_15.txt"              15
-	cd .. && taskset -c 0                                          ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0.txt"                      1
+	cd .. && taskset -c 1     ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_1.txt"       1
+	cd .. && taskset -c 2     ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_2.txt"       1
+	cd .. && taskset -c 3     ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_3.txt"       1
+	cd .. && taskset -c 1,2   ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_1_2.txt"     2
+	cd .. && taskset -c 1,3   ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_1_3.txt"     2
+	cd .. && taskset -c 2,3   ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_2_3.txt"     2
+	cd .. && taskset -c 1-3   ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_1_2_3.txt"   3
+	cd .. && taskset -c 0     ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0.txt"       1
+	cd .. && taskset -c 0,1   ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_1.txt"     2
+	cd .. && taskset -c 0,2   ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_2.txt"     2
+	cd .. && taskset -c 0,3   ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_3.txt"     2
+	cd .. && taskset -c 0,1,2 ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_1_2.txt"   3
+	cd .. && taskset -c 0,1,3 ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_1_3.txt"   3
+	cd .. && taskset -c 0,2,3 ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_2_3.txt"   3
