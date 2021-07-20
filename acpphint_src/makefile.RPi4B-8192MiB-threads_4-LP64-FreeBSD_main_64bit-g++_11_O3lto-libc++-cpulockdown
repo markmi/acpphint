@@ -1,8 +1,8 @@
 #
-# acpphint's makefile.Rock64-4096MiB-threads_4-LP64-FreeBSD_13_64bit-g++_10_O3lto-libc++
-# example (as of requiring c++17 or later)
+# acpphint's makefile.RPi4B-8192MiB-threads_4-LP64-FreeBSD_main_64bit-g++_11_O3lto-libc++-cpulockdown
+# example (as of requiring c++20 or later)
 #
-#  Copyright (c) 2015-2020 Mark Millard
+#  Copyright (c) 2015-2021 Mark Millard
 #  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
 #
 #  Note: Any acpphint*.{h,cpp} code or makefile code
@@ -35,7 +35,7 @@
 .POSIX:
 .SUFFIXES:
 
-THE_MAKEFILE= makefile.Rock64-4096MiB-threads_4-LP64-FreeBSD_13_64bit-g++_10_O3lto-libc++
+THE_MAKEFILE= makefile.RPi4B-8192MiB-threads_4-LP64-FreeBSD_main_64bit-g++_11_O3lto-libc++-cpulockdown
 
 #
 # acpphint's makefile.*'s are very tailored to my use but may be
@@ -48,6 +48,10 @@ THE_MAKEFILE= makefile.Rock64-4096MiB-threads_4-LP64-FreeBSD_13_64bit-g++_10_O3l
 # and SUFFIX as appropriate.
 #
 # The major targets are: build gather-info gather-NOPREFER-info
+# But acpphint-run just runs the basic acpphint benchmarks, but no
+# cpuset, taskset, etc. used.
+# But acpphint-NOPREFER-run just runs the NOPREFER accphint
+# benchmarks, cpuset, taskset, etc. possibly used.
 #
 # The makefile.*'s are not set up for cross-build use.
 #
@@ -56,72 +60,58 @@ THE_MAKEFILE= makefile.Rock64-4096MiB-threads_4-LP64-FreeBSD_13_64bit-g++_10_O3l
 #
 
 #
-# This file presumes FreeBSD port lang/gcc10 is installed.
+# This file presumes FreeBSD port lang/gcc11 is installed.
 #
 
 CXXLIB=
-CXX=            g++10 -v -std=c++17 -Wpedantic -Wall -Wextra
+CXX=            g++11 -v -std=c++20 -Wpedantic -Wall -Wextra
 CXX+=           -Wno-psabi -nostdinc -nostdinc++ -I/usr/include/c++/v1 -I/usr/include
-OPT=            -O3 -mcpu=cortex-a53 -mno-outline-atomics -flto
-CPULOCKDOWN_OPT=
-#CPULOCKDOWN_OPT=        -DWANT_CPU_LOCKDOWN
+#CXX+=           -DDSIZE_ALL_ISIZE_ALL
+OPT=            -O3 -mcpu=cortex-a72 -flto
+OPT+=           -mno-outline-atomics
+#CPULOCKDOWN_OPT=
+CPULOCKDOWN_OPT=        -DWANT_CPU_LOCKDOWN
 # Note for FreeBSD: WANT_NUMA_TOO is implicit/automatic; not so for Linux
 #CPULOCKDOWN_OPT+=       -DWANT_NUMA_TOO
-LDCXX=          -nodefaultlibs -lc++ -lcxxrt -lthr -lm -lc -lgcc_s \
-                -Wl,-rpath=/usr/local/lib/gcc10
+LDCXX=          -nodefaultlibs -lc++ -lcxxrt -lthr -lm -lc -lgcc_s
+LDCXX+=         -Wl,-rpath=/usr/local/lib/gcc11
 # For Linux NUMA use:
 #LDCXX+=         -lnuma
 
-# Note: g++9 with -O2 or -O3 produced more performant code compared
-#       to FreeBSD's system clang 8 with such, and not by trivial
-#       amounts for the systems compared. (Same libc++ and such in
-#       use.) -O2 vs. -O3 made little difference.
-#
 # Note: head FreeBSD's libgcc_s was missing at least
-#       __floatunditf@GCC_4.2.0 at runtime so, for gcc9,
-#       I've used -Wl,-rpath=/usr/local/lib/gcc9 in order
+#       __floatunditf@GCC_4.2.0 at runtime so, for gcc*,
+#       I've used -Wl,-rpath=/usr/local/lib/gcc* in order
 #       to pick up definition(s). So far I've only had
 #       such an issue for targeting aarch64 and armv7.
 
-COMPILER_DESC=      g++_10_O3lto
+COMPILER_DESC=      g++_11_O3lto
 LIBRARY_DESC=       libc++
 COMPILER_LIBRARY=   ${COMPILER_DESC}-${LIBRARY_DESC}
 
-COMPUTER=               Rock64
-RAM=                    4096MiB
+COMPUTER=               RPi4B
+RAM=                    8192MiB
 THREADS=                threads_4
 CPP_DATA_MODEL=         LP64
-OS=                     FreeBSD_13_r365932M_64bit
-SUFFIX=
-#SUFFIX=                 -cpulockdown
+OS=                     FreeBSD_main_n247756_348c41d1815d_64bit
+#SUFFIX=
+SUFFIX=                 -cpulockdown
 ACPPHINT_FILENAME_INFO= ${COMPUTER}-${RAM}-${THREADS}-${CPP_DATA_MODEL}-${OS}-${COMPILER_LIBRARY}${SUFFIX}
 #
 # Note: The "threads_4" is what the hardware has for
 # HW threads --or as presented by the likes of HyperV.
 # acpphint will also add using_N_threads to file names
 # recording benchmark results.
-#
-# Note: FreeBSD powerpc64 has the same representation
-# for long double as for double. This is not true for
-# aarch64 or amd64, which use more bytes for long double.
 
 include makefile.common_part
 
 #
 #  Support some special NOPREFER-related information gathering:
-# 
+#
 gather-NOPREFER-info: \
-                cpp_clockinfo_main-run \
-                acpphint_kernelsurveyors_main-run \
-                acpphint_kernelsamplers_main-run \
-                acpphint-NOPREFER-run
+		cpp_clockinfo_main-run \
+		acpphint_kernelsurveyors_main-run \
+		acpphint_kernelsamplers_main-run \
+		acpphint-NOPREFER-run
 
 acpphint-NOPREFER-run:
-	cd .. && cpuset -l0,1 ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_1.txt"     2
-	cd .. && cpuset -l0,2 ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_2.txt"     2
-	cd .. && cpuset -l0,3 ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_3.txt"     2
-	cd .. && cpuset -l1,2 ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_1_2.txt"     2
-	cd .. && cpuset -l1,3 ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_1_3.txt"     2
-	cd .. && cpuset -l2,3 ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_2_3.txt"     2
-	cd .. && cpuset -l0-2 ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_1_2.txt"   3
-	cd .. && cpuset -l0-3 ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_1_2_3.txt" 4
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} ".txt" 2
