@@ -66,7 +66,7 @@ struct sys_cpubinding
         if  (0 != cpuset_getdomain  ( CPU_LEVEL_WHICH
                                     , CPU_WHICH_PID
                                     , id_t{-1} // current process
-                                    , sizeof(domainset_t)
+                                    , sizeof(dom_set)
                                     , &dom_set
                                     , &memdom_policy
                                     )
@@ -82,7 +82,7 @@ struct sys_cpubinding
                 if  (0 != cpuset_getaffinity( CPU_LEVEL_WHICH
                                             , CPU_WHICH_DOMAIN
                                             , d
-                                            , sizeof(cpuset_t)
+                                            , sizeof(cpu_set)
                                             , &cpu_set
                                             )
                     )
@@ -117,7 +117,7 @@ struct sys_cpubinding
             if  (0 != cpuset_getaffinity( CPU_LEVEL_WHICH
                                         , CPU_WHICH_PID
                                         , id_t{-1} // current process
-                                        , sizeof(cpuset_t)
+                                        , sizeof(cpu_set)
                                         , &cpu_set
                                         )
                 )
@@ -207,7 +207,7 @@ void RestrictThreadToCpu(unsigned int cpu_num, unsigned int num_cpus_used)
     if  (0 != cpuset_setaffinity( CPU_LEVEL_WHICH
                                 , CPU_WHICH_TID
                                 , id_t{-1} // current thread
-                                , sizeof(cpuset_t)
+                                , sizeof(cpus_info.singleton_sets.at(c).cpu_set)
                                 , &cpus_info.singleton_sets.at(c).cpu_set
                                 )
         )
@@ -220,7 +220,7 @@ void RestrictThreadToCpu(unsigned int cpu_num, unsigned int num_cpus_used)
     if  (0 != cpuset_setdomain  ( CPU_LEVEL_WHICH
                                 , CPU_WHICH_TID
                                 , id_t{-1} // current thread
-                                , sizeof(domainset_t)
+                                , sizeof(cpus_info.singleton_sets.at(c).domain_set)
                                 , &cpus_info.singleton_sets.at(c).domain_set
                                 , DOMAINSET_POLICY_INTERLEAVE
                                 )
