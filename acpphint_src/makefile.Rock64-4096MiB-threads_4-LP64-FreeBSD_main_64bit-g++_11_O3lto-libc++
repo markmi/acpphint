@@ -67,7 +67,7 @@ CXXLIB=
 CXX=            g++11 -v -std=c++20 -Wpedantic -Wall -Wextra
 CXX+=           -Wno-psabi -nostdinc -nostdinc++ -I/usr/include/c++/v1 -I/usr/include
 #CXX+=           -DDSIZE_ALL_ISIZE_ALL
-OPT=            -O3 -mcpu=cortex-a72 -flto
+OPT=            -O3 -mcpu=cortex-a53 -flto
 OPT+=           -mno-outline-atomics
 CPULOCKDOWN_OPT=
 #CPULOCKDOWN_OPT=        -DWANT_CPU_LOCKDOWN
