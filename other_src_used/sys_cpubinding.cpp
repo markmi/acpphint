@@ -173,7 +173,7 @@ struct sys_cpubinding
                                 {cpu_as_set,domain_info[domain_num].domain_set}
                             );
 
-            std::cout << "acpphint's cpu_num: "
+            std::cout << "Program's cpu_num: "
                       << std::to_string(cpu_num)
                       << " has operating system cpu_id: "
                       << std::to_string(cpu_id)
