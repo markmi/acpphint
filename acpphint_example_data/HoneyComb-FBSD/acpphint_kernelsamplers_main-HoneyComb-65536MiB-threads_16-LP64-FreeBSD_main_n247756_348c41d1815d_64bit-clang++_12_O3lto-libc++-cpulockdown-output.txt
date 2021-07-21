@@ -1,4 +1,21 @@
-os domain 0 affinity #cpus: 16
+os PID (not NUMA domain) affinity #cpus: 16
+os domain 0 filtered affinity #cpus: 16
+acpphint's cpu_num: 0 has operating system cpu_id: 0
+acpphint's cpu_num: 1 has operating system cpu_id: 1
+acpphint's cpu_num: 2 has operating system cpu_id: 2
+acpphint's cpu_num: 3 has operating system cpu_id: 3
+acpphint's cpu_num: 4 has operating system cpu_id: 4
+acpphint's cpu_num: 5 has operating system cpu_id: 5
+acpphint's cpu_num: 6 has operating system cpu_id: 6
+acpphint's cpu_num: 7 has operating system cpu_id: 7
+acpphint's cpu_num: 8 has operating system cpu_id: 8
+acpphint's cpu_num: 9 has operating system cpu_id: 9
+acpphint's cpu_num: 10 has operating system cpu_id: 10
+acpphint's cpu_num: 11 has operating system cpu_id: 11
+acpphint's cpu_num: 12 has operating system cpu_id: 12
+acpphint's cpu_num: 13 has operating system cpu_id: 13
+acpphint's cpu_num: 14 has operating system cpu_id: 14
+acpphint's cpu_num: 15 has operating system cpu_id: 15
 ./acpphint_kernelsamplers_main-HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_n247756_348c41d1815d_64bit-clang++_12_O3lto-libc++-cpulockdown . . .
 acpphint_kernelsamplers_main version: 0.1.24
 
@@ -15,35 +32,35 @@ scy:        256
 dmax:       65'535
 initial_dx: 256
 
-1.005e-07 1.00283e+07 1.00784 168
-1.605e-07 1.2516e+07 2.00881 216
-2.01e-07 1.50034e+07 3.01569 264
-2.81e-07 1.42784e+07 4.01224 312
-3.21e-07 1.56312e+07 5.01763 360
-3.61e-07 1.6687e+07 6.02401 408
-4.41e-07 1.59441e+07 7.03137 456
-5.61e-07 1.60864e+07 9.02447 552
-6.41e-07 1.71607e+07 11 648
-8.4e-07 1.66666e+07 14 792
-1e-06 1.69605e+07 16.9605 936
-1.241e-06 1.69218e+07 21 1'128
-1.521e-06 1.70357e+07 25.9113 1'368
-1.841e-06 1.72773e+07 31.8075 1'656
-2.281e-06 1.74022e+07 39.6944 2'040
-2.841e-06 1.74198e+07 49.4897 2'520
-3.601e-06 1.72217e+07 62.0154 3'144
-4.481e-06 1.72046e+07 77.0937 3'912
-5.64e-06 1.70282e+07 96.0393 4'872
-7.041e-06 1.70854e+07 120.298 6'072
-8.841e-06 1.69112e+07 149.512 7'608
-1.112e-05 1.68621e+07 187.507 9'528
-1.4e-05 1.66324e+07 232.853 11'976
+1.05014e-07 9.59724e+06 1.00784 168
+1.65854e-07 1.21119e+07 2.00881 216
+2.17806e-07 1.38458e+07 3.01569 264
+2.74321e-07 1.4626e+07 4.01224 312
+3.31708e-07 1.51266e+07 5.01763 360
+3.8805e-07 1.55238e+07 6.02401 408
+4.445e-07 1.58186e+07 7.03137 456
+5.57214e-07 1.61957e+07 9.02447 552
+6.70083e-07 1.64158e+07 11 648
+8.40125e-07 1.66642e+07 14 792
+1.01013e-06 1.67905e+07 16.9605 936
+1.24017e-06 1.69332e+07 21 1'128
+1.53e-06 1.69355e+07 25.9113 1'368
+1.86025e-06 1.70985e+07 31.8075 1'656
+2.3205e-06 1.7106e+07 39.6944 2'040
+2.8805e-06 1.71809e+07 49.4897 2'520
+3.6205e-06 1.7129e+07 62.0154 3'144
+4.521e-06 1.70524e+07 77.0937 3'912
+5.68e-06 1.69083e+07 96.0393 4'872
+7.081e-06 1.69888e+07 120.298 6'072
+8.881e-06 1.68351e+07 149.512 7'608
+1.116e-05 1.68017e+07 187.507 9'528
+1.404e-05 1.6585e+07 232.853 11'976
 
  n:                        stopped for 256.000000 == initial_dx <= (next n) == 312.000000
  eflag:                    stopped with eflag normal (1)
  median_mean_sec_per_lap:  stopped with 0.000014 == median_mean_sec_per_lap < STOPTM == 1.000000
  vectors_total_bytes:      stopped with 11976 == vectors_total_bytes < VECTS_BYTES_LIMIT == 9223372036854775807
- quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 0.954797
+ quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 0.965314
  qdata.size():             stopped with 23 == qdata.size() < NSAMP == 80
  HI/(scx*scy) == ? * approx. lower bound: 1.005857 * 0.386294
  LO/(scx*scy) == ? * approx. upper bound: 0.994787 * 0.386294
@@ -58,18 +75,18 @@ initial_dx:     16
 
 NCHUNK(nproc):  4
 
-8.6477e-05 127'382 11.0156 792
-9.0317e-05 154'740 13.9756 936
-8.8197e-05 192'352 16.9649 1'080
-8.4198e-05 236'968 19.9523 1'224
-8.7478e-05 261'149 22.8448 1'368
-8.3238e-05 344'338 28.662 1'656
-8.8478e-05 390'091 34.5145 1'944
-8.5077e-05 507'696 43.1932 2'376
+9.1998e-05 119'738 11.0156 792
+8.9197e-05 156'683 13.9756 936
+8.6038e-05 197'179 16.9649 1'080
+8.4438e-05 236'295 19.9523 1'224
+8.5598e-05 266'884 22.8448 1'368
+8.3477e-05 343'352 28.662 1'656
+8.3678e-05 412'467 34.5145 1'944
+8.9238e-05 484'023 43.1932 2'376
 
  n:                        stopped for 16.000000 == initial_dx <= (next n) == 18.000000
  eflag:                    stopped with eflag normal (1)
- median_mean_sec_per_lap:  stopped with 0.000085 == median_mean_sec_per_lap < STOPTM == 1.000000
+ median_mean_sec_per_lap:  stopped with 0.000089 == median_mean_sec_per_lap < STOPTM == 1.000000
  vectors_total_bytes:      stopped with 2376 == vectors_total_bytes < VECTS_BYTES_LIMIT == 9223372036854775807
  quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 1.000000
  qdata.size():             stopped with 8 == qdata.size() < NSAMP == 80
@@ -86,32 +103,32 @@ scy:        181
 dmax:       23'167
 initial_dx: 128
 
-1.005e-07 1.01069e+07 1.01575 168
-1.605e-07 1.25712e+07 2.01768 216
-2.01e-07 1.50821e+07 3.0315 264
-2.8e-07 1.43733e+07 4.02453 312
-3.21e-07 1.56865e+07 5.03536 360
-3.62e-07 1.67077e+07 6.04818 408
-4.41e-07 1.60159e+07 7.06299 456
-5.61e-07 1.61302e+07 9.04907 552
-6.81e-07 1.62566e+07 11.0707 648
-8.41e-07 1.66852e+07 14.0322 792
-1.001e-06 1.69503e+07 16.9673 936
-1.24e-06 1.68961e+07 20.9511 1'128
-1.521e-06 1.69973e+07 25.8528 1'368
-1.841e-06 1.7189e+07 31.645 1'656
-2.281e-06 1.7249e+07 39.3451 2'040
-2.841e-06 1.73204e+07 49.2074 2'520
-3.601e-06 1.73407e+07 62.4439 3'144
-4.481e-06 1.7233e+07 77.221 3'912
-5.641e-06 1.69167e+07 95.427 4'872
-7.041e-06 1.6738e+07 117.853 6'072
+1.05569e-07 9.62161e+06 1.01575 168
+1.625e-07 1.24165e+07 2.01768 216
+2.18917e-07 1.38477e+07 3.0315 264
+2.7575e-07 1.45949e+07 4.02453 312
+3.31708e-07 1.51801e+07 5.03536 360
+3.8805e-07 1.55861e+07 6.04818 408
+4.445e-07 1.58898e+07 7.06299 456
+5.57214e-07 1.62398e+07 9.04907 552
+6.70083e-07 1.65214e+07 11.0707 648
+8.40125e-07 1.67025e+07 14.0322 792
+1.015e-06 1.67165e+07 16.9673 936
+1.24017e-06 1.68938e+07 20.9511 1'128
+1.53025e-06 1.68945e+07 25.8528 1'368
+1.87025e-06 1.69202e+07 31.645 1'656
+2.3205e-06 1.69554e+07 39.3451 2'040
+2.8805e-06 1.70829e+07 49.2074 2'520
+3.6205e-06 1.72473e+07 62.4439 3'144
+4.521e-06 1.70805e+07 77.221 3'912
+5.68e-06 1.68005e+07 95.427 4'872
+7.081e-06 1.66435e+07 117.853 6'072
 
  n:                        stopped for 128.000000 == initial_dx <= (next n) == 157.000000
  eflag:                    stopped with eflag normal (1)
  median_mean_sec_per_lap:  stopped with 0.000007 == median_mean_sec_per_lap < STOPTM == 1.000000
  vectors_total_bytes:      stopped with 6072 == vectors_total_bytes < VECTS_BYTES_LIMIT == 9223372036854775807
- quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 0.965245
+ quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 0.964990
  qdata.size():             stopped with 20 == qdata.size() < NSAMP == 80
  HI/(scx*scy) == ? * approx. lower bound: 1.011446 * 0.386294
  LO/(scx*scy) == ? * approx. upper bound: 0.989665 * 0.386294
@@ -126,14 +143,14 @@ initial_dx:     8
 
 NCHUNK(nproc):  4
 
-8.2038e-05 133'992 10.9924 792
-7.7078e-05 180'888 13.9425 936
-8.3878e-05 201'689 16.9172 1'080
-8.4078e-05 236'536 19.8874 1'224
+8.8558e-05 124'127 10.9924 792
+7.9518e-05 175'338 13.9425 936
+9.0998e-05 185'908 16.9172 1'080
+8.9158e-05 223'058 19.8874 1'224
 
  n:                        stopped for 8.000000 == initial_dx <= (next n) == 8.000000
  eflag:                    stopped with eflag normal (1)
- median_mean_sec_per_lap:  stopped with 0.000084 == median_mean_sec_per_lap < STOPTM == 1.000000
+ median_mean_sec_per_lap:  stopped with 0.000089 == median_mean_sec_per_lap < STOPTM == 1.000000
  vectors_total_bytes:      stopped with 1224 == vectors_total_bytes < VECTS_BYTES_LIMIT == 9223372036854775807
  quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 1.000000
  qdata.size():             stopped with 4 == qdata.size() < NSAMP == 80
@@ -150,35 +167,35 @@ scy:        256
 dmax:       65'535
 initial_dx: 256
 
-7.025e-08 1.42349e+07 1 124
-1.005e-07 1.97555e+07 1.98542 150
-1.405e-07 2.11316e+07 2.96899 176
-1.805e-07 2.18002e+07 3.93494 202
-2.01e-07 2.43881e+07 4.90202 228
-2.41e-07 2.43672e+07 5.87248 254
-2.81e-07 2.42591e+07 6.81679 280
-3.61e-07 2.40532e+07 8.68322 332
-4.01e-07 2.62794e+07 10.538 384
-5.21e-07 2.54737e+07 13.2718 462
-6.41e-07 2.47905e+07 15.8907 540
-8.01e-07 2.41924e+07 19.3781 644
-9.61e-07 2.45584e+07 23.6006 774
-1.161e-06 2.44744e+07 28.4147 930
-1.441e-06 2.39696e+07 34.5401 1'138
-1.801e-06 2.31972e+07 41.7781 1'398
-2.281e-06 2.21491e+07 50.522 1'736
-2.841e-06 2.12068e+07 60.2486 2'152
-3.561e-06 2.00324e+07 71.3355 2'672
-4.441e-06 1.87916e+07 83.4536 3'322
-5.561e-06 1.73834e+07 96.6692 4'154
-7e-06 1.58337e+07 110.836 5'194
-8.801e-06 1.42617e+07 125.517 6'520
+7.5807e-08 1.31914e+07 1 124
+1.11605e-07 1.77897e+07 1.98542 150
+1.47179e-07 2.01727e+07 2.96899 176
+1.82652e-07 2.15434e+07 3.93494 202
+2.19e-07 2.23836e+07 4.90202 228
+2.5375e-07 2.31428e+07 5.87248 254
+2.88607e-07 2.36196e+07 6.81679 280
+3.60045e-07 2.4117e+07 8.68322 332
+4.31167e-07 2.44407e+07 10.538 384
+5.37214e-07 2.47048e+07 13.2718 462
+6.43417e-07 2.46974e+07 15.8907 540
+7.961e-07 2.43413e+07 19.3781 644
+9.75125e-07 2.42026e+07 23.6006 774
+1.18683e-06 2.39416e+07 28.4147 930
+1.48025e-06 2.3334e+07 34.5401 1'138
+1.83025e-06 2.28264e+07 41.7781 1'398
+2.3005e-06 2.19613e+07 50.522 1'736
+2.8605e-06 2.10623e+07 60.2486 2'152
+3.58e-06 1.99261e+07 71.3355 2'672
+4.481e-06 1.86239e+07 83.4536 3'322
+5.601e-06 1.72593e+07 96.6692 4'154
+7.001e-06 1.58315e+07 110.836 5'194
+8.841e-06 1.41972e+07 125.517 6'520
 
  n:                        stopped for 256 == initial_dx <= (next n) == 312
  eflag:                    stopped with eflag normal (1)
  median_mean_sec_per_lap:  stopped with 0.000009 == median_mean_sec_per_lap < STOPTM == 1.000000
  vectors_total_bytes:      stopped with 6520 == vectors_total_bytes < VECTS_BYTES_LIMIT == 9223372036854775807
- quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 0.542696
+ quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 0.574673
  qdata.size():             stopped with 23 == qdata.size() < NSAMP == 80
  HI/(scx*scy) == ? * approx. lower bound: 1.010737 * 0.386294
  LO/(scx*scy) == ? * approx. upper bound: 0.990276 * 0.386294
@@ -193,18 +210,18 @@ initial_dx:     16
 
 NCHUNK(nproc):  4
 
-8.4437e-05 125'448 10.5925 528
-9.0238e-05 147'628 13.3217 606
-8.1078e-05 197'000 15.9724 684
-8.1638e-05 228'195 18.6294 762
-8.7957e-05 240'805 21.1805 840
-8.3558e-05 312'667 26.1258 996
-8.1518e-05 378'250 30.8342 1'152
-8.4358e-05 446'211 37.6415 1'386
+8.5318e-05 124'153 10.5925 528
+8.5118e-05 156'508 13.3217 606
+8.8677e-05 180'119 15.9724 684
+8.3078e-05 224'240 18.6294 762
+9.0077e-05 235'138 21.1805 840
+8.7477e-05 298'659 26.1258 996
+8.7638e-05 351'836 30.8342 1'152
+8.8758e-05 424'091 37.6415 1'386
 
  n:                        stopped for 16 == initial_dx <= (next n) == 18
  eflag:                    stopped with eflag normal (1)
- median_mean_sec_per_lap:  stopped with 0.000084 == median_mean_sec_per_lap < STOPTM == 1.000000
+ median_mean_sec_per_lap:  stopped with 0.000089 == median_mean_sec_per_lap < STOPTM == 1.000000
  vectors_total_bytes:      stopped with 1386 == vectors_total_bytes < VECTS_BYTES_LIMIT == 9223372036854775807
  quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 1.000000
  qdata.size():             stopped with 8 == qdata.size() < NSAMP == 80
@@ -221,32 +238,32 @@ scy:        181
 dmax:       23'167
 initial_dx: 128
 
-7.025e-08 1.42349e+07 1 124
-1.005e-07 1.96958e+07 1.97942 150
-1.405e-07 2.10412e+07 2.95628 176
-1.805e-07 2.16536e+07 3.90847 202
-2.01e-07 2.41908e+07 4.86235 228
-2.41e-07 2.41917e+07 5.83019 254
-2.81e-07 2.39976e+07 6.74332 280
-3.61e-07 2.37057e+07 8.55776 332
-4.01e-07 2.58276e+07 10.3569 384
-5.21e-07 2.49335e+07 12.9903 462
-6.01e-07 2.57927e+07 15.5014 540
-7.61e-07 2.46622e+07 18.7679 644
-9.61e-07 2.36605e+07 22.7377 774
-1.161e-06 2.34151e+07 27.1849 930
-1.441e-06 2.26748e+07 32.6744 1'138
-1.801e-06 2.1778e+07 39.2222 1'398
-2.241e-06 2.08259e+07 46.6708 1'736
-2.801e-06 1.95739e+07 54.8265 2'152
-3.521e-06 1.8199e+07 64.0787 2'672
-4.361e-06 1.69634e+07 73.9773 3'322
+7.51053e-08 1.33146e+07 1 124
+1.10553e-07 1.79048e+07 1.97942 150
+1.45714e-07 2.02882e+07 2.95628 176
+1.80913e-07 2.16042e+07 3.90847 202
+2.16895e-07 2.2418e+07 4.86235 228
+2.51281e-07 2.32018e+07 5.83019 254
+2.87179e-07 2.34813e+07 6.74332 280
+3.58227e-07 2.38892e+07 8.55776 332
+4.28944e-07 2.4145e+07 10.3569 384
+5.34357e-07 2.43102e+07 12.9903 462
+6.40083e-07 2.42178e+07 15.5014 540
+7.881e-07 2.38141e+07 18.7679 644
+9.65125e-07 2.35593e+07 22.7377 774
+1.18017e-06 2.30348e+07 27.1849 930
+1.46025e-06 2.23759e+07 32.6744 1'138
+1.81025e-06 2.16667e+07 39.2222 1'398
+2.2805e-06 2.04652e+07 46.6708 1'736
+2.8405e-06 1.93017e+07 54.8265 2'152
+3.5205e-06 1.82016e+07 64.0787 2'672
+4.401e-06 1.68092e+07 73.9773 3'322
 
  n:                        stopped for 128 == initial_dx <= (next n) == 157
  eflag:                    stopped with eflag normal (1)
  median_mean_sec_per_lap:  stopped with 0.000004 == median_mean_sec_per_lap < STOPTM == 1.000000
  vectors_total_bytes:      stopped with 3322 == vectors_total_bytes < VECTS_BYTES_LIMIT == 9223372036854775807
- quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 0.656793
+ quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 0.691446
  qdata.size():             stopped with 20 == qdata.size() < NSAMP == 80
  HI/(scx*scy) == ? * approx. lower bound: 1.017021 * 0.386294
  LO/(scx*scy) == ? * approx. upper bound: 0.982495 * 0.386294
@@ -261,14 +278,14 @@ initial_dx:     8
 
 NCHUNK(nproc):  4
 
-8.3797e-05 123'772 10.3717 528
-8.5437e-05 151'783 12.9678 606
-7.9798e-05 194'455 15.5171 684
-8.6197e-05 209'435 18.0526 762
+8.3198e-05 124'663 10.3717 528
+8.5038e-05 152'495 12.9678 606
+8.8717e-05 174'906 15.5171 684
+8.8638e-05 203'667 18.0526 762
 
  n:                        stopped for 8 == initial_dx <= (next n) == 8
  eflag:                    stopped with eflag normal (1)
- median_mean_sec_per_lap:  stopped with 0.000086 == median_mean_sec_per_lap < STOPTM == 1.000000
+ median_mean_sec_per_lap:  stopped with 0.000089 == median_mean_sec_per_lap < STOPTM == 1.000000
  vectors_total_bytes:      stopped with 762 == vectors_total_bytes < VECTS_BYTES_LIMIT == 9223372036854775807
  quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 1.000000
  qdata.size():             stopped with 4 == qdata.size() < NSAMP == 80
@@ -285,32 +302,32 @@ scy:        181
 dmax:       23'167
 initial_dx: 128
 
-8.025e-08 1.24611e+07 1 124
-1.205e-07 1.64268e+07 1.97942 150
-1.405e-07 2.10412e+07 2.95628 176
-2.01e-07 1.94451e+07 3.90847 202
-2.01e-07 2.41908e+07 4.86235 228
-2.41e-07 2.41917e+07 5.83019 254
-2.81e-07 2.39976e+07 6.74332 280
-3.61e-07 2.37057e+07 8.55776 332
-4.41e-07 2.34849e+07 10.3569 384
-5.21e-07 2.49335e+07 12.9903 462
-6.41e-07 2.41832e+07 15.5014 540
-8.01e-07 2.34306e+07 18.7679 644
-9.61e-07 2.36605e+07 22.7377 774
-1.201e-06 2.26352e+07 27.1849 930
-1.481e-06 2.20624e+07 32.6744 1'138
-1.841e-06 2.13048e+07 39.2222 1'398
-2.321e-06 2.0108e+07 46.6708 1'736
-2.881e-06 1.90304e+07 54.8265 2'152
-3.64e-06 1.7604e+07 64.0787 2'672
-4.56e-06 1.62231e+07 73.9773 3'322
+8.21607e-08 1.21713e+07 1 124
+1.17865e-07 1.6794e+07 1.97942 150
+1.55714e-07 1.89853e+07 2.95628 176
+1.90955e-07 2.04681e+07 3.90847 202
+2.25583e-07 2.15546e+07 4.86235 228
+2.62562e-07 2.2205e+07 5.83019 254
+3.00071e-07 2.24724e+07 6.74332 280
+3.70955e-07 2.30696e+07 8.55776 332
+4.42278e-07 2.34171e+07 10.3569 384
+5.51429e-07 2.35576e+07 12.9903 462
+6.6e-07 2.3487e+07 15.5014 540
+8.121e-07 2.31104e+07 18.7679 644
+9.90125e-07 2.29645e+07 22.7377 774
+1.20683e-06 2.25258e+07 27.1849 930
+1.50025e-06 2.17793e+07 32.6744 1'138
+1.86025e-06 2.10844e+07 39.2222 1'398
+2.34e-06 1.99448e+07 46.6708 1'736
+2.9205e-06 1.8773e+07 54.8265 2'152
+3.66e-06 1.75078e+07 64.0787 2'672
+4.601e-06 1.60785e+07 73.9773 3'322
 
  n:                        stopped for 128 == initial_dx <= (next n) == 157
  eflag:                    stopped with eflag normal (1)
  median_mean_sec_per_lap:  stopped with 0.000005 == median_mean_sec_per_lap < STOPTM == 1.000000
  vectors_total_bytes:      stopped with 3322 == vectors_total_bytes < VECTS_BYTES_LIMIT == 9223372036854775807
- quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 0.650656
+ quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 0.682520
  qdata.size():             stopped with 20 == qdata.size() < NSAMP == 80
  HI/(scx*scy) == ? * approx. lower bound: 1.017021 * 0.386294
  LO/(scx*scy) == ? * approx. upper bound: 0.982495 * 0.386294
@@ -325,10 +342,10 @@ initial_dx:     8
 
 NCHUNK(nproc):  4
 
-8.7558e-05 118'456 10.3717 528
-7.6598e-05 169'297 12.9678 606
-7.8957e-05 196'526 15.5171 684
-8.7358e-05 206'651 18.0526 762
+9.1198e-05 113'728 10.3717 528
+8.4998e-05 152'566 12.9678 606
+8.4318e-05 184'031 15.5171 684
+8.6717e-05 208'179 18.0526 762
 
  n:                        stopped for 8 == initial_dx <= (next n) == 8
  eflag:                    stopped with eflag normal (1)
@@ -349,32 +366,32 @@ scy:        181
 dmax:       23'167
 initial_dx: 128
 
-8.025e-08 1.24611e+07 1 124
-1.205e-07 1.64268e+07 1.97942 150
-1.605e-07 1.84192e+07 2.95628 176
-2.01e-07 1.94451e+07 3.90847 202
-2.02e-07 2.4071e+07 4.86235 228
-2.41e-07 2.41917e+07 5.83019 254
-3.21e-07 2.10072e+07 6.74332 280
-3.61e-07 2.37057e+07 8.55776 332
-4.41e-07 2.34849e+07 10.3569 384
-5.61e-07 2.31557e+07 12.9903 462
-6.81e-07 2.27627e+07 15.5014 540
-8.41e-07 2.23162e+07 18.7679 644
-1.001e-06 2.2715e+07 22.7377 774
-1.241e-06 2.19057e+07 27.1849 930
-1.561e-06 2.09317e+07 32.6744 1'138
-1.921e-06 2.04176e+07 39.2222 1'398
-2.401e-06 1.94381e+07 46.6708 1'736
-3.001e-06 1.82694e+07 54.8265 2'152
-3.76e-06 1.70422e+07 64.0787 2'672
-4.681e-06 1.58037e+07 73.9773 3'322
+8.30377e-08 1.20427e+07 1 124
+1.20029e-07 1.64913e+07 1.97942 150
+1.56173e-07 1.89295e+07 2.95628 176
+1.96238e-07 1.9917e+07 3.90847 202
+2.32941e-07 2.08737e+07 4.86235 228
+2.70667e-07 2.15401e+07 5.83019 254
+3.07731e-07 2.1913e+07 6.74332 280
+3.8405e-07 2.22829e+07 8.55776 332
+4.60062e-07 2.25119e+07 10.3569 384
+5.74357e-07 2.26172e+07 12.9903 462
+6.881e-07 2.25279e+07 15.5014 540
+8.45125e-07 2.22073e+07 18.7679 644
+1.04017e-06 2.18597e+07 22.7377 774
+1.26667e-06 2.14618e+07 27.1849 930
+1.57025e-06 2.08084e+07 32.6744 1'138
+1.95025e-06 2.01114e+07 39.2222 1'398
+2.4405e-06 1.91235e+07 46.6708 1'736
+3.0405e-06 1.80321e+07 54.8265 2'152
+3.7805e-06 1.69498e+07 64.0787 2'672
+4.721e-06 1.56698e+07 73.9773 3'322
 
  n:                        stopped for 128 == initial_dx <= (next n) == 157
  eflag:                    stopped with eflag normal (1)
  median_mean_sec_per_lap:  stopped with 0.000005 == median_mean_sec_per_lap < STOPTM == 1.000000
  vectors_total_bytes:      stopped with 3322 == vectors_total_bytes < VECTS_BYTES_LIMIT == 9223372036854775807
- quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 0.653273
+ quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 0.692829
  qdata.size():             stopped with 20 == qdata.size() < NSAMP == 80
  HI/(scx*scy) == ? * approx. lower bound: 1.017021 * 0.386294
  LO/(scx*scy) == ? * approx. upper bound: 0.982495 * 0.386294
@@ -389,14 +406,14 @@ initial_dx:     8
 
 NCHUNK(nproc):  4
 
-8.6358e-05 120'102 10.3717 528
-8.3158e-05 155'942 12.9678 606
-7.9198e-05 195'928 15.5171 684
-8.2838e-05 217'927 18.0526 762
+9.0917e-05 114'079 10.3717 528
+9.0238e-05 143'707 12.9678 606
+8.3238e-05 186'419 15.5171 684
+8.9077e-05 202'663 18.0526 762
 
  n:                        stopped for 8 == initial_dx <= (next n) == 8
  eflag:                    stopped with eflag normal (1)
- median_mean_sec_per_lap:  stopped with 0.000083 == median_mean_sec_per_lap < STOPTM == 1.000000
+ median_mean_sec_per_lap:  stopped with 0.000089 == median_mean_sec_per_lap < STOPTM == 1.000000
  vectors_total_bytes:      stopped with 762 == vectors_total_bytes < VECTS_BYTES_LIMIT == 9223372036854775807
  quips_to_peak_ratio:      stopped with 0.033333 == STOPRT <= quips/peak_quips == 1.000000
  qdata.size():             stopped with 4 == qdata.size() < NSAMP == 80

@@ -1,4 +1,21 @@
-os domain 0 affinity #cpus: 16
+os PID (not NUMA domain) affinity #cpus: 16
+os domain 0 filtered affinity #cpus: 16
+acpphint's cpu_num: 0 has operating system cpu_id: 0
+acpphint's cpu_num: 1 has operating system cpu_id: 1
+acpphint's cpu_num: 2 has operating system cpu_id: 2
+acpphint's cpu_num: 3 has operating system cpu_id: 3
+acpphint's cpu_num: 4 has operating system cpu_id: 4
+acpphint's cpu_num: 5 has operating system cpu_id: 5
+acpphint's cpu_num: 6 has operating system cpu_id: 6
+acpphint's cpu_num: 7 has operating system cpu_id: 7
+acpphint's cpu_num: 8 has operating system cpu_id: 8
+acpphint's cpu_num: 9 has operating system cpu_id: 9
+acpphint's cpu_num: 10 has operating system cpu_id: 10
+acpphint's cpu_num: 11 has operating system cpu_id: 11
+acpphint's cpu_num: 12 has operating system cpu_id: 12
+acpphint's cpu_num: 13 has operating system cpu_id: 13
+acpphint's cpu_num: 14 has operating system cpu_id: 14
+acpphint's cpu_num: 15 has operating system cpu_id: 15
 ./acpphint_kernelsurveyors_main-HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_n247756_348c41d1815d_64bit-clang++_12_O3-libc++-cpulockdown . . .
 acpphint_kernelsurveyors_main version: 0.1.24
 
@@ -22,8 +39,8 @@ krr.kernel_result.RECT_maxjo:           127
 krr.kernel_result.ixes_errs_maxiq:      254
 krr.kernel_result.RECT_total_used:      128
 krr.kernel_result.ixes_errs_used_each:  255
-krr.total_sec_for_laps_for_median:      1.668e-05
-krr.tscout():                           5.56e-06
+krr.total_sec_for_laps_for_median:      1.664e-05
+krr.tscout():                           5.54667e-06
 krr.vectors_total_bytes:                13'384
 VectorsUsedBytes:                       13'368
 
@@ -48,8 +65,8 @@ krr.kernel_result.RECT_maxjo:           3
 krr.kernel_result.ixes_errs_maxiq:      3
 krr.kernel_result.RECT_total_used:      64
 krr.kernel_result.ixes_errs_used_each:  64
-krr.total_sec_for_laps_for_median:      0.00141471
-krr.tscout():                           0.000471569
+krr.total_sec_for_laps_for_median:      0.00128107
+krr.tscout():                           0.000427024
 krr.vectors_total_bytes:                7'808
 VectorsUsedBytes:                       5'704
 
@@ -100,8 +117,8 @@ krr.kernel_result.RECT_maxjo:           3
 krr.kernel_result.ixes_errs_maxiq:      3
 krr.kernel_result.RECT_total_used:      64
 krr.kernel_result.ixes_errs_used_each:  64
-krr.total_sec_for_laps_for_median:      0.00133399
-krr.tscout():                           0.000444663
+krr.total_sec_for_laps_for_median:      0.00140439
+krr.tscout():                           0.000468129
 krr.vectors_total_bytes:                7'808
 VectorsUsedBytes:                       5'704
 

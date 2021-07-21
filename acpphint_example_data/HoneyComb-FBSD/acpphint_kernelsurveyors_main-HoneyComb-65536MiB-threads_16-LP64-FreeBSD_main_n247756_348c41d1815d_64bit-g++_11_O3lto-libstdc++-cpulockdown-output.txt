@@ -1,4 +1,21 @@
-os domain 0 affinity #cpus: 16
+os PID (not NUMA domain) affinity #cpus: 16
+os domain 0 filtered affinity #cpus: 16
+Program's cpu_num: 0 has operating system cpu_id: 0
+Program's cpu_num: 1 has operating system cpu_id: 1
+Program's cpu_num: 2 has operating system cpu_id: 2
+Program's cpu_num: 3 has operating system cpu_id: 3
+Program's cpu_num: 4 has operating system cpu_id: 4
+Program's cpu_num: 5 has operating system cpu_id: 5
+Program's cpu_num: 6 has operating system cpu_id: 6
+Program's cpu_num: 7 has operating system cpu_id: 7
+Program's cpu_num: 8 has operating system cpu_id: 8
+Program's cpu_num: 9 has operating system cpu_id: 9
+Program's cpu_num: 10 has operating system cpu_id: 10
+Program's cpu_num: 11 has operating system cpu_id: 11
+Program's cpu_num: 12 has operating system cpu_id: 12
+Program's cpu_num: 13 has operating system cpu_id: 13
+Program's cpu_num: 14 has operating system cpu_id: 14
+Program's cpu_num: 15 has operating system cpu_id: 15
 ./acpphint_kernelsurveyors_main-HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_n247756_348c41d1815d_64bit-g++_11_O3lto-libstdc++-cpulockdown . . .
 acpphint_kernelsurveyors_main version: 0.1.24
 
@@ -48,8 +65,8 @@ krr.kernel_result.RECT_maxjo:           3
 krr.kernel_result.ixes_errs_maxiq:      3
 krr.kernel_result.RECT_total_used:      64
 krr.kernel_result.ixes_errs_used_each:  64
-krr.total_sec_for_laps_for_median:      0.00150018
-krr.tscout():                           0.000500061
+krr.total_sec_for_laps_for_median:      0.00151718
+krr.tscout():                           0.000505728
 krr.vectors_total_bytes:                7'808
 VectorsUsedBytes:                       5'704
 
@@ -100,8 +117,8 @@ krr.kernel_result.RECT_maxjo:           3
 krr.kernel_result.ixes_errs_maxiq:      3
 krr.kernel_result.RECT_total_used:      64
 krr.kernel_result.ixes_errs_used_each:  64
-krr.total_sec_for_laps_for_median:      0.00151854
-krr.tscout():                           0.000506181
+krr.total_sec_for_laps_for_median:      0.00153346
+krr.tscout():                           0.000511154
 krr.vectors_total_bytes:                7'808
 VectorsUsedBytes:                       5'704
 
