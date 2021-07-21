@@ -62,6 +62,21 @@ struct sys_cpubinding
         int memdom_policy;
 
         std::vector<cpu_and_domain_sets> domain_info{};
+
+        cpuset_t cpu_set;
+
+        if  (0 != cpuset_getaffinity( CPU_LEVEL_WHICH
+                                    , CPU_WHICH_PID
+                                    , id_t{-1} // current process
+                                    , sizeof(cpu_set)
+                                    , &cpu_set
+                                    )
+            )
+            throw std::runtime_error("failed to identify an affinity");
+
+        std::cout << "os PID (not NUMA domain) affinity #cpus: "
+                  << std::to_string(CPU_COUNT(&cpu_set))
+                  << "\n";
         
         if  (0 != cpuset_getdomain  ( CPU_LEVEL_WHICH
                                     , CPU_WHICH_PID
@@ -77,18 +92,22 @@ struct sys_cpubinding
         {
             if (DOMAINSET_ISSET(d,&dom_set))
             {
-                cpuset_t cpu_set;
+                cpuset_t dcpu_set;
 
                 if  (0 != cpuset_getaffinity( CPU_LEVEL_WHICH
                                             , CPU_WHICH_DOMAIN
                                             , d
-                                            , sizeof(cpu_set)
-                                            , &cpu_set
+                                            , sizeof(dcpu_set)
+                                            , &dcpu_set
                                             )
                     )
                     throw std::runtime_error("failed to identify an affinity");
 
-                unsigned int domain_concurrency_count= CPU_COUNT(&cpu_set);
+                cpuset_t filtered_dcpu_set;
+                CPU_COPY(&dcpu_set, &filtered_dcpu_set);
+                CPU_AND(&filtered_dcpu_set, &cpu_set);
+
+                unsigned int domain_concurrency_count= CPU_COUNT(&filtered_dcpu_set);
                 
                 if (0u == domain_concurrency_count) continue;
 
@@ -96,7 +115,7 @@ struct sys_cpubinding
 
                 concurrency_count_for_in_domains+= domain_concurrency_count;
 
-                std::cout << "os domain " << std::to_string(d) << " affinity #cpus: "
+                std::cout << "os domain " << std::to_string(d) << " filtered affinity #cpus: "
                           << std::to_string(domain_concurrency_count)
                           << "\n";
 
@@ -104,7 +123,7 @@ struct sys_cpubinding
                 DOMAINSET_SETOF(d,&domain_as_set);
 
                 domain_info.emplace_back
-                            (cpu_and_domain_sets{cpu_set,domain_as_set});
+                            (cpu_and_domain_sets{filtered_dcpu_set,domain_as_set});
             }
         }
 
@@ -112,22 +131,7 @@ struct sys_cpubinding
 
         if (0u == domain_count)
         {
-            cpuset_t cpu_set;
-
-            if  (0 != cpuset_getaffinity( CPU_LEVEL_WHICH
-                                        , CPU_WHICH_PID
-                                        , id_t{-1} // current process
-                                        , sizeof(cpu_set)
-                                        , &cpu_set
-                                        )
-                )
-                throw std::runtime_error("failed to identify an affinity");
-
             concurrency_count_for_in_domains= CPU_COUNT(&cpu_set);
-
-            std::cout << "os PID (not NUMA domain) affinity #cpus: "
-                      << std::to_string(concurrency_count_for_in_domains)
-                      << "\n";
 
             domainset_t domain_as_set{};
             DOMAINSET_ZERO(&domain_as_set);
@@ -168,6 +172,12 @@ struct sys_cpubinding
                             ( cpu_and_domain_sets
                                 {cpu_as_set,domain_info[domain_num].domain_set}
                             );
+
+            std::cout << "acpphint's cpu_num: "
+                      << std::to_string(cpu_num)
+                      << " has operating system cpu_id: "
+                      << std::to_string(cpu_id)
+                      << "\n";
         }
     }
 };

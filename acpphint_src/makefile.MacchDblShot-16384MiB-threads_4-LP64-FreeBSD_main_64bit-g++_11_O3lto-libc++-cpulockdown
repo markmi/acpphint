@@ -114,4 +114,18 @@ gather-NOPREFER-info: \
 		acpphint-NOPREFER-run
 
 acpphint-NOPREFER-run:
+	cd .. && cpuset -l1     ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_1.txt"       1
+	cd .. && cpuset -l2     ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_2.txt"       1
+	cd .. && cpuset -l3     ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_3.txt"       1
+	cd .. && cpuset -l1,2   ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_1_2.txt"     2
+	cd .. && cpuset -l1,3   ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_1_3.txt"     2
+	cd .. && cpuset -l2,3   ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_2_3.txt"     2
+	cd .. && cpuset -l1-3   ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_1_2_3.txt"   3
+	cd .. && cpuset -l0     ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0.txt"       1
+	cd .. && cpuset -l0,1   ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_1.txt"     2
+	cd .. && cpuset -l0,2   ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_2.txt"     2
+	cd .. && cpuset -l0,3   ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_3.txt"     2
+	cd .. && cpuset -l0,1,2 ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_1_2.txt"   3
+	cd .. && cpuset -l0,1,3 ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_1_3.txt"   3
+	cd .. && cpuset -l0,2,3 ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_2_3.txt"   3
 	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} ".txt" 2

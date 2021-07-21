@@ -120,4 +120,59 @@ gather-NOPREFER-info: \
 		acpphint-NOPREFER-run
 
 acpphint-NOPREFER-run:
+	cd .. && cpuset -l0,1,4,5                                    ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4_kx4p1_0_5.txt"         4
+	cd .. && cpuset -l0,2,4,6                                    ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx2s_0_6.txt"              4
+	cd .. && cpuset -l0,1,8,9                                    ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4_kx4p1_0_9.txt"         4
+	cd .. && cpuset -l0,2,8,10                                   ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx8_kx8p2_0_2_8_10.txt"    4
+	cd .. && cpuset -l0,1,16,17                                  ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx16_kx16p1_0_1_16_17.txt" 4
+	cd .. && cpuset -l0,2,16,18                                  ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx16_kx16p2_0_2_16_18.txt" 4
+	cd .. && cpuset -l0,4,8,12                                   ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4s_0_12.txt"             4
+	cd .. && cpuset -l0,4,16,20                                  ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx16_kx16p4_0_4_16_20.txt" 4
+	cd .. && cpuset -l0,8,16,24                                  ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx8s_0_24.txt"             4
+	cd .. && cpuset -l0,1,4,5,8,9,12,13                          ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4_kx4p1_0_13.txt"        8
+	cd .. && cpuset -l0,2,4,6,8,10,12,14                         ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx2s_0_14.txt"             8
+	cd .. && cpuset -l0,1,4,5,16,17,20,21                        ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4_kx4p1_0_5_16_21.txt"   8
+	cd .. && cpuset -l0,2,4,6,16,18,20,22                        ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx2s_0_6_16_22.txt"        8
+	cd .. && cpuset -l0,4,8,12,16,20,24,28                       ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4s_0_28.txt"             8
+	cd .. && cpuset -l0,1,4,5,8,9,12,13,16,17,20,21,24,25,28,29  ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4_kx4p1_0_29.txt"        16
+	cd .. && cpuset -l0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30 ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx2s_0_30.txt"             16
 	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} ".txt" 2
+
+#
+#  Support some NUMA-related information gathering:
+#
+gather-NUMA-info: \
+		cpp_clockinfo_main-run \
+		acpphint_kernelsurveyors_main-run \
+		acpphint_kernelsamplers_main-run \
+		acpphint-NUMA-run
+                
+acpphint-NUMA-run:
+	cd .. && cpuset -l0,4,8,12                                   -n prefer:0 ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-prefer_0_cpus_kx4s_0_12.txt"      4
+	cd .. && cpuset -l0,4,8,12                                   -n prefer:1 ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-prefer_1_cpus_kx4s_0_12.txt"      4
+	cd .. && cpuset -l0,4,8,12                                   -n rr:0,1   ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-rr_0_1_cpus_kx4s_0_12.txt"        4
+	cd .. && cpuset -l0,4,8,12                                   -n il:0,1   ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-il_0_1_cpus_kx4s_0_12.txt"        4
+	cd .. && cpuset -l0,4,16,20                                  -n prefer:0 ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-prefer_0_cpus_kx4s_0_4_16_20.txt" 4
+	cd .. && cpuset -l0,4,16,20                                  -n prefer:1 ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-prefer_1_cpus_kx4s_0_4_16_20.txt" 4
+	cd .. && cpuset -l0,4,16,20                                  -n rr:0,1   ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-rr_0_1_cpus_kx4s_0_4_16_20.txt"   4
+	cd .. && cpuset -l0,4,16,20                                  -n il:0,1   ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-il_0_1_cpus_kx4s_0_4_16_20.txt"   4
+	cd .. && cpuset -l0,8,16,24                                  -n prefer:0 ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-prefer_0_cpus_kx8s_0_24.txt"      4
+	cd .. && cpuset -l0,8,16,24                                  -n prefer:1 ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-prefer_1_cpus_kx8s_0_24.txt"      4
+	cd .. && cpuset -l0,8,16,24                                  -n rr:0,1   ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-rr_0_1_cpus_kx8s_0_24.txt"        4
+	cd .. && cpuset -l0,8,16,24                                  -n il:0,1   ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-il_0_1_cpus_kx8s_0_24.txt"        4
+	cd .. && cpuset -l0,2,4,6,8,10,12,14                         -n prefer:0 ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-prefer_0_cpus_kx2s_0_14.txt"      8
+	cd .. && cpuset -l0,2,4,6,8,10,12,14                         -n prefer:1 ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-prefer_1_cpus_kx2s_0_14.txt"      8
+	cd .. && cpuset -l0,2,4,6,8,10,12,14                         -n rr:0,1   ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-rr_0_1_cpus_kx2s_0_14.txt"        8
+	cd .. && cpuset -l0,2,4,6,8,10,12,14                         -n il:0,1   ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-il_0_1_cpus_kx2s_0_14.txt"        8
+	cd .. && cpuset -l0,2,4,6,16,18,20,22                        -n prefer:0 ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-prefer_0_cpus_kx2s_0_6_16_22.txt" 8
+	cd .. && cpuset -l0,2,4,6,16,18,20,22                        -n prefer:1 ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-prefer_1_cpus_kx2s_0_6_16_22.txt" 8
+	cd .. && cpuset -l0,2,4,6,16,18,20,22                        -n rr:0,1   ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-rr_0_1_cpus_kx2s_0_6_16_22.txt"   8
+	cd .. && cpuset -l0,2,4,6,16,18,20,22                        -n il:0,1   ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-il_0_1_cpus_kx2s_0_6_16_22.txt"   8
+	cd .. && cpuset -l0,4,8,12,16,20,24,28                       -n prefer:0 ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-prefer_0_cpus_kx4s_0_28.txt"      8
+	cd .. && cpuset -l0,4,8,12,16,20,24,28                       -n prefer:1 ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-prefer_1_cpus_kx4s_0_28.txt"      8
+	cd .. && cpuset -l0,4,8,12,16,20,24,28                       -n rr:0,1   ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-rr_0_1_cpus_kx4s_0_28.txt"        8
+	cd .. && cpuset -l0,4,8,12,16,20,24,28                       -n il:0,1   ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-il_0_1_cpus_kx4s_0_28.txt"        8
+	cd .. && cpuset -l0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30 -n prefer:0 ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-prefer_0_cpus_kx2s_0_30.txt"      16
+	cd .. && cpuset -l0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30 -n prefer:1 ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-prefer_1_cpus_kx2s_0_30.txt"      16
+	cd .. && cpuset -l0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30 -n rr:0,1   ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-rr_0_1_cpus_kx2s_0_30.txt"        16
+	cd .. && cpuset -l0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30 -n il:0,1   ./${@:-NUMA-run=}-${ACPPHINT_FILENAME_INFO} "-il_0_1_cpus_kx2s_0_30.txt"        16
