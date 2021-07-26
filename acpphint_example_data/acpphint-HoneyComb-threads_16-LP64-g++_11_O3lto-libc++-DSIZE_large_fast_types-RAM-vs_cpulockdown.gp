@@ -6,14 +6,14 @@ COMPILERLIBRARY2="g++_11_O3lto-libc++"
 FNAME2PREFIX=    "HoneyComb-FBSD/acpphint-HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_n247756_348c41d1815d_64bit-" . COMPILERLIBRARY2
 RAMLOWERBOUND=   64
 RAMUPPERBOUND=   2**37
-QUIPSUPPERBOUND= 2e8
+QUIPSUPPERBOUND= 3e8
 TIMELOWERBOUND=  1e-8
 TIMEUPPERBOUND=  1.6
 set title "FNAME2PREFIX= " . FNAME2PREFIX . "\nFNAMEPREFIX= " . FNAMEPREFIX noenhanced
 set ylabel "QUality Improvement/sec"
 unset logscale y
 set ytics border mirror
-set mytics 10
+set mytics 5
 RAMLABEL= "kernel vectors: total Bytes"
 RAMLOGSCALE= 4
 TIMELABEL= "Median for: mean seconds per lap"
