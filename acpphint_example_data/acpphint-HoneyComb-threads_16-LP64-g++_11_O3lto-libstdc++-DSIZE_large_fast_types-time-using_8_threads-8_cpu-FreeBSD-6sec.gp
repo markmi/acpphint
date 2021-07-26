@@ -1,9 +1,9 @@
 reset session
 GNUTERM = "x11"
-COMPILERLIBRARY= "g++_11_O3lto-libstdc++"
-FNAMEPREFIX=     "HoneyComb-STOPTM_6/acpphint-HoneyComb-65536MiB-threads_16-LP64-Fedora_34_64bit-" . COMPILERLIBRARY
-COMPILERLIBRARY2=COMPILERLIBRARY
-FNAME2PREFIX=    "HoneyComb-Fedora/acpphint-HoneyComb-65536MiB-threads_16-LP64-Fedora_34_64bit-" . COMPILERLIBRARY2
+COMPILERLIBRARY= "g++_11_O3lto-libc++-cpulockdown"
+FNAMEPREFIX=     "HoneyComb-STOPTM_6/acpphint-HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_n247756_348c41d1815d_64bit-" . COMPILERLIBRARY
+COMPILERLIBRARY2="g++_11_O3lto-libc++"
+FNAME2PREFIX=    "HoneyComb-STOPTM_6/acpphint-HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_n247756_348c41d1815d_64bit-" . COMPILERLIBRARY2
 RAMLOWERBOUND=   64
 RAMUPPERBOUND=   2**37
 QUIPSUPPERBOUND= 2e8
