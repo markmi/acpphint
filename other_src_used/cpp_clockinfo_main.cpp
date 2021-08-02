@@ -172,7 +172,7 @@ try
                     std::cout
                     <<        std::setw(10) << distinct_value_pos
                     << " " << std::setw(10) << value_count
-                    << " " << ClkInfo::nsFormatted(durations.at(i))
+                    << " " << std::setw(14) << ClkInfo::nsFormatted(durations.at(i))
                     << " " << std::setw(10) << std::setprecision(8) << std::fixed
                            << double(i+1) / end_durations
                            << std::defaultfloat

@@ -148,7 +148,7 @@ ClkInfo::ClkInfo(DurationsStatus durations_status)
     
     auto const find_and_sort_deltas
     {
-        [&back_to_back_tps,this](auto order_test)
+        [&back_to_back_tps,this](auto order_test, const char* throw_msg)
         {
             observed_durations.clear();
             
@@ -169,8 +169,7 @@ ClkInfo::ClkInfo(DurationsStatus durations_status)
                         << "but became : "
                         << nsFormatted((*at_tp).time_since_epoch())
                         << " ns\n";
-                    throw std::runtime_error
-                        ("now() did not progress appropriately for stage");
+                    throw std::runtime_error(throw_msg);
                 }
                 
                 observed_durations.emplace_back(*at_tp - *prev_tp);
@@ -187,7 +186,10 @@ ClkInfo::ClkInfo(DurationsStatus durations_status)
         { return after < before; }
     };
     
-    find_and_sort_deltas(backwards_failure_test);
+    find_and_sort_deltas
+        ( backwards_failure_test
+        , "now() did not produce all-non-negative preliminary back_to_back_tps deltas"
+        );
     
     zero_duration_observed= observed_durations.at(0u) == Duration::zero();
     
@@ -202,9 +204,35 @@ ClkInfo::ClkInfo(DurationsStatus durations_status)
         { return after <= before; }
     };
     
+    duration_overhead= Duration::zero();
+
+    if (!zero_duration_observed)
+    {
+        for (auto i{back_to_back_tps.capacity()}; 0<i; --i)
+        {
+            back_to_back_tps.emplace_back(Now());
+        }
+
+        try
+        {
+            find_and_sort_deltas
+                ( progress_failure_test
+                , "now() did not produce all-positive deltas for back_to_back_tps"
+                );
+
+            duration_overhead= observed_durations.at(0u);
+        }
+        catch (const std::runtime_error& e)
+        {
+            back_to_back_tps    .clear();
+            observed_durations  .clear();
+            zero_duration_observed= true;
+        }
+    }
+
     // Deal with clocks that change slowly (min delta of no time difference)
     // by instead explicitly spinning until times change. Otherwise do not
-    // spin.
+    // spin to find such.
     if (zero_duration_observed)
     {
         auto prev_tp{Now()};
@@ -218,20 +246,12 @@ ClkInfo::ClkInfo(DurationsStatus durations_status)
             prev_tp = new_tp;
         }
         
-        find_and_sort_deltas(progress_failure_test);
+        find_and_sort_deltas
+            ( progress_failure_test
+            , "now() equality-looping got non-positive deltas for back_to_back_tps"
+            );
     
         duration_overhead= Duration::zero();
-    }
-    else
-    {
-        for (auto i{back_to_back_tps.capacity()}; 0<i; --i)
-        {
-            back_to_back_tps.emplace_back(Now());
-        }
-         
-        find_and_sort_deltas(progress_failure_test);
-    
-        duration_overhead= observed_durations.at(0u);
     }
     
     auto const large_percentile_at
