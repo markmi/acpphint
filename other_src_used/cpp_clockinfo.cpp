@@ -154,7 +154,7 @@ ClkInfo::ClkInfo(DurationsStatus durations_status)
             
             auto prev_tp{back_to_back_tps.cbegin()};
             auto at_tp  {std::next(prev_tp)};
-           for (
+            for (
                 ; at_tp != back_to_back_tps.cend()
                 ; prev_tp = at_tp++
                 )
@@ -297,19 +297,14 @@ void ClkInfo::Merge(const ClkInfo& OtherClkInfoExample)
 // Support for converting durations to ns based output. . .
 
 #include <sstream>      // ostringsteam (and related)
-#include <iomanip>      // setw, setprecision
 
 auto ClkInfo::nsFormatted(Duration const& d) -> std::string
 {
     std::ostringstream out{};
     out.imbue(CppThousandsLocale());
     
-    using ns_floating_form
-            = std::chrono::duration<double,std::chrono::nanoseconds::period>;
-    
-    out << std::setw(14) << std::setprecision(8)
-        << ns_floating_form(d).count();
-    
+    out << std::chrono::duration_cast<std::chrono::nanoseconds>(d).count();
+
     return out.str();
 }
 
