@@ -24,18 +24,70 @@ set xtics border mirror in RAMLOGSCALE rotate by -45
 set mxtics RAMLOGSCALE-1
 set grid xtics mxtics ytics mytics
 plot [RAMLOWERBOUND:RAMUPPERBOUND][0:QUIPSUPPERBOUND] \
- FNAME2PREFIX . "-DSIZE_ui-ISIZE_ui-using_4_threads.txt"    using 4:2 with linespoints linecolor rgb "orange" \
-,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_4_threads.txt"    using 4:2 with linespoints linecolor rgb "orange" \
-,FNAME2PREFIX . "-DSIZE_ui-ISIZE_ui-using_2_threads-cpus_2_3.txt"   using 4:2 with linespoints linecolor rgb "light-pink" \
-,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_2_threads-cpus_2_3.txt"   using 4:2 with linespoints linecolor rgb "light-pink" \
-,FNAME2PREFIX . "-DSIZE_ui-ISIZE_ui-using_2_threads-cpus_1_3.txt"   using 4:2 with linespoints linecolor rgb "light-pink" \
-,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_2_threads-cpus_1_3.txt"   using 4:2 with linespoints linecolor rgb "light-pink" \
-,FNAME2PREFIX . "-DSIZE_ui-ISIZE_ui-using_1_threads.txt"    using 4:2 with linespoints linecolor rgb "magenta" \
-,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads.txt"    using 4:2 with linespoints linecolor rgb "magenta" \
-,FNAMEPREFIX  . "-DSIZE_ui-ISIZE_ui-using_4_threads.txt"    using 4:2 with linespoints linecolor rgb "dark-orange" \
-,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_4_threads.txt"    using 4:2 with linespoints linecolor rgb "dark-orange" \
-,FNAMEPREFIX  . "-DSIZE_ui-ISIZE_ui-using_2_threads.txt"    using 4:2 with linespoints linecolor rgb "dark-pink" \
-,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_2_threads.txt"    using 4:2 with linespoints linecolor rgb "dark-pink" \
-,FNAMEPREFIX  . "-DSIZE_ui-ISIZE_ui-using_1_threads.txt"    using 4:2 with linespoints linecolor rgb "dark-magenta" \
-,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_1_threads.txt"    using 4:2 with linespoints linecolor rgb "dark-magenta"
+ FNAME2PREFIX . "-DSIZE_ui-ISIZE_ui-using_4_threads.txt"  using 4:2 with linespoints linecolor rgb "orange" \
+,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_4_threads.txt"  using 4:2 with linespoints linecolor rgb "orange" \
+,FNAME2PREFIX . "-DSIZE_ui-ISIZE_ui-using_3_threads-cpus_0_1_2.txt" using 4:2 with linespoints linecolor rgb "light-turquoise" \
+,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_3_threads-cpus_0_1_2.txt" using 4:2 with linespoints linecolor rgb "light-turquoise" \
+,FNAME2PREFIX . "-DSIZE_ui-ISIZE_ui-using_3_threads-cpus_0_1_3.txt" using 4:2 with linespoints linecolor rgb "light-turquoise" \
+,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_3_threads-cpus_0_1_3.txt" using 4:2 with linespoints linecolor rgb "light-turquoise" \
+,FNAME2PREFIX . "-DSIZE_ui-ISIZE_ui-using_3_threads-cpus_0_2_3.txt" using 4:2 with linespoints linecolor rgb "light-turquoise" \
+,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_3_threads-cpus_0_2_3.txt" using 4:2 with linespoints linecolor rgb "light-turquoise" \
+,FNAME2PREFIX . "-DSIZE_ui-ISIZE_ui-using_3_threads-cpus_1_2_3.txt" using 4:2 with linespoints linecolor rgb "light-turquoise" \
+,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_3_threads-cpus_0_1_3.txt" using 4:2 with linespoints linecolor rgb "light-turquoise" \
+,FNAME2PREFIX . "-DSIZE_ui-ISIZE_ui-using_2_threads-cpus_0_1.txt" using 4:2 with linespoints linecolor rgb "light-pink" \
+,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_2_threads-cpus_0_1.txt" using 4:2 with linespoints linecolor rgb "light-pink" \
+,FNAME2PREFIX . "-DSIZE_ui-ISIZE_ui-using_2_threads-cpus_2_3.txt" using 4:2 with linespoints linecolor rgb "light-pink" \
+,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_2_threads-cpus_2_3.txt" using 4:2 with linespoints linecolor rgb "light-pink" \
+,FNAME2PREFIX . "-DSIZE_ui-ISIZE_ui-using_2_threads-cpus_0_2.txt" using 4:2 with linespoints linecolor rgb "light-pink" \
+,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_2_threads-cpus_0_2.txt" using 4:2 with linespoints linecolor rgb "light-pink" \
+,FNAME2PREFIX . "-DSIZE_ui-ISIZE_ui-using_2_threads-cpus_0_3.txt" using 4:2 with linespoints linecolor rgb "light-pink" \
+,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_2_threads-cpus_0_3.txt" using 4:2 with linespoints linecolor rgb "light-pink" \
+,FNAME2PREFIX . "-DSIZE_ui-ISIZE_ui-using_2_threads-cpus_1_2.txt" using 4:2 with linespoints linecolor rgb "light-pink" \
+,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_2_threads-cpus_1_2.txt" using 4:2 with linespoints linecolor rgb "light-pink" \
+,FNAME2PREFIX . "-DSIZE_ui-ISIZE_ui-using_2_threads-cpus_1_3.txt" using 4:2 with linespoints linecolor rgb "light-pink" \
+,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_2_threads-cpus_1_3.txt" using 4:2 with linespoints linecolor rgb "light-pink" \
+,FNAME2PREFIX . "-DSIZE_ui-ISIZE_ui-using_1_threads-cpus_0.txt"  using 4:2 with linespoints linecolor rgb "light-magenta" \
+,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_0.txt"  using 4:2 with linespoints linecolor rgb "light-magenta" \
+,FNAME2PREFIX . "-DSIZE_ui-ISIZE_ui-using_1_threads-cpus_1.txt"  using 4:2 with linespoints linecolor rgb "light-magenta" \
+,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_1.txt"  using 4:2 with linespoints linecolor rgb "light-magenta" \
+,FNAME2PREFIX . "-DSIZE_ui-ISIZE_ui-using_1_threads-cpus_2.txt"  using 4:2 with linespoints linecolor rgb "light-magenta" \
+,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_2.txt"  using 4:2 with linespoints linecolor rgb "light-magenta" \
+,FNAME2PREFIX . "-DSIZE_ui-ISIZE_ui-using_1_threads-cpus_3.txt"  using 4:2 with linespoints linecolor rgb "light-magenta" \
+,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_3.txt"  using 4:2 with linespoints linecolor rgb "light-magenta" \
+,FNAME2PREFIX . "-DSIZE_ui-ISIZE_ui-using_1_threads.txt"  using 4:2 with linespoints linecolor rgb "light-magenta" \
+,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads.txt"  using 4:2 with linespoints linecolor rgb "light-magenta" \
+,FNAMEPREFIX  . "-DSIZE_ui-ISIZE_ui-using_4_threads.txt"  using 4:2 with linespoints linecolor rgb "dark-orange" \
+,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_4_threads.txt"  using 4:2 with linespoints linecolor rgb "dark-orange" \
+,FNAMEPREFIX  . "-DSIZE_ui-ISIZE_ui-using_3_threads-cpus_0_1_2.txt" using 4:2 with linespoints linecolor rgb "dark-turquoise" \
+,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_3_threads-cpus_0_1_2.txt" using 4:2 with linespoints linecolor rgb "dark-turquoise" \
+,FNAMEPREFIX  . "-DSIZE_ui-ISIZE_ui-using_3_threads-cpus_0_1_3.txt" using 4:2 with linespoints linecolor rgb "dark-turquoise" \
+,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_3_threads-cpus_0_1_3.txt" using 4:2 with linespoints linecolor rgb "dark-turquoise" \
+,FNAMEPREFIX  . "-DSIZE_ui-ISIZE_ui-using_3_threads-cpus_0_2_3.txt" using 4:2 with linespoints linecolor rgb "dark-turquoise" \
+,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_3_threads-cpus_0_2_3.txt" using 4:2 with linespoints linecolor rgb "dark-turquoise" \
+,FNAMEPREFIX  . "-DSIZE_ui-ISIZE_ui-using_3_threads-cpus_1_2_3.txt" using 4:2 with linespoints linecolor rgb "dark-turquoise" \
+,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_3_threads-cpus_0_1_3.txt" using 4:2 with linespoints linecolor rgb "dark-turquoise" \
+,FNAMEPREFIX  . "-DSIZE_ui-ISIZE_ui-using_2_threads-cpus_0_1.txt" using 4:2 with linespoints linecolor rgb "dark-pink" \
+,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_2_threads-cpus_0_1.txt" using 4:2 with linespoints linecolor rgb "dark-pink" \
+,FNAMEPREFIX  . "-DSIZE_ui-ISIZE_ui-using_2_threads-cpus_2_3.txt" using 4:2 with linespoints linecolor rgb "dark-pink" \
+,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_2_threads-cpus_2_3.txt" using 4:2 with linespoints linecolor rgb "dark-pink" \
+,FNAMEPREFIX  . "-DSIZE_ui-ISIZE_ui-using_2_threads-cpus_0_2.txt" using 4:2 with linespoints linecolor rgb "dark-pink" \
+,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_2_threads-cpus_0_2.txt" using 4:2 with linespoints linecolor rgb "dark-pink" \
+,FNAMEPREFIX  . "-DSIZE_ui-ISIZE_ui-using_2_threads-cpus_0_3.txt" using 4:2 with linespoints linecolor rgb "dark-pink" \
+,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_2_threads-cpus_0_3.txt" using 4:2 with linespoints linecolor rgb "dark-pink" \
+,FNAMEPREFIX  . "-DSIZE_ui-ISIZE_ui-using_2_threads-cpus_1_2.txt" using 4:2 with linespoints linecolor rgb "dark-pink" \
+,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_2_threads-cpus_1_2.txt" using 4:2 with linespoints linecolor rgb "dark-pink" \
+,FNAMEPREFIX  . "-DSIZE_ui-ISIZE_ui-using_2_threads-cpus_1_3.txt" using 4:2 with linespoints linecolor rgb "dark-pink" \
+,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_2_threads-cpus_1_3.txt" using 4:2 with linespoints linecolor rgb "dark-pink" \
+,FNAMEPREFIX  . "-DSIZE_ui-ISIZE_ui-using_2_threads.txt"  using 4:2 with linespoints linecolor rgb "dark-pink" \
+,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_2_threads.txt"  using 4:2 with linespoints linecolor rgb "dark-pink" \
+,FNAMEPREFIX  . "-DSIZE_ui-ISIZE_ui-using_1_threads-cpus_0.txt"  using 4:2 with linespoints linecolor rgb "dark-magenta" \
+,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_0.txt"  using 4:2 with linespoints linecolor rgb "dark-magenta" \
+,FNAMEPREFIX  . "-DSIZE_ui-ISIZE_ui-using_1_threads-cpus_1.txt"  using 4:2 with linespoints linecolor rgb "dark-magenta" \
+,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_1.txt"  using 4:2 with linespoints linecolor rgb "dark-magenta" \
+,FNAMEPREFIX  . "-DSIZE_ui-ISIZE_ui-using_1_threads-cpus_2.txt"  using 4:2 with linespoints linecolor rgb "dark-magenta" \
+,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_2.txt"  using 4:2 with linespoints linecolor rgb "dark-magenta" \
+,FNAMEPREFIX  . "-DSIZE_ui-ISIZE_ui-using_1_threads-cpus_3.txt"  using 4:2 with linespoints linecolor rgb "dark-magenta" \
+,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_3.txt"  using 4:2 with linespoints linecolor rgb "dark-magenta" \
+,FNAMEPREFIX  . "-DSIZE_ui-ISIZE_ui-using_1_threads.txt"  using 4:2 with linespoints linecolor rgb "dark-magenta" \
+,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_1_threads.txt"  using 4:2 with linespoints linecolor rgb "dark-magenta"
 #    EOF
