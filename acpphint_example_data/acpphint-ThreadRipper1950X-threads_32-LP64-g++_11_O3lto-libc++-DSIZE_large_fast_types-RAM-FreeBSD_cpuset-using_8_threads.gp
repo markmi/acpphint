@@ -1,12 +1,12 @@
 reset session
 GNUTERM = "x11"
-COMPILERLIBRARY2="g++_10_O3lto-libc++"
-FNAME2PREFIX=    "ThreadRipper1950X-nonuma-FBSD-pg_ps/acpphint-ThreadRipper1950X-131072MiB-threads_32-LP64-FreeBSD_13_r363590M_64bit-" . COMPILERLIBRARY2
-COMPILERLIBRARY= "g++_10_O3lto-libc++-cpulockdown"
-FNAMEPREFIX=     "ThreadRipper1950X-nonuma-FBSD-pg_ps/acpphint-ThreadRipper1950X-131072MiB-threads_32-LP64-FreeBSD_13_r363590M_64bit-" . COMPILERLIBRARY
+COMPILERLIBRARY2="g++_11_O3lto-libc++"
+FNAME2PREFIX=    "ThreadRipper1950X-nonuma-FBSD-pg_ps/acpphint-ThreadRipper1950X-131072MiB-threads_32-LP64-FreeBSD_main_n247756_348c41d1815d_64bit-" . COMPILERLIBRARY2
+COMPILERLIBRARY= "g++_11_O3lto-libc++-cpulockdown"
+FNAMEPREFIX=     "ThreadRipper1950X-nonuma-FBSD-pg_ps/acpphint-ThreadRipper1950X-131072MiB-threads_32-LP64-FreeBSD_main_n247756_348c41d1815d_64bit-" . COMPILERLIBRARY
 RAMLOWERBOUND=   64
 RAMUPPERBOUND=   2**38
-QUIPSUPPERBOUND= 4e8
+QUIPSUPPERBOUND= 5e8
 TIMELOWERBOUND=  1e-8
 TIMEUPPERBOUND=  1.6
 set title "FNAME2PREFIX= " . FNAME2PREFIX . "\nFNAMEPREFIX= " . FNAMEPREFIX noenhanced
