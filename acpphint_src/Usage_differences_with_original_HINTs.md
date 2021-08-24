@@ -23,7 +23,7 @@ format appropriate for at least gnuplot):
 1.  median trail's mean time per lap in sec 
     (median from sort by mean time per lap)
 2.  QUality ImProvement/sec (a.k.a QUIPS)
-3.  QUality (a.k.a QUIPS * previously listed time per lap, 
+3.  Quality (a.k.a QUIPS * previously listed time per lap, 
     like in the original pthread HINT)
 4.  kernel vectors total memory use
     (not an understated figure like the original
