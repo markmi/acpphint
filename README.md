@@ -21,7 +21,7 @@ integration problem, Quality being `1/(high_bound-low_bound)`. So higher is
 better. As the total size of the kernel vectors grows noticeably beyond a cache
 size, the cache tends to become fairly ineffective. So the right hand side tends
 to be more memory subsystem bandwidth limited for the stopping constraints that
-I've used. (I used stopping-constraints that avoided using kernel vector sizes\
+I've used. (I used stopping-constraints that avoided using kernel vector sizes
 that would cause paging, for example.)
 
 The dark/bright is for without cpu lock down code and the light is for with cpu
