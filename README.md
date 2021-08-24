@@ -15,7 +15,7 @@ matching the original HINT benchmark's output files.
 I am not trying to collect/archive reports of results.
 
 An example gnuplot from OverDrive 1000 example data was:
-![OverDrive 1000, QUIPS vs. RAM](acpphint_example_data/acpphint-OverDrive_1000-threads_4-LP64-g++_10_O3lto-libc++-DSIZE_large_fast_types-RAM-using_2_threads-cpu_migration_FreeBSD.png)
+![OverDrive 1000, QUIPS vs. RAM](acpphint_example_data/acpphint-OverDrive_1000-threads_4-LP64-g++_10_O3lto-libc++-DSIZE_large_fast_types-RAM-using_2_threads-FreeBSD.png)
 QUality Improvement/sec (QUIPS) is based on QUality in a hierarchical
 integration problem, Quality being `1/(high_bound-low_bound)`. So higher is
 better. As the total size of the kernel vectors grows noticeably beyond a cache
@@ -31,7 +31,7 @@ is for the Data Type. `ISIZE` is for the Indexing Type (not double or other
 floating point types).
 
 Another plot from the same data files was:
-![OverDrive 1000, QUIPS vs. median of mean lap times](acpphint_example_data/acpphint-OverDrive_1000-threads_4-LP64-g++_10_O3lto-libc++-DSIZE_large_fast_types-time-using_2_threads-cpu_migration_FreeBSD.png)
+![OverDrive 1000, QUIPS vs. median of mean lap times](acpphint_example_data/acpphint-OverDrive_1000-threads_4-LP64-g++_10_O3lto-libc++-DSIZE_large_fast_types-time-using_2_threads-FreeBSD.png)
 
 This tends to show the latency involved for small sized kernel vectors, where
 single threaded does not measure any thread creation time or the like but the
