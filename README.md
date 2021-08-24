@@ -83,7 +83,7 @@ examples.) That code's license in turn sets the overall license to also be GLPv2
 (no earlier, no later), despite OpenBSD-vintage-ISC licensed source in
 `other_src_used/` also being built and linked in.
 ##### Changelog . . .
-###### [0.1.24] 2021-Jul-06 (start) . . . 2021-Aug-23 (final)
+###### [0.1.24] 2021-Jul-06 (start) . . . 2021-Aug-24 (final)
 Additions
 - Add HoneyComb tests and related files.
 
@@ -118,14 +118,14 @@ Changes
 
 Removals
 - The OverDrive 1000 and the other PowerMac11,2 "bit
-  the dust". I'll keep some plots around that involve
-  the OverDrive 1000, but possibly not the data files
-  and certainly not the makefile.OverDrive* files.
-  Similarly for the PowerMac11,2's now that I've no
-  access to working systems of that kind.
+  the dust". I've kept some plots around that involve
+  the OverDrive 1000, with just the matching data files,
+  but not the makefile.OverDrive* files. The PowerMac
+  files have all been removed.
 
-- Most older example data files, makefile.*
-  files, *.gp files, and the like have been removed.
+- Other than the OverDrive 1000 files that I've kept,
+  older example data files, makefile.* files, *.gp files,
+  and the like have been removed.
 
 ###### [0.1.23] 2020-Aug-03 (start) . . . 2020-Oct-30 (final)
 Additions
