@@ -11,7 +11,7 @@ TIMELOWERBOUND=  1e-8
 TIMEUPPERBOUND=  1.6
 #set title "FNAME2PREFIX= " . FNAME2PREFIX . "\nFNAMEPREFIX= " . FNAMEPREFIX noenhanced
 set title "FNAMEPREFIX= " . FNAMEPREFIX noenhanced
-set ylabel "QUality Improvement/sec"
+set ylabel "QUality ImProvement/sec"
 unset logscale y
 set ytics border mirror
 set mytics 5

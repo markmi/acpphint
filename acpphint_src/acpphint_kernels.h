@@ -122,7 +122,7 @@ struct KernelVectors
         // But the minimum NCHUNK requirement being 2 (possibly set higher)
         // means that no single cell spans scx*sxy for 1<nproc.
         //
-        // The QUality Improvement measure is (still) always based on comparing
+        // The QUality ImProvement measure is (still) always based on comparing
         // to the conceptual initial approximation bounds (for this code always
         // implicit)
         //

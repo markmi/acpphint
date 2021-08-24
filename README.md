@@ -17,7 +17,7 @@ I am not trying to collect/archive reports of results.
 An example gnuplot from OverDrive 1000 example data was:
 ![OverDrive 1000, QUIPS vs. RAM](acpphint_example_data/acpphint-OverDrive_1000-threads_4-LP64-g++_10_O3lto-libc++-DSIZE_large_fast_types-RAM-using_2_threads-FreeBSD.png)
 
-QUality Improvement/sec (QUIPS) is based on QUality in a hierarchical
+QUality ImProvement/sec (QUIPS) is based on QUality in a hierarchical
 integration problem, Quality being `1/(high_bound-low_bound)`. So higher is
 better. As the total size of the kernel vectors grows noticeably beyond a cache
 size, the cache tends to become fairly ineffective. So the right hand side tends
