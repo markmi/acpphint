@@ -79,7 +79,7 @@ back then, the intended license was GPLv2 without any "or later" status: exactly
 GPLv2. This is what sets the license for the source code in `acpphint_src/`. (I
 did not bother to make distinct licensing for the `acpphint_src/makefile.*`
 examples.) That code's license in turn sets the overall license to also be GLPv2 
-(no earlier, no later), despite OpenBSD_vintage-ISC licensed source in
+(no earlier, no later), despite OpenBSD-vintage-ISC licensed source in
 `other_src_used/` also being built and linked in.
 ##### Changelog . . .
 ###### [0.1.24] 2021-Jul-06 (start) . . . 2021-Aug-23 (final)
