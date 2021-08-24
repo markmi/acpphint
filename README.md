@@ -103,7 +103,7 @@ Changes
 - Update to g++ 11 use.
 
 - For just HoneyComb, also provide tests and supporting
-  files for the main FreeBSD system clang (12).
+  files for the main FreeBSD system clang++ (12).
 
 - Update minor things in the sources to silence new
   warnings and the like.
@@ -142,7 +142,7 @@ Additions
   stuck with the last that I tried.) Matching
   makefile.* files and the like are involved.
   I still founds that g++ produced more performant
-  benchmark code compared to clang for what I
+  benchmark code compared to clang++ for what I
   looked at.
 
 - Add some Fedora 32 ThreadRipper 1950X data, g++10
@@ -217,9 +217,9 @@ Removals
 ###### [0.1.19] 2020-Jan-12
 Additions
 - Add dual socket PowerMac3,6 G4 data, but based on
-  -maix-struct-return to match the odd(?) clang code
+  -maix-struct-return to match the odd(?) clang++ code
   generation for 32-bit powerpc. (May well have to
-  replace later if clang is "corrected" (but that 
+  replace later if clang++ is "corrected" (but that 
   would be another ABI change).
 
 Changes
