@@ -38,7 +38,7 @@ I just wanted to avoid covering yet more licensing criteria.)
 files for example comparisons via a plot (using \* to shorten the
 example name):
 ```
-acpphint-OverDrive_1000-*_large_fast_types-RAM-using_2_threads-cpu_migration_FreeBSD.gp
+acpphint-OverDrive_1000-*_large_fast_types-RAM-using_2_threads-FreeBSD.gp
 ```
 ##### Example gnuplot usage (happens to be from macOS) . . .
 Using load to make plots via `*.gp` files:
@@ -46,7 +46,7 @@ Using load to make plots via `*.gp` files:
 $ /usr/local/bin/gnuplot
 . . .
 gnuplot> cd '/Users/markmi/acpphint/acpphint_example_data/'
-gnuplot> load 'acpphint-OverDrive_1000-threads_4-LP64-g++_10_O3lto-libc++-DSIZE_large_fast_types-RAM-using_2_threads-cpu_migration_FreeBSD.gp'
+gnuplot> load 'acpphint-OverDrive_1000-threads_4-LP64-g++_10_O3lto-libc++-DSIZE_large_fast_types-RAM-using_2_threads-FreeBSD.gp'
 ```
 ##### gnuplot `*.gp` file details . .  .
 The example `*.gp` files are for `GNUTERM = "x11"`.
