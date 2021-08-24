@@ -12,7 +12,6 @@ This covers:
 6.  Original pthreads HINT notes . . .
 
 ##### General code notes . . .
-
 The code is C++20 code at the time this is being written.
 I generally will not make detailed comments on this
 aspect. The HINT kernel code has the smallest of the
@@ -49,8 +48,8 @@ can be used to get an idea where they all are for a set
 of the files.
 
 ##### Memory use tracking . . .
-
-The original serial HINT did the following (some lines split for readability):
+The original serial HINT did the following (some lines split
+for readability):
 ```
     rect = (RECT  *)malloc((MSIZE)(memry * sizeof(RECT)));
     errs = (DSIZE *)malloc((MSIZE)(memry
@@ -69,7 +68,7 @@ This understates the allocations and can understate the
 high end of what is accessed.
 
 pthreads HINT had similar problems for sizeof(DSIZE)
-and sizeof(ISIZE) in its calculations.
+and sizeof(ISIZE) use in its calculations.
 
 This variation on HINT uses the total size for its
 equivalent of all 3 and accounts for the
@@ -80,7 +79,6 @@ how much its use spanned of its equivalents of rect, errs,
 and ixes. (Relevant for development/testing.)
 
 ##### Types allowed for DSIZE and ISIZE . . .
-
 The original serial and pthread HINTs were not designed
 to handle unsigned integral types for DSIZE and ISIZE.
 This variation on HINT is designed to handled such. In
@@ -97,7 +95,6 @@ having the smaller maximum value in figuring out what
 size of cell grid to use.
 
 ##### Other issues in the original HINTs that were avoided. . .
-
 While this variation on Hint does not use such, I'll note
 that for the original serial and pthreads HINTs depends
 on the overflow behavior of signed integral types, which
@@ -214,7 +211,6 @@ low-side estimate, low by 1/gamut [viewed as a rational
 number]. gamut being the difference in the high vs. low bounds.)
 
 ##### Original serial HINT notes . . .
-
 The kernel code initialized with: `rect[0].ahi = dmax`
 (for when it==0).
 
@@ -225,15 +221,16 @@ dmax based still leads to a proper upper bound for the specific
 integration involved in HINT.
 
 When the it==0 case was split, the split ignored
-`rect[0].ahi` and assigned accurate figures. Things continued from there
-(0<it).
+`rect[0].ahi` and assigned accurate figures. Things continued
+from there (0<it).
 
 The serial use of the kernel routine made no other use of
 dmax.
 
 
 While this variation on Hint does not use such, I'll note
-that for the original serial HINT [gamut below is the difference between the high and low bounds]:
+that for the original serial HINT [gamut below is the difference
+between the high and low bounds]:
 ```
 		delq = (double)dmax / gamut - 1;
         quips = delq / t + 1.0 / gamut / t;
@@ -248,13 +245,11 @@ writes out a underestimate of the quality, low by
 1/gamut (viewed as a rational number).
 
 While this variation on Hint does not use such, I'll note
-that for the original serial HINT declares main as
-returning void instead of the required int. (Presumes
-wanting to avoiding implementation-defined status for
-HINT's code.)
+that the original serial HINT declares main as returning
+void instead of the required int. (Presumes wanting to avoiding
+implementation-defined status for HINT's code.)
 
 ##### Original pthreads HINT notes . . .
-
 The original pthreads HINT source only has the initial dx
 (scx/NCHUNK/nproc) known to be an integral (non-negative)
 power of 2 when (for k known):
@@ -264,7 +259,7 @@ power of 2 when (for k known):
 with NCHUNK and nproc each also being integral (non-negative)
 powers of 2 so scx was also a such a power of 2. This effectively
 restricted nproc (given default NCHUNK values) in order for dx to
-be an integral (non-negative) power of 2.
+be an integral (non-negative) power of 2\.
 
 There were no stated requirements for the NCHUNK adjustable and
 and nproc adjustable to each be powers of 2\.

@@ -7,20 +7,35 @@ This covers:
 
 ##### What `acpphint` is a variation on . . .
 
-`acpphint` is a variation on the original HINT serial and pthread benchmarks, but written in C++ and with various choices specific to my use. The benchmark program still generates files appropriate for gnuplot use, but not fully matching the original HINT benchmark's output files.
+`acpphint` is a variation on the original HINT serial and pthread benchmarks,
+but written in C++ and with various choices specific to my use. The benchmark
+program still generates files appropriate for gnuplot use, but not fully
+matching the original HINT benchmark's output files.
 
 I am not trying to collect/archive reports of results.
 
-An example gnuplot from an OverDrive 1000 is:
+An example gnuplot from an OverDrive 1000 was:
 ![OverDrive 1000, QUIPS vs. RAM](acpphint_example_data/acpphint-OverDrive_1000-threads_4-LP64-g++_10_O3lto-libc++-DSIZE_large_fast_types-RAM-using_2_threads-cpu_migration_FreeBSD.png)
-QUality Improvement/sec (QUIPS) is based on QUality in a hierarchical integration problem, Quality being `1/(high_bound-low_bound)`. So higher is better. As the total size of the kernel vectors grows noticably beyond a cache size, the cache tends to become fairly ineffective. So the right hand side tends to be memory subsystem bandwidth constrained for the stopping constraints that I've used. (I used stopping-constraints that avoided using kernel vector sizes that would cause paging, for example.)
+QUality Improvement/sec (QUIPS) is based on QUality in a hierarchical
+integration problem, Quality being `1/(high_bound-low_bound)`. So higher is
+better. As the total size of the kernel vectors grows noticeably beyond a cache
+size, the cache tends to become fairly ineffective. So the right hand side tends
+to be more memory subsystem bandwidth limited for the stopping constraints that
+I've used. (I used stopping-constraints that avoided using kernel vector sizes\
+that would cause paging, for example.)
 
-The dark/bright is for without cpu lock down code and the light is for with cpu lock down code. `_ull` for `unsigned long long`, `_ul` for `unsigned long`. (There are other data types measured/recorded, just not plotted here.) `DSIZE` is for the Data Type. `ISIZE` is for the Indexing Type (not double or other floating point types).
+The dark/bright is for without cpu lock down code and the light is for with cpu
+lock down code. `_ull` for `unsigned long long`, `_ul` for `unsigned long`.
+(There are other data types measured/recorded, just not plotted here.) `DSIZE`
+is for the Data Type. `ISIZE` is for the Indexing Type (not double or other
+floating point types).
 
-Another plot from the same data file is:
+Another plot from the same data file was:
 ![OverDrive 1000, QUIPS vs. median of mean lap times](acpphint_example_data/acpphint-OverDrive_1000-threads_4-LP64-g++_10_O3lto-libc++-DSIZE_large_fast_types-time-using_2_threads-cpu_migration_FreeBSD.png)
 
-This tends to show the latency involved for small sized kernel vectors, where single threaded does not measure any thread creation time or the like but the multi-threaded cases do.
+This tends to show the latency involved for small sized kernel vectors, where
+single threaded does not measure any thread creation time or the like but the
+multi-threaded cases do.
 
 ##### Where are the various README.md files?
 The various README.md files are:
@@ -30,7 +45,10 @@ acpphint_src/README.md          (the main README.md)
 acpphint_example_data/README.md (.gp gnulot usage too)
 other_src_used/README.md        (other source code used)
 ```
-(I normally have  a directory called `acpphint`  as the top of the tree of the acpphint source distribution.) It is the `acpphint_src/README.md` that covers how to build and how to run for the way the examples are set up. Material about using the example data files is in: `acpphint_example_data/README.md` .
+(I normally have  a directory called `acpphint`  as the top of the tree of the
+acpphint source distribution.) It is the `acpphint_src/README.md` that covers
+how to build and how to run for the way the examples are set up. Material about
+using the example data files is in: `acpphint_example_data/README.md` .
 
 ##### Licensing notes . . .
 The various LICENSE.md files are:
@@ -38,34 +56,64 @@ The various LICENSE.md files are:
 LICENSE.md                (the overall license: GPLv2)
 acpphint_src/LICENSE.md   (GPLv2 for HINT code variations)
 acpphint_example_data/LICENSE.md (None for the example data)
-other_src_used/LICENSE.md (OpenBSD-vintage ISC source)
+other_src_used/LICENSE.md (OpenBSD-vintage-ISC source)
 ```
-Overall, each `acpphint*-NAME` program is licensed as GPLv2 (not earlier, not later). But building the `acpphint related code does build some OpenBSD-vintage-ISC licensed source files, those under `other_src_used/ instead of under `acpphint_src/. Some resulting object files are linked into the acpphint\*-NAME related programs (GPLv2 programs).
+Overall, each `acpphint*-NAME` program is licensed as GPLv2 (not earlier, not
+later). But building the `acpphint related code does build some
+OpenBSD-vintage-ISC licensed source files, those under `other_src_used/ instead
+of under `acpphint_src/. Some resulting object files are linked into the
+acpphint\*-NAME related programs (GPLv2 programs).
 
-See the `acpphint_src/LICENSE.md` for the GPLv2 license text that applies to the files in `acpphint_src/` and to the binary files containing code from them. As I have the things structured, programs that do not have names that start with `acpphint do not contain code from acpphint_src/` ( just from other_src_used/` ).
+See the `acpphint_src/LICENSE.md` for the GPLv2 license text that applies to the 
+files in `acpphint_src/` and to the binary files containing code from them. As I 
+have the things structured, programs that do not have names that start with
+`acpphint do not contain code from acpphint_src/` ( just from `other_src_used/` ).
 
-See the `other_src_used/LICENSE.md` for the OpenBSD-vintage ISC license text that applies to just the source files in `other_src_used/` and to any binaries not containing code from `acpphint_src/` source files.
+See the `other_src_used/LICENSE.md` for the OpenBSD-vintage-ISC license text
+that applies to just the source files in `other_src_used/` and to any binaries
+not containing code from `acpphint_src/` source files.
 
-Note: The original HINT's copyright holder, Iowa State University Research Foundation, Inc., reported that, despite how HINT was mistakenly distributed back then, the intended license was GPLv2 without any "or later" status: exactly GPLv2. This is what sets the license for the source code in `acpphint_src/`. (I did not bother to make distinct licensing for the `acpphint_src/makefile.*` examples.) That code's license in turn sets the overall license to also be GLPv2 (no earlier, no later), despite OpenBSD_vintage ISC licensed source in `other_src_used/` also being built and linked in.
+Note: The original HINT's copyright holder, Iowa State University Research
+Foundation, Inc., reported that, despite how HINT was mistakenly distributed
+back then, the intended license was GPLv2 without any "or later" status: exactly 
+GPLv2. This is what sets the license for the source code in `acpphint_src/`. (I
+did not bother to make distinct licensing for the `acpphint_src/makefile.*`
+examples.) That code's license in turn sets the overall license to also be GLPv2 
+(no earlier, no later), despite OpenBSD_vintage-ISC licensed source in
+`other_src_used/` also being built and linked in.
 ##### Changelog . . .
-###### [0.1.24] 2021-Jul-06 (start) . . . 2021-???-?? (final)
+###### [0.1.24] 2021-Jul-06 (start) . . . 2021-Aug-23 (final)
 Additions
-- Add HoneyComb tests for at least FreeBSD.
+- Add HoneyComb tests and related files.
 
-- Add code based on C++20 --and some C++17 that is now
-  available: The output of the scales vs. the known
+- Add some code based on C++20 --and some C++17 that is
+  now available: The output of the scales vs. the known
   approximation to the result now uses std::to_chars
   for the floating point output when available.
 
-- Pending: Start a round of updating to more modern
-  FreeBSD and other OS vintages.
-
-- Pending: Add some gnuplot .gp files for exploring
-  the new data.
-
 Changes
+- A round of updating to more modern FreeBSD and, for
+  the HoneyComb and the MACCHIATObin Double Shot, Fedora
+  34. Only FreeBSD is tested in other contexts this time.
+
+- Add/replace gnuplot .gp files (for exploring just
+  the new data and the older OverDrive 1000 data
+  that I've kept).
+
+- Update to g++ 11 use.
+
+- For just HoneyComb, also provide tests and supporting
+  files for the main FreeBSD system clang (12).
+
 - Update minor things in the sources to silence new
-  warnings.
+  warnings and the like.
+
+- Update the FreeBSD "cpu lock down" code in
+  other_src_used to work within just whatever cpuset
+  is active for the process.
+
+- Update various \*.md files to track what has been
+  going on.
 
 Removals
 - The OverDrive 1000 and the other PowerMac11,2 "bit
@@ -75,18 +123,16 @@ Removals
   Similarly for the PowerMac11,2's now that I've no
   access to working systems of that kind.
 
-- Pending: Various older example data files, makefile.*
-  files, *.gp files, and the like will be removed.
-  Some of the old makefile.* files may end up still
-  around as examples.
+- Most older example data files, makefile.*
+  files, *.gp files, and the like have been removed.
 
 ###### [0.1.23] 2020-Aug-03 (start) . . . 2020-Oct-30 (final)
 Additions
-- Actaully get the FreeBSD and Linux cpu lock down
+- Actually get the FreeBSD and Linux cpu lock down
   code to be part of such builds and make the code
   actually not be rejected. Also have it work. (I
-  do not distrute binaries at all --nor that linux
-  specific source, avoiding sppending time on the
+  do not distribute binaries at all --nor that linux
+  specific source, avoiding spending time on the
   additional licensing criteria that may be involved.
   But I've checked that such linux code is possible.)
 
@@ -96,7 +142,7 @@ Additions
   stuck with the last that I tried.) Matching
   makefile.* files and the like are involved.
   I still founds that g++ produced more performant
-  benchamrk code compared to clang for what I
+  benchmark code compared to clang for what I
   looked at.
 
 - Add some Fedora 32 ThreadRipper 1950X data, g++10
@@ -117,9 +163,9 @@ Removals
   and the like have mostly been removed. Some of the old
   makefile.* files are around as examples.
 
-- The Pine64+ 2GB and PowerMac11,2 that allowed all
-  memory slots to be used "bit the dust". As such I'm
-  reverting to no coverage of old PowerMacs or the
+- The PowerMac11,2 that allowed all memory slots to be
+  used "bit the dust", as did the Pine64+ 2GB. As such
+  I'm reverting to no coverage of old PowerMacs or the
   Pine64+ 2GB. (FreeBSD has 32-bit power pc messed
   up currently.)
 
@@ -174,7 +220,7 @@ Additions
   -maix-struct-return to match the odd(?) clang code
   generation for 32-bit powerpc. (May well have to
   replace later if clang is "corrected" (but that 
-  would be antoehr ABI change).
+  would be another ABI change).
 
 Changes
 - Fix various typos and out of date comments.
@@ -212,7 +258,7 @@ Removals
 Additions
 - Add STOPTM_ALT macro for using -DSTOPTM_ALT=... to
   compile-time control the median trial time stopping
-  criterian. Also add NSAMP_ALT for using -DNSAMP_ALT=...
+  criterion. Also add NSAMP_ALT for using -DNSAMP_ALT=...
   in case it is needed to reach the STOPTM_ALT value.
   Add more ThreadRipper1950X example material based on
   using these. Still no .gp or .png for the
@@ -354,7 +400,7 @@ Removals
 Additions
 - Add a .gp file (for gnuplot use) that compares
   a MACCHIATObin Double Shot to a Raspberry Pi 4B:
-  Both have an A72, but with very diifferent memory
+  Both have an A72, but with very different memory
   subsystems, as well as different cpu clock rates.
 
 Changes
@@ -391,7 +437,7 @@ Additions
 
 Changes
 - Fix a typo in README.md to explore making a change.
-- Adjust makefile.common_part to indicaite v0.1.2 .
+- Adjust makefile.common_part to indicate v0.1.2 .
   
 Removals
 - None.

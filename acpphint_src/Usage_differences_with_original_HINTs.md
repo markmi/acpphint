@@ -11,13 +11,14 @@ The rest of this document covers:
 ##### Context . . .
 I am not trying to collect/archive reports of results.
 
-There are separate programs for reporting on some example
-kernel surveys and kernel sampling, as well as time "now" usage. These other programs are/were used as a basis for some testing and, for the most part, are not considered here.
+There are separate programs for reporting on some example kernel surveys and
+kernel sampling, as well as time "now" usage. These other programs are/were used 
+as a basis for some testing and, for the most part, are not considered here.
 
 ##### Data provided . . .
-
-This variation on HINT does not compute or present 'Net
-QUIPs' (QUality Improvement Per Second). It only provides data for making various plots (in a format appropriate for at least gnuplot):
+This variation on HINT does not compute or present 'Net QUIPs' (QUality
+Improvement Per Second). It only provides data for making various plots (in a
+format appropriate for at least gnuplot):
 
 1.  median trail's mean time per lap in sec 
     (median from sort by mean time per lap)
@@ -37,9 +38,10 @@ the rect vector) and bandwidth.
 Some gnuplot commands are thus distinct for this variation
 on HINT.
 
-One run of this HINT variant outputs files for several
-DSIZE/ISIZE/threads-use combinations. The code can
-be adjusted to run and output just ones of interest.
+One run of this HINT variant by default outputs files for
+several DSIZE/ISIZE/threads-use combinations. The code can
+be adjusted to run and output just ones of interest or
+additional non-default ones.
 
 For DSIZE/ISIZE combinations that are big enough, one
 run of this HINT variant can output files for both
@@ -47,7 +49,6 @@ serial HINT and for examples of various multi-threaded
 HINT counts.
 
 ##### argv[?] use . . .
-
 The output files have the argv[0] text as the file name
 prefix and text after that identifying the specific test.
 The example makefile.* files generate very long command
@@ -65,13 +66,14 @@ For any of those that are missing, the defaults are:
 
 1.  ".txt" for argv[1]
 2.  3 for argv[2]
-3.  For argv[3]: use the hardware concurrency count from C++ (or, for cpulockdown variants, elsewhere); also do a serial HINT (single thread) run as well
+3.  For argv[3]: use the hardware concurrency count from C++
+    (or, for cpulockdown variants, elsewhere); also do a serial
+    HINT (single thread) run as well
 
 Other than the potential serial run, the thread counts drop by
 a factor of 2 (integer division), starting at the maximum.
 
 ##### The source code adjustable-items . . .
-
 The areas with adjustable items are labeled with the text:
 ```
 // Edit as needed
@@ -85,7 +87,6 @@ can be used to get an idea where they all are for a set of
 the files.
 
 ##### Time handling . . .
-
 The original serial HINT and pthreads HINT tried to
 eliminate examples of "less work took more time"
 by retrying or eventually taking a value from another
@@ -113,8 +114,8 @@ what the original HINTs called RUNTM. It also
 uses the C++ steady clock by default.
 
 ##### Calculating kernel vector memory use . . .
-
-The original serial HINT did the following (lines split for readability):
+The original serial HINT did the following (lines split
+for readability):
 ```
     rect = (RECT  *)malloc((MSIZE)(memry * sizeof(RECT)));
     errs = (DSIZE *)malloc((MSIZE)(memry
@@ -135,7 +136,6 @@ This variation on HINT uses the total sizes for its
 equivalent of all 3, including the sizeof(std::vector<. . .>)'s.
 
 ##### Types allowed for DSIZE and ISIZE . . .
-
 The original serial and pthread HINTs were not designed
 to handle unsigned integral types for DSIZE and ISIZE.
 This variation on HINT is designed to handled such. In
@@ -149,7 +149,6 @@ type is used but is treated as having the smaller maximum
 value in figuring out what size of cell grid to use.
 
 ##### License notes . . .
-
 According to the orignal HINT's copyright holder,
 Iowa State University Research Foundation, Inc.,
 the intended license for HINT was always GPLv2
