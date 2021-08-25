@@ -25,10 +25,9 @@ to be more memory subsystem bandwidth limited for the stopping constraints that
 I've used. (I used stopping-constraints that avoided using kernel vector sizes
 that would cause paging, for example.)
 
-The dark/bright is for without cpu lock down code and the light is for with cpu
-lock down code. `_ull` for `unsigned long long`, `_ul` for `unsigned long`.
-`DSIZE` is for the Data Type. `ISIZE` is for the Indexing Type (not double or
-other floating point types).
+`_ull` is for `unsigned long long`, `_ul` is for `unsigned long`. `DSIZE` is for
+the Data Type. `ISIZE` is for the Indexing Type (not double or other floating
+point types).
 
 Another plot from the same data files was:
 ![OverDrive 1000, QUIPS vs. median of mean lap times](acpphint_example_data/acpphint-OverDrive_1000-threads_4-LP64-g++_10_O3lto-libc++-DSIZE_large_fast_types-time-using_2_threads-FreeBSD.png)
