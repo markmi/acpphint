@@ -38,12 +38,12 @@ plot [RAMLOWERBOUND:RAMUPPERBOUND][0:QUIPSUPPERBOUND] \
 ,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_4_threads-cpus_kx8_kx8p2_0_2_8_10.txt"      using 4:2 with linespoints linecolor rgb "dark-blue" \
 ,FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_4_threads-cpus_kx4s_0_12.txt"             using 4:2 with linespoints linecolor rgb "dark-blue" \
 ,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_4_threads-cpus_kx4s_0_12.txt"               using 4:2 with linespoints linecolor rgb "dark-blue" \
-,FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_4_threads-cpus_kx16_kx16p4_0_4_16_20.txt" using 4:2 with linespoints linecolor rgb "magenta" \
-,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_4_threads-cpus_kx16_kx16p4_0_4_16_20.txt"   using 4:2 with linespoints linecolor rgb "magenta" \
+,FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_4_threads-cpus_kx16_kx16p4_0_4_16_20.txt" using 4:2 with linespoints linecolor rgb "dark-magenta" \
+,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_4_threads-cpus_kx16_kx16p4_0_4_16_20.txt"   using 4:2 with linespoints linecolor rgb "dark-magenta" \
 ,FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_4_threads-cpus_kx16_kx16p2_0_2_16_18.txt" using 4:2 with linespoints linecolor rgb "dark-magenta" \
 ,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_4_threads-cpus_kx16_kx16p2_0_2_16_18.txt"   using 4:2 with linespoints linecolor rgb "dark-magenta" \
-,FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_4_threads.txt" using 4:2 with linespoints linecolor rgb "light-pink" \
-,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_4_threads.txt"   using 4:2 with linespoints linecolor rgb "light-pink" \
+,FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_4_threads.txt" using 4:2 with linespoints linecolor rgb "dark-pink" \
+,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_4_threads.txt"   using 4:2 with linespoints linecolor rgb "dark-pink" \
 ,FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_4_threads-cpus_kx8s_0_24.txt"             using 4:2 with linespoints linecolor rgb "dark-turquoise" \
 ,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_4_threads-cpus_kx8s_0_24.txt"               using 4:2 with linespoints linecolor rgb "dark-turquoise" \
 ,FNAMEPREFIX . "-DSIZE_ull-ISIZE_ull-using_1_threads.txt" using 4:2 with linespoints linecolor rgb "light-grey" \
