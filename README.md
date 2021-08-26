@@ -29,6 +29,10 @@ that would cause paging, for example.)
 the Data Type. `ISIZE` is for the Indexing Type (not double or other floating
 point types).
 
+For more examples of this type of plot with some notes about the plots, see:
+
+[Some acpphint curves with notes, QUIPS vs. RAM](Some_acpphint_curves_with_notes.md)
+
 Another plot from the same data files was:
 ![OverDrive 1000, QUIPS vs. median of mean lap times](acpphint_example_data/acpphint-OverDrive_1000-threads_4-LP64-g++_10_O3lto-libc++-DSIZE_large_fast_types-time-using_2_threads-FreeBSD.png)
 
