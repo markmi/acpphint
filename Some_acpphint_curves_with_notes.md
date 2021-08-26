@@ -176,4 +176,4 @@ smaller cache levels).
 
 Notes:
 
-0. The x range for this plot is not the same as for the other 1950X plots.
+0. The y range for this plot is not the same as for the other 1950X plots.
