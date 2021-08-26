@@ -168,7 +168,4 @@ smaller cache levels).
 
 Notes:
 
-0. The x and y ranges for all the plots for 1950X CCD/CCX 2/4 thread
-   combinations are the same, making comparison/contrast easier.
-1. The light green curves were light grey in the other 1950X 2/4 thread
-   plots.
+0. The x ranges for this plot is not the same as for the other 1950X plots.
