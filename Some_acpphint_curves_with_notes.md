@@ -14,7 +14,7 @@ This covers:
 
 This document presumes familiarity with some material from:
 
-![README](README.md)
+[README](README.md)
 
 ##### Cortex-A53 cores with and without smaller cache level(s) being shared . . .
 In this plot:
