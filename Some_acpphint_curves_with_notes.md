@@ -1,5 +1,6 @@
 ##### Some_acpphint_curves_with_notes.md
 This covers:
+
 0. Cortex-A53 cores with and without smaller cache level(s) being shared
    (old OverDrive 1000 example, repeated cpu migration allowed)
 1. ThreadRipper 1950X: 1CCD 1CCX 2/4 hardware threads
@@ -17,6 +18,7 @@ This document presumes familiarity with some material from:
 
 ##### Cortex-A53 cores with and without smaller cache level(s) being shared . . .
 In this plot:
+
 0. The dark goldenrod curves are for smaller RAM cache levels being shared.
 1. The dark blue curves are for no RAM cache levels shared.
 2. The dark grey curves are just for a sense of scale vs. single threaded and
@@ -28,6 +30,7 @@ the process was assigned. The curve names identify the FreeBSD CPUs assigned.
 ![OverDrive 1000, QUIPS vs. RAM](acpphint_example_data/acpphint-OverDrive_1000-threads_4-LP64-g++_10_O3lto-libc++-DSIZE_large_fast_types-RAM-using_2_threads-FreeBSD.png)
 
 Effects of competing for the shared RAM cache level(s) can be seen:
+
 0. Thread creation takes somewhat less time.
    (left side of goldenrod vs. blue curves)
 1. Computing is somewhat slower.
@@ -36,12 +39,14 @@ Effects of competing for the shared RAM cache level(s) can be seen:
 This will contrast with the ThreadRipper 1950X SMT pairs.
 
 Notes:
+
 0. The x and y ranges for plotting are different from the later ThreadRipper
    1950X examples.
 1. The data is older because the OverDrive 1000 "bit the dust".
 
 ##### ThreadRipper 1950X: 1CCD 1CCX 2/4 hardware threads
 In this plot:
+
 0. Pink and Magenta are for 2 (hardware) threads.
 1. Goldenrod and Blue are for 4 (hardware) threads.
 2. Pink and Goldenrod are for SMT pairs being used (0/1, 0/1/4/5).
@@ -75,6 +80,7 @@ Notes:
 
 ##### ThreadRipper 1950X: 1CCD 2CCX 2/4 hardware threads
 In this plot:
+
 0. Pink and Magenta are for 2 (hardware) threads.
 1. Goldenrod and Blue are for 4 (hardware) threads.
 2. Pink and Goldenrod are for SMT pairs being used (0/1/8/9).
@@ -107,6 +113,7 @@ Notes:
 
 ##### ThreadRipper 1950X: 2CCD 2CCX/4CCX 2/4 hardware threads
 In this plot:
+
 0. Pink and Magenta are for 2 (hardware) threads.
 1. Goldenrod, Blue, and Green are for 4 (hardware) threads.
 2. Goldenrod is for SMT pairs being used (0/1/16/17).
@@ -141,6 +148,7 @@ Notes:
 
 #####  ThreadRipper 1950X: no process cpuset restriction 4/8/16/32 hardware threads
 In this plot:
+
 0. Turquoise is for 4 (hardware) threads (0/8/16/24).
 1. Pink is for 8 (hardware) threads (0/4/8/12/16/20/24/28).
 2. Green is for 16 (hardware) threads (0/2/4/6/8/10/12/. . ./28/30).
