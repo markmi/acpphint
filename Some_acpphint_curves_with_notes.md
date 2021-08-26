@@ -155,7 +155,7 @@ Notes:
    combinations are the same, making comparison/contrast easier.
 1. The curves for allowing (hardware) thread migration without SMT involvement
    show very clear evidence of around n*512 KiByte, 16 MiByte, and 32 MiByte RAM 
-   cache changes, n being the number of (hardware) threads, except for the 2CCD 4 CCX case that has more cache per (hardware) thread.
+   cache changes, n being the number of (hardware) threads, except for the 2CCD 4CCX case that has more cache per (hardware) thread.
 2. The shared smaller cache level(s) for SMT usage have competing usage and make
    them show messier transitions.
 3. The light green curves were dark grey in the other 1950X 2/4 thread
