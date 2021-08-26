@@ -164,7 +164,7 @@ Another distinction for 2CCD 2CCX/4CXX shown is for 32 (hardware) threads:
 32 is also based on SMT pairs use (and the matching sharing of sufficiently
 smaller cache levels).
 
-![1950X 2CCD 2CCX/4CCX 2/4 (hw) threads, QUIPS vs. RAM](acpphint_example_data/acpphint-ThreadRipper1950X-threads_32-LP64-g++_11_O3lto-libc++-DSIZE_large_fast_types-RAM-FreeBSD_cpuset-2CCD_2_4_CCX_2_4_hwthreads.png)
+![1950X 2CCD 2CCX/4CCX 2/4 (hw) threads, QUIPS vs. RAM](acpphint_example_data/acpphint-ThreadRipper1950X-threads_32-LP64-g++_11_O3lto-libc++-DSIZE_large_fast_types-RAM-FreeBSD-using_4_8_16_32_threads.png)
 
 Notes:
 
