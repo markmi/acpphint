@@ -74,7 +74,7 @@ involving such SMT pairs.
 
 ![1950X 1CCD 1CCX 2/4 (hw) threads, QUIPS vs. RAM](acpphint_example_data/acpphint-ThreadRipper1950X-threads_32-LP64-g++_11_O3lto-libc++-DSIZE_large_fast_types-RAM-FreeBSD_cpuset-1CCD_1CCX_2_4_hwthreads.png)
 
-The combined effects of SMT pair use and competing for the shard RAM cache
+The combined effects of SMT pair use and competing for the shared RAM cache
 level(s) can be seen to have a large effect: SMT pair use is far slower than
 avoiding such use.
 
