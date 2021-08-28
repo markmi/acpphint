@@ -1,7 +1,7 @@
 ##### Some_acpphint_curves_with_notes.md
 This covers:
 
-0. Cortex-A53 cores with and without smaller cache level(s) being shared
+0. Cortex-A57 cores with and without smaller cache level(s) being shared
    (old OverDrive 1000 example, repeated cpu migration allowed)
 1. ThreadRipper 1950X: 1CCD 1CCX 2/4 hardware threads
    (SMT pairs being used vs. not; SMT pairs also share smaller cache levels)
@@ -16,7 +16,7 @@ This document presumes familiarity with some material from:
 
 [README](README.md)
 
-##### Cortex-A53 cores with and without smaller cache level(s) being shared . . .
+##### Cortex-A57 cores with and without smaller cache level(s) being shared . . .
 In this plot:
 
 0. The dark goldenrod curves are for smaller RAM cache levels being shared.
