@@ -85,7 +85,7 @@ examples.) That code's license in turn sets the overall license to also be GLPv2
 (no earlier, no later), despite OpenBSD-vintage-ISC licensed source in
 `other_src_used/` also being built and linked in.
 ##### Changelog . . .
-###### [0.1.24] 2021-Jul-06 (start) . . . 2021-Aug-24 (final)
+###### [0.1.24] 2021-Jul-06 (start) . . . 2021-Aug-28 (final)
 Additions
 - Add HoneyComb tests and related files.
 
