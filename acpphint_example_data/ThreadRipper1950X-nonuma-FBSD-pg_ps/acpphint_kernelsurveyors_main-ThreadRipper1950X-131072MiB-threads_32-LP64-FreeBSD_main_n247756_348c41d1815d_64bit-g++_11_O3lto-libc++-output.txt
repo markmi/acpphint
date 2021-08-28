@@ -21,8 +21,8 @@ krr.kernel_result.RECT_maxjo:           63
 krr.kernel_result.ixes_errs_maxiq:      126
 krr.kernel_result.RECT_total_used:      64
 krr.kernel_result.ixes_errs_used_each:  127
-krr.total_sec_for_laps_for_median:      3.948e-06
-krr.tscout():                           1.316e-06
+krr.total_sec_for_laps_for_median:      3.917e-06
+krr.tscout():                           1.30567e-06
 krr.vectors_total_bytes:                6'728
 VectorsUsedBytes:                       6'712
 
@@ -47,8 +47,8 @@ krr.kernel_result.RECT_maxjo:           3
 krr.kernel_result.ixes_errs_maxiq:      3
 krr.kernel_result.RECT_total_used:      128
 krr.kernel_result.ixes_errs_used_each:  128
-krr.total_sec_for_laps_for_median:      0.00137283
-krr.tscout():                           0.000457611
+krr.total_sec_for_laps_for_median:      0.00352069
+krr.tscout():                           0.00117356
 krr.vectors_total_bytes:                15'616
 VectorsUsedBytes:                       11'336
 
@@ -73,8 +73,8 @@ krr.kernel_result.RECT_maxjo:           63
 krr.kernel_result.ixes_errs_maxiq:      126
 krr.kernel_result.RECT_total_used:      64
 krr.kernel_result.ixes_errs_used_each:  127
-krr.total_sec_for_laps_for_median:      3.988e-06
-krr.tscout():                           1.32933e-06
+krr.total_sec_for_laps_for_median:      3.968e-06
+krr.tscout():                           1.32267e-06
 krr.vectors_total_bytes:                6'728
 VectorsUsedBytes:                       6'712
 
@@ -99,8 +99,8 @@ krr.kernel_result.RECT_maxjo:           3
 krr.kernel_result.ixes_errs_maxiq:      3
 krr.kernel_result.RECT_total_used:      128
 krr.kernel_result.ixes_errs_used_each:  128
-krr.total_sec_for_laps_for_median:      0.00131104
-krr.tscout():                           0.000437012
+krr.total_sec_for_laps_for_median:      0.00111411
+krr.tscout():                           0.000371371
 krr.vectors_total_bytes:                15'616
 VectorsUsedBytes:                       11'336
 

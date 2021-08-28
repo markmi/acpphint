@@ -5,7 +5,7 @@ cpp_clockinfo_main version: acpphint_0.1.24
 is_steady:                           true
 period 'resolution' : 1 ns
 duration max        : 9'223'372'036'854'775'807 ns
-now (from epoch)    : 363'415'410'044 ns
+now (from epoch)    : 343'343'794'885 ns
 
 
 main thread by itself:
@@ -27,68 +27,256 @@ Other information for reference:
 
 small scale duration variability     : 10 ns
 
-largest observed duration            : 2'054 ns
+largest observed duration            : 6'302 ns
 (with min duration still included)
 
 
       list  #Examples       duration   fraction
   position  of durat.           (ns)    with <=
 
-         0  1'253'274             30 0.62663700
-         1     76'484             31 0.66487900
-         2    618'621             40 0.97418950
-         3     51'247             41 0.99981300
-         4        193             50 0.99990950
-         5         29             51 0.99992400
-         6         58             60 0.99995300
-         7          8             61 0.99995700
-         8          1             70 0.99995750
-         9          2             80 0.99995850
-        10          4             90 0.99996050
-        11          1            100 0.99996100
-        12          1            170 0.99996150
-        13          1            341 0.99996200
-        14          1            360 0.99996250
-        15          1            591 0.99996300
-        16          1            601 0.99996350
-        17          1            621 0.99996400
-        18          2            642 0.99996500
-        19          2            651 0.99996600
-        20          2            652 0.99996700
-        21          4            661 0.99996900
-        22          1            662 0.99996950
-        23         12            671 0.99997550
-        24          2            672 0.99997650
-        25          2            681 0.99997750
-        26          7            691 0.99998100
-        27          3            692 0.99998250
-        28          2            701 0.99998350
-        29          2            702 0.99998450
-        30          1            711 0.99998500
-        31          2            712 0.99998600
-        32          3            721 0.99998750
-        33          1            722 0.99998800
-        34          2            731 0.99998900
-        35          1            732 0.99998950
-        36          1            741 0.99999000
-        37          1            752 0.99999050
-        38          1            782 0.99999100
-        39          1            791 0.99999150
-        40          2            841 0.99999250
-        41          1            882 0.99999300
-        42          1            892 0.99999350
-        43          1            911 0.99999400
-        44          1            921 0.99999450
-        45          1            941 0.99999500
-        46          2            942 0.99999600
-        47          1          1'062 0.99999650
-        48          1          1'122 0.99999700
-        49          1          1'333 0.99999750
-        50          1          1'373 0.99999800
-        51          1          1'643 0.99999850
-        52          1          1'703 0.99999900
-        53          1          1'713 0.99999950
-        54          1          2'054 1.00000000
+         0  1'321'051             30 0.66052550
+         1     80'283             31 0.70066700
+         2    549'235             40 0.97528450
+         3     45'407             41 0.99798800
+         4         35             50 0.99800550
+         5          6             51 0.99800850
+         6          1            131 0.99800900
+         7          1            260 0.99800950
+         8          1            290 0.99801000
+         9          1            571 0.99801050
+        10          1            572 0.99801100
+        11          1            601 0.99801150
+        12          2            611 0.99801250
+        13          3            612 0.99801400
+        14          2            621 0.99801500
+        15          3            622 0.99801650
+        16          8            631 0.99802050
+        17          2            632 0.99802150
+        18         15            641 0.99802900
+        19          6            651 0.99803200
+        20          2            652 0.99803300
+        21          4            661 0.99803500
+        22          1            662 0.99803550
+        23          3            671 0.99803700
+        24          2            681 0.99803800
+        25          1            691 0.99803850
+        26          1            721 0.99803900
+        27          1            741 0.99803950
+        28         23            761 0.99805100
+        29         12            762 0.99805700
+        30         60            771 0.99808700
+        31         56            772 0.99811500
+        32        114            781 0.99817200
+        33        125            782 0.99823450
+        34        120            791 0.99829450
+        35        124            792 0.99835650
+        36        112            801 0.99841250
+        37        132            802 0.99847850
+        38        121            811 0.99853900
+        39        136            812 0.99860700
+        40        110            821 0.99866200
+        41        138            822 0.99873100
+        42         91            831 0.99877650
+        43        123            832 0.99883800
+        44         65            841 0.99887050
+        45         84            842 0.99891250
+        46         23            851 0.99892400
+        47         58            852 0.99895300
+        48         22            861 0.99896400
+        49         41            862 0.99898450
+        50          9            871 0.99898900
+        51         19            872 0.99899850
+        52          7            881 0.99900200
+        53         27            882 0.99901550
+        54         11            891 0.99902100
+        55         23            892 0.99903250
+        56         15            901 0.99904000
+        57         38            902 0.99905900
+        58         15            911 0.99906650
+        59         39            912 0.99908600
+        60          7            921 0.99908950
+        61         39            922 0.99910900
+        62          8            931 0.99911300
+        63         34            932 0.99913000
+        64         11            941 0.99913550
+        65         45            942 0.99915800
+        66         10            951 0.99916300
+        67         45            952 0.99918550
+        68          8            961 0.99918950
+        69         63            962 0.99922100
+        70          6            971 0.99922400
+        71         45            972 0.99924650
+        72          1            973 0.99924700
+        73         11            981 0.99925250
+        74         43            982 0.99927400
+        75          1            983 0.99927450
+        76          6            991 0.99927750
+        77         37            992 0.99929600
+        78          1            993 0.99929650
+        79          6          1'001 0.99929950
+        80         41          1'002 0.99932000
+        81          6          1'011 0.99932300
+        82         32          1'012 0.99933900
+        83          4          1'021 0.99934100
+        84         41          1'022 0.99936150
+        85          1          1'023 0.99936200
+        86          3          1'031 0.99936350
+        87         37          1'032 0.99938200
+        88          2          1'033 0.99938300
+        89          1          1'041 0.99938350
+        90         35          1'042 0.99940100
+        91          2          1'043 0.99940200
+        92          2          1'051 0.99940300
+        93         49          1'052 0.99942750
+        94          4          1'061 0.99942950
+        95         45          1'062 0.99945200
+        96          3          1'063 0.99945350
+        97          1          1'071 0.99945400
+        98         37          1'072 0.99947250
+        99          4          1'073 0.99947450
+       100         39          1'082 0.99949400
+       101          7          1'083 0.99949750
+       102          1          1'091 0.99949800
+       103         50          1'092 0.99952300
+       104          2          1'093 0.99952400
+       105         43          1'102 0.99954550
+       106          1          1'103 0.99954600
+       107         49          1'112 0.99957050
+       108          9          1'113 0.99957500
+       109         44          1'122 0.99959700
+       110          6          1'123 0.99960000
+       111         51          1'132 0.99962550
+       112          9          1'133 0.99963000
+       113         35          1'142 0.99964750
+       114          2          1'143 0.99964850
+       115         25          1'152 0.99966100
+       116          9          1'153 0.99966550
+       117         22          1'162 0.99967650
+       118          7          1'163 0.99968000
+       119         17          1'172 0.99968850
+       120          8          1'173 0.99969250
+       121         19          1'182 0.99970200
+       122          7          1'183 0.99970550
+       123         16          1'192 0.99971350
+       124          6          1'193 0.99971650
+       125         12          1'202 0.99972250
+       126          4          1'203 0.99972450
+       127          8          1'212 0.99972850
+       128          2          1'213 0.99972950
+       129          9          1'222 0.99973400
+       130          7          1'223 0.99973750
+       131          9          1'232 0.99974200
+       132          5          1'233 0.99974450
+       133          5          1'242 0.99974700
+       134          3          1'243 0.99974850
+       135          7          1'252 0.99975200
+       136          3          1'253 0.99975350
+       137          8          1'262 0.99975750
+       138          6          1'263 0.99976050
+       139         13          1'272 0.99976700
+       140         11          1'273 0.99977250
+       141          6          1'282 0.99977550
+       142          9          1'283 0.99978000
+       143         10          1'292 0.99978500
+       144         14          1'293 0.99979200
+       145          8          1'302 0.99979600
+       146         10          1'303 0.99980100
+       147         17          1'312 0.99980950
+       148         14          1'313 0.99981650
+       149         10          1'322 0.99982150
+       150          6          1'323 0.99982450
+       151          9          1'332 0.99982900
+       152         13          1'333 0.99983550
+       153          7          1'342 0.99983900
+       154          8          1'343 0.99984300
+       155          5          1'352 0.99984550
+       156          5          1'353 0.99984800
+       157          3          1'362 0.99984950
+       158         12          1'363 0.99985550
+       159          7          1'372 0.99985900
+       160          3          1'373 0.99986050
+       161          3          1'382 0.99986200
+       162          5          1'383 0.99986450
+       163          1          1'392 0.99986500
+       164         12          1'393 0.99987100
+       165          4          1'402 0.99987300
+       166          5          1'403 0.99987550
+       167          1          1'412 0.99987600
+       168          2          1'413 0.99987700
+       169          3          1'422 0.99987850
+       170          5          1'423 0.99988100
+       171          1          1'432 0.99988150
+       172          7          1'433 0.99988500
+       173          2          1'442 0.99988600
+       174          6          1'443 0.99988900
+       175          2          1'452 0.99989000
+       176          6          1'453 0.99989300
+       177          2          1'462 0.99989400
+       178          8          1'463 0.99989800
+       179          1          1'472 0.99989850
+       180         10          1'473 0.99990350
+       181          1          1'482 0.99990400
+       182         11          1'483 0.99990950
+       183          3          1'492 0.99991100
+       184         14          1'493 0.99991800
+       185          2          1'502 0.99991900
+       186         15          1'503 0.99992650
+       187         13          1'513 0.99993300
+       188          7          1'523 0.99993650
+       189          7          1'533 0.99994000
+       190          6          1'543 0.99994300
+       191          9          1'553 0.99994750
+       192          2          1'563 0.99994850
+       193         10          1'573 0.99995350
+       194          1          1'583 0.99995400
+       195          3          1'593 0.99995550
+       196          4          1'603 0.99995750
+       197          1          1'604 0.99995800
+       198          5          1'613 0.99996050
+       199          3          1'623 0.99996200
+       200          5          1'633 0.99996450
+       201         10          1'643 0.99996950
+       202          4          1'653 0.99997150
+       203          2          1'654 0.99997250
+       204          4          1'663 0.99997450
+       205          5          1'673 0.99997700
+       206          2          1'683 0.99997800
+       207          1          1'684 0.99997850
+       208          3          1'693 0.99998000
+       209          2          1'713 0.99998100
+       210          1          1'723 0.99998150
+       211          2          1'724 0.99998250
+       212          1          1'733 0.99998300
+       213          1          1'753 0.99998350
+       214          1          1'754 0.99998400
+       215          3          1'763 0.99998550
+       216          1          1'773 0.99998600
+       217          1          1'774 0.99998650
+       218          1          1'793 0.99998700
+       219          2          1'803 0.99998800
+       220          1          1'814 0.99998850
+       221          1          1'823 0.99998900
+       222          1          1'843 0.99998950
+       223          1          1'844 0.99999000
+       224          1          1'854 0.99999050
+       225          1          1'874 0.99999100
+       226          1          1'913 0.99999150
+       227          1          1'974 0.99999200
+       228          1          1'993 0.99999250
+       229          1          1'994 0.99999300
+       230          2          2'054 0.99999400
+       231          1          2'135 0.99999450
+       232          1          2'254 0.99999500
+       233          1          2'455 0.99999550
+       234          1          2'464 0.99999600
+       235          1          3'306 0.99999650
+       236          1          5'160 0.99999700
+       237          1          5'220 0.99999750
+       238          1          5'390 0.99999800
+       239          1          5'551 0.99999850
+       240          1          5'701 0.99999900
+       241          1          6'072 0.99999950
+       242          1          6'302 1.00000000
 
 Other threads (parallel, if any):
 
@@ -109,280 +297,7 @@ Other information for reference:
 
 small scale duration variability     : 20 ns
 
-largest observed duration            : 5'881 ns
-(with min duration still included)
-
-
-Clock tick is not slow relative to execution:
-no zero durations observed.
-
-Of 2'000'000 near 'back to back now()' durations:
-
-minimum duration                     : 40 ns
-(to be subtracted out from activity durations)
-
-target approx. min actvity duration  : 1'000 ns
-(with min duration still included)
-
-target with min duration subtracted  : 960 ns
-
-Other information for reference:
-
-small scale duration variability     : 10 ns
-
-largest observed duration            : 5'010 ns
-(with min duration still included)
-
-
-Clock tick is not slow relative to execution:
-no zero durations observed.
-
-Of 2'000'000 near 'back to back now()' durations:
-
-minimum duration                     : 40 ns
-(to be subtracted out from activity durations)
-
-target approx. min actvity duration  : 1'000 ns
-(with min duration still included)
-
-target with min duration subtracted  : 960 ns
-
-Other information for reference:
-
-small scale duration variability     : 10 ns
-
-largest observed duration            : 6'653 ns
-(with min duration still included)
-
-
-Clock tick is not slow relative to execution:
-no zero durations observed.
-
-Of 2'000'000 near 'back to back now()' durations:
-
-minimum duration                     : 40 ns
-(to be subtracted out from activity durations)
-
-target approx. min actvity duration  : 1'000 ns
-(with min duration still included)
-
-target with min duration subtracted  : 960 ns
-
-Other information for reference:
-
-small scale duration variability     : 10 ns
-
-largest observed duration            : 15'069 ns
-(with min duration still included)
-
-
-Clock tick is not slow relative to execution:
-no zero durations observed.
-
-Of 2'000'000 near 'back to back now()' durations:
-
-minimum duration                     : 40 ns
-(to be subtracted out from activity durations)
-
-target approx. min actvity duration  : 1'100 ns
-(with min duration still included)
-
-target with min duration subtracted  : 1'060 ns
-
-Other information for reference:
-
-small scale duration variability     : 11 ns
-
-largest observed duration            : 5'140 ns
-(with min duration still included)
-
-
-Clock tick is not slow relative to execution:
-no zero durations observed.
-
-Of 2'000'000 near 'back to back now()' durations:
-
-minimum duration                     : 40 ns
-(to be subtracted out from activity durations)
-
-target approx. min actvity duration  : 1'000 ns
-(with min duration still included)
-
-target with min duration subtracted  : 960 ns
-
-Other information for reference:
-
-small scale duration variability     : 10 ns
-
-largest observed duration            : 6'422 ns
-(with min duration still included)
-
-
-Clock tick is not slow relative to execution:
-no zero durations observed.
-
-Of 2'000'000 near 'back to back now()' durations:
-
-minimum duration                     : 40 ns
-(to be subtracted out from activity durations)
-
-target approx. min actvity duration  : 1'000 ns
-(with min duration still included)
-
-target with min duration subtracted  : 960 ns
-
-Other information for reference:
-
-small scale duration variability     : 10 ns
-
-largest observed duration            : 5'240 ns
-(with min duration still included)
-
-
-Clock tick is not slow relative to execution:
-no zero durations observed.
-
-Of 2'000'000 near 'back to back now()' durations:
-
-minimum duration                     : 40 ns
-(to be subtracted out from activity durations)
-
-target approx. min actvity duration  : 1'100 ns
-(with min duration still included)
-
-target with min duration subtracted  : 1'060 ns
-
-Other information for reference:
-
-small scale duration variability     : 11 ns
-
-largest observed duration            : 8'537 ns
-(with min duration still included)
-
-
-Clock tick is not slow relative to execution:
-no zero durations observed.
-
-Of 2'000'000 near 'back to back now()' durations:
-
-minimum duration                     : 30 ns
-(to be subtracted out from activity durations)
-
-target approx. min actvity duration  : 1'000 ns
-(with min duration still included)
-
-target with min duration subtracted  : 970 ns
-
-Other information for reference:
-
-small scale duration variability     : 10 ns
-
-largest observed duration            : 9'758 ns
-(with min duration still included)
-
-
-Clock tick is not slow relative to execution:
-no zero durations observed.
-
-Of 2'000'000 near 'back to back now()' durations:
-
-minimum duration                     : 40 ns
-(to be subtracted out from activity durations)
-
-target approx. min actvity duration  : 1'100 ns
-(with min duration still included)
-
-target with min duration subtracted  : 1'060 ns
-
-Other information for reference:
-
-small scale duration variability     : 11 ns
-
-largest observed duration            : 19'166 ns
-(with min duration still included)
-
-
-Clock tick is not slow relative to execution:
-no zero durations observed.
-
-Of 2'000'000 near 'back to back now()' durations:
-
-minimum duration                     : 40 ns
-(to be subtracted out from activity durations)
-
-target approx. min actvity duration  : 1'000 ns
-(with min duration still included)
-
-target with min duration subtracted  : 960 ns
-
-Other information for reference:
-
-small scale duration variability     : 10 ns
-
-largest observed duration            : 8'817 ns
-(with min duration still included)
-
-
-Clock tick is not slow relative to execution:
-no zero durations observed.
-
-Of 2'000'000 near 'back to back now()' durations:
-
-minimum duration                     : 30 ns
-(to be subtracted out from activity durations)
-
-target approx. min actvity duration  : 2'100 ns
-(with min duration still included)
-
-target with min duration subtracted  : 2'070 ns
-
-Other information for reference:
-
-small scale duration variability     : 21 ns
-
-largest observed duration            : 11'332 ns
-(with min duration still included)
-
-
-Clock tick is not slow relative to execution:
-no zero durations observed.
-
-Of 2'000'000 near 'back to back now()' durations:
-
-minimum duration                     : 40 ns
-(to be subtracted out from activity durations)
-
-target approx. min actvity duration  : 1'000 ns
-(with min duration still included)
-
-target with min duration subtracted  : 960 ns
-
-Other information for reference:
-
-small scale duration variability     : 10 ns
-
-largest observed duration            : 8'416 ns
-(with min duration still included)
-
-
-Clock tick is not slow relative to execution:
-no zero durations observed.
-
-Of 2'000'000 near 'back to back now()' durations:
-
-minimum duration                     : 30 ns
-(to be subtracted out from activity durations)
-
-target approx. min actvity duration  : 2'100 ns
-(with min duration still included)
-
-target with min duration subtracted  : 2'070 ns
-
-Other information for reference:
-
-small scale duration variability     : 21 ns
-
-largest observed duration            : 5'471 ns
+largest observed duration            : 25'308 ns
 (with min duration still included)
 
 
@@ -403,112 +318,7 @@ Other information for reference:
 
 small scale duration variability     : 20 ns
 
-largest observed duration            : 7'514 ns
-(with min duration still included)
-
-
-Clock tick is not slow relative to execution:
-no zero durations observed.
-
-Of 2'000'000 near 'back to back now()' durations:
-
-minimum duration                     : 40 ns
-(to be subtracted out from activity durations)
-
-target approx. min actvity duration  : 1'000 ns
-(with min duration still included)
-
-target with min duration subtracted  : 960 ns
-
-Other information for reference:
-
-small scale duration variability     : 10 ns
-
-largest observed duration            : 4'860 ns
-(with min duration still included)
-
-
-Clock tick is not slow relative to execution:
-no zero durations observed.
-
-Of 2'000'000 near 'back to back now()' durations:
-
-minimum duration                     : 40 ns
-(to be subtracted out from activity durations)
-
-target approx. min actvity duration  : 1'100 ns
-(with min duration still included)
-
-target with min duration subtracted  : 1'060 ns
-
-Other information for reference:
-
-small scale duration variability     : 11 ns
-
-largest observed duration            : 11'573 ns
-(with min duration still included)
-
-
-Clock tick is not slow relative to execution:
-no zero durations observed.
-
-Of 2'000'000 near 'back to back now()' durations:
-
-minimum duration                     : 40 ns
-(to be subtracted out from activity durations)
-
-target approx. min actvity duration  : 1'000 ns
-(with min duration still included)
-
-target with min duration subtracted  : 960 ns
-
-Other information for reference:
-
-small scale duration variability     : 10 ns
-
-largest observed duration            : 10'821 ns
-(with min duration still included)
-
-
-Clock tick is not slow relative to execution:
-no zero durations observed.
-
-Of 2'000'000 near 'back to back now()' durations:
-
-minimum duration                     : 40 ns
-(to be subtracted out from activity durations)
-
-target approx. min actvity duration  : 1'000 ns
-(with min duration still included)
-
-target with min duration subtracted  : 960 ns
-
-Other information for reference:
-
-small scale duration variability     : 10 ns
-
-largest observed duration            : 11'362 ns
-(with min duration still included)
-
-
-Clock tick is not slow relative to execution:
-no zero durations observed.
-
-Of 2'000'000 near 'back to back now()' durations:
-
-minimum duration                     : 40 ns
-(to be subtracted out from activity durations)
-
-target approx. min actvity duration  : 1'000 ns
-(with min duration still included)
-
-target with min duration subtracted  : 960 ns
-
-Other information for reference:
-
-small scale duration variability     : 10 ns
-
-largest observed duration            : 10'510 ns
+largest observed duration            : 1'100'167 ns
 (with min duration still included)
 
 
@@ -529,49 +339,7 @@ Other information for reference:
 
 small scale duration variability     : 20 ns
 
-largest observed duration            : 7'594 ns
-(with min duration still included)
-
-
-Clock tick is not slow relative to execution:
-no zero durations observed.
-
-Of 2'000'000 near 'back to back now()' durations:
-
-minimum duration                     : 30 ns
-(to be subtracted out from activity durations)
-
-target approx. min actvity duration  : 2'100 ns
-(with min duration still included)
-
-target with min duration subtracted  : 2'070 ns
-
-Other information for reference:
-
-small scale duration variability     : 21 ns
-
-largest observed duration            : 7'024 ns
-(with min duration still included)
-
-
-Clock tick is not slow relative to execution:
-no zero durations observed.
-
-Of 2'000'000 near 'back to back now()' durations:
-
-minimum duration                     : 40 ns
-(to be subtracted out from activity durations)
-
-target approx. min actvity duration  : 1'000 ns
-(with min duration still included)
-
-target with min duration subtracted  : 960 ns
-
-Other information for reference:
-
-small scale duration variability     : 10 ns
-
-largest observed duration            : 4'749 ns
+largest observed duration            : 786'189 ns
 (with min duration still included)
 
 
@@ -592,70 +360,7 @@ Other information for reference:
 
 small scale duration variability     : 20 ns
 
-largest observed duration            : 25'999 ns
-(with min duration still included)
-
-
-Clock tick is not slow relative to execution:
-no zero durations observed.
-
-Of 2'000'000 near 'back to back now()' durations:
-
-minimum duration                     : 40 ns
-(to be subtracted out from activity durations)
-
-target approx. min actvity duration  : 1'000 ns
-(with min duration still included)
-
-target with min duration subtracted  : 960 ns
-
-Other information for reference:
-
-small scale duration variability     : 10 ns
-
-largest observed duration            : 11'612 ns
-(with min duration still included)
-
-
-Clock tick is not slow relative to execution:
-no zero durations observed.
-
-Of 2'000'000 near 'back to back now()' durations:
-
-minimum duration                     : 40 ns
-(to be subtracted out from activity durations)
-
-target approx. min actvity duration  : 1'100 ns
-(with min duration still included)
-
-target with min duration subtracted  : 1'060 ns
-
-Other information for reference:
-
-small scale duration variability     : 11 ns
-
-largest observed duration            : 8'546 ns
-(with min duration still included)
-
-
-Clock tick is not slow relative to execution:
-no zero durations observed.
-
-Of 2'000'000 near 'back to back now()' durations:
-
-minimum duration                     : 40 ns
-(to be subtracted out from activity durations)
-
-target approx. min actvity duration  : 1'100 ns
-(with min duration still included)
-
-target with min duration subtracted  : 1'060 ns
-
-Other information for reference:
-
-small scale duration variability     : 11 ns
-
-largest observed duration            : 10'981 ns
+largest observed duration            : 1'178'196 ns
 (with min duration still included)
 
 
@@ -667,16 +372,16 @@ Of 2'000'000 near 'back to back now()' durations:
 minimum duration                     : 30 ns
 (to be subtracted out from activity durations)
 
-target approx. min actvity duration  : 2'100 ns
+target approx. min actvity duration  : 2'000 ns
 (with min duration still included)
 
-target with min duration subtracted  : 2'070 ns
+target with min duration subtracted  : 1'970 ns
 
 Other information for reference:
 
-small scale duration variability     : 21 ns
+small scale duration variability     : 20 ns
 
-largest observed duration            : 10'490 ns
+largest observed duration            : 1'165'552 ns
 (with min duration still included)
 
 
@@ -685,19 +390,19 @@ no zero durations observed.
 
 Of 2'000'000 near 'back to back now()' durations:
 
-minimum duration                     : 40 ns
+minimum duration                     : 30 ns
 (to be subtracted out from activity durations)
 
-target approx. min actvity duration  : 1'100 ns
+target approx. min actvity duration  : 2'000 ns
 (with min duration still included)
 
-target with min duration subtracted  : 1'060 ns
+target with min duration subtracted  : 1'970 ns
 
 Other information for reference:
 
-small scale duration variability     : 11 ns
+small scale duration variability     : 20 ns
 
-largest observed duration            : 10'520 ns
+largest observed duration            : 1'096'711 ns
 (with min duration still included)
 
 
@@ -718,7 +423,70 @@ Other information for reference:
 
 small scale duration variability     : 10 ns
 
-largest observed duration            : 10'901 ns
+largest observed duration            : 824'441 ns
+(with min duration still included)
+
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 30 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 2'000 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'970 ns
+
+Other information for reference:
+
+small scale duration variability     : 20 ns
+
+largest observed duration            : 1'030'975 ns
+(with min duration still included)
+
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 30 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 2'000 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'970 ns
+
+Other information for reference:
+
+small scale duration variability     : 20 ns
+
+largest observed duration            : 952'436 ns
+(with min duration still included)
+
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 30 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 2'000 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'970 ns
+
+Other information for reference:
+
+small scale duration variability     : 20 ns
+
+largest observed duration            : 859'408 ns
 (with min duration still included)
 
 
@@ -730,16 +498,79 @@ Of 2'000'000 near 'back to back now()' durations:
 minimum duration                     : 40 ns
 (to be subtracted out from activity durations)
 
-target approx. min actvity duration  : 1'100 ns
+target approx. min actvity duration  : 1'000 ns
 (with min duration still included)
 
-target with min duration subtracted  : 1'060 ns
+target with min duration subtracted  : 960 ns
 
 Other information for reference:
 
-small scale duration variability     : 11 ns
+small scale duration variability     : 10 ns
 
-largest observed duration            : 11'452 ns
+largest observed duration            : 885'778 ns
+(with min duration still included)
+
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 30 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 2'000 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'970 ns
+
+Other information for reference:
+
+small scale duration variability     : 20 ns
+
+largest observed duration            : 845'591 ns
+(with min duration still included)
+
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 30 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 2'000 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'970 ns
+
+Other information for reference:
+
+small scale duration variability     : 20 ns
+
+largest observed duration            : 1'203'213 ns
+(with min duration still included)
+
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 30 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 2'000 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'970 ns
+
+Other information for reference:
+
+small scale duration variability     : 20 ns
+
+largest observed duration            : 1'323'563 ns
 (with min duration still included)
 
 
@@ -751,16 +582,373 @@ Of 2'000'000 near 'back to back now()' durations:
 minimum duration                     : 40 ns
 (to be subtracted out from activity durations)
 
-target approx. min actvity duration  : 1'100 ns
+target approx. min actvity duration  : 1'000 ns
 (with min duration still included)
 
-target with min duration subtracted  : 1'060 ns
+target with min duration subtracted  : 960 ns
 
 Other information for reference:
 
-small scale duration variability     : 11 ns
+small scale duration variability     : 10 ns
 
-largest observed duration            : 9'077 ns
+largest observed duration            : 1'000'417 ns
+(with min duration still included)
+
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 30 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 2'000 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'970 ns
+
+Other information for reference:
+
+small scale duration variability     : 20 ns
+
+largest observed duration            : 1'138'530 ns
+(with min duration still included)
+
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 30 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 2'000 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'970 ns
+
+Other information for reference:
+
+small scale duration variability     : 20 ns
+
+largest observed duration            : 1'136'997 ns
+(with min duration still included)
+
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 30 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 2'000 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'970 ns
+
+Other information for reference:
+
+small scale duration variability     : 20 ns
+
+largest observed duration            : 1'010'596 ns
+(with min duration still included)
+
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 40 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'000 ns
+(with min duration still included)
+
+target with min duration subtracted  : 960 ns
+
+Other information for reference:
+
+small scale duration variability     : 10 ns
+
+largest observed duration            : 1'397'764 ns
+(with min duration still included)
+
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 30 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 2'000 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'970 ns
+
+Other information for reference:
+
+small scale duration variability     : 20 ns
+
+largest observed duration            : 1'037'929 ns
+(with min duration still included)
+
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 30 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 2'000 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'970 ns
+
+Other information for reference:
+
+small scale duration variability     : 20 ns
+
+largest observed duration            : 1'272'445 ns
+(with min duration still included)
+
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 30 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 2'000 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'970 ns
+
+Other information for reference:
+
+small scale duration variability     : 20 ns
+
+largest observed duration            : 983'524 ns
+(with min duration still included)
+
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 30 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 2'000 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'970 ns
+
+Other information for reference:
+
+small scale duration variability     : 20 ns
+
+largest observed duration            : 942'507 ns
+(with min duration still included)
+
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 30 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 2'000 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'970 ns
+
+Other information for reference:
+
+small scale duration variability     : 20 ns
+
+largest observed duration            : 824'031 ns
+(with min duration still included)
+
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 30 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 2'000 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'970 ns
+
+Other information for reference:
+
+small scale duration variability     : 20 ns
+
+largest observed duration            : 1'134'583 ns
+(with min duration still included)
+
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 30 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 2'000 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'970 ns
+
+Other information for reference:
+
+small scale duration variability     : 20 ns
+
+largest observed duration            : 1'084'687 ns
+(with min duration still included)
+
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 40 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'000 ns
+(with min duration still included)
+
+target with min duration subtracted  : 960 ns
+
+Other information for reference:
+
+small scale duration variability     : 10 ns
+
+largest observed duration            : 898'874 ns
+(with min duration still included)
+
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 40 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'000 ns
+(with min duration still included)
+
+target with min duration subtracted  : 960 ns
+
+Other information for reference:
+
+small scale duration variability     : 10 ns
+
+largest observed duration            : 1'061'003 ns
+(with min duration still included)
+
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 30 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 2'000 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'970 ns
+
+Other information for reference:
+
+small scale duration variability     : 20 ns
+
+largest observed duration            : 2'544'610 ns
+(with min duration still included)
+
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 40 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'000 ns
+(with min duration still included)
+
+target with min duration subtracted  : 960 ns
+
+Other information for reference:
+
+small scale duration variability     : 10 ns
+
+largest observed duration            : 1'010'866 ns
+(with min duration still included)
+
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 40 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'000 ns
+(with min duration still included)
+
+target with min duration subtracted  : 960 ns
+
+Other information for reference:
+
+small scale duration variability     : 10 ns
+
+largest observed duration            : 727'787 ns
+(with min duration still included)
+
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 30 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 2'000 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'970 ns
+
+Other information for reference:
+
+small scale duration variability     : 20 ns
+
+largest observed duration            : 785'006 ns
 (with min duration still included)
 
 
@@ -774,15 +962,15 @@ Of 66'000'000 near 'back to back now()' durations:
 minimum duration                     : 30 ns
 (to be subtracted out from activity durations)
 
-target approx. min actvity duration  : 2'100 ns
+target approx. min actvity duration  : 2'000 ns
 (with min duration still included)
 
-target with min duration subtracted  : 2'070 ns
+target with min duration subtracted  : 1'970 ns
 
 Other information for reference:
 
-small scale duration variability     : 21 ns
+small scale duration variability     : 20 ns
 
-largest observed duration            : 25'999 ns
+largest observed duration            : 2'544'610 ns
 (with min duration still included)
 
