@@ -85,6 +85,28 @@ examples.) That code's license in turn sets the overall license to also be GLPv2
 (no earlier, no later), despite OpenBSD-vintage-ISC licensed source in
 `other_src_used/` also being built and linked in.
 ##### Changelog . . .
+###### [0.1.25] 2022-Aug-31 (start) . . . 2022-???-?? (final)
+Additions
+- Add some new HoneyComb makefile.*'s, matching the more
+  recent context (preliminary).
+
+Changes
+- Update the FreeBSD code in other_src_used/sys_cpubinding.cpp
+  to use the newer FreeBSD CPU_AND macro (now 3 arguments, not
+  2 arguments).
+
+Removals
+- Delete most of the *.gp files and update to have just 12
+  of the historical g++ 11 and clang++ 12 ones and 2 of the
+  older OverDrive ones. MacchDblShot and RPi4B are only
+  involved in Cortex-A72 comparisons, not by themselves. The
+  ThreadRipper1950X data, HoneyComb data, and old OverDrive
+  data are primary now.
+
+- Delete lots of old *.txt data files --and even some
+  whole directories of such. Keep at least what is
+  referenced by the 12 *.gp files.
+
 ###### [0.1.24] 2021-Jul-06 (start) . . . 2021-Aug-28 (final)
 Additions
 - Add HoneyComb tests and related files.
