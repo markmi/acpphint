@@ -6,7 +6,7 @@ COMPILERLIBRARY= "g++_11_O3lto-libc++-cpulockdown"
 FNAMEPREFIX=     "ThreadRipper1950X-nonuma-FBSD-pg_ps/acpphint-ThreadRipper1950X-131072MiB-threads_32-LP64-FreeBSD_main_n247756_348c41d1815d_64bit-" . COMPILERLIBRARY
 RAMLOWERBOUND=   64
 RAMUPPERBOUND=   2**38
-QUIPSUPPERBOUND= 3e8
+QUIPSUPPERBOUND= 5e8
 TIMELOWERBOUND=  1e-8
 TIMEUPPERBOUND=  1.6
 set title "1950X, 2CCD 2CCX/4CXX 2/4 hwthreads, process under cpuset, cpulockdown also avoids repeated thread migrations within cpuset\n" . \
