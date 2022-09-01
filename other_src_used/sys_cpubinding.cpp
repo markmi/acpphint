@@ -105,7 +105,7 @@ struct sys_cpubinding
 
                 cpuset_t filtered_dcpu_set;
                 CPU_COPY(&dcpu_set, &filtered_dcpu_set);
-                CPU_AND(&filtered_dcpu_set, &cpu_set);
+                CPU_AND(&filtered_dcpu_set, &filtered_dcpu_set, &cpu_set);
 
                 unsigned int domain_concurrency_count= CPU_COUNT(&filtered_dcpu_set);
                 
