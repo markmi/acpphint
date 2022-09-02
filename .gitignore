@@ -2,4 +2,5 @@
 /acpphint-*
 /acpphint_kernel*_main-*
 /cpp_clockinfo_main-*
+/gcm.cache/
 .DS_Store
