@@ -1,7 +1,7 @@
 #
 # acpphint's makefile.common_part (as of requiring c++20 or later)
 #
-#  Copyright (c) 2015-2021 Mark Millard
+#  Copyright (c) 2015-2022 Mark Millard
 #  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
 #
 #  Note: Any acpphint*.{h,cpp} code or makefile code
@@ -35,7 +35,7 @@
 # Edit ACPPHINT_VERS's definition to update the version number
 # that the 4 ACPPHINT_FILENAME_INFO related programs report on
 # their 2nd std::cout line.
-ACPPHINT_VERS=                  0.1.25
+ACPPHINT_VERS=                  0.1.26
 CPPCLOCKINFO_VERS=              acpphint_${ACPPHINT_VERS}
 ACPPHINTKERNELSURVEYORS_VERS=   ${ACPPHINT_VERS}
 ACPPHINTKERNELSAMPLERS_VERS=    ${ACPPHINT_VERS}

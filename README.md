@@ -61,7 +61,7 @@ acpphint_src/LICENSE.md   (GPLv2 for HINT code variations)
 acpphint_example_data/LICENSE.md (None for the example data)
 other_src_used/LICENSE.md (OpenBSD-vintage-ISC source)
 ```
-Overall, each `acpphint*-NAME` program is licensed as GPLv2 (not earlier, not
+Overall, each `acpphint\*-NAME` program is licensed as GPLv2 (not earlier, not
 later). But building the `acpphint related code does build some
 OpenBSD-vintage-ISC licensed source files, those under `other_src_used/ instead
 of under `acpphint_src/. Some resulting object files are linked into the
@@ -80,14 +80,32 @@ Note: The original HINT's copyright holder, Iowa State University Research
 Foundation, Inc., reported that, despite how HINT was mistakenly distributed
 back then, the intended license was GPLv2 without any "or later" status: exactly 
 GPLv2. This is what sets the license for the source code in `acpphint_src/`. (I
-did not bother to make distinct licensing for the `acpphint_src/makefile.*`
+did not bother to make distinct licensing for the `acpphint_src/makefile.\*`
 examples.) That code's license in turn sets the overall license to also be GLPv2 
 (no earlier, no later), despite OpenBSD-vintage-ISC licensed source in
 `other_src_used/` also being built and linked in.
 ##### Changelog . . .
+###### [0.1.26] 2022-Nov-21 (start) . . . 2023-???-?? (final)
+Additions
+- Add new Fedora 37 Server makefile.\*'s for Running on a
+  2018 macMini under what macOS provides for a VM. Add files
+  from runs in a new acpphint_example_data/2018macMiniVM-Fedora/
+  directory for this combination (but there are not any \*.gp
+  files using them yet).
+
+Changes
+- Make some \*.gp content more uniform.
+
+- Update the .gitignore files, in part for future C++
+  module experimentation.
+
+Removals
+- Remove most older makefile.\*'s that do not match one of
+  the now 12 \*.gp files at all.
+
 ###### [0.1.25] 2022-Aug-31 (start) . . . 2022-???-?? (final)
 Additions
-- Add some new HoneyComb makefile.*'s, matching the more
+- Add some new HoneyComb makefile.\*'s, matching the more
   recent context (preliminary).
 
 Changes
@@ -96,16 +114,16 @@ Changes
   2 arguments).
 
 Removals
-- Delete most of the *.gp files and update to have just 12
+- Delete most of the \*.gp files and update to have just 12
   of the historical g++ 11 and clang++ 12 ones and 2 of the
   older OverDrive ones. MacchDblShot and RPi4B are only
   involved in Cortex-A72 comparisons, not by themselves. The
   ThreadRipper1950X data, HoneyComb data, and old OverDrive
   data are primary now.
 
-- Delete lots of old *.txt data files --and even some
+- Delete lots of old \*.txt data files --and even some
   whole directories of such. Keep at least what is
-  referenced by the 12 *.gp files.
+  referenced by the 12 \*.gp files.
 
 ###### [0.1.24] 2021-Jul-06 (start) . . . 2021-Aug-28 (final)
 Additions
@@ -144,11 +162,11 @@ Removals
 - The OverDrive 1000 and the other PowerMac11,2 "bit
   the dust". I've kept some plots around that involve
   the OverDrive 1000, with just the matching data files,
-  but not the makefile.OverDrive* files. The PowerMac
+  but not the makefile.OverDrive\* files. The PowerMac
   files have all been removed.
 
 - Other than the OverDrive 1000 files that I've kept,
-  older example data files, makefile.* files, *.gp files,
+  older example data files, makefile.\* files, \*.gp files,
   and the like have been removed.
 
 ###### [0.1.23] 2020-Aug-03 (start) . . . 2020-Oct-30 (final)
@@ -165,7 +183,7 @@ Additions
   -O3 LTO based examples. (Exploring -O2, -O3, and
   -O3 -flto did not find great differences, but I
   stuck with the last that I tried.) Matching
-  makefile.* files and the like are involved.
+  makefile.\* files and the like are involved.
   I still founds that g++ produced more performant
   benchmark code compared to clang++ for what I
   looked at.
@@ -184,9 +202,9 @@ Changes
   values in involved in the reported relationships.
 
 Removals
-- Older example data files, makefile.* files, *.gp files,
+- Older example data files, makefile.\* files, \*.gp files,
   and the like have mostly been removed. Some of the old
-  makefile.* files are around as examples.
+  makefile.\* files are around as examples.
 
 - The PowerMac11,2 that allowed all memory slots to be
   used "bit the dust", as did the Pine64+ 2GB. As such
