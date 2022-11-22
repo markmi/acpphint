@@ -93,15 +93,24 @@ Additions
   directory for this combination (but there are not any \*.gp
   files using them yet).
 
+- Later: Add the 2018macMniVM *.gp files. Also add the missing
+  HoneyComb RAM vs_cpulockdown *.gp file.
+
 Changes
 - Make some \*.gp content more uniform.
 
 - Update the .gitignore files, in part for future C++
   module experimentation.
 
+- Later: removal of deleted data files from being gnerated by the
+  makefile files for the 2018macMiniVM.
+
 Removals
 - Remove most older makefile.\*'s that do not match one of
   the now 12 \*.gp files at all.
+
+- Remove 2 misnamed 2018macMIniVM data files that are not to
+  be regenerated.
 
 ###### [0.1.25] 2022-Aug-31 (start) . . . 2022-???-?? (final)
 Additions
