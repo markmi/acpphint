@@ -105,6 +105,9 @@ Changes
 - Later: removal of deleted data files from being gnerated by the
   makefile files for the 2018macMiniVM.
 
+- Later: fix the libstdc++ spelling in the makefile.2018macMiniVM*
+  names.
+
 Removals
 - Remove most older makefile.\*'s that do not match one of
   the now 12 \*.gp files at all.
