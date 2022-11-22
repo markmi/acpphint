@@ -120,5 +120,4 @@ acpphint-NOPREFER-run:
 	cd .. && taskset -c 2,3,6,7,10                                 ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4p2_kx4p3_2_10.txt"       5
 	cd .. && taskset -c 1,2,5,6,9,10                               ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4p1_kx4p2_1_10.txt"       6
 	cd .. && taskset -c 1,2,3,4,5,6,7,8,9,10                       ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kp1_1_10.txt"              10
-	cd .. && taskset -c 0,1,2,3,4,5,6,7,8,9,10                     ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_k_0_10.txt"                11
 	cd .. && taskset -c 0                                          ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0.txt"                      1
