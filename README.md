@@ -96,6 +96,9 @@ Additions
 - Later: Add the 2018macMniVM *.gp files. Also add the missing
   HoneyComb RAM vs_cpulockdown *.gp file.
 
+- Later: Add makefiles, data files, and *.gp files for using
+  g++/libc++ for the 2018macMiniVM . (g++ 12 as it turns out.)
+
 Changes
 - Make some \*.gp content more uniform.
 
