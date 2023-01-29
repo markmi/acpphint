@@ -58,17 +58,17 @@ The default filename suffix is ".txt" .
 
 argv[1], if supplied, supplies an alternate filename suffix.
 
-argv[2], if supplied, specifies a minimum thread count.
+argv[2], if supplied, specifies a minimum multi-thread count.
 
-argv[3], if supplied, specifies a maximum thread count.
+argv[3], if supplied, specifies a maximum multi-thread count.
 
 For any of those that are missing, the defaults are:
 
 1.  ".txt" for argv[1]
 2.  3 for argv[2]
-3.  For argv[3]: use the hardware concurrency count from C++
-    (or, for cpulockdown variants, elsewhere); also do a serial
-    HINT (single thread) run as well
+3.  For argv[3]: Use argv[2] if it was explicitly specified.
+    Otherwise, implicitly use the automatically found figure
+    for what hardware thread count is available.
 
 Other than the potential serial run, the thread counts drop by
 a factor of 2 (integer division), starting at the maximum.

@@ -85,6 +85,18 @@ examples.) That code's license in turn sets the overall license to also be GLPv2
 (no earlier, no later), despite OpenBSD-vintage-ISC licensed source in
 `other_src_used/` also being built and linked in.
 ##### Changelog . . .
+###### [0.1.27] 2023-Jan-28         . . . 2023-???-?? (final)
+Additions
+- Add OpenBSD makefile.\*'s for Running on a HoneyComb. Add
+  files from a run in a new acpphint_example_data/HonyComb-OBSD/
+  directory for this combination (but there are not any \*.gp
+  files using them yet).
+
+Changes
+- Correct acpphint_src/Usage_differences_with_original_HINTs.md
+  notes about how the command line arguments to acpphint are
+  handled.
+
 ###### [0.1.26] 2022-Nov-21 (start) . . . 2023-???-?? (final)
 Additions
 - Add new Fedora 37 Server makefile.\*'s for Running on a
