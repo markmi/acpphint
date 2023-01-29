@@ -360,6 +360,12 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
               + "NSAMP == " + std::to_string(NSAMP)
               + "\n";
 
+    qdata.back().how_stopped_notes
+        +=  " vectors_total_bytes/median_mean_sec_per_lap == "
+          + std::to_string(run_result.vectors_total_bytes
+				/run_result.median_mean_sec_per_lap.count())
+          + "\n";
+
     auto const answer_lower_bound_floating_form
         {std::nexttowardl(approx_answer_floating_form, 0.0L)};
 

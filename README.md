@@ -85,10 +85,18 @@ examples.) That code's license in turn sets the overall license to also be GLPv2
 (no earlier, no later), despite OpenBSD-vintage-ISC licensed source in
 `other_src_used/` also being built and linked in.
 ##### Changelog . . .
+###### [0.1.28] 2023-Jan-28         . . . 2023-???-?? (final)
+Additions
+- Add OpenBSD makefile.\* for Running on a HoneyComb with a
+  kernel without DIAGNOSTIC variant of GENERIC. Add files from
+  a run for this type of context.
+
+- Add vectors_total_bytes/median_mean_sec_per_lap std::cout line.
+
 ###### [0.1.27] 2023-Jan-28         . . . 2023-???-?? (final)
 Additions
 - Add OpenBSD makefile.\*'s for Running on a HoneyComb. Add
-  files from a run in a new acpphint_example_data/HonyComb-OBSD/
+  files from a run in a new acpphint_example_data/HoneyComb-OBSD/
   directory for this combination (but there are not any \*.gp
   files using them yet).
 

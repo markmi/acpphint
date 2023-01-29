@@ -1,0 +1,127 @@
+#
+# acpphint's makefile.HoneyComb-65536MiB-threads_16-LP64-OpenBSD_7p2STABLE_NODIAG_64bit-clang++_13_O3lto-libc++
+# example (as of requiring C++20 or later)
+#
+#  Copyright (c) 2015-2023 Mark Millard
+#  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
+#
+#  Note: Any acpphint*.{h,cpp} code or makefile code
+#        that is insufficiently original comes under
+#        the Iowa State University Research Foundation,
+#        Inc. copyright.
+#
+#        This does not apply to cpp_*.{h,cpp} or
+#        sys_*.{h,cpp} code: that is strictly mine.
+#
+#  This program is free software; you can redistribute it
+#  and/or modify it under the terms of the GNU General
+#  version 2 Public License as published by the Free
+#  Software Foundation.
+#
+#  This program is distributed in the hope that it will
+#  be useful, but WITHOUT ANY WARRANTY; without even the
+#  implied warranty of MERCHANTABILITY or FITNESS FOR A
+#  PARTICULAR PURPOSE.  See the GNU General Public
+#  License for more details.
+#
+#  You should have received a copy of the GNU General
+#  Public License version 2 along with this program; if
+#  not, write to:
+#
+#  Free Software Foundation, Inc.
+#  51 Franklin Street, Fifth Floor,
+#  Boston, MA  02110-1301, USA.
+#
+.POSIX:
+.SUFFIXES:
+
+THE_MAKEFILE= makefile.HoneyComb-65536MiB-threads_16-LP64-OpenBSD_7p2STABLE_NODIAG_64bit-clang++_13_O3lto-libc++
+
+#
+# acpphint's makefile.*'s are very tailored to my use but may be
+# used to see how to build the investigative programs and the
+# benchmark program and what they in turn require.
+#
+# Before including makefile.common_part :
+# Adjust CXXLIB, CXX, OPT, CPULOCKDOWN_OPT, LDCXX, COMPILER_DESC, 
+# LIBRARY_DESC, COMPUTER, RAM, THREADS, CPP_DATA_MODEL, OS,
+# and SUFFIX as appropriate.
+#
+# The major targets are: build gather-info gather-NOPREFER-info
+# But acpphint-run just runs the basic acpphint benchmarks, but no
+# cpuset, taskset, etc. used.
+# But acpphint-NOPREFER-run just runs the NOPREFER accphint
+# benchmarks, cpuset, taskset, etc. possibly used.
+#
+# The makefile.*'s are not set up for cross-build use.
+#
+# The naming used does require (relative to POSIX):
+# "allow other characters in target names as extensions"
+#
+
+#
+# This file presumes OpenBSD system-clang is at 13.
+#
+
+CXXLIB=
+CXX=            clang++ -v -std=c++20 -Wpedantic -Wall -Wextra
+#CXX+=           -stdlib=libc++
+#CXX+=           -DDSIZE_ALL_ISIZE_ALL
+OPT=            -O3 -mcpu=cortex-a72
+LTO_STYLE=	-flto
+OPT+=           ${LTO_STYLE}
+CPULOCKDOWN_OPT=
+#CPULOCKDOWN_OPT=        -DWANT_CPU_LOCKDOWN
+# Note for FreeBSD: WANT_NUMA_TOO is implicit/automatic; not so for Linux
+#CPULOCKDOWN_OPT+=       -DWANT_NUMA_TOO
+LDCXX+=         -fuse-ld=lld ${LTO_STYLE}
+#LDCXX+=         -Wl,-rpath=/usr/local/lib/gccVERSION
+# For Linux NUMA use:
+#LDCXX+=         -lnuma
+
+COMPILER_DESC=      clang++_13_O3lto
+LIBRARY_DESC=       libc++
+COMPILER_LIBRARY=   ${COMPILER_DESC}-${LIBRARY_DESC}
+
+COMPUTER=               HoneyComb
+RAM=                    65536MiB
+THREADS=                threads_16
+CPP_DATA_MODEL=         LP64
+OS=                     OpenBSD_7p2STABLE_NODIAG_64bit
+SUFFIX=
+#SUFFIX=                 -cpulockdown
+ACPPHINT_FILENAME_INFO= ${COMPUTER}-${RAM}-${THREADS}-${CPP_DATA_MODEL}-${OS}-${COMPILER_LIBRARY}${SUFFIX}
+#
+# Note: The "threads_16" is what the hardware has for
+# HW threads --or as presented by the likes of HyperV.
+# acpphint will also add using_N_threads to file names
+# recording benchmark results.
+
+include makefile.common_part
+
+#
+#  Support some special NOPREFER-related information gathering:
+#
+gather-NOPREFER-info: \
+		cpp_clockinfo_main-run \
+		acpphint_kernelsurveyors_main-run \
+		acpphint_kernelsamplers_main-run \
+		acpphint-NOPREFER-run
+
+acpphint-NOPREFER-run:
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_15.txt"                      1
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_15.txt"                      2
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_15.txt"                      3
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_15.txt"                      4
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_15.txt"                      5
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_15.txt"                      6
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_15.txt"                      7
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_15.txt"                      8
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_15.txt"                      9
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_15.txt"                      10
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_15.txt"                      11
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_15.txt"                      12
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_15.txt"                      13
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_15.txt"                      14
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_15.txt"                      15
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_15.txt"                      16
