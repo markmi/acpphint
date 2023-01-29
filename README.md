@@ -92,6 +92,10 @@ Additions
   directory for this combination (but there are not any \*.gp
   files using them yet).
 
+- Later: add a *.pg file that uses the 1, 2, and 4 thread
+  OpenBSD data compared/contrasted with cpuset based FreeBSD
+  data (but not with cpu lockdowns).
+
 Changes
 - Correct acpphint_src/Usage_differences_with_original_HINTs.md
   notes about how the command line arguments to acpphint are
