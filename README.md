@@ -85,7 +85,21 @@ examples.) That code's license in turn sets the overall license to also be GLPv2
 (no earlier, no later), despite OpenBSD-vintage-ISC licensed source in
 `other_src_used/` also being built and linked in.
 ##### Changelog . . .
-###### [0.1.28] 2023-Jan-28         . . . 2023-???-?? (final)
+###### [0.1.29] 2023-Jan-30         . . . 2023-???-?? (final)
+Additions
+- Add NetBSD makefile.\*'s for Running on a HoneyComb. Add
+  files from a run in a new acpphint_example_data/HoneyComb-NBSD/
+  directory for this combination (but there are not any \*.gp
+  files using them yet).
+
+Changes
+- Update other_src_used/sys_cpubinding.cpp to have support for
+  cpu lock down for NetBSD.
+
+- Update a couple of the HoneyComb FreeBSD make.*'s to add 2
+  additional test runs, matching what NetBSD has.
+
+###### [0.1.28] 2023-Jan-29         . . . 2023-???-?? (final)
 Additions
 - Add OpenBSD makefile.\* for Running on a HoneyComb with a
   kernel without DIAGNOSTIC variant of GENERIC. Add files from

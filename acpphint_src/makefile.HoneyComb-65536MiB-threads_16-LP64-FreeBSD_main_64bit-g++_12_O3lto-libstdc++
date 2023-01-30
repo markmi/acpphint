@@ -124,3 +124,5 @@ acpphint-NOPREFER-run:
 	cd .. && cpuset -l2,3,6,7,10,11,14,15                        ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4p2_kx4p3_2_15.txt"       8
 	cd .. && cpuset -l1,2,3,4,5,6,7,8,9,10,11,12,13,14,15        ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kp1_1_15.txt"              15
 	cd .. && cpuset -l0                                          ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0.txt"                      1
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} ".txt"  2
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} ".txt" 16

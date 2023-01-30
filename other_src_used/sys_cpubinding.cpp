@@ -1,7 +1,7 @@
 //
 //  sys_cpubinding.cpp (c++20 currently)
 //
-//  Copyright (c) 2019-2021 Mark Millard
+//  Copyright (c) 2019-2023 Mark Millard
 //
 //  Permission to use, copy, modify, and distribute this software for any
 //  purpose with or without fee is hereby granted, provided that the above
@@ -238,6 +238,130 @@ void RestrictThreadToCpu(unsigned int cpu_num, unsigned int num_cpus_used)
         throw std::runtime_error("Failed to set numa memory domain");
 }
 
+#elif defined(__NetBSD__) && defined(WANT_CPU_LOCKDOWN)
+#include <pthread.h>
+#include <sched.h>
+
+#include <vector>
+#include <iostream>
+
+struct sys_cpubinding
+{
+    cpuset_t* cpu_set{cpuset_create()};
+
+    std::vector<cpuset_t*> singleton_sets{}; // Indexed by cpu_num.
+
+    unsigned int concurrency_count{0u}; // Matching c++ type
+    
+    sys_cpubinding()
+    {
+        if (!cpu_set)
+            throw std::runtime_error("cpuset_create failed.");
+
+        if  (0 != pthread_getaffinity_np( pthread_self()
+                                        , cpuset_size(cpu_set)
+                                        , cpu_set
+                                        )
+            )
+            throw std::runtime_error("failed to identify an affinity");
+
+        cpuid_t upper_bound_cpus{8u*cpuset_size(cpu_set)};
+        cpuid_t cpu_id{0};
+        for (; cpu_id < upper_bound_cpus; ++cpu_id) {
+            int const cpu_status{cpuset_isset(cpu_id, cpu_set)};
+
+            if      (-1 == cpu_status) break;
+            else if ( 0 == cpu_status) continue;
+
+            ++concurrency_count;
+        }
+
+        upper_bound_cpus= cpu_id;
+
+        if (concurrency_count < 1u) {
+            concurrency_count = std::thread::hardware_concurrency();
+            cpu_id = upper_bound_cpus = concurrency_count;
+            while (0<cpu_id)
+                cpuset_set(--cpu_id, cpu_set);
+        }
+
+        cpu_id= 0u;
+        for (; cpu_id<upper_bound_cpus; ++cpu_id)
+        {
+            int const cpu_status{cpuset_isset(cpu_id, cpu_set)};
+
+            if      (-1 == cpu_status) break;
+            else if ( 0 == cpu_status) continue;
+            
+            cpuset_t* cpu_as_set{cpuset_create()};
+            if (!cpu_as_set)
+                throw std::runtime_error("cpuset_create failed.");
+
+            cpuset_set(cpu_id, cpu_as_set);
+            
+            singleton_sets.emplace_back(cpu_as_set);
+
+            std::cout << "Program's cpu_num: "
+                      << std::to_string(singleton_sets.size()-1u)
+                      << " has operating system cpu_id: "
+                      << std::to_string(cpu_id)
+                      << "\n";
+        }
+
+        if (0u == singleton_sets.size())
+            throw std::runtime_error("failed to identify any cpus");
+    }
+
+    ~sys_cpubinding()
+    {
+        for(auto& singleton : singleton_sets) {
+            cpuset_destroy(singleton);
+            singleton= nullptr;
+        }
+
+        cpuset_destroy(cpu_set);
+        cpu_set= nullptr;
+    }
+};
+
+static struct sys_cpubinding const cpus_info{};
+
+auto ConcurrencyCountForInDomains() -> unsigned int // matching c++ type
+{
+    return cpus_info.concurrency_count;
+}
+
+void RestrictThreadToCpu(unsigned int cpu_num, unsigned int num_cpus_used)
+{
+    unsigned int num_cpus= cpus_info.singleton_sets.size();
+
+    if (num_cpus < num_cpus_used)
+        throw     std::runtime_error(std::string("#cpus vs. #cpus_used: ")
+                + std::to_string(num_cpus) + " == #cpus"
+                + " < "
+                + "#cpu_used == " + std::to_string(num_cpus_used));
+
+    if (num_cpus_used <= cpu_num)
+        throw std::runtime_error("#cpus_used vs. cpu#: "
+                + std::to_string(num_cpus_used) + " == #cpus_used"
+                + " <= "
+                + "cpu# == " + std::to_string(cpu_num));
+
+    unsigned int c{cpu_num*(num_cpus/num_cpus_used)};
+        // 'c' skips cpus when a fraction are in use.
+        // This can tend to avoid hyperthreads or other
+        // such with extra shared-resource constraints.
+
+    if  (0 != pthread_setaffinity_np( pthread_self()
+                                    , cpuset_size(cpus_info.singleton_sets.at(c))
+                                    , cpus_info.singleton_sets.at(c)
+                                    )
+        )
+        throw std::runtime_error("failed to set cpu");
+
+    // Has the thread migrated by here?
+}
+
 #elif defined(LGPLv2_1_OKAY) && defined(__linux__) && defined(WANT_CPU_LOCKDOWN)
 // <numa.h>, <sched.h>, and <pthread.h> are each licensed via
 // LesserGPLv2.1 and so use would get into detailed rules for if a
@@ -281,7 +405,7 @@ char copyright_and_license_for_sys_cpubinding[]
 {
     "Context for this Copyright: sys_cpubinding\n"
     "\n"
-    "Copyright (c) 2019-2021 Mark Millard\n"
+    "Copyright (c) 2019-2023 Mark Millard\n"
     "\n"
     "Permission to use, copy, modify, and distribute this software for any\n"
     "purpose with or without fee is hereby granted, provided that the above\n"
