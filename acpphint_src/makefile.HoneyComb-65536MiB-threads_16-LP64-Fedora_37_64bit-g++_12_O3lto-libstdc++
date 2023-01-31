@@ -58,7 +58,7 @@ THE_MAKEFILE= makefile.HoneyComb-65536MiB-threads_16-LP64-Fedora_37_64bit-g++_12
 #
 
 #
-# This file presumes Fedora has g++ v11 installed as g++ and has make.
+# This file presumes Fedora has g++ 12 installed as g++ and has make.
 #
 
 CXXLIB=
@@ -77,7 +77,7 @@ CPULOCKDOWN_OPT=
 # distribute (but I proved could be implemented on a Linux):
 #CPULOCKDOWN_OPT+=       -DLGPLv2_1_OKAY
 #LDCXX=          -nodefaultlibs -lc++ -lcxxrt -lthr -lm -lc -lgcc_s
-#LDCXX+=         -Wl,-rpath=/usr/local/lib/gcc11
+#LDCXX+=         -Wl,-rpath=/usr/local/lib/gcc12
 # For Linux NUMA use:
 #LDCXX+=         -lnuma
 
