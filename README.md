@@ -89,15 +89,18 @@ examples.) That code's license in turn sets the overall license to also be GLPv2
 Additions
 - Add Fedora makefile.\*'s for Running on a HoneyComb. Add
   files from a run in a new acpphint_example_data/HoneyComb-Fedora/
-  directory for this combination (but there are not any \*.gp
-  files using them yet).
+  directory for this combination.
+
+- Later: add 2 such *.pg files. Adjust/rename a couple of others,
+  adding time variants to the existing RAM ones as well.
 
 ###### [0.1.29] 2023-Jan-30         . . . 2023-???-?? (final)
 Additions
 - Add NetBSD makefile.\*'s for Running on a HoneyComb. Add
   files from a run in a new acpphint_example_data/HoneyComb-NBSD/
-  directory for this combination (but there are not any \*.gp
-  files using them yet).
+  directory for this combination.
+
+- Later: add such *.pg files. Also rescale in various *.gp files.
 
 Changes
 - Update other_src_used/sys_cpubinding.cpp to have support for
