@@ -85,6 +85,13 @@ examples.) That code's license in turn sets the overall license to also be GLPv2
 (no earlier, no later), despite OpenBSD-vintage-ISC licensed source in
 `other_src_used/` also being built and linked in.
 ##### Changelog . . .
+###### [0.1.30] 2023-Jan-31         . . . 2023-???-?? (final)
+Additions
+- Add Fedora makefile.\*'s for Running on a HoneyComb. Add
+  files from a run in a new acpphint_example_data/HoneyComb-Fedora/
+  directory for this combination (but there are not any \*.gp
+  files using them yet).
+
 ###### [0.1.29] 2023-Jan-30         . . . 2023-???-?? (final)
 Additions
 - Add NetBSD makefile.\*'s for Running on a HoneyComb. Add
