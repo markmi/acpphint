@@ -85,7 +85,7 @@ examples.) That code's license in turn sets the overall license to also be GLPv2
 (no earlier, no later), despite OpenBSD-vintage-ISC licensed source in
 `other_src_used/` also being built and linked in.
 ##### Changelog . . .
-###### [0.1.30] 2023-Jan-31         . . . 2023-???-?? (final)
+###### [0.1.30] 2023-Jan-31+        . . . 2023-???-?? (final)
 Additions
 - Add Fedora makefile.\*'s for Running on a HoneyComb. Add
   files from a run in a new acpphint_example_data/HoneyComb-Fedora/
@@ -96,12 +96,18 @@ Additions
 
 Changes
 - Adjust a FreeBSD libstdc++ makefile.\*'s for Running on a HoneyComb.
-  Add files from a run in to acpphint_example_data/HoneyComb-FBSD/ .
+  Add files from a run into acpphint_example_data/HoneyComb-FBSD/ .
   Also add *.gp files for this.
 
-- Adjust a FreeBSD libc++ makefile.\*'s for Running on a HoneyComb.
+- Adjust FreeBSD libc++ makefile.\*'s for Running on a HoneyComb.
   (The variant for still using g++12.) No data files or *.gp files
   yet.
+
+- Later: Add data files for libc++ .
+
+- Later: Adjust libc++ related cpulockdown make.* file. Add files
+  from a run into acpphint_example_data/HoneyComb-FBSD/ . No *.gp
+  files for it yet.
 
 ###### [0.1.29] 2023-Jan-30         . . . 2023-???-?? (final)
 Additions

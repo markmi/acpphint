@@ -103,9 +103,6 @@ ACPPHINT_FILENAME_INFO= ${COMPUTER}-${RAM}-${THREADS}-${CPP_DATA_MODEL}-${OS}-${
 
 include makefile.common_part
 
-#
-#  Support some special NOPREFER-related information gathering:
-#
 gather-NOPREFER-info: \
 		cpp_clockinfo_main-run \
 		acpphint_kernelsurveyors_main-run \
