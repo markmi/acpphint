@@ -94,9 +94,13 @@ Additions
 - Later: add 2 such *.pg files. Adjust/rename a couple of others,
   adding time variants to the existing RAM ones as well.
 
-- Adjust a FreeBSD makefile.\*'s for Running on a HoneyComb. Add
-  files from a run in to acpphint_example_data/HoneyComb-FBSD/ .
-  No *.gp files for this yet.
+- Adjust a FreeBSD libstdc++ makefile.\*'s for Running on a HoneyComb.
+  Add files from a run in to acpphint_example_data/HoneyComb-FBSD/ .
+  Also add *.gp files for this.
+
+- Adjust a FreeBSD libc++ makefile.\*'s for Running on a HoneyComb.
+  (The variant for still using g++12.) No data files or *.gp files
+  yet.
 
 ###### [0.1.29] 2023-Jan-30         . . . 2023-???-?? (final)
 Additions
