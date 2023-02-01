@@ -94,6 +94,7 @@ Additions
 - Later: add 2 such *.pg files. Adjust/rename a couple of others,
   adding time variants to the existing RAM ones as well.
 
+Changes
 - Adjust a FreeBSD libstdc++ makefile.\*'s for Running on a HoneyComb.
   Add files from a run in to acpphint_example_data/HoneyComb-FBSD/ .
   Also add *.gp files for this.
