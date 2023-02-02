@@ -85,6 +85,12 @@ examples.) That code's license in turn sets the overall license to also be GLPv2
 (no earlier, no later), despite OpenBSD-vintage-ISC licensed source in
 `other_src_used/` also being built and linked in.
 ##### Changelog . . .
+###### [0.1.31] 2023-Feb-02         . . . 2023-???-?? (final)
+Additions
+- Have the std::cout quips_to_peak_ratio line also report
+  the numerator and denominator for the ratio so the quips
+  and peak quips are explicitly visible as well.
+
 ###### [0.1.30] 2023-Jan-31+        . . . 2023-???-?? (final)
 Additions
 - Add Fedora makefile.\*'s for Running on a HoneyComb. Add

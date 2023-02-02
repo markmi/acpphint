@@ -284,7 +284,9 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
     if  (quips_to_peak_ratio < STOPRT)
         qdata.back().how_stopped_notes
             +=  " quips_to_peak_ratio:      stopped for "
-              + std::to_string(quips_to_peak_ratio) + " == quips/peak_quips"
+              + std::to_string(quips_to_peak_ratio)
+              + " == " + std::to_string(qdata.back().quips) + "/" + std::to_string(quips_peak)
+              + " == quips/peak_quips"
               + " < "
               + "STOPRT == " + std::to_string(STOPRT)
               + "\n";
@@ -341,7 +343,9 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
             +=  " quips_to_peak_ratio:      stopped with "
               + std::to_string(STOPRT) + " == STOPRT"
               + " <= "
-              + "quips/peak_quips == " + std::to_string(quips_to_peak_ratio)
+              + "quips/peak_quips"
+              + " == " + std::to_string(qdata.back().quips) + "/" + std::to_string(quips_peak)
+              + " == " + std::to_string(quips_to_peak_ratio)
               + "\n";
 
     if (DSIZE_n < ki.initial_dx) // DSIZE_n here is after last n used.
