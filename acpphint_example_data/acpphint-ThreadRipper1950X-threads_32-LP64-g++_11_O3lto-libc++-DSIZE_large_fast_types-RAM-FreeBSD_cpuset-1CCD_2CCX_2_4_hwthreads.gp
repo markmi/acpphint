@@ -8,7 +8,7 @@ RAMLOWERBOUND=   64
 RAMUPPERBOUND=   2**38
 QUIPSUPPERBOUND= 5e8
 TIMELOWERBOUND=  1e-8
-TIMEUPPERBOUND=  1.6
+TIMEUPPERBOUND=  10
 set title "1950X, 1CCD 2CCX 2/4 hwthreads, process under cpuset, cpulockdown also avoids repeated thread migrations within cpuset\n" . \
           "FNAME2PREFIX= " . FNAME2PREFIX . "\nFNAMEPREFIX= " . FNAMEPREFIX noenhanced
 set ylabel "QUality ImProvement/sec"
