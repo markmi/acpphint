@@ -94,6 +94,8 @@ Additions
 - Later: add 2 such *.pg files. Adjust/rename a couple of others,
   adding time variants to the existing RAM ones as well.
 
+- Later: add a missing time *.gp file to go with a RAM one.
+
 Changes
 - Adjust a FreeBSD libstdc++ makefile.\*'s for Running on a HoneyComb.
   Add files from a run into acpphint_example_data/HoneyComb-FBSD/ .
@@ -112,6 +114,8 @@ Changes
 - Later: Only have 3 NetBSD related *.gp files: Just for showing the
   NetBSD data oddities. Also use 10 for the time upper bounds in
   general for *.gp files, not 1.6.
+
+- Later: Adjust/rename 3 g++_11 *.gp files to instead be g++_12 ones.
 
 ###### [0.1.29] 2023-Jan-30         . . . 2023-???-?? (final)
 Additions
