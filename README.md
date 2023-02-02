@@ -94,7 +94,9 @@ Additions
 - Later: add 2 such *.pg files. Adjust/rename a couple of others,
   adding time variants to the existing RAM ones as well.
 
-- Later: add a missing time *.gp file to go with a RAM one.
+- Later: Add a missing time *.gp file to go with a RAM one.
+
+- Later: Add FreeBSD libstdc++ data, no *.gp files yet.
 
 Changes
 - Adjust a FreeBSD libstdc++ makefile.\*'s for Running on a HoneyComb.
@@ -116,6 +118,9 @@ Changes
   general for *.gp files, not 1.6.
 
 - Later: Adjust/rename 3 g++_11 *.gp files to instead be g++_12 ones.
+
+- Later: Modernize the FreeBSD libstdc++ make.* files to match the
+  current context.
 
 ###### [0.1.29] 2023-Jan-30         . . . 2023-???-?? (final)
 Additions

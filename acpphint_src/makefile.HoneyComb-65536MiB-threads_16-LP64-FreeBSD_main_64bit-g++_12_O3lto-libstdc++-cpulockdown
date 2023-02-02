@@ -2,7 +2,7 @@
 # acpphint's makefile.HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_64bit-g++_12_O3lto-libstdc++-cpulockdown
 # example (as of requiring C++20 or later)
 #
-#  Copyright (c) 2015-2022 Mark Millard
+#  Copyright (c) 2015-2023 Mark Millard
 #  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
 #
 #  Note: Any acpphint*.{h,cpp} code or makefile code
@@ -91,7 +91,7 @@ COMPUTER=               HoneyComb
 RAM=                    65536MiB
 THREADS=                threads_16
 CPP_DATA_MODEL=         LP64
-OS=                     FreeBSD_main_n256584_5bc926af9fd1_64bit
+OS=                     FreeBSD_main_n259950_5723e5ac6d76_64bit
 #SUFFIX=
 SUFFIX=                 -cpulockdown
 ACPPHINT_FILENAME_INFO= ${COMPUTER}-${RAM}-${THREADS}-${CPP_DATA_MODEL}-${OS}-${COMPILER_LIBRARY}${SUFFIX}
@@ -103,9 +103,6 @@ ACPPHINT_FILENAME_INFO= ${COMPUTER}-${RAM}-${THREADS}-${CPP_DATA_MODEL}-${OS}-${
 
 include makefile.common_part
 
-#
-#  Ignore any special NOPREFER-related information gathering request:
-#
 gather-NOPREFER-info: \
 		cpp_clockinfo_main-run \
 		acpphint_kernelsurveyors_main-run \
@@ -124,5 +121,20 @@ acpphint-NOPREFER-run:
 	cd .. && cpuset -l2,3,6,7,10,11,14,15                        ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4p2_kx4p3_2_15.txt"       8
 	cd .. && cpuset -l1,2,3,4,5,6,7,8,9,10,11,12,13,14,15        ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kp1_1_15.txt"              15
 	cd .. && cpuset -l0                                          ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0.txt"                      1
+	cd .. && cpuset -l0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15      ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kp1_0_15.txt"              16
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} ".txt"  1
 	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} ".txt"  2
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} ".txt"  3
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} ".txt"  4
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} ".txt"  5
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} ".txt"  6
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} ".txt"  7
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} ".txt"  8
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} ".txt"  9
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} ".txt" 10
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} ".txt" 11
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} ".txt" 12
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} ".txt" 13
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} ".txt" 14
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} ".txt" 15
 	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} ".txt" 16
