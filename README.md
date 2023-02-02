@@ -109,6 +109,10 @@ Changes
   from a run into acpphint_example_data/HoneyComb-FBSD/ . No *.gp
   files for it yet.
 
+- Later: Only have 3 NetBSD related *.gp files: Just for showing the
+  NetBSD data oddities. Also use 10 for the time upper bounds in
+  general for *.gp files, not 1.6.
+
 ###### [0.1.29] 2023-Jan-30         . . . 2023-???-?? (final)
 Additions
 - Add NetBSD makefile.\*'s for Running on a HoneyComb. Add
