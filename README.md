@@ -85,7 +85,7 @@ examples.) That code's license in turn sets the overall license to also be GLPv2
 (no earlier, no later), despite OpenBSD-vintage-ISC licensed source in
 `other_src_used/` also being built and linked in.
 ##### Changelog . . .
-###### [0.1.31] 2023-Feb-02         . . . 2023-???-?? (final)
+###### [0.1.31] 2023-Feb-02+        . . . 2023-???-?? (final)
 Additions
 - Have the std::cout quips_to_peak_ratio line also report
   the numerator and denominator for the ratio so the quips
@@ -96,9 +96,13 @@ Changes
   instead. Also, mostly avoid the runs involving a command
   line cpuset or schedctl style of run.
 
+- Later: Adjust HoneyComb FreeBSD clang++ 15 make.*'s to
+  identify modern FBSD vintage. Add files from runs to
+  acpphint_example_data/HoneyComb-FBSD/ . No *.gp's yet.
+
 ###### [0.1.30] 2023-Jan-31+        . . . 2023-???-?? (final)
 Additions
-- Add Fedora makefile.\*'s for Running on a HoneyComb. Add
+- Add Fedora makefile.*'s for Running on a HoneyComb. Add
   files from a run in a new acpphint_example_data/HoneyComb-Fedora/
   directory for this combination.
 
