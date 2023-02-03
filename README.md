@@ -98,7 +98,8 @@ Changes
 
 - Later: Adjust HoneyComb FreeBSD clang++ 15 make.*'s to
   identify modern FBSD vintage. Add files from runs to
-  acpphint_example_data/HoneyComb-FBSD/ . No *.gp's yet.
+  acpphint_example_data/HoneyComb-FBSD/ . Update *.gp's too.
+  (One unrelated rename as well.)
 
 ###### [0.1.30] 2023-Jan-31+        . . . 2023-???-?? (final)
 Additions
