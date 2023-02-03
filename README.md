@@ -91,6 +91,11 @@ Additions
   the numerator and denominator for the ratio so the quips
   and peak quips are explicitly visible as well.
 
+Changes
+- Later: Adjust/rename most g++_11 *.gp's to be g++_12 ones
+  instead. Also, mostly avoid the runs involving a command
+  line cpuset or schedctl style of run.
+
 ###### [0.1.30] 2023-Jan-31+        . . . 2023-???-?? (final)
 Additions
 - Add Fedora makefile.\*'s for Running on a HoneyComb. Add
