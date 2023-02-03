@@ -102,8 +102,8 @@ Changes
   (One unrelated rename as well.)
 
 Removals
-- Remove most older makefile.\*'s that do not match one of
-  the now 12 \*.gp files at all.
+- Later: Remove most older makefile.\*'s that do not match one of
+  the now 12 \*.gp files at all. That includes clang++_12 files.
 
 ###### [0.1.30] 2023-Jan-31+        . . . 2023-???-?? (final)
 Additions
