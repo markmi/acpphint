@@ -101,6 +101,10 @@ Changes
   acpphint_example_data/HoneyComb-FBSD/ . Update *.gp's too.
   (One unrelated rename as well.)
 
+Removals
+- Remove most older makefile.\*'s that do not match one of
+  the now 12 \*.gp files at all.
+
 ###### [0.1.30] 2023-Jan-31+        . . . 2023-???-?? (final)
 Additions
 - Add Fedora makefile.*'s for Running on a HoneyComb. Add
@@ -113,6 +117,10 @@ Additions
 - Later: Add a missing time *.gp file to go with a RAM one.
 
 - Later: Add FreeBSD libstdc++ data, no *.gp files yet.
+
+Removals
+- Delete various unused HoneyComb FreeBSD g++ 11 based data files,
+  now that a more modern FreeBSD/g++ combination has data files.
 
 Changes
 - Adjust a FreeBSD libstdc++ makefile.\*'s for Running on a HoneyComb.
@@ -202,10 +210,6 @@ Changes
 
 - Later: fix the libstdc++ spelling in the makefile.2018macMiniVM*
   names.
-
-Removals
-- Remove most older makefile.\*'s that do not match one of
-  the now 12 \*.gp files at all.
 
 - Remove 2 misnamed 2018macMIniVM data files that are not to
   be regenerated.
