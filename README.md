@@ -85,6 +85,10 @@ examples.) That code's license in turn sets the overall license to also be GLPv2
 (no earlier, no later), despite OpenBSD-vintage-ISC licensed source in
 `other_src_used/` also being built and linked in.
 ##### Changelog . . .
+###### [0.1.32] 2023-Feb-15         . . . 2023-???-?? (final)
+Changes
+- Have quips_peak and quips_to_peak_ratio updated in more cases.
+
 ###### [0.1.31] 2023-Feb-02+        . . . 2023-???-?? (final)
 Additions
 - Have the std::cout quips_to_peak_ratio line also report
