@@ -233,14 +233,14 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
         if (NOERROR != run_result.kernel_result.eflag)
             break;
 
+        quips_peak=             std::max(quips_peak,quips);
+        quips_to_peak_ratio=    quips/quips_peak;
+
         if (STOPTM <= run_result.median_mean_sec_per_lap)
             break;
             
         if (VECTS_BYTES_LIMIT <= run_result.vectors_total_bytes)
             break;
-
-        quips_peak=             std::max(quips_peak,quips);
-        quips_to_peak_ratio=    quips/quips_peak;
 
         if  (  STOPRT_GRID_SIZE_THRESHOLD<n // Threshold not in original HINTs
             && quips_to_peak_ratio<STOPRT
