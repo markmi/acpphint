@@ -85,6 +85,39 @@ examples.) That code's license in turn sets the overall license to also be GLPv2
 (no earlier, no later), despite OpenBSD-vintage-ISC licensed source in
 `other_src_used/` also being built and linked in.
 ##### Changelog . . .
+###### [0.1.33] 2023-May-03         . . . 2023-???-?? (final)
+Additions
+- Start to add Windows Dev Kit 2023 based examples (WDK23
+  naming here), with code generation tailored to the
+  cortex-a78c/cortex-x1c involved. The kernel and world
+  for the context were also tailored so tailored is the
+  overall type context. The prepliminary data is from a
+  ZFS context (unusual procedure) instead of UFS (normal).
+  No .gp files yet.
+
+- Set up to later get some modern HoneyComb based data for
+  comparison and contrast use. (Not built or run yet: build
+  in/for a cortex-a72 context.) Similarly for testing
+  cortex-a72 code on the WDK23.
+
+Changes
+- Update to using lang/gcc13 and devel/clang16 based builds
+  for the ones I intend to test. (libc++ is still from llvm15
+  in the system).
+
+Notes:
+- The LLVM15 libc++ include __type_traits/is_convertible.h
+  needed handling of __is_convertible being a builtin,
+  which g++13 has. g++13 -stdlib=libc++ does not compile
+  succesfully for libc++ use otherwise. FreeBSD main
+  [so: 14] is still using LLVM 15.0.7 .
+
+- clang++15, clang++16, and g++13 all have issues with
+  mistaken or incomplete/inaccurate default features for
+  cortex-x1c and/or cortex-a78c, not even treating the
+  2 the same in places where ARM documents them as
+  matching. (Mostly [completely?] they match.)
+
 ###### [0.1.32] 2023-Feb-15         . . . 2023-???-?? (final)
 Changes
 - Have quips_peak and quips_to_peak_ratio updated in more cases.

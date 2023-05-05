@@ -20,14 +20,16 @@ the example data, such as:
 ```
 HoneyComb-FBSD/
 HoneyComb-Fedora/
-HoneyComb-STOPTM_6/
+HoneyComb-NBSD/                                                                                                                                      
+HoneyComb-OBSD/                                                                                                                                      
+HoneyComb-ubuntu/                                                                                                                                    
 MacchDblShot-FBSD/
-MacchDblShot-Fedora/
-OPi+2E-FBSD/
+MacchDblShot-ubuntu/
 OverDrive_1000-FBSD/
 RPi4B-FBSD/
-Rock64-FBSD/
 ThreadRipper1950X-nonuma-FreeBSD-pg_ps/
+WDK23_CA72-FBSD/
+WDK23_CA78C-FBSD/
 ```
 (I do not distribute binaries. But I also do not distribute the
 source sys_cpubinding_lgplv2_1_okay.cpp that I used to prove
