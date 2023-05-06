@@ -67,9 +67,6 @@ CXXLIB=
 CXX=            clang++16 -v -std=c++20 -Wpedantic -Wall -Wextra
 #CXX+=           -stdlib=libc++
 #CXX+=           -DDSIZE_ALL_ISIZE_ALL
-# Note: for now clang++16 is missing having the flagm feature by default for cortex-x1c .
-# Note: clang++16 currently has more complete default features for the cortex-x1c
-#       than for the cortex-a78c --including ones with no direct command line control.
 OPT=            -O3 -mcpu=cortex-a72
 LTO_STYLE=	-flto
 OPT+=           ${LTO_STYLE}
@@ -82,7 +79,7 @@ LDCXX+=         -fuse-ld=lld ${LTO_STYLE}
 # For Linux NUMA use:
 #LDCXX+=         -lnuma
 
-COMPILER_DESC=      clang++_16_O3lto_CA78C
+COMPILER_DESC=      clang++_16_O3lto_CA72
 LIBRARY_DESC=       libc++
 COMPILER_LIBRARY=   ${COMPILER_DESC}-${LIBRARY_DESC}
 
