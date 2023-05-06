@@ -112,6 +112,11 @@ Changes
 
 - Later: fix naming error in 2 makefile.* files.
 
+- Later: I've rerun the 4 CA78C cpu cpuset-restricted examples that
+  were for lack of cpu lockdowns --because the original data looks
+  to have had competing non-benchmark activity that made for
+  problematical data.
+
 Notes:
 - The LLVM15 libc++ include __type_traits/is_convertible.h
   needed handling of __is_convertible being a builtin,
