@@ -112,10 +112,14 @@ Changes
 
 - Later: fix naming error in 2 makefile.* files.
 
-- Later: I've rerun the 4 CA78C cpu cpuset-restricted examples that
-  were for lack of cpu lockdowns --because the original data looks
-  to have had competing non-benchmark activity that made for
-  problematical data.
+- Later: I've rerun the 4 CA78C cpu cpuset-restricted examples
+  that were for lack of cpu lockdowns --because the original
+  data looked to possibly have had competing non-benchmark
+  activity that made for problematical data. The result was\
+  somewhat less messy for the plot curves --but still messy.
+  No messes observed for any cpu clock down testing so far.
+  Looks like the wide variability is tied to thread migration
+  activity among the cpuset restricted set of cores.
 
 Notes:
 - The LLVM15 libc++ include __type_traits/is_convertible.h
@@ -128,7 +132,8 @@ Notes:
   mistaken or incomplete/inaccurate default features for
   cortex-x1c and/or cortex-a78c, not even treating the
   2 the same in places where ARM documents them as
-  matching. (Mostly [completely?] they match.)
+  matching --with FreeBSD's boot reporting agreeing.
+  (Mostly [completely?] they match.)
 
 ###### [0.1.32] 2023-Feb-15         . . . 2023-???-?? (final)
 Changes
