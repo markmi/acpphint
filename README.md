@@ -100,10 +100,17 @@ Additions
   in/for a cortex-a72 context.) Similarly for testing
   cortex-a72 code on the WDK23.
 
+- Added later: UFS WDK23 examples based on kernel/world/acpphint
+  having code tuned for cortex-a72. No replacement of ZFS context
+  example data with UFS context data yet for
+  cortex-a78c/cortex-x1c.
+
 Changes
 - Update to using lang/gcc13 and devel/clang16 based builds
   for the ones I intend to test. (libc++ is still from llvm15
   in the system).
+
+- Later: fix naming error in 2 makefile.* files.
 
 Notes:
 - The LLVM15 libc++ include __type_traits/is_convertible.h
