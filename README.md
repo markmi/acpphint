@@ -100,10 +100,14 @@ Additions
   in/for a cortex-a72 context.) Similarly for testing
   cortex-a72 code on the WDK23.
 
-- Added later: UFS WDK23 examples based on kernel/world/acpphint
-  having code tuned for cortex-a72. No replacement of ZFS context
-  example data with UFS context data yet for
-  cortex-a78c/cortex-x1c.
+- Added later: UFS WDK23 CA72 (kernel/world/acpphint).
+  No replacement of ZFS context example data with UFS
+  context data yet for CA78C(/X1C).
+
+- Added later: Start to explore the kernel being targetted
+  one way and the rest (world/acpphint) being the other. First
+  example: UFS WDK23 with CA78C(/X1C) kernel and CA72 world.
+  This adds makefile.* files with appropriate naming.
 
 Changes
 - Update to using lang/gcc13 and devel/clang16 based builds
