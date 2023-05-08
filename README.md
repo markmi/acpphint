@@ -91,9 +91,11 @@ Additions
   naming here), with code generation tailored to the
   cortex-a78c/cortex-x1c involved. The kernel and world
   for the context were also tailored so tailored is the
-  overall type context. The prepliminary data is from a
+  overall type context. The prepliminary data was from a
   ZFS context (unusual procedure) instead of UFS (normal).
-  No .gp files yet.
+  For just clang++16 based, I'm updating to a UFS base
+  test context for now. (g++13 likely will be updated
+  later.) No .gp files yet.
 
 - Set up to later get some modern HoneyComb based data for
   comparison and contrast use. (Not built or run yet: build
