@@ -1,6 +1,6 @@
 #
 # acpphint's makefile.WDK23_K78CW72-32768MiB-threads_8-LP64-FreeBSD_main_64bit-clang++_16_O3lto_CA72-libc++
-# example (as of requiring C++20 or later)
+# example (as of requiring C++23 or later)
 #
 #  Copyright (c) 2015-2023 Mark Millard
 #  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
@@ -64,7 +64,7 @@ THE_MAKEFILE= makefile.WDK23_K78CW72-32768MiB-threads_8-LP64-FreeBSD_main_64bit-
 #
 
 CXXLIB=
-CXX=            clang++16 -v -std=c++20 -Wpedantic -Wall -Wextra
+CXX=            clang++16 -v -std=c++2b -Wpedantic -Wall -Wextra
 #CXX+=           -stdlib=libc++
 #CXX+=           -DDSIZE_ALL_ISIZE_ALL
 OPT=            -O3 -mcpu=cortex-a72

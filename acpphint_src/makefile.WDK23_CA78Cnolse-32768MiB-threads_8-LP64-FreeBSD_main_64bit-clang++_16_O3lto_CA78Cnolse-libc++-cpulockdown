@@ -1,5 +1,5 @@
 #
-# acpphint's makefile.WDK23_CA78C-32768MiB-threads_8-LP64-FreeBSD_main_64bit-clang++_16_O3lto_CA78C-libc++
+# acpphint's makefile.WDK23_CA78Cnolse-32768MiB-threads_8-LP64-FreeBSD_main_64bit-clang++_16_O3lto_CA78Cnolse-libc++
 # example (as of requiring C++23 or later)
 #
 #  Copyright (c) 2015-2023 Mark Millard
@@ -35,7 +35,7 @@
 .POSIX:
 .SUFFIXES:
 
-THE_MAKEFILE= makefile.WDK23_CA78C-32768MiB-threads_8-LP64-FreeBSD_main_64bit-clang++_16_O3lto_CA78C-libc++
+THE_MAKEFILE= makefile.WDK23_CA78Cnolse-32768MiB-threads_8-LP64-FreeBSD_main_64bit-clang++_16_O3lto_CA78Cnolse-libc++
 
 #
 # acpphint's makefile.*'s are very tailored to my use but may be
@@ -70,11 +70,11 @@ CXX=            clang++16 -v -std=c++2b -Wpedantic -Wall -Wextra
 # Note: for now clang++16 is missing having the flagm feature by default for cortex-x1c .
 # Note: clang++16 currently has more complete default features for the cortex-x1c
 #       than for the cortex-a78c --including ones with no direct command line control.
-OPT=            -O3 -mcpu=cortex-x1c+flagm
+OPT=            -O3 -mcpu=cortex-x1c+flagm+nolse
 LTO_STYLE=	-flto
 OPT+=           ${LTO_STYLE}
-CPULOCKDOWN_OPT=
-#CPULOCKDOWN_OPT=        -DWANT_CPU_LOCKDOWN
+#CPULOCKDOWN_OPT=
+CPULOCKDOWN_OPT=        -DWANT_CPU_LOCKDOWN
 # Note for FreeBSD: WANT_NUMA_TOO is implicit/automatic; not so for Linux
 #CPULOCKDOWN_OPT+=       -DWANT_NUMA_TOO
 LDCXX+=         -fuse-ld=lld ${LTO_STYLE}
@@ -82,17 +82,17 @@ LDCXX+=         -fuse-ld=lld ${LTO_STYLE}
 # For Linux NUMA use:
 #LDCXX+=         -lnuma
 
-COMPILER_DESC=      clang++_16_O3lto_CA78C
+COMPILER_DESC=      clang++_16_O3lto_CA78Cnolse
 LIBRARY_DESC=       libc++
 COMPILER_LIBRARY=   ${COMPILER_DESC}-${LIBRARY_DESC}
 
-COMPUTER=               WDK23_CA78C
+COMPUTER=               WDK23_CA78Cnolse
 RAM=                    32768MiB
 THREADS=                threads_8
 CPP_DATA_MODEL=         LP64
 OS=                     FreeBSD_main_n262658_b347c2284603_64bit
-SUFFIX=
-#SUFFIX=                 -cpulockdown
+#SUFFIX=
+SUFFIX=                 -cpulockdown
 ACPPHINT_FILENAME_INFO= ${COMPUTER}-${RAM}-${THREADS}-${CPP_DATA_MODEL}-${OS}-${COMPILER_LIBRARY}${SUFFIX}
 #
 # Note: The "threads_8" is what the hardware has for
