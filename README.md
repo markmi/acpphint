@@ -109,14 +109,16 @@ Additions
 - Added later: Start to explore the kernel being targetted
   one way and the rest (world/acpphint) being the other. First
   example: UFS WDK23 with CA78C(/X1C) kernel and CA72 world.
-  This adds makefile.* files with appropriate naming.
+  This adds makefile.* files with appropriate naming. Then
+  add UFS WDK23 with CA72 kernel and CA78C(/X1C) world.
 
 Changes
 - Update to using lang/gcc13 and devel/clang16 based builds
   for the ones I intend to test. (libc++ is still from llvm15
   in the system).
 
-- Later: fix naming error in 2 makefile.* files.
+- Later: fix naming error in 2 makefile.* files. Even later:
+  fix more typos in makefile.* files.
 
 - Later: I've rerun the 4 CA78C cpu cpuset-restricted examples
   that were for lack of cpu lockdowns --because the original
