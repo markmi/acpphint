@@ -85,6 +85,40 @@ examples.) That code's license in turn sets the overall license to also be GLPv2
 (no earlier, no later), despite OpenBSD-vintage-ISC licensed source in
 `other_src_used/` also being built and linked in.
 ##### Changelog . . .
+###### [0.1.34] 2023-May-11         . . . 2023-???-?? (final)
+Additions
+- Add makefile.*'s and such for looking at time measurement
+  for full-feature, nolse, nolse and norcpc, norcpc, and
+  CA72 style code (kernel/world/etc.). Add a
+  acpphint_example_data/WDK23_cpp_clockinfo_examples/ with
+  the example cpp_clockinfo outputs.
+
+- Note: Later 0.1.33 may get more reworking/replacement from
+  picking a specific combination to primarily target.
+
+Changes
+- Update CA78Cnolse examples based on the UFS context
+  that now normally is based on +nolse for the context
+  (kernel, world) and the banchmark.
+
+- Update the cpp_clockinfo code to have better output for
+  the comparison's I was doing.
+
+- Adjust acpphint_src/makefile.common_part for doing some
+  just cpp_clockinfo activity rather than the full
+  benchmarking.
+
+- Remove materials that mixed kernels vs. world that had
+  distinct compiling configurations: avoid dealing with
+  the volume of stuff tied to the combinatorics.
+
+- Remove existing g++ examples as I disocvered that the
+  kernel+world configuration measured was far from optimal
+  for the FreeBSD activity (buildorld, buildkernel, building
+  ports). Have the makefile.* 's for g++ use be just for
+  CA72 and CA78Cnolse (+nolse use). My normal environment is
+  bsaed on +nolse now.
+
 ###### [0.1.33] 2023-May-03         . . . 2023-???-?? (final)
 Additions
 - Start to add Windows Dev Kit 2023 based examples (WDK23
@@ -112,6 +146,11 @@ Additions
   This adds makefile.* files with appropriate naming. Then
   add UFS WDK23 with CA72 kernel and CA78C(/X1C) world.
 
+- Added later: UFS cpu clockdown CA78C+nolse example data.
+
+- Added later: UFS cpu clockdown world CA78C+nolse_norcpc
+  example data for  CA72 kernel.
+
 Changes
 - Update to using lang/gcc13 and devel/clang16 based builds
   for the ones I intend to test. (libc++ is still from llvm15
@@ -123,11 +162,17 @@ Changes
 - Later: I've rerun the 4 CA78C cpu cpuset-restricted examples
   that were for lack of cpu lockdowns --because the original
   data looked to possibly have had competing non-benchmark
-  activity that made for problematical data. The result was\
+  activity that made for problematical data. The result was
   somewhat less messy for the plot curves --but still messy.
   No messes observed for any cpu clock down testing so far.
   Looks like the wide variability is tied to thread migration
   activity among the cpuset restricted set of cores.
+
+- Later: Various WDK23 related removals of likely unused
+  material. Looks like I'll just be looking at time measuring
+  for a while and will likely need to redo various things
+  afterwards and possibly delete even more as not really
+  appropraite long term.
 
 Notes:
 - The LLVM15 libc++ include __type_traits/is_convertible.h

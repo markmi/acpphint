@@ -60,7 +60,7 @@
 //#include <memory>       // allocator (implicit)
 
 // Definitions for ClkInfo . . .
-    
+
 ClkInfo::ClkInfo(DurationsStatus durations_status) 
     : num_durations_sampled{num_durations_sampled_per_instance}
 {
@@ -69,11 +69,11 @@ ClkInfo::ClkInfo(DurationsStatus durations_status)
         , "The source code only designed for UsedClk::duration.count()"
           " being integral"
         );
-        
+
     auto const old{std::cerr.flags()};
-    
+
     auto const cleaner{ [old]() -> void {std::cerr.flags(old);} };
-    
+
     struct end_scope_cleaner
     {
         end_scope_cleaner(decltype(cleaner) const& c) : clean_with(c) {}
@@ -81,9 +81,9 @@ ClkInfo::ClkInfo(DurationsStatus durations_status)
     private:
         decltype(cleaner) const& clean_with;
     } const end_scope_clean_with{cleaner};
-         
+
     using TimePoint = typename UsedClk::time_point;
-    
+
     // Start investigation with a small sampling for basic classification
     std::vector<TimePoint> back_to_back_tps
     {
@@ -143,15 +143,15 @@ ClkInfo::ClkInfo(DurationsStatus durations_status)
         , Now()
         }
     };
-    
+
     observed_durations.reserve(back_to_back_tps.size()-1u);
-    
+
     auto const find_and_sort_deltas
     {
         [&back_to_back_tps,this](auto order_test, const char* throw_msg)
         {
             observed_durations.clear();
-            
+
             auto prev_tp{back_to_back_tps.cbegin()};
             auto at_tp  {std::next(prev_tp)};
             for (
@@ -171,39 +171,39 @@ ClkInfo::ClkInfo(DurationsStatus durations_status)
                         << " ns\n";
                     throw std::runtime_error(throw_msg);
                 }
-                
+
                 observed_durations.emplace_back(*at_tp - *prev_tp);
             }
-            
+
             std::sort
                 (std::begin(observed_durations), std::end(observed_durations));
         }
     };
-     
+
     auto const backwards_failure_test
     {
         [](UsedClk::time_point before, UsedClk::time_point after) -> bool
         { return after < before; }
     };
-    
+
     find_and_sort_deltas
         ( backwards_failure_test
         , "now() did not produce all-non-negative preliminary back_to_back_tps deltas"
         );
-    
+
     zero_duration_observed= observed_durations.at(0u) == Duration::zero();
-    
+
     back_to_back_tps    .clear();
     observed_durations  .clear();
     back_to_back_tps    .reserve(num_durations_sampled_per_instance+1u);
     observed_durations  .reserve(num_durations_sampled_per_instance);
-     
+
     auto const progress_failure_test
     {
         [](UsedClk::time_point before, UsedClk::time_point after) -> bool
         { return after <= before; }
     };
-    
+
     duration_overhead= Duration::zero();
 
     if (!zero_duration_observed)
@@ -241,33 +241,45 @@ ClkInfo::ClkInfo(DurationsStatus durations_status)
             auto new_tp{Now()};
             while (new_tp == prev_tp)
                 new_tp= Now();
-                
+
             back_to_back_tps.emplace_back(prev_tp);
             prev_tp = new_tp;
         }
-        
+
         find_and_sort_deltas
             ( progress_failure_test
             , "now() equality-looping got non-positive deltas for back_to_back_tps"
             );
-    
+
         duration_overhead= Duration::zero();
     }
-    
-    auto const large_percentile_at
+
+    auto large_percentile_at
         {(large_percentile*(observed_durations.size()-1u))/percentile_scale};
-    
+
     duration_spanning_large_percentile
                                 = observed_durations.at(large_percentile_at);
-    
+
+    // Avoid odd 0u == small_scale_duration_variability if we can:
+    while (  duration_spanning_large_percentile == duration_overhead
+          && large_percentile_at < observed_durations.size()-1u
+          )
+        {
+            large_percentile_at++;
+            duration_spanning_large_percentile
+                                = observed_durations.at(large_percentile_at);
+
+        }
+
     small_scale_duration_variability=  duration_spanning_large_percentile
                                      - duration_overhead;
-                                   
+
     target_approx_min_duration
-        = scale_factor_for_activity_target*small_scale_duration_variability;
+        =  scale_factor_for_activity_target
+         * std::max(small_scale_duration_variability,duration_overhead);
 
     largest_duration= observed_durations.back();
-    
+
     if (DurationsStatus::Forget == durations_status)
     {
         observed_durations.clear();
@@ -303,7 +315,7 @@ void ClkInfo::Merge(const ClkInfo& OtherClkInfoExample)
                     );
 
     num_durations_sampled+= OtherClkInfoExample.num_durations_sampled;
-    
+
     // Effectively change the status to DurationsStatus::Forget.
     // In other words: ObservedDurationsSortedWeaklyIncreasing()
     // then returns an empty Durations value.
@@ -322,7 +334,7 @@ auto ClkInfo::nsFormatted(Duration const& d) -> std::string
 {
     std::ostringstream out{};
     out.imbue(CppThousandsLocale());
-    
+
     out << std::chrono::duration_cast<std::chrono::nanoseconds>(d).count();
 
     return out.str();
@@ -343,7 +355,7 @@ auto ClkInfoFromThreads( ClkInfo::DurationsStatus durations_status
 
     std::vector<std::future<ClkInfo>> in_parallel{};
     in_parallel.reserve(requested_threads);
-    
+
     for(auto thread{requested_threads}; 0<thread; --thread)
     {
         try
@@ -361,14 +373,14 @@ auto ClkInfoFromThreads( ClkInfo::DurationsStatus durations_status
             break;
         }
     }
-    
+
     if (in_parallel.empty()) return std::vector<ClkInfo>{};
-            
+
     for(auto& thread : in_parallel)
     {
         thread.wait();
     }
-    
+
     std::vector<ClkInfo> threads_clock_infos{};
     threads_clock_infos.reserve(in_parallel.size());
 
@@ -376,7 +388,7 @@ auto ClkInfoFromThreads( ClkInfo::DurationsStatus durations_status
     {
         threads_clock_infos.emplace_back(thread.get());
     }
-    
+
     return threads_clock_infos;
 }
 

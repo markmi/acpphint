@@ -77,7 +77,7 @@ try
                 << "argv[1] could not be converted to positive thread count\n";
             return 1;
         }
-    
+
         requested_threads= temp;    // controls threads used for threaded test
                                     // if optional argv[1] makes it positive.
     }
@@ -87,15 +87,17 @@ try
     std::cout
         << argv[0u] << " . . .\n"
         << "cpp_clockinfo_main version: " CPPCLOCKINFO_VERS "\n"
-        << "\n" << std::flush;
-    
+        << "\n"
+        << "NOTE: Producing the below output did NOT involve any INTERNAL CPU-lock-down activity.\n"
+        << std::flush;
+
     auto clock_info_report
     {
         [](const ClkInfo& test_clock_info) -> void
         {
             std::cout
                 << "\n";
-                    
+
             if (test_clock_info.ZeroDurationObserved())
             {
                 std::cout
@@ -108,7 +110,7 @@ try
                     << "Clock tick is not slow relative to execution:\n"
                     << "no zero durations observed.\n";
             }
-    
+
             std::cout
                 << "\n"
                 << "Of " << std::setw(0) << test_clock_info.NumDurationsSampled()
@@ -144,10 +146,11 @@ try
                 << " ns\n"
                 << "(with min duration still included)\n"
                 << "\n";
-                
+
             auto const durations
                 {test_clock_info.ObservedDurationsSortedWeaklyIncreasing()};
             auto const end_durations    {durations.size()};
+            auto const percent99_of_end_durations {0.99*end_durations};
 
             if (1<end_durations)
             {
@@ -168,7 +171,7 @@ try
                         ++value_count;
                         ++i;
                     }
-                    
+
                     std::cout
                     <<        std::setw(10) << distinct_value_pos
                     << " " << std::setw(10) << value_count
@@ -177,18 +180,27 @@ try
                            << double(i+1) / end_durations
                            << std::defaultfloat
                     << "\n";
-                        
-                     ++distinct_value_pos;
+
+                    if (  value_count<10
+                       && percent99_of_end_durations < double(i+1)
+                       && i+1 < end_durations
+                       )
+                    {
+                        std::cout << "(" << end_durations-i-1 << " examples not summarized)\n";
+                        break;
+                    }
+
+                    ++distinct_value_pos;
                  }
             }
-            
+
             std::cout.flush();
         }
-        
+
     };
 
     ClkInfo clock_info{ClkInfo::DurationsStatus::Keep}; // Initially: just main thread
-    
+
     std::cout
         << "\n"
         << "is_steady:                           "
@@ -211,23 +223,23 @@ try
 
     std::cout   << "\n"
                 << "Other threads (parallel, if any):\n";
-                
+
     auto threads_clock_infos
-                { ClkInfoFromThreads( ClkInfo::DurationsStatus::Forget
+                { ClkInfoFromThreads( ClkInfo::DurationsStatus::Keep
                                     , requested_threads
                                     )
                 };
-    
+
     for (auto& thread_clock_info : threads_clock_infos)
     {
         clock_info_report(thread_clock_info);
-        
+
         clock_info.Merge(thread_clock_info);
     }
 
     std::cout   << "\n"
                 << "Overall:\n";
-                
+
     clock_info_report(clock_info);
 }
 catch(std::exception& e)
