@@ -9,7 +9,7 @@ Program's cpu_num: 5 has operating system cpu_id: 5
 Program's cpu_num: 6 has operating system cpu_id: 6
 Program's cpu_num: 7 has operating system cpu_id: 7
 ./acpphint_kernelsurveyors_main-WDK23_CA72-32768MiB-threads_8-LP64-FreeBSD_main_n262658_b347c2284603_64bit-clang++_16_O3lto_CA72-libc++-cpulockdown . . .
-acpphint_kernelsurveyors_main version: 0.1.33
+acpphint_kernelsurveyors_main version: 0.1.34
 
 ./acpphint_kernelsurveyors_main-WDK23_CA72-32768MiB-threads_8-LP64-FreeBSD_main_n262658_b347c2284603_64bit-clang++_16_O3lto_CA72-libc++-cpulockdown . . .
 
@@ -23,21 +23,21 @@ scy:        4'294'967'296
 dmax:       18'446'744'073'709'551'615
 initial_dx: 4'294'967'296
 
-nscout:                                 256
-krr.kernel_result.result_bounds.HI:     7'161'937'200'509'091'840
-krr.kernel_result.result_bounds.LO:     7'089'879'602'209'751'040
+nscout:                                 512
+krr.kernel_result.result_bounds.HI:     7'143'896'413'703'766'016
+krr.kernel_result.result_bounds.LO:     7'107'867'612'406'611'968
 krr.kernel_result.eflag:                1
-krr.kernel_result.RECT_maxjo:           255
-krr.kernel_result.ixes_errs_maxiq:      510
-krr.kernel_result.RECT_total_used:      256
-krr.kernel_result.ixes_errs_used_each:  511
-krr.total_sec_for_laps_for_median:      1.9166e-05
-krr.tscout():                           6.38867e-06
-krr.vectors_total_bytes:                26'696
-VectorsUsedBytes:                       26'680
+krr.kernel_result.RECT_maxjo:           511
+krr.kernel_result.ixes_errs_maxiq:      1'022
+krr.kernel_result.RECT_total_used:      512
+krr.kernel_result.ixes_errs_used_each:  1'023
+krr.total_sec_for_laps_for_median:      5.9582e-05
+krr.tscout():                           1.98607e-05
+krr.vectors_total_bytes:                53'320
+VectorsUsedBytes:                       53'304
 
-approx HI normal scale:     0.388249
-approx LO normal scale:     0.384343
+approx HI normal scale:     0.387271
+approx LO normal scale:     0.385318
 
 threaded. . .
 
@@ -57,8 +57,8 @@ krr.kernel_result.RECT_maxjo:           3
 krr.kernel_result.ixes_errs_maxiq:      3
 krr.kernel_result.RECT_total_used:      32
 krr.kernel_result.ixes_errs_used_each:  32
-krr.total_sec_for_laps_for_median:      0.000477633
-krr.tscout():                           0.000159211
+krr.total_sec_for_laps_for_median:      0.000726389
+krr.tscout():                           0.00024213
 krr.vectors_total_bytes:                3'904
 VectorsUsedBytes:                       2'888
 
@@ -75,21 +75,21 @@ scy:        4'294'967'296
 dmax:       18'446'744'073'709'551'615
 initial_dx: 4'294'967'296
 
-nscout:                                 256
-krr.kernel_result.result_bounds.HI:     7'161'937'200'509'091'840
-krr.kernel_result.result_bounds.LO:     7'089'879'602'209'751'040
+nscout:                                 512
+krr.kernel_result.result_bounds.HI:     7'143'896'413'703'766'016
+krr.kernel_result.result_bounds.LO:     7'107'867'612'406'611'968
 krr.kernel_result.eflag:                1
-krr.kernel_result.RECT_maxjo:           255
-krr.kernel_result.ixes_errs_maxiq:      510
-krr.kernel_result.RECT_total_used:      256
-krr.kernel_result.ixes_errs_used_each:  511
-krr.total_sec_for_laps_for_median:      1.9166e-05
-krr.tscout():                           6.38867e-06
-krr.vectors_total_bytes:                26'696
-VectorsUsedBytes:                       26'680
+krr.kernel_result.RECT_maxjo:           511
+krr.kernel_result.ixes_errs_maxiq:      1'022
+krr.kernel_result.RECT_total_used:      512
+krr.kernel_result.ixes_errs_used_each:  1'023
+krr.total_sec_for_laps_for_median:      5.9113e-05
+krr.tscout():                           1.97043e-05
+krr.vectors_total_bytes:                53'320
+VectorsUsedBytes:                       53'304
 
-approx HI normal scale:     0.388249
-approx LO normal scale:     0.384343
+approx HI normal scale:     0.387271
+approx LO normal scale:     0.385318
 
 threaded. . .
 
@@ -109,8 +109,8 @@ krr.kernel_result.RECT_maxjo:           3
 krr.kernel_result.ixes_errs_maxiq:      3
 krr.kernel_result.RECT_total_used:      32
 krr.kernel_result.ixes_errs_used_each:  32
-krr.total_sec_for_laps_for_median:      0.000428521
-krr.tscout():                           0.00014284
+krr.total_sec_for_laps_for_median:      0.000694775
+krr.tscout():                           0.000231592
 krr.vectors_total_bytes:                3'904
 VectorsUsedBytes:                       2'888
 

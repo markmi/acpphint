@@ -119,6 +119,12 @@ Changes
   CA72 and CA78Cnolse (+nolse use). My normal environment is
   bsaed on +nolse now.
 
+- Build and run the clang 16 WDK23_CA72 tests in a UFS
+  cortex-a72 targeted kernel+world context and update to
+  the results. The prior results were odd but I've not
+  managed to ever reproduce the oddity. Some form of
+  operator oddity/error for which I do not know the details.
+
 ###### [0.1.33] 2023-May-03         . . . 2023-???-?? (final)
 Additions
 - Start to add Windows Dev Kit 2023 based examples (WDK23
