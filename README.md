@@ -93,8 +93,15 @@ Additions
   acpphint_example_data/WDK23_cpp_clockinfo_examples/ with
   the example cpp_clockinfo outputs.
 
-- Note: Later 0.1.33 may get more reworking/replacement from
-  picking a specific combination to primarily target.
+- Note: I settled on CA78Cnolse (normal WDK23 use in my
+  context), CA72 (use of media used for cortex-a72 based
+  systems), and CA78C (+lse and implicitly +rcpc that I
+  started with but did not keep media around after gathering
+  the data) for what to generate and keep example data for.
+  In each case there was a kernel, world, ports (such as
+  llvm16), and benchmark build involved: a full context
+  matched for lse and and rcpc status. I've not done such
+  for involving +norcpc in builds.
 
 Changes
 - Update CA78Cnolse examples based on the UFS context
