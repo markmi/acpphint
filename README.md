@@ -89,24 +89,25 @@ examples.) That code's license in turn sets the overall license to also be GLPv2
 Additions
 - Add makefile.*'s and such for looking at time measurement
   for full-feature, nolse, nolse and norcpc, norcpc, and
-  CA72 style code (kernel/world/etc.). Add a
-  acpphint_example_data/WDK23_cpp_clockinfo_examples/ with
-  the example cpp_clockinfo outputs.
+  CA72 style code (kernel/world/any-ports-used intended to
+  be matching). Add an
+  acpphint_example_data/WDK23_cpp_clockinfo_examples/
+  with the example cpp_clockinfo outputs.
 
-- Note: I settled on CA78Cnolse (normal WDK23 use in my
-  context), CA72 (use of media used for cortex-a72 based
-  systems), and CA78C (+lse and implicitly +rcpc that I
-  started with but did not keep media around after gathering
-  the data) for what to generate and keep example data for.
-  In each case there was a kernel, world, ports (such as
-  llvm16), and benchmark build involved: a full context
-  matched for lse and and rcpc status. I've not done such
-  for involving +norcpc in builds.
+- Note: I settled on keeping most data just for: CA78Cnolse
+  (for normal WDK23 use in my context), CA72 (use of media
+  also used for cortex-a72 based systems), and CA78C (+lse
+  and implicitly +rcpc that I started with but did not keep
+  media around after gathering the data). In each case there
+  was a kernel, world, ports (such as llvm16), and benchmark
+  build involved: a full context matched for lse and (and
+  rcpc) status. I've not done such for involving +norcpc in
+  builds.
 
 Changes
 - Update CA78Cnolse examples based on the UFS context
   that now normally is based on +nolse for the context
-  (kernel, world) and the banchmark.
+  (kernel, world) and the benchmark.
 
 - Update the cpp_clockinfo code to have better output for
   the comparison's I was doing.
@@ -121,20 +122,28 @@ Changes
 
 - Remove existing g++ examples as I disocvered that the
   kernel+world configuration measured was far from optimal
-  for the FreeBSD activity (buildorld, buildkernel, building
-  ports). Have the makefile.* 's for g++ use be just for
-  CA72 and CA78Cnolse (+nolse use). My normal environment is
-  bsaed on +nolse now.
+  for the FreeBSD activity (buildworld, buildkernel,
+  building ports). Have the makefile.* 's for g++ use be
+  just for CA72 and CA78Cnolse (+nolse use). My normal
+  environments are based on +nolse now.
 
 - Build and run the clang 16 WDK23_CA72 tests in a UFS
   cortex-a72 targeted kernel+world context and update to
   the results. The prior results were odd but I've not
   managed to ever reproduce the oddity. Some form of
-  operator oddity/error for which I do not know the details.
+  operator oddity/error for which I do not know the
+  details.
 
 - Build and run the g++ 13 WDK23_CA72 tests in a UFS
   cortex-a72 targeted kernel+world context and update to
-  the results, for both libc++ and libstdc++.
+  the results, for both libc++ and libstdc++ .
+
+- Build and run the g++ 13 WDK23_CA78Cnolse tests in a UFS
+  cortex-x1c/a78c+nolse targeted kernel+world context and
+  update to the results, for both libc++ and libstdc++ .
+  This involved adding a missing character to a makefile.*
+  filename as well. (I also added missing "-cpulockdown"
+  text in various makefile.* files.)
 
 ###### [0.1.33] 2023-May-03         . . . 2023-???-?? (final)
 Additions

@@ -1,5 +1,5 @@
 #
-# acpphint's makefile.WDK23_CA78Cnolse-32768MiB-threads_8-LP64-FreeBSD_main_64bit-clang++_15_O3lto_CA78Cnolse-libc++
+# acpphint's makefile.WDK23_CA78Cnolse-32768MiB-threads_8-LP64-FreeBSD_main_64bit-clang++_15_O3lto_CA78Cnolse-libc++-cpulockdown
 # example (as of requiring C++23 or later)
 #
 #  Copyright (c) 2015-2023 Mark Millard
@@ -35,7 +35,7 @@
 .POSIX:
 .SUFFIXES:
 
-THE_MAKEFILE= makefile.WDK23_CA78Cnolse-32768MiB-threads_8-LP64-FreeBSD_main_64bit-clang++_15_O3lto_CA78Cnolse-libc++
+THE_MAKEFILE= makefile.WDK23_CA78Cnolse-32768MiB-threads_8-LP64-FreeBSD_main_64bit-clang++_15_O3lto_CA78Cnolse-libc++-cpulockdown
 
 #
 # acpphint's makefile.*'s are very tailored to my use but may be
