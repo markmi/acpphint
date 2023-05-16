@@ -1,8 +1,8 @@
 reset session
 GNUTERM = "x11"
-COMPILERLIBRARY= "clang++_16_O3lto_CA78Cnolse-libc++"
+COMPILERLIBRARY= "clang++_16_O3lto_CA78Cnolse-libc++-cpulockdown"
 FNAMEPREFIX=     "WDK23_CA78Cnolse-FBSD/acpphint-WDK23_CA78Cnolse-32768MiB-threads_8-LP64-FreeBSD_main_n262658_b347c2284603_64bit-" . COMPILERLIBRARY
-COMPILERLIBRARY2="g++_13_O3lto_CA78Cnolse-libc++"
+COMPILERLIBRARY2="clang++_16_O3lto_CA78Cnolse-libc++"
 FNAME2PREFIX=    "WDK23_CA78Cnolse-FBSD/acpphint-WDK23_CA78Cnolse-32768MiB-threads_8-LP64-FreeBSD_main_n262658_b347c2284603_64bit-" . COMPILERLIBRARY2
 RAMLOWERBOUND=   64
 RAMUPPERBOUND=   2**37
