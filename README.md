@@ -145,6 +145,10 @@ Changes
   filename as well. (I also added missing "-cpulockdown"
   text in various makefile.* files.)
 
+- Have WDK23 *.gp file names be explicit about when libc++
+  and libstd++ are both involved. Add 2 g++ related WDK23
+  RAM vs. time *.gp files (for -cpulockdown contexts).
+
 ###### [0.1.33] 2023-May-03         . . . 2023-???-?? (final)
 Additions
 - Start to add Windows Dev Kit 2023 based examples (WDK23
