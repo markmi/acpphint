@@ -104,6 +104,11 @@ Additions
   rcpc) status. I've not done such for involving +norcpc in
   builds.
 
+- Add modern HoneyComb example data and supporting material
+  for: clang++ 16 & libc++, g++ 13 with that libc++, g++ 13
+  with its libstdc++ . Both with CPU lock down and without
+  it. (No *.gp files yet.)
+
 Changes
 - Update CA78Cnolse examples based on the UFS context
   that now normally is based on +nolse for the context
