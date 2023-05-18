@@ -125,7 +125,7 @@ Changes
   distinct compiling configurations: avoid dealing with
   the volume of stuff tied to the combinatorics.
 
-- Remove existing g++ examples as I disocvered that the
+- Remove existing g++ examples as I discovered that the
   kernel+world configuration measured was far from optimal
   for the FreeBSD activity (buildworld, buildkernel,
   building ports). Have the makefile.* 's for g++ use be
@@ -153,6 +153,10 @@ Changes
 - Have WDK23 *.gp file names be explicit about when libc++
   and libstd++ are both involved. Add 2 g++ related WDK23
   RAM vs. time *.gp files (for -cpulockdown contexts).
+
+- Update the HoneyComb *-g++_13_O3lto-libc++* materials
+  after fixing the makefile.* files involved to have
+  the intended lists of tests.
 
 ###### [0.1.33] 2023-May-03         . . . 2023-???-?? (final)
 Additions
