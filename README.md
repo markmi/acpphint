@@ -107,7 +107,11 @@ Additions
 - Add modern HoneyComb example data and supporting material
   for: clang++ 16 & libc++, g++ 13 with that libc++, g++ 13
   with its libstdc++ . Both with CPU lock down and without
-  it. (No *.gp files yet.)
+  it.
+
+- Add/update modern HoneyComb related *.gp files, including
+  for comparison to WDK23_CA72 and WDK23_CA78Cnolse .
+
 
 Changes
 - Update CA78Cnolse examples based on the UFS context
