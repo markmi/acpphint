@@ -1,9 +1,9 @@
 reset session
 GNUTERM = "x11"
-COMPILERLIBRARY= "g++_12_O3lto-libc++-cpulockdown"
-FNAMEPREFIX=     "HoneyComb-FBSD/acpphint-HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_n259950_5723e5ac6d76_64bit-" . COMPILERLIBRARY
-COMPILERLIBRARY2= "clang++_16_O3lto_CA78Cnolse-libc++-cpulockdown"
-FNAME2PREFIX=     "WDK23_CA78Cnolse-FBSD/acpphint-WDK23_CA78Cnolse-32768MiB-threads_8-LP64-FreeBSD_main_n262658_b347c2284603_64bit-" . COMPILERLIBRARY2
+COMPILERLIBRARY= "g++_13_O3lto-libc++-cpulockdown"
+FNAMEPREFIX=     "HoneyComb-FBSD/acpphint-HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_n262658_b347c2284603_64bit-" . COMPILERLIBRARY
+COMPILERLIBRARY2="clang++_16_O3lto_CA72-libc++-cpulockdown"
+FNAME2PREFIX=    "WDK23_CA72-FBSD/acpphint-WDK23_CA72-32768MiB-threads_8-LP64-FreeBSD_main_n262658_b347c2284603_64bit-" . COMPILERLIBRARY2
 RAMLOWERBOUND=   64
 RAMUPPERBOUND=   2**37
 QUIPSUPPERBOUND= 1.2e8
