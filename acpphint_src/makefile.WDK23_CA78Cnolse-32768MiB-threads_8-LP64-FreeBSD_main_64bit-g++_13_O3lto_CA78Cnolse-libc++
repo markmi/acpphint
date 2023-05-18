@@ -68,7 +68,7 @@ CXX=            g++13 -v -std=c++23 -Wpedantic -Wall -Wextra
 CXX+=           -stdlib=libc++
 #CXX+=           -DDSIZE_ALL_ISIZE_ALL
 # Note: for now g++13 is missing having the flagm feature by default for cortex-x1c .
-OPT=            -O3 -mcpu=cortex-x1c+flagm
+OPT=            -O3 -mcpu=cortex-x1c+flagm+nolse
 OPT+=           -flto
 CPULOCKDOWN_OPT=
 #CPULOCKDOWN_OPT=        -DWANT_CPU_LOCKDOWN

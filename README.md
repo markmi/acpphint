@@ -112,8 +112,12 @@ Additions
 - Add/update modern HoneyComb related *.gp files, including
   for comparison to WDK23_CA72 and WDK23_CA78Cnolse .
 
+- Update various *.gp files for HoneyComb vs. WDK23 CA78C*
+  to also include 8 thread examples. This involved renaming
+  the files to indicate the addition. complete the coverage
+  of g++ 13 libc++ and libstdc++ combinations.
 
-Changes
+Changes/removals
 - Update CA78Cnolse examples based on the UFS context
   that now normally is based on +nolse for the context
   (kernel, world) and the benchmark.
@@ -161,6 +165,14 @@ Changes
 - Update the HoneyComb *-g++_13_O3lto-libc++* materials
   after fixing the makefile.* files involved to have
   the intended lists of tests.
+
+- Fix the g++ CA78Cnolse makefile.*'s to actually
+  specify the +nolse . The g++ tests will all need to
+  be rerun and the data updated. This is likely what
+  explains some of the odd example data curve structure.
+
+- Remove *.gp files that mixed both HoneyComb vs.
+  WDK23_CA78C*'s and the compilers/libraries used.
 
 ###### [0.1.33] 2023-May-03         . . . 2023-???-?? (final)
 Additions

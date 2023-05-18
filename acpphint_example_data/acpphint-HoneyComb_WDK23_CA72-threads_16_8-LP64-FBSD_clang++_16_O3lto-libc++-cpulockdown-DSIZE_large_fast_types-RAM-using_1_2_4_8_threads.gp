@@ -24,7 +24,9 @@ set xtics border mirror in RAMLOGSCALE rotate by -45
 set mxtics RAMLOGSCALE-1
 set grid xtics mxtics ytics mytics
 plot [RAMLOWERBOUND:RAMUPPERBOUND][0:QUIPSUPPERBOUND] \
- FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_4_threads-cpus_4_5_6_7.txt"  using 4:2 with linespoints linecolor rgb "goldenrod" \
+ FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_8_threads-cpus_0_1_2_3_4_5_6_7.txt"  using 4:2 with linespoints linecolor rgb "light-red" \
+,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_8_threads-cpus_0_1_2_3_4_5_6_7.txt"    using 4:2 with linespoints linecolor rgb "light-red" \
+,FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_4_threads-cpus_4_5_6_7.txt"  using 4:2 with linespoints linecolor rgb "goldenrod" \
 ,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_4_threads-cpus_4_5_6_7.txt"    using 4:2 with linespoints linecolor rgb "goldenrod" \
 ,FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_4_threads-cpus_0_1_2_3.txt"  using 4:2 with linespoints linecolor rgb "goldenrod" \
 ,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_4_threads-cpus_0_1_2_3.txt"    using 4:2 with linespoints linecolor rgb "goldenrod" \
@@ -35,7 +37,11 @@ plot [RAMLOWERBOUND:RAMUPPERBOUND][0:QUIPSUPPERBOUND] \
 ,FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_4.txt"  using 4:2 with linespoints linecolor rgb "magenta" \
 ,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_4.txt"    using 4:2 with linespoints linecolor rgb "magenta" \
 ,FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_1.txt"  using 4:2 with linespoints linecolor rgb "magenta" \
-,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_1.txt"    using 4:2 with linespoints linecolor rgb "magenta" \
+,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_1.txt"    using 4:2 with linespoints linecolor rgb "magenta" \
+,FNAMEPREFIX  . "-DSIZE_ull-ISIZE_ull-using_8_threads-cpus_kx4p1_kx4p2_1_14.txt"     using 4:2 with linespoints linecolor rgb "dark-red" \
+,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_8_threads-cpus_kx4p1_kx4p2_1_14.txt"       using 4:2 with linespoints linecolor rgb "dark-red" \
+,FNAMEPREFIX  . "-DSIZE_ull-ISIZE_ull-using_8_threads-cpus_kx4p2_kx4p3_2_15.txt"     using 4:2 with linespoints linecolor rgb "dark-red" \
+,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_8_threads-cpus_kx4p2_kx4p3_2_15.txt"       using 4:2 with linespoints linecolor rgb "dark-red" \
 ,FNAMEPREFIX  . "-DSIZE_ull-ISIZE_ull-using_4_threads-cpus_kx8p1_kx8p3_1_3_9_11.txt" using 4:2 with linespoints linecolor rgb "dark-goldenrod" \
 ,FNAMEPREFIX  . "-DSIZE_ul-ISIZE_ul-using_4_threads-cpus_kx8p1_kx8p3_1_3_9_11.txt"   using 4:2 with linespoints linecolor rgb "dark-goldenrod" \
 ,FNAMEPREFIX  . "-DSIZE_ull-ISIZE_ull-using_4_threads-cpus_2_3_8_9.txt"              using 4:2 with linespoints linecolor rgb "dark-goldenrod" \
