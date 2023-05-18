@@ -13,7 +13,7 @@ set title "FNAME2PREFIX= " . FNAME2PREFIX . "\nFNAMEPREFIX= " . FNAMEPREFIX noen
 set ylabel "QUality ImProvement/sec"
 unset logscale y
 set ytics border mirror
-set mytics 5
+set mytics 4
 RAMLABEL= "kernel vectors: total Bytes"
 RAMLOGSCALE= 4
 TIMELABEL= "Median for: mean seconds per lap"
