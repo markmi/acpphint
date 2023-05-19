@@ -174,6 +174,9 @@ Changes/removals
 - Remove *.gp files that mixed both HoneyComb vs.
   WDK23_CA78C*'s and the compilers/libraries used.
 
+- Update to have g++ 13 WSDK23_CA78Cnolse example
+  data that is actually based on using +nolse.
+
 ###### [0.1.33] 2023-May-03         . . . 2023-???-?? (final)
 Additions
 - Start to add Windows Dev Kit 2023 based examples (WDK23
