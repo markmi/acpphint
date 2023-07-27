@@ -92,10 +92,18 @@ Additions
   for armv7 code. (2023-Jul-26)
 
 - Add *.txt file output for modern LP64 and ILP32 for
-  aarch64(/armv7) FreeBSD main, with ILP32 *.txt files going
-  into the new:
+  aarch64(/armv7) FreeBSD main on the HoneyComb system,
+  with ILP32 *.txt files going into the new:
 
   acpphint_example_data/HoneyComb-FBSD-ILP32/
+
+- Add *.txt file output for modern LP64 and ILP32 for
+  aarch64(/armv7) FreeBSD main on the WDK23 system,
+  with ILP32 *.txt files going into the new:
+
+  acpphint_example_data/WDK23_CA78C-FBSD-ILP32/
+
+  (Added: 2023-Jul-27)
 
 Changes/removals
 - Update other_src_used/cpp_clockinfo.cpp to no longer
