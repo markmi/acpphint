@@ -85,6 +85,45 @@ examples.) That code's license in turn sets the overall license to also be GLPv2
 (no earlier, no later), despite OpenBSD-vintage-ISC licensed source in
 `other_src_used/` also being built and linked in.
 ##### Changelog . . .
+###### [0.1.35] 2023-Jul-01         . . . 2023-???-?? (final)
+Additions
+- Add makefile.HoneyComb*-IPL32-FreeBSD_main_64bit-*clang++*
+  that will produce acpphint programs that use the new lib32
+  for armv7 code. (2023-Jul-26)
+
+- Add *.txt file output for modern LP64 and ILP32 for
+  aarch64(/armv7) FreeBSD main, with ILP32 *.txt files going
+  into the new:
+
+  acpphint_example_data/HoneyComb-FBSD-ILP32/
+
+Changes/removals
+- Update other_src_used/cpp_clockinfo.cpp to no longer
+  use async, avoiding its potential policy consequences.
+  This is associated with progressing to clang 16's
+  libc++ that finally allows the alternative code in
+  the form used.
+
+- Update acpphint_src/acpphint_kernelrunners.cpp to no
+  longer use async, avoiding its potential policy
+  consequences. This is associated with progressing to
+  clang 16's libc++ that finally allows the alternative
+  code in the form used.
+
+- Where there has been FreeBSD clang++ 16 or g++ 13
+  coverage already, remove makefile.* that were for earlier
+  versions. But for other platforms, keep the most recent
+  around for reference.
+
+- Update the FreeBSD clang++ 16 makefile.* to reference a
+  FreeBSD main-vintage that is LLVM 16 based, which allows
+  avoiding async use for clang++ because of the system
+  libc++ update involved. (async could impose threading
+  managment policy that is not desired.) On FreeBSD,
+  devel/llvm* ports use the system libc++ instead of
+  having their own. So, prior clang++16 results were
+  based on llvm 15's libc++ being in use.
+
 ###### [0.1.34] 2023-May-11         . . . 2023-???-?? (final)
 Additions
 - Add makefile.*'s and such for looking at time measurement

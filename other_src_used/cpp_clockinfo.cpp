@@ -278,6 +278,7 @@ ClkInfo::ClkInfo(DurationsStatus durations_status)
         =  scale_factor_for_activity_target
          * std::max(small_scale_duration_variability,duration_overhead);
 
+
     largest_duration= observed_durations.back();
 
     if (DurationsStatus::Forget == durations_status)
@@ -340,9 +341,13 @@ auto ClkInfo::nsFormatted(Duration const& d) -> std::string
     return out.str();
 }
 
+#include <future>       // packaged_task, future
+#include <utility>      // move (for packaged_task and future use)
+#include <thread>       // thread (clang++ 16 + -stdlib=libc++ work on openSUSE Tumblweed)
+                        // (clang++ 16 + 15's libc++ does not in FreeBSD main [so: FBSD 14])
+                        // (jthread still not present in LLVM16 materials)
+                        // thread::hardware_concurrency
 
-#include <thread>       // thread::hardware_concurrency
-#include <future>       // future, async, launch::async
 #include <system_error> // system_error, errc::resource_unavailable_try_again
 
 
@@ -353,40 +358,53 @@ auto ClkInfoFromThreads( ClkInfo::DurationsStatus durations_status
     if (0u == requested_threads)
         requested_threads= std::thread::hardware_concurrency();
 
-    std::vector<std::future<ClkInfo>> in_parallel{};
-    in_parallel.reserve(requested_threads);
+    auto parallel_code{[durations_status](){return ClkInfo{durations_status};}};
 
-    for(auto thread{requested_threads}; 0<thread; --thread)
+    std::vector<std::future<ClkInfo>> parallel_tasks_future{};
+    parallel_tasks_future.reserve(requested_threads);
+
+    std::vector<std::thread> parallel_tasks_thread{};
+    // Use std::jthread when clang allows it.
+    parallel_tasks_thread.reserve(requested_threads);
+
+    for(auto threads_to_do{requested_threads}; 0u<threads_to_do; --threads_to_do)
     {
         try
         {
-            in_parallel.emplace_back
-                ( std::async
-                    (std::launch::async
-                    , [durations_status](){return ClkInfo{durations_status};} 
-                    )
-                );
+            std::packaged_task parallel_task{parallel_code};
+            auto parallel_task_future{parallel_task.get_future()};
+
+            parallel_tasks_future.emplace_back(std::move(parallel_task_future));
+            parallel_tasks_thread.emplace_back(std::move(parallel_task));
         }
         catch(std::system_error& e)
         {
-            if (e.code() != std::errc::resource_unavailable_try_again) throw;
-            break;
+            if (e.code() == std::errc::resource_unavailable_try_again) break;
+
+            for(auto& parallel_task_thread : parallel_tasks_thread)
+            {
+                parallel_task_thread.join();
+            }
+            throw;
         }
     }
 
-    if (in_parallel.empty()) return std::vector<ClkInfo>{};
-
-    for(auto& thread : in_parallel)
+    for(auto& parallel_task_future : parallel_tasks_future)
     {
-        thread.wait();
+        parallel_task_future.wait();
     }
 
     std::vector<ClkInfo> threads_clock_infos{};
-    threads_clock_infos.reserve(in_parallel.size());
+    threads_clock_infos.reserve(parallel_tasks_future.size());
 
-    for(auto& thread : in_parallel)
+    for(auto& parallel_task_future : parallel_tasks_future)
     {
-        threads_clock_infos.emplace_back(thread.get());
+        threads_clock_infos.emplace_back(parallel_task_future.get());
+    }
+
+    for(auto& parallel_task_thread : parallel_tasks_thread)
+    {
+        parallel_task_thread.join();
     }
 
     return threads_clock_infos;

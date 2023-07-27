@@ -60,14 +60,24 @@ THE_MAKEFILE= makefile.HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_64bit-cla
 #
 
 #
-# This file presumes FreeBSD port devel/llvm16 is installed.
+# This file presumes FreeBSD is using LLVM 16.
+#
+# Note: As of main_n263893_0631830a7a3c the system libc++ is
+#       presumed to be from LLVM 16 or later, no longer 
+#       from LLVM 15. This is used to avoid async's policy
+#       control for thread managment. (devel/llvm* do not 
+#       have their own libc++'s but use the system one 
+#       instead.)
 #
 
 CXXLIB=
-CXX=            clang++16 -v -std=c++20 -Wpedantic -Wall -Wextra
+CXX=            clang++ -v -std=c++2b -Wpedantic -Wall -Wextra
 #CXX+=           -stdlib=libc++
 #CXX+=           -DDSIZE_ALL_ISIZE_ALL
-OPT=            -O3 -mcpu=cortex-a72
+#CXX+=           -m32 -target armv7-unknown-freebsd14.0-gnueabihf 
+OPT=            -O3
+OPT+=           -mcpu=cortex-a72
+#OPT+=           -mcpu=cortex-a7
 LTO_STYLE=	-flto
 OPT+=           ${LTO_STYLE}
 #CPULOCKDOWN_OPT=
@@ -81,13 +91,16 @@ LDCXX+=         -fuse-ld=lld ${LTO_STYLE}
 
 COMPILER_DESC=      clang++_16_O3lto
 LIBRARY_DESC=       libc++
-COMPILER_LIBRARY=   ${COMPILER_DESC}-${LIBRARY_DESC}
+ABI_VARIANT=
+#ABI_VARIANT=        -${CPP_DATA_MODEL}
+COMPILER_LIBRARY=   ${COMPILER_DESC}-${LIBRARY_DESC}${ABI_VARIANT}
 
 COMPUTER=               HoneyComb
 RAM=                    65536MiB
 THREADS=                threads_16
 CPP_DATA_MODEL=         LP64
-OS=                     FreeBSD_main_n262658_b347c2284603_64bit
+#CPP_DATA_MODEL=         ILP32
+OS=                     FreeBSD_main_n264334_215bab7924f6_64bit
 #SUFFIX=
 SUFFIX=                 -cpulockdown
 ACPPHINT_FILENAME_INFO= ${COMPUTER}-${RAM}-${THREADS}-${CPP_DATA_MODEL}-${OS}-${COMPILER_LIBRARY}${SUFFIX}

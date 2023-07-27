@@ -1,8 +1,7 @@
-//
 //  acpphint_kernelrunners.cpp
 //  acpphint (a C++ variation on the old HINT benchmark)
 //
-//  Copyright (c) 2015-2021 Mark Millard
+//  Copyright (c) 2015-2023 Mark Millard
 //  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
 //
 //  Note: Any acpphint*.{h,cpp} code or makefile code
@@ -44,7 +43,11 @@
 
 #include <stdexcept>    // runtime_error
 
-#include <future>       // future, async, launch::async
+#include <future>       // packaged_task, future
+#include <utility>      // move (for packaged_task and future use)
+#include <thread>       // thread (clang++ 16 + -stdlib=libc++ work on openSUSE Tumblweed)
+                        // (clang++ 16 + 15's system libc++ did not in FreeBSD main)
+                        // (jthread still not present in LLVM16 materials)
 
 #include <algorithm>    // std::nth_element
 
@@ -83,23 +86,30 @@ static auto serial_kernel_runner
     try
     {
         // Potentially: restrict the allocation(s) to a NUMA memory domain:
-        auto alloc_vect= std::async
-                    ( std::launch::async
-                    , [memry]()
-                        {
-                            RestrictThreadToCpu(0u,1u); // if built for such
-                            return KernelVectors<DSIZE,ISIZE>{memry};
-                        }
-                    );
-        KernelVectors<DSIZE,ISIZE> kvs{alloc_vect.get()};
+
+        // clang16 still can not do the template deduction itself.
+        auto alloc_vect_code
+            {[memry]()
+                    {
+                        RestrictThreadToCpu(0u,1u); // if built for such
+                        return KernelVectors<DSIZE,ISIZE>{memry};
+                    }
+            };
+        std::packaged_task alloc_vect_task{alloc_vect_code};
+        auto alloc_vect_future{alloc_vect_task.get_future()};
+        std::thread alloc_vect_task_thread{std::move(alloc_vect_task)};
+        // Use std::jthread when clang allows it.
+
+        KernelVectors<DSIZE,ISIZE> kvs{alloc_vect_future.get()};
+
+        alloc_vect_task_thread.join();
 
         krrs.reserve(NTRIAL<DSIZE,ISIZE>);
 
         // bad_alloc not expected after the kvs construction.
 
-        auto sequential= std::async // async: used for potential cpu lock down
-                ( std::launch::async
-                , [&clock_info,laps,&ki,&kvs,&krrs]()
+        auto sequential_code
+            {[&clock_info,laps,&ki,&kvs,&krrs]()
                     {
                         RestrictThreadToCpu(0u,1u); // if built for such
                         
@@ -147,8 +157,13 @@ static auto serial_kernel_runner
                                                 );
                         }
                     }
-                );
-        sequential.wait();
+             };
+        std::packaged_task sequential_task{sequential_code};  // used for potential cpu lock down
+        auto sequential_task_future{sequential_task.get_future()};
+        std::thread sequential_task_thread{std::move(sequential_task)};
+        // Use std::jthread when clang allows it.
+        sequential_task_future.wait();
+        sequential_task_thread.join();
     }
     catch(std::bad_alloc const& e)
     {
@@ -179,26 +194,43 @@ static auto parallel_kernel_runner
     
         for (HwConcurrencyCount thread{0u}; thread<ki.nproc; ++thread)
         {
-            // Distribute allocations over the potential NUMA memory domains:
-            auto alloc_thread= std::async
-                            ( std::launch::async
-                            , [thread,memry,&ki,&threads_kvs]()
-                                {
-                                    RestrictThreadToCpu(thread,ki.nproc);
-                                                        // if built for such
-                                    threads_kvs.emplace_back
-                                          (KernelVectors<DSIZE,ISIZE>{memry});
-                                }
-                            );
-            alloc_thread.wait();
+            // Possibly distribute allocations over the potential NUMA memory domains:
+            auto memalloc_code
+                {[thread,memry,&ki,&threads_kvs]()
+                    {
+                         RestrictThreadToCpu(thread,ki.nproc); // if built for such
+                         threads_kvs.emplace_back(KernelVectors<DSIZE,ISIZE>{memry});
+                    }
+                };
+            std::packaged_task memalloc_task{memalloc_code};
+            auto memalloc_task_future{memalloc_task.get_future()};
+            std::thread memalloc_task_thread{std::move(memalloc_task)};
+            // Use std::jthread when clang allows it.
+            memalloc_task_future.wait();
+            memalloc_task_thread.join();
         }
 
         krrs.reserve(NTRIAL<DSIZE,ISIZE>);
 
         // bad_alloc not expected after the KernelVectors constructions.
     
-        std::vector<std::future<KernelResults<DSIZE,ISIZE>>>
-                                                        in_parallel(ki.nproc);
+        auto parallel_code
+            {[&ki,&threads_kvs](HwConcurrencyCount thread)
+                {
+                    RestrictThreadToCpu(thread,ki.nproc); // if built for such
+                    return Kernel<DSIZE,ISIZE>( thread
+                                              , ki
+                                              , threads_kvs[thread]
+                                              );
+                }
+            };
+
+        std::vector<std::future<KernelResults<DSIZE,ISIZE>>> parallel_tasks_future{};
+        parallel_tasks_future.reserve(ki.nproc);
+
+        std::vector<std::thread> parallel_tasks_thread{};
+        // Use std::jthread when clang allows it.
+        parallel_tasks_thread.reserve(ki.nproc);
         
         for ( auto trials_left{NTRIAL<DSIZE,ISIZE>} // 0u<NTRIAL required.
             ; 0u<trials_left
@@ -213,30 +245,30 @@ static auto parallel_kernel_runner
                 ; --lap_count_down
                 )
             {
-                for(HwConcurrencyCount thread{0u}; thread<ki.nproc; ++thread)
+                for(auto threads_left{ki.nproc}; 0u<threads_left; --threads_left)
                 {
-                    in_parallel[thread]= std::async
-                        ( std::launch::async
-                        , [thread,&ki,&threads_kvs]()
-                            {
-                                RestrictThreadToCpu(thread,ki.nproc);
-                                                        // if built for such
-                                return Kernel<DSIZE,ISIZE>
-                                                        ( thread
-                                                        , ki
-                                                        , threads_kvs[thread]
-                                                        );
-                            }
-                        );
+                    std::packaged_task parallel_task{parallel_code};
+                    auto parallel_task_future{parallel_task.get_future()};
+
+                    parallel_tasks_future.emplace_back(std::move(parallel_task_future));
+                    parallel_tasks_thread.emplace_back(std::move(parallel_task),ki.nproc-threads_left);
                 }
                 KernelResults<DSIZE,ISIZE> lap_result{};
     
-                for(auto& thread : in_parallel)
+                for(auto& thread_result : parallel_tasks_future)
                 {
-                    lap_result.Merge(thread.get());
+                    lap_result.Merge(thread_result.get());
+                }
+
+                for(auto& thread : parallel_tasks_thread)
+                {
+                    thread.join();
                 }
                 
                 result= lap_result; // Using the last lap's result
+
+                parallel_tasks_thread.clear();
+                parallel_tasks_future.clear();
             }
         
             auto const finish{clock_info.Now()};

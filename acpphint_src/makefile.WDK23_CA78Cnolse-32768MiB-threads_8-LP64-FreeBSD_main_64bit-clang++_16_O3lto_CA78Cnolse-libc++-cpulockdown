@@ -62,6 +62,13 @@ THE_MAKEFILE= makefile.WDK23_CA78Cnolse-32768MiB-threads_8-LP64-FreeBSD_main_64b
 #
 # This file presumes FreeBSD port devel/llvm16 is installed.
 #
+# Note: As of main_n263893_0631830a7a3c the system libc++ is
+#       presumed to be from LLVM 16 or later, no longer
+#       from LLVM 15. This is used to avoid async's policy
+#       control for thread managment. (devel/llvm* do not
+#       have their own libc++'s but use the system one
+#       instead.)
+#
 
 CXXLIB=
 CXX=            clang++16 -v -std=c++2b -Wpedantic -Wall -Wextra
@@ -90,7 +97,7 @@ COMPUTER=               WDK23_CA78Cnolse
 RAM=                    32768MiB
 THREADS=                threads_8
 CPP_DATA_MODEL=         LP64
-OS=                     FreeBSD_main_n262658_b347c2284603_64bit
+OS=                     FreeBSD_main_n263893_0631830a7a3c_64bit
 #SUFFIX=
 SUFFIX=                 -cpulockdown
 ACPPHINT_FILENAME_INFO= ${COMPUTER}-${RAM}-${THREADS}-${CPP_DATA_MODEL}-${OS}-${COMPILER_LIBRARY}${SUFFIX}
