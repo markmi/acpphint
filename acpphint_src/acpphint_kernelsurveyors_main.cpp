@@ -51,7 +51,7 @@
 //
 // Also large thread_counts can not handle smaller DSIZE
 // or ISIZE types like unsigned short or short, given
-// NCHUNK: scx=initial_dx*nproc*NHUCK with intial_dx
+// NCHUNK: scx=initial_dx*nproc*NCHUCK with initial_dx
 // being a integral (non-negative) power of 2. It just
 // does not have enough room for nscout<initial_dx to fit.
 //
