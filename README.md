@@ -105,12 +105,18 @@ Additions
 
   (Added: 2023-Jul-27)
 
+- Add *.gp files for the new HoneyComb and WDK23 data.
+  (Added: 2023-Jul-29)
+
 Changes/removals
 - Update other_src_used/cpp_clockinfo.cpp to no longer
   use async, avoiding its potential policy consequences.
   This is associated with progressing to clang 16's
   libc++ that finally allows the alternative code in
   the form used.
+
+  Somewhat later: fix typos in instances of 2 variable
+  names in some comments in some source files.
 
 - Update acpphint_src/acpphint_kernelrunners.cpp to no
   longer use async, avoiding its potential policy
