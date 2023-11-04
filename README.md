@@ -85,6 +85,11 @@ examples.) That code's license in turn sets the overall license to also be GLPv2
 (no earlier, no later), despite OpenBSD-vintage-ISC licensed source in
 `other_src_used/` also being built and linked in.
 ##### Changelog . . .
+###### [0.1.36] 2023-Nov-04         . . . 202?-???-?? (final)
+Additions
+- Add makefile.7950X3D-* FreeBSD files for Ryzen 9 7950X3D
+  benchmarking.
+
 ###### [0.1.35] 2023-Jul-01         . . . 2023-???-?? (final)
 Additions
 - Add makefile.HoneyComb*-IPL32-FreeBSD_main_64bit-*clang++*
