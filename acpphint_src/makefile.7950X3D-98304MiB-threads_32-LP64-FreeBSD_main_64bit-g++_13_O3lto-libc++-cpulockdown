@@ -60,11 +60,11 @@ THE_MAKEFILE= makefile.7950X3D-98304MiB-threads_32-LP64-FreeBSD_main_64bit-g++_1
 #
 
 #
-# This file presumes FreeBSD port lang/gcc11 is installed.
+# This file presumes FreeBSD port lang/gcc13 is installed.
 #
 
 CXXLIB=
-CXX=            g++11 -v -std=c++23 -Wpedantic -Wall -Wextra
+CXX=            g++13 -v -std=c++23 -Wpedantic -Wall -Wextra
 CXX+=           -stdlib=libc++
 #CXX+=           -Wno-psabi -nostdinc -nostdinc++ -I/usr/include/c++/v1 -I/usr/include
 #CXX+=           -DDSIZE_ALL_ISIZE_ALL
