@@ -67,7 +67,7 @@ THE_MAKEFILE= makefile.7950X3D-98304MiB-threads_32-LP64-FreeBSD_main_64bit-g++_1
 
 CXXLIB=
 CXX=            g++13 -v -std=c++23 -Wpedantic -Wall -Wextra
-CXX+=           -stdlib=llibc++
+CXX+=           -stdlib=libc++
 #CXX+=           -Wno-psabi -nostdinc -nostdinc++ -I/usr/include/c++/v1 -I/usr/include
 #CXX+=           -DDSIZE_ALL_ISIZE_ALL
 OPT=            -O3 -flto
