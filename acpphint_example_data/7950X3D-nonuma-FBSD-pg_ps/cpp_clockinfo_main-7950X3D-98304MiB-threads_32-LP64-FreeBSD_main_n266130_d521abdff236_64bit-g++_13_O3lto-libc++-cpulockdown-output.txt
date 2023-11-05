@@ -1,0 +1,1146 @@
+./cpp_clockinfo_main-7950X3D-98304MiB-threads_32-LP64-FreeBSD_main_n266130_d521abdff236_64bit-g++_13_O3lto-libc++-cpulockdown . . .
+cpp_clockinfo_main version: acpphint_0.1.36
+
+NOTE: Producing the below output did NOT involve any INTERNAL CPU-lock-down activity.
+
+is_steady:                           true
+period 'resolution' : 1 ns
+duration max        : 9'223'372'036'854'775'807 ns
+now (from epoch)    : 23'792'244'257'334 ns
+
+
+main thread by itself:
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 10 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'000 ns
+(with min duration still included)
+
+target with min duration subtracted  : 990 ns
+
+Other information for reference:
+
+small scale duration variability     : 10 ns
+
+largest observed duration            : 4'120 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         15             10 0.00000750
+         1        531             19 0.00027300
+         2  1'909'066             20 0.95480600
+         3         26             29 0.95481900
+         4     70'220             30 0.98992900
+         5          7             39 0.98993250
+         6     12'975             40 0.99642000
+         7          1             49 0.99642050
+(7'159 examples not summarized)
+
+Other threads (parallel, if any):
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 661'690 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         80             19 0.00004000
+         1    324'920             20 0.16250000
+         2        684             29 0.16284200
+         3  1'592'285             30 0.95898450
+         4         39             39 0.95900400
+         5     66'488             40 0.99224800
+         6          7             49 0.99225150
+(15'497 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 923'617 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         80             19 0.00004000
+         1    259'041             20 0.12956050
+         2        701             29 0.12991100
+         3  1'670'725             30 0.96527350
+         4         25             39 0.96528600
+         5     59'585             40 0.99507850
+         6          1             49 0.99507900
+(9'842 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 2'100 ns
+(with min duration still included)
+
+target with min duration subtracted  : 2'081 ns
+
+Other information for reference:
+
+small scale duration variability     : 21 ns
+
+largest observed duration            : 463'283 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         94             19 0.00004700
+         1    332'171             20 0.16613250
+         2        566             29 0.16641550
+         3  1'395'393             30 0.86411200
+         4         43             39 0.86413350
+         5     72'164             40 0.90021550
+         6          8             49 0.90021950
+         7      8'194             50 0.90431650
+         8          3             59 0.90431800
+         9      6'200             60 0.90741800
+        10          5             69 0.90742050
+        11      6'115             70 0.91047800
+        12         86             79 0.91052100
+        13     75'381             80 0.94821150
+        14        115             89 0.94826900
+        15     84'506             90 0.99052200
+        16         14             99 0.99052900
+        17      9'826            100 0.99544200
+        18          5            109 0.99544450
+(9'111 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 913'917 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         55             19 0.00002750
+         1    222'502             20 0.11127850
+         2        721             29 0.11163900
+         3  1'704'764             30 0.96402100
+         4         31             39 0.96403650
+         5     63'969             40 0.99602100
+         6      1'366             50 0.99670400
+         7          1             59 0.99670450
+(6'591 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 1'607'407 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         60             19 0.00003000
+         1    247'472             20 0.12376600
+         2        716             29 0.12412400
+         3  1'678'897             30 0.96357250
+         4         31             39 0.96358800
+         5     63'389             40 0.99528250
+         6      2'496             50 0.99653050
+         7          2             59 0.99653150
+(6'937 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 1'991'942 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         82             19 0.00004100
+         1    307'698             20 0.15389000
+         2        682             29 0.15423100
+         3  1'608'295             30 0.95837850
+         4         28             39 0.95839250
+         5     66'258             40 0.99152150
+         6          3             49 0.99152300
+(16'954 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 920'907 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         56             19 0.00002800
+         1    224'772             20 0.11241400
+         2        712             29 0.11277000
+         3  1'704'099             30 0.96481950
+         4         25             39 0.96483200
+         5     61'979             40 0.99582150
+         6          1             49 0.99582200
+(8'356 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 1'821'455 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         57             19 0.00002850
+         1    223'064             20 0.11156050
+         2        708             29 0.11191450
+         3  1'697'584             30 0.96070650
+         4         44             39 0.96072850
+         5     70'703             40 0.99608000
+         6      1'318             50 0.99673900
+         7          1             59 0.99673950
+(6'521 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 1'111'895 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         87             19 0.00004350
+         1    306'802             20 0.15344450
+         2        676             29 0.15378250
+         3  1'608'130             30 0.95784750
+         4         35             39 0.95786500
+         5     66'859             40 0.99129450
+         6          5             49 0.99129700
+(17'406 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 3'386'623 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         64             19 0.00003200
+         1    248'749             20 0.12440650
+         2        716             29 0.12476450
+         3  1'675'935             30 0.96273200
+         4         37             39 0.96275050
+         5     63'818             40 0.99465950
+         6          1             49 0.99466000
+(10'680 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 1'102'965 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         92             19 0.00004600
+         1    295'309             20 0.14770050
+         2        671             29 0.14803600
+         3  1'618'677             30 0.95737450
+         4         46             39 0.95739750
+         5     67'579             40 0.99118700
+         6          1             49 0.99118750
+(17'625 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 1'109'894 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0        106             19 0.00005300
+         1    339'721             20 0.16991350
+         2        664             29 0.17024550
+         3  1'579'983             30 0.96023700
+         4         30             39 0.96025200
+         5     63'265             40 0.99188450
+         6          2             49 0.99188550
+(16'229 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 2'267'388 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         78             19 0.00003900
+         1    284'313             20 0.14219550
+         2        688             29 0.14253950
+         3  1'644'192             30 0.96463550
+         4         33             39 0.96465200
+         5     62'717             40 0.99601050
+         6          2             49 0.99601150
+(7'977 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 10 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 2'000 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'990 ns
+
+Other information for reference:
+
+small scale duration variability     : 20 ns
+
+largest observed duration            : 1'331'691 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         49             10 0.00002450
+         1         80             19 0.00006450
+         2    308'576             20 0.15435250
+         3        679             29 0.15469200
+         4  1'609'482             30 0.95943300
+         5         35             39 0.95945050
+         6     68'213             40 0.99355700
+         7          2             49 0.99355800
+(12'884 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 2'002'402 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         96             19 0.00004800
+         1    344'801             20 0.17244850
+         2        684             29 0.17279050
+         3  1'575'906             30 0.96074350
+         4         18             39 0.96075250
+         5     62'481             40 0.99199300
+         6          1             49 0.99199350
+(16'013 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 1'337'321 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         81             19 0.00004050
+         1    314'795             20 0.15743800
+         2        689             29 0.15778250
+         3  1'607'192             30 0.96137850
+         4         25             39 0.96139100
+         5     62'416             40 0.99259900
+         6          3             49 0.99260050
+(14'799 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 1'366'930 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         63             19 0.00003150
+         1    256'518             20 0.12829050
+         2        733             29 0.12865700
+         3  1'673'351             30 0.96533250
+         4         37             39 0.96535100
+         5     60'682             40 0.99569200
+         6          1             49 0.99569250
+(8'615 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 1'329'581 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         93             19 0.00004650
+         1    306'056             20 0.15307450
+         2        666             29 0.15340750
+         3  1'607'536             30 0.95717550
+         4         32             39 0.95719150
+         5     69'001             40 0.99169200
+         6          4             49 0.99169400
+(16'612 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 1'549'819 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         96             19 0.00004800
+         1    337'410             20 0.16875300
+         2        646             29 0.16907600
+         3  1'583'730             30 0.96094100
+         4         34             39 0.96095800
+         5     63'430             40 0.99267300
+         6          4             49 0.99267500
+(14'650 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 919'127 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         45             19 0.00002250
+         1    221'655             20 0.11085000
+         2        715             29 0.11120750
+         3  1'711'235             30 0.96682500
+         4         37             39 0.96684350
+         5     58'564             40 0.99612550
+         6          1             49 0.99612600
+(7'748 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 1'138'824 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         66             19 0.00003300
+         1    227'837             20 0.11395150
+         2        732             29 0.11431750
+         3  1'699'795             30 0.96421500
+         4         35             39 0.96423250
+         5     62'958             40 0.99571150
+         6      1'767             50 0.99659500
+         7          1             59 0.99659550
+(6'809 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 1'831'135 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         68             19 0.00003400
+         1    212'521             20 0.10629450
+         2        715             29 0.10665200
+         3  1'716'739             30 0.96502150
+         4         35             39 0.96503900
+         5     61'198             40 0.99563800
+         6          1             49 0.99563850
+(8'723 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 915'717 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         81             19 0.00004050
+         1    229'141             20 0.11461100
+         2        691             29 0.11495650
+         3  1'693'357             30 0.96163500
+         4         27             39 0.96164850
+         5     68'433             40 0.99586500
+         6      1'654             50 0.99669200
+         7          2             59 0.99669300
+(6'614 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 1'125'635 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         76             19 0.00003800
+         1    268'931             20 0.13450350
+         2        693             29 0.13485000
+         3  1'645'151             30 0.95742550
+         4         40             39 0.95744550
+         5     71'699             40 0.99329500
+         6          3             49 0.99329650
+(13'407 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 1'816'904 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         60             19 0.00003000
+         1    225'294             20 0.11267700
+         2        703             29 0.11302850
+         3  1'700'216             30 0.96313650
+         4         47             39 0.96316000
+         5     65'781             40 0.99605050
+         6          1             49 0.99605100
+(7'898 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 2'220'219 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         89             19 0.00004450
+         1    294'558             20 0.14732350
+         2        661             29 0.14765400
+         3  1'626'087             30 0.96069750
+         4         46             39 0.96072050
+         5     65'683             40 0.99356200
+         6          3             49 0.99356350
+(12'873 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 2'044'531 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         63             19 0.00003150
+         1    223'723             20 0.11189300
+         2        715             29 0.11225050
+         3  1'700'158             30 0.96232950
+         4         36             39 0.96234750
+         5     66'887             40 0.99579100
+         6          1             49 0.99579150
+(8'417 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 1'141'134 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         78             19 0.00003900
+         1    281'423             20 0.14075050
+         2        686             29 0.14109350
+         3  1'649'407             30 0.96579700
+         4         25             39 0.96580950
+         5     59'783             40 0.99570100
+         6          2             49 0.99570200
+(8'596 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 1'540'679 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0        103             19 0.00005150
+         1    310'498             20 0.15530050
+         2        661             29 0.15563100
+         3  1'614'429             30 0.96284550
+         4         34             39 0.96286250
+         5     61'330             40 0.99352750
+         6          2             49 0.99352850
+(12'943 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 918'927 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0         63             19 0.00003150
+         1    220'273             20 0.11016800
+         2        723             29 0.11052950
+         3  1'706'487             30 0.96377300
+         4         31             39 0.96378850
+         5     64'257             40 0.99591700
+         6          3             49 0.99591850
+(8'163 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 3'315'274 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0        101             19 0.00005050
+         1    315'426             20 0.15776350
+         2        668             29 0.15809750
+         3  1'610'812             30 0.96350350
+         4         39             39 0.96352300
+         5     61'561             40 0.99430350
+         6          1             49 0.99430400
+(11'392 examples not summarized)
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 2'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 19 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 1'900 ns
+(with min duration still included)
+
+target with min duration subtracted  : 1'881 ns
+
+Other information for reference:
+
+small scale duration variability     : 11 ns
+
+largest observed duration            : 1'758'675 ns
+(with min duration still included)
+
+
+      list  #Examples       duration   fraction
+  position  of durat.           (ns)    with <=
+
+         0        104             19 0.00005200
+         1    319'854             20 0.15997900
+         2        664             29 0.16031100
+         3  1'606'802             30 0.96371200
+         4         34             39 0.96372900
+         5     62'177             40 0.99481750
+         6      2'463             50 0.99604900
+         7          2             59 0.99605000
+(7'900 examples not summarized)
+
+Overall:
+
+Clock tick is not slow relative to execution:
+no zero durations observed.
+
+Of 66'000'000 near 'back to back now()' durations:
+
+minimum duration                     : 10 ns
+(to be subtracted out from activity durations)
+
+target approx. min actvity duration  : 2'100 ns
+(with min duration still included)
+
+target with min duration subtracted  : 2'090 ns
+
+Other information for reference:
+
+small scale duration variability     : 21 ns
+
+largest observed duration            : 3'386'623 ns
+(with min duration still included)
+
