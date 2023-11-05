@@ -114,22 +114,31 @@ acpphint-NOPREFER-run:
 	cd .. && cpuset -l0,4                                        ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_4.txt"                   2
 	cd .. && cpuset -l0,8                                        ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_8.txt"                   2
 	cd .. && cpuset -l0,16                                       ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_0_16.txt"                  2
+	cd .. && cpuset -l16,17                                      ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_16_17.txt"                   2
+	cd .. && cpuset -l16,24                                      ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_16_24.txt"                   2
 	cd .. && cpuset -l0,1,4,5                                    ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4_kx4p1_0_5.txt"         4
 	cd .. && cpuset -l0,2,4,6                                    ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx2s_0_6.txt"              4
 	cd .. && cpuset -l0,1,8,9                                    ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4_kx4p1_0_9.txt"         4
 	cd .. && cpuset -l0,2,8,10                                   ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx8_kx8p2_0_2_8_10.txt"    4
 	cd .. && cpuset -l0,1,16,17                                  ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx16_kx16p1_0_1_16_17.txt" 4
 	cd .. && cpuset -l0,2,16,18                                  ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx16_kx16p2_0_2_16_18.txt" 4
+	cd .. && cpuset -l16,17,24,25                                ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx16_kx16p1_16_17_24_25.txt" 4
+	cd .. && cpuset -l16,18,24,26                                ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx16_kx16p2_16_18_24_26.txt" 4
 	cd .. && cpuset -l0,4,8,12                                   ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4s_0_12.txt"             4
 	cd .. && cpuset -l0,4,16,20                                  ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx16_kx16p4_0_4_16_20.txt" 4
 	cd .. && cpuset -l0,8,16,24                                  ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx8s_0_24.txt"             4
+	cd .. && cpuset -l16,20,24,28                                ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx16_kx16p4_16_20_24_28.txt" 4
+	cd .. && cpuset -l18,20,26,28                                ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx8p2_kx8p4_18_20_26_28.txt" 4
 	cd .. && cpuset -l0,1,4,5,8,9,12,13                          ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4_kx4p1_0_13.txt"        8
 	cd .. && cpuset -l0,2,4,6,8,10,12,14                         ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx2s_0_14.txt"             8
 	cd .. && cpuset -l0,1,4,5,16,17,20,21                        ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4_kx4p1_0_5_16_21.txt"   8
 	cd .. && cpuset -l0,2,4,6,16,18,20,22                        ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx2s_0_6_16_22.txt"        8
 	cd .. && cpuset -l0,4,8,12,16,20,24,28                       ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4s_0_28.txt"             8
+	cd .. && cpuset -l16,17,20,21,24,25,28,29                    ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4_kx4p1_16_17_28_29.txt"   8
+	cd .. && cpuset -l16,18,20,22,24,26,28,30                    ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx2s_16_18_28_30.txt"        8
 	cd .. && cpuset -l0,1,4,5,8,9,12,13,16,17,20,21,24,25,28,29  ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4_kx4p1_0_29.txt"        16
 	cd .. && cpuset -l0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30 ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx2s_0_30.txt"             16
+	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} ".txt" 2
 
 #
 #  Support some NUMA-related information gathering:
