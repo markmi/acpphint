@@ -150,6 +150,7 @@ acpphint-NOPREFER-run:
 	cd .. && cpuset -l0,1,4,5,8,9,12,13,16,17,20,21,24,25,28,29  ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx4_kx4p1_0_29.txt"        16
 	cd .. && cpuset -l0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30 ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpus_kx2s_0_30.txt"             16
 	cd .. && ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} ".txt" 1 2
+	cd .. && cpuset -l16 ./${@:-NOPREFER-run=}-${ACPPHINT_FILENAME_INFO} "-cpu_16.txt" 1 1
 
 #
 #  Support some NUMA-related information gathering:
