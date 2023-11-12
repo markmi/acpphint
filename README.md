@@ -85,7 +85,7 @@ examples.) That code's license in turn sets the overall license to also be GLPv2
 (no earlier, no later), despite OpenBSD-vintage-ISC licensed source in
 `other_src_used/` also being built and linked in.
 ##### Changelog . . .
-###### [0.1.36] 2023-Nov-04/05      . . . 202?-???-?? (final)
+###### [0.1.36] 2023-Nov-04/05/12   . . . 202?-???-?? (final)
 Additions
 - Add makefile.7950X3D-* FreeBSD files for Ryzen 9 7950X3D
   benchmarking.
@@ -100,6 +100,13 @@ Additions of material for results
 
 - Add RAM and time *.gp files for plotting some of the
   benchmarking cases.
+
+Added later:
+- Add the *.gp and *.png for a basic 7950X3D plot for 8
+  locked down threads (and single-threaded for scale).
+
+- Add material in Some_accphint_curves_with_notes.md
+  material that uses the added plot (.png file).
 
 ###### [0.1.35] 2023-Jul-01         . . . 2023-???-?? (final)
 Additions

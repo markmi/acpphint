@@ -194,3 +194,19 @@ Notes:
 1. 4 and 8 (hardware) thread cases that allow repeated hardware thread
    migrations show some clear evidence of example RAM cache changes. (But the
    pattern of use of CCDs and CCXs and such is not fixed for any size tried.)
+
+#####  Ryzen 9 7950X3D: 1&8 hardware threads, at most 1 hw thread per SMT pair
+In this plot:
+
+0. Dark curves are for devel/llvm17's clang++17, with system libc++ (llvm16).
+1. Light curves are for lang/gcc13's g++13, with system libc++ (llvm16).
+2. The grey curves are just for a sense of scale vs. single threaded.
+
+All the curves are for "cpu lock down" to a hardware thread after a thread
+is created, so, generally avoiding migrations.
+
+![7950X3D, 1&8 hw threads, QUIPS vs. RAM](acpphint_example_data/acpphint-7950X3D-threads_32-LP64-clang++_17_g++_13_O3lto-libc++-DSIZE_large_fast_types-RAM-FreeBSD_using_8_threads-on_1CCD-avoiding_SMT.png)
+
+Notes:
+
+0. The y range for this plot is not the same as for the other plots.
