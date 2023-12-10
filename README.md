@@ -85,6 +85,15 @@ examples.) That code's license in turn sets the overall license to also be GLPv2
 (no earlier, no later), despite OpenBSD-vintage-ISC licensed source in
 `other_src_used/` also being built and linked in.
 ##### Changelog . . .
+###### [0.1.36] 2023-Dec-09         . . . 202?-???-?? (final)
+Additions
+- Add makefile.7950X3D-* FreeBSD files for Ryzen 9 7950X3D
+  with 192 GiBytes of lightly slower RAM instead of 96 GiBytes
+  of slightly faster RAM. Also: FreeBSD main is now llvm17
+  based, including the system libc++.
+
+- Add example *.txt benchmark run files.
+
 ###### [0.1.36] 2023-Nov-04/05/12   . . . 202?-???-?? (final)
 Additions
 - Add makefile.7950X3D-* FreeBSD files for Ryzen 9 7950X3D

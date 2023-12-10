@@ -1,0 +1,143 @@
+os PID (not NUMA domain) affinity #cpus: 32
+os domain 0 filtered affinity #cpus: 32
+Program's cpu_num: 0 has operating system cpu_id: 0
+Program's cpu_num: 1 has operating system cpu_id: 1
+Program's cpu_num: 2 has operating system cpu_id: 2
+Program's cpu_num: 3 has operating system cpu_id: 3
+Program's cpu_num: 4 has operating system cpu_id: 4
+Program's cpu_num: 5 has operating system cpu_id: 5
+Program's cpu_num: 6 has operating system cpu_id: 6
+Program's cpu_num: 7 has operating system cpu_id: 7
+Program's cpu_num: 8 has operating system cpu_id: 8
+Program's cpu_num: 9 has operating system cpu_id: 9
+Program's cpu_num: 10 has operating system cpu_id: 10
+Program's cpu_num: 11 has operating system cpu_id: 11
+Program's cpu_num: 12 has operating system cpu_id: 12
+Program's cpu_num: 13 has operating system cpu_id: 13
+Program's cpu_num: 14 has operating system cpu_id: 14
+Program's cpu_num: 15 has operating system cpu_id: 15
+Program's cpu_num: 16 has operating system cpu_id: 16
+Program's cpu_num: 17 has operating system cpu_id: 17
+Program's cpu_num: 18 has operating system cpu_id: 18
+Program's cpu_num: 19 has operating system cpu_id: 19
+Program's cpu_num: 20 has operating system cpu_id: 20
+Program's cpu_num: 21 has operating system cpu_id: 21
+Program's cpu_num: 22 has operating system cpu_id: 22
+Program's cpu_num: 23 has operating system cpu_id: 23
+Program's cpu_num: 24 has operating system cpu_id: 24
+Program's cpu_num: 25 has operating system cpu_id: 25
+Program's cpu_num: 26 has operating system cpu_id: 26
+Program's cpu_num: 27 has operating system cpu_id: 27
+Program's cpu_num: 28 has operating system cpu_id: 28
+Program's cpu_num: 29 has operating system cpu_id: 29
+Program's cpu_num: 30 has operating system cpu_id: 30
+Program's cpu_num: 31 has operating system cpu_id: 31
+./acpphint_kernelsurveyors_main-7950X3D-196608MiB-threads_32-LP64-FreeBSD_main_n266876_e183039f0882_64bit-g++_13_O3lto-libc++-cpulockdown . . .
+acpphint_kernelsurveyors_main version: 0.1.36
+
+./acpphint_kernelsurveyors_main-7950X3D-196608MiB-threads_32-LP64-FreeBSD_main_n266876_e183039f0882_64bit-g++_13_O3lto-libc++-cpulockdown . . .
+
+DSIZE=unsigned long long, ISIZE=unsigned long long:
+
+serial. . .
+
+nproc:      1
+scx:        4'294'967'296
+scy:        4'294'967'296
+dmax:       18'446'744'073'709'551'615
+initial_dx: 4'294'967'296
+
+nscout:                                 256
+krr.kernel_result.result_bounds.HI:     7'161'937'200'509'091'840
+krr.kernel_result.result_bounds.LO:     7'089'879'602'209'751'040
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           255
+krr.kernel_result.ixes_errs_maxiq:      510
+krr.kernel_result.RECT_total_used:      256
+krr.kernel_result.ixes_errs_used_each:  511
+krr.total_sec_for_laps_for_median:      6.291e-06
+krr.tscout():                           2.097e-06
+krr.vectors_total_bytes:                26'696
+VectorsUsedBytes:                       26'680
+
+approx HI normal scale:     0.388249
+approx LO normal scale:     0.384343
+
+threaded. . .
+
+nproc:          32
+scx:            4'294'967'296
+scy:            4'294'967'296
+dmax:           18'446'744'073'709'551'615
+initial_dx:     33'554'432
+
+NCHUNK(nproc):  4
+
+nscout:                                 4
+krr.kernel_result.result_bounds.HI:     7'198'071'549'771'907'072
+krr.kernel_result.result_bounds.LO:     7'053'956'357'468'192'768
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           3
+krr.kernel_result.ixes_errs_maxiq:      3
+krr.kernel_result.RECT_total_used:      128
+krr.kernel_result.ixes_errs_used_each:  128
+krr.total_sec_for_laps_for_median:      0.00081213
+krr.tscout():                           0.00027071
+krr.vectors_total_bytes:                15'616
+VectorsUsedBytes:                       11'336
+
+approx HI normal scale: 0.390208
+approx LO normal scale: 0.382396
+
+DSIZE=unsigned long, ISIZE=unsigned long:
+
+serial. . .
+
+nproc:      1
+scx:        4'294'967'296
+scy:        4'294'967'296
+dmax:       18'446'744'073'709'551'615
+initial_dx: 4'294'967'296
+
+nscout:                                 256
+krr.kernel_result.result_bounds.HI:     7'161'937'200'509'091'840
+krr.kernel_result.result_bounds.LO:     7'089'879'602'209'751'040
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           255
+krr.kernel_result.ixes_errs_maxiq:      510
+krr.kernel_result.RECT_total_used:      256
+krr.kernel_result.ixes_errs_used_each:  511
+krr.total_sec_for_laps_for_median:      6.191e-06
+krr.tscout():                           2.06367e-06
+krr.vectors_total_bytes:                26'696
+VectorsUsedBytes:                       26'680
+
+approx HI normal scale:     0.388249
+approx LO normal scale:     0.384343
+
+threaded. . .
+
+nproc:          32
+scx:            4'294'967'296
+scy:            4'294'967'296
+dmax:           18'446'744'073'709'551'615
+initial_dx:     33'554'432
+
+NCHUNK(nproc):  4
+
+nscout:                                 4
+krr.kernel_result.result_bounds.HI:     7'198'071'549'771'907'072
+krr.kernel_result.result_bounds.LO:     7'053'956'357'468'192'768
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           3
+krr.kernel_result.ixes_errs_maxiq:      3
+krr.kernel_result.RECT_total_used:      128
+krr.kernel_result.ixes_errs_used_each:  128
+krr.total_sec_for_laps_for_median:      0.000927468
+krr.tscout():                           0.000309156
+krr.vectors_total_bytes:                15'616
+VectorsUsedBytes:                       11'336
+
+approx HI normal scale: 0.390208
+approx LO normal scale: 0.382396
+
