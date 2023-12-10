@@ -1,4 +1,4 @@
-#### acpphint_src/Usage_differences_with_original_HINTs.md
+#### acpphint\_src/Usage\_differences\_with\_original\_HINTs.md
 This file documents differences with the original serial and
 pthreads HINT benchmarks that matter for use.
 
@@ -23,7 +23,7 @@ format appropriate for at least gnuplot):
 1.  median trail's mean time per lap in sec 
     (median from sort by mean time per lap)
 2.  QUality ImProvement/sec (a.k.a QUIPS)
-3.  Quality (a.k.a QUIPS * previously listed time per lap, 
+3.  Quality (a.k.a QUIPS \* previously listed time per lap, 
     like in the original pthread HINT)
 4.  kernel vectors total memory use
     (not an understated figure like the original
@@ -51,7 +51,7 @@ HINT counts.
 ##### argv[?] use . . .
 The output files have the argv[0] text as the file name
 prefix and text after that identifying the specific test.
-The example makefile.* files generate very long command
+The example makefile.\* files generate very long command
 names that encode lots of context information.
 
 The default filename suffix is ".txt" .
@@ -124,7 +124,7 @@ for readability):
                                     * sizeof(ISIZE) * 2));
 ```
 but later miscalculated the memory use for those (missing any
-'*2'):
+\*2):
 ```
     memuse = (int)(qdata[i-1].n
            * (sizeof(RECT)+sizeof(DSIZE)+sizeof(ISIZE)));

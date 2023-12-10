@@ -1,4 +1,4 @@
-#### acpphint_src/README.md
+#### acpphint\_src/README.md
 This covers:
 1.  What `acpphint` is a variation on . . .
 2.  How to build . . .
@@ -133,7 +133,7 @@ say to make builds take less time.
 
 The default currently is to build ul (unsigned long) and which ever of ull
 (unsigned long long) or ui (unsigned int) that have the same maximum value
-as unsigned long. There is a macro DSIZE_ALL_ISIZE_ALL that, when defined,
+as unsigned long. There is a macro DSIZE\_ALL\_ISIZE\_ALL that, when defined,
 leads to a wide variety of DSIZE ISIZE combinations in most of the programs.
 
 `acpphint_kernels.cpp` has, for example (abbreviated/line-split),
@@ -248,7 +248,7 @@ See `../*.md` for more overall information.
 Overall, each `acpphint*-NAME` is licensed as GPLv2 (not earlier, not later).
 But building the acpphint related code does build some OpenBSD-vintage-ISC
 licensed source files, those under `other_src_used/` instead of under
-`acpphint_src/`. Some resulting object files are linked into the acpphint*-NAME
+`acpphint_src/`. Some resulting object files are linked into the acpphint\*-NAME
 related programs.
 
 See the `acpphint_src/LICENSE.md` for the GPLv2 license text that applies to the 
@@ -257,7 +257,7 @@ Programs that do not have names that start with `acpphint` do not contain code
 from `acpphint_src/` ( just from `../other_src_used/` ).
 
 See the `../other_src_used/LICENSE.md` for the OpenBSD-vintage-ISC license text
-that applies to just the source files in other_src_used/ and to any binaries not 
+that applies to just the source files in other\_src\_used/ and to any binaries not 
 containing code from `acpphint_src/` source files.
 
 Note: The original HINT's copyright holder, Iowa State University Research

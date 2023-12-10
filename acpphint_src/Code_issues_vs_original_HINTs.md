@@ -1,4 +1,4 @@
-#### acpphint_src/Code_issues_vs_original_HINTs.md
+#### acpphint\_src/Code\_issues\_vs\_original\_HINTs.md
 This file documents properties of source code
 differences with the original serial and
 pthreads HINT benchmarks.
@@ -27,7 +27,7 @@ For this variation on HINT, RUNTM is computed instead
 of being directly adjustable. PATIENCE, MXPROC, DSREFS,
 ISREFS, and MSIZE are not used.
 
-For this variation on HINT, STILL_UNKNOWN was
+For this variation on HINT, STILL\_UNKNOWN was
 added to EFlag as the first value.
 
 The original serial and pthread HINTs did not use
@@ -58,7 +58,7 @@ for readability):
                                    * sizeof(ISIZE) * 2));
 ```
 but it later miscalculated the memory use for those (missing
-any '*2' or tracking of the largest index actually used
+any '\*2' or tracking of the largest index actually used
 in errs and in ixes):
 ```
     memuse = (int)(qdata[i-1].n
@@ -168,7 +168,7 @@ That is a problem vs the description of MXPROC: "Maximum
 number of processors to use in shared memory configuration".
 With each "processor" having HI and LO entries in gs the
 maximum "processor" count is MXPROC/2 in order to avoid
-trashing memory and accessing unowned memory. "2*" could be
+trashing memory and accessing unowned memory. "2\*" could be
 considered as missing from the gs declaration. Or the hint.h
 description could be considered wrong.
 
@@ -275,7 +275,7 @@ initialization was very different: It was based on setting up
 the scatter decomposition.
 
 At no stage was there an explicit single cell spanning the whole
-scx*scy area so no individual area calculation spanned a big
+scx\*scy area so no individual area calculation spanned a big
 enough area to have overflow/truncation/rounding issues. Nor did
 any sum of areas that was peformed.
 

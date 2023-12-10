@@ -1,4 +1,4 @@
-##### Some_acpphint_curves_with_notes.md
+##### Some\_acpphint\_curves\_with\_notes.md
 This covers:
 
 0. Cortex-A57 cores with and without smaller cache level(s) being shared
@@ -36,7 +36,7 @@ Effects of competing for the shared RAM cache level(s) can be seen:
    (left side of goldenrod vs. blue curves)
 1. Computing is somewhat slower.
    (right side of goldenrod vs. blue curves)
-2. The curve structures show a RAM cache changes at around n*256 KiByte, for n
+2. The curve structures show a RAM cache changes at around n\*256 KiByte, for n
    being the number of hardware threads in use.
 3. The curve structures show a RAM cache change at about 8 MiByte.
 4. The 1-hardware-thread curves show a RAM cache change at about 32 KiByte.
@@ -116,7 +116,7 @@ Notes:
 0. The x and y ranges for all the plots for 1950X CCD/CCX 2/4 thread
    combinations are the same, making comparison/contrast easier.
 1. The curves for allowing (hardware) thread migration without SMT involvement
-   show very clear evidence of around n*512 KiByte and 16 MiByte RAM cache
+   show very clear evidence of around n\*512 KiByte and 16 MiByte RAM cache
    changes, n being the number of (hardware) threads.
 2. The shared smaller cache level(s) for SMT usage have competing usage and make
    them show messier transitions.
@@ -154,7 +154,7 @@ Notes:
 0. The x and y ranges for all the plots for 1950X CCD/CCX 2/4 thread
    combinations are the same, making comparison/contrast easier.
 1. The curves for allowing (hardware) thread migration without SMT involvement
-   show very clear evidence of around n*512 KiByte, 16 MiByte, and 32 MiByte RAM 
+   show very clear evidence of around n\*512 KiByte, 16 MiByte, and 32 MiByte RAM 
    cache changes, n being the number of (hardware) threads, except for the 2CCD 4CCX case that has more cache per (hardware) thread.
 2. The shared smaller cache level(s) for SMT usage have competing usage and make
    them show messier transitions.

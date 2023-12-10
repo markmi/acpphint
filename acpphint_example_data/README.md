@@ -1,4 +1,4 @@
-#### acpphint_example_data/README.md
+#### acpphint\_example\_data/README.md
 In general these notes are as of when they were written.
 
 This covers:
@@ -32,8 +32,8 @@ WDK23_CA72-FBSD/
 WDK23_CA78C-FBSD/
 ```
 (I do not distribute binaries. But I also do not distribute the
-source sys_cpubinding_lgplv2_1_okay.cpp that I used to prove
-that a Linux was supportable for WANT_CPU_LOCKDOWN builds.
+source sys\_cpubinding\_lgplv2\_1\_okay.cpp that I used to prove
+that a Linux was supportable for WANT\_CPU\_LOCKDOWN builds.
 I just wanted to avoid covering yet more licensing criteria.)
 
 `acpphint_example_data/` also contains some `*.gp`
@@ -76,7 +76,7 @@ The fields are:
 1.  median trial's mean time per lap in sec
     (median from sort by mean time per lap)
 2.  QUality ImProvement/sec (a.k.a QUIPS)
-3.  Quality (a.k.a QUIPS * previously listed time per lap, 
+3.  Quality (a.k.a QUIPS \* previously listed time per lap, 
     like in the original pthread HINT)
 4.  kernel vectors total memory use
 
