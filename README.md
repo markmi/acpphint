@@ -85,7 +85,7 @@ examples.) That code's license in turn sets the overall license to also be GLPv2
 (no earlier, no later), despite OpenBSD-vintage-ISC licensed source in
 `other_src_used/` also being built and linked in.
 ##### Changelog . . .
-###### [0.1.37] 2023-Nov-04/05/12   . . . 202?-???-?? (final)
+###### [0.1.37] 2023-Dec-10          . . . 202?-???-?? (final)
 Changes
 - Use long double with std::to_chars when:
   201611L <= __cpp_lib_to_chars
@@ -95,6 +95,13 @@ Changes
   distinct from double.)
 
   This change is outside the code that is benchmarked.
+
+Added later:
+- Add \*.gp files for the 192GiByte RAM tests.
+
+Changes
+- Rename the \*.gp files for the 96GiByte RAM tests to be
+  explicit about the 96GiByte RAM context.
 
 ###### [0.1.36] 2023-Dec-09         . . . 202?-???-?? (final)
 Additions
