@@ -51,18 +51,16 @@
 #include <cmath>    // trunc
 
 //#include <cstddef>      // size_t
-//#include <limits>       // numeric_limits<>::max()
+//#include <limits>       // numeric_limits<>::max(), numeric_limits<>::digits10()
 //#include <string>       // to_string and such
 
 #include <version>      // __cpp_lib_to_chars
 
-#include <cmath>        // nexttowardl
+#include <cmath>        // pow, nexttowardl
 
-#if 201611L <= __cpp_lib_to_chars
 #include <charconv>     // to_chars and such
 #include <string_view>  // string_view
 #include <array>        // array
-#endif
 
 #include <climits>     // ULONG_MAX, UINT_MAX, ULLONG_MAX
 
@@ -370,93 +368,83 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
 				/run_result.median_mean_sec_per_lap.count())
           + "\n";
 
-    auto const answer_lower_bound_floating_form
-        {std::nexttowardl(approx_answer_floating_form, 0.0L)};
+    auto constexpr dig10      {std::numeric_limits<decltype(approx_answer_floating_form)>::digits10};
+    auto const     delta      {std::pow(static_cast<decltype(approx_answer_floating_form)>(1.0L/10.0L),dig10)};
+    auto const     more_delta {std::nexttoward(delta,static_cast<decltype(delta)>(1.0))};
 
-    auto const answer_upper_bound_floating_form
-        {std::nexttowardl(approx_answer_floating_form, 1.0L)};
+    auto const answer_lower_bound_floating_form {approx_answer_floating_form - more_delta};
+
+    auto const answer_upper_bound_floating_form {approx_answer_floating_form + more_delta};
 
     auto const scale_factor_for_hi // an upper bound on scale factor
-        ( ( static_cast<long double>(run_result.kernel_result.result_bounds.HI)
-                                                              / ki.scx / ki.scy
+        ( ( static_cast<decltype(approx_answer_floating_form)>(run_result.kernel_result.result_bounds.HI)
+              / static_cast<decltype(approx_answer_floating_form)>(ki.scx)
+              / static_cast<decltype(approx_answer_floating_form)>(ki.scy)
           ) 
          / answer_lower_bound_floating_form
         );
     auto const scale_factor_for_lo // a lower bound on scale factor
-        ( ( static_cast<long double>(run_result.kernel_result.result_bounds.LO)
-                                                              / ki.scx / ki.scy
+        ( ( static_cast<decltype(approx_answer_floating_form)>(run_result.kernel_result.result_bounds.LO)
+              / static_cast<decltype(approx_answer_floating_form)>(ki.scx)
+              / static_cast<decltype(approx_answer_floating_form)>(ki.scy)
           )
          / answer_upper_bound_floating_form
         );
 
-#if (201611L <= __cpp_lib_to_chars)
-        std::array<char, 128> lower_approx;
-        auto const [after_lower_approx_chars, lower_approx_err_code]
-            ( std::to_chars( lower_approx.data(), lower_approx.data() + lower_approx.size()
-                           , answer_lower_bound_floating_form
-                           )
-            );
-        std::array<char, 128> upper_approx;
-        auto const [after_upper_approx_chars, upper_approx_err_code]
-            ( std::to_chars( upper_approx.data(), upper_approx.data() + upper_approx.size()
-                           , answer_upper_bound_floating_form
-                           )
-            );
+    std::array<char, 128> lower_approx;
+    auto const [after_lower_approx_chars, lower_approx_err_code]
+        ( std::to_chars( lower_approx.data(), lower_approx.data() + lower_approx.size()
+                       , answer_lower_bound_floating_form, std::chars_format::fixed
+                       )
+        );
+    std::array<char, 128> upper_approx;
+    auto const [after_upper_approx_chars, upper_approx_err_code]
+        ( std::to_chars( upper_approx.data(), upper_approx.data() + upper_approx.size()
+                       , answer_upper_bound_floating_form, std::chars_format::fixed
+                       )
+        );
+
+    std::array<char, 128> scale_factor; // For HI's context then reused for LO's.
     
-        std::array<char, 128> scale_factor; // For HI's context then reused for LO's.
-    
-        qdata.back().how_stopped_notes += " HI/(scx*scy) == ? * approx. lower bound: ";
-        auto const [after_scale_hi_chars, scale_hi_err_code]
-            ( std::to_chars( scale_factor.data(), scale_factor.data() + scale_factor.size()
-                           , scale_factor_for_hi, std::chars_format::fixed
-                           )
-            );
-        if (scale_hi_err_code == std::errc() && lower_approx_err_code == std::errc())
-        {
-            qdata.back().how_stopped_notes
-                +=  std::string_view(scale_factor.data(), after_scale_hi_chars);
-            qdata.back().how_stopped_notes += " * ";
-            qdata.back().how_stopped_notes
-                += std::string_view(lower_approx.data(), after_lower_approx_chars);
-        }
-        else
-            qdata.back().how_stopped_notes
-                +=  std::to_string(scale_factor_for_hi)
-                  + " * " + std::to_string(answer_lower_bound_floating_form);
-        qdata.back().how_stopped_notes += "\n";
-    
-        qdata.back().how_stopped_notes += " LO/(scx*scy) == ? * approx. upper bound: ";
-        auto [after_scale_lo_chars, scale_lo_err_code]
-            ( std::to_chars( scale_factor.data(), scale_factor.data() + scale_factor.size()
-                           , scale_factor_for_lo, std::chars_format::fixed
-                           )
-            );
-        if (scale_lo_err_code == std::errc() && upper_approx_err_code == std::errc())
-        {
-            qdata.back().how_stopped_notes
-                +=  std::string_view(scale_factor.data(), after_scale_lo_chars);
-            qdata.back().how_stopped_notes += " * ";
-            qdata.back().how_stopped_notes
-                += std::string_view(upper_approx.data(), after_upper_approx_chars);
-        }
-        else
-            qdata.back().how_stopped_notes
-                +=  std::to_string(scale_factor_for_lo)
-                  + " * " + std::to_string(answer_upper_bound_floating_form);
-        qdata.back().how_stopped_notes += "\n";
-#else
-        qdata.back().how_stopped_notes += " HI/(scx*scy) == ? * approx. lower bound: ";
+    qdata.back().how_stopped_notes += " HI/(scx*scy) == ? * approx. lower bound: ";
+    auto const [after_scale_hi_chars, scale_hi_err_code]
+        ( std::to_chars( scale_factor.data(), scale_factor.data() + scale_factor.size()
+                       , scale_factor_for_hi, std::chars_format::fixed
+                       )
+        );
+    if (scale_hi_err_code == std::errc() && lower_approx_err_code == std::errc())
+    {
+        qdata.back().how_stopped_notes
+            +=  std::string_view(scale_factor.data(), after_scale_hi_chars);
+        qdata.back().how_stopped_notes += " * ";
+        qdata.back().how_stopped_notes
+            += std::string_view(lower_approx.data(), after_lower_approx_chars);
+    }
+    else
         qdata.back().how_stopped_notes
             +=  std::to_string(scale_factor_for_hi)
               + " * " + std::to_string(answer_lower_bound_floating_form);
-        qdata.back().how_stopped_notes += "\n";
+    qdata.back().how_stopped_notes += "\n";
 
-        qdata.back().how_stopped_notes += " LO/(scx*scy) == ? * approx. upper bound: ";
+    qdata.back().how_stopped_notes += " LO/(scx*scy) == ? * approx. upper bound: ";
+    auto [after_scale_lo_chars, scale_lo_err_code]
+        ( std::to_chars( scale_factor.data(), scale_factor.data() + scale_factor.size()
+                       , scale_factor_for_lo, std::chars_format::fixed
+                       )
+        );
+    if (scale_lo_err_code == std::errc() && upper_approx_err_code == std::errc())
+    {
+        qdata.back().how_stopped_notes
+            +=  std::string_view(scale_factor.data(), after_scale_lo_chars);
+        qdata.back().how_stopped_notes += " * ";
+        qdata.back().how_stopped_notes
+            += std::string_view(upper_approx.data(), after_upper_approx_chars);
+    }
+    else
         qdata.back().how_stopped_notes
             +=  std::to_string(scale_factor_for_lo)
               + " * " + std::to_string(answer_upper_bound_floating_form);
-        qdata.back().how_stopped_notes += "\n";
-#endif
+    qdata.back().how_stopped_notes += "\n";
 
     return qdata;
 }

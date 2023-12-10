@@ -63,7 +63,10 @@ using TrialCount = typename std::vector<KernelRunnerResults<DSIZE,ISIZE>>::size_
 template<typename DSIZE, typename ISIZE>
 TrialCount<DSIZE,ISIZE> constexpr NTRIAL{21u}; // Edit as needed.
 
-long double const approx_answer_floating_form
+#if 201611L <= __cpp_lib_to_chars
+long
+#endif
+double constexpr approx_answer_floating_form
                 {0.386'294'361'119'890'618'834'464'242'916'531'361'510'00L};
                 // Unsure if ends up on the low vs. the high side,
                 // or by how much.

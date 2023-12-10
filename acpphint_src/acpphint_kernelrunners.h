@@ -55,7 +55,11 @@
 //#include <new>                  // bad_alloc
 //#include <system_error>         // system_error, error_code
 
-extern long double const approx_answer_floating_form;
+extern 
+#if 201611L <= __cpp_lib_to_chars
+long
+#endif
+double const approx_answer_floating_form;
 
 template<typename DSIZE, typename ISIZE>
 struct KernelRunnerResults
