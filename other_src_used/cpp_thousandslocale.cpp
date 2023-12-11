@@ -29,14 +29,11 @@
 //
 
 #include "cpp_thousandslocale.h"
-
-//#include <locale>       // locale, numpunct
+#include <string>  // for std::basic_string, std::string
+namespace { template <typename T> class cpp_numpunct; }
 
 namespace
 {
-    template<typename T>
-    class cpp_numpunct;
-
     template<>
     class cpp_numpunct<char> : public std::numpunct<char>
     {

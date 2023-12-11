@@ -31,7 +31,7 @@
 #ifndef cpp_thousandslocale_guard
 #define cpp_thousandslocale_guard
 
-#include <locale>       // locale
+#include <locale>  // for std::locale
 
 // Can be used to cause C++ like use of ' as a separator:
 auto CppThousandsLocale() -> std::locale;

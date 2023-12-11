@@ -40,29 +40,20 @@
 //
 
 #include "acpphint_kernelsamplers.h"
-//#include "acpphint_kernelsurveyors.h"
-//#include "acpphint_kernelrunners.h"
-//#include "acpphint_kernels.h"
-//#include "cpp_clockinfo.h"
-
-//#include <stdexcept>    // runtime_error
-//#include <system_error> // system_error, error_code
-
-#include <cmath>    // trunc
-
-//#include <cstddef>      // size_t
-//#include <limits>       // numeric_limits<>::max(), numeric_limits<>::digits10()
-//#include <string>       // to_string and such
-
-#include <version>      // __cpp_lib_to_chars
-
-#include <cmath>        // pow, nexttowardl
-
-#include <charconv>     // to_chars and such
-#include <string_view>  // string_view
-#include <array>        // array
-
-#include <climits>     // ULONG_MAX, UINT_MAX, ULLONG_MAX
+#include <algorithm>                   // for std::max
+#include <array>                       // for std::array
+#include <charconv>                    // for std::chars_format, std::to_chars
+#include <climits>                     // for ULONG_MAX, UINT_MAX, ULLONG_MAX
+#include <cmath>                       // for pow, nexttoward, std::nexttoward
+#include <cstddef>                     // for size_t, std::size_t
+#include <limits>                      // for std::numeric_limits
+#include <string>                      // for std::to_string, std::operator+
+#include <string_view>                 // for std::basic_string_view, std::s...
+#include <system_error>                // for std::errc
+#include "acpphint_kernelrunners.h"    // for approx_answer_floating_form
+#include "acpphint_kernels.h"          // for KernelResults, NMIN
+#include "acpphint_kernelsurveyors.h"  // for KernelSurveyor
+#include "cpp_clockinfo.h"             // for ClkInfo
 
 template<typename DSIZE, typename ISIZE>
 auto KernelSampler  ( ClkInfo                               const&  clock_info

@@ -44,16 +44,11 @@
 #ifndef acpphint_kernelrunners_guard
 #define acpphint_kernelrunners_guard
 
-#include "acpphint_kernels.h"
-#include "cpp_clockinfo.h"
-
-#include <chrono>               // duration, treat_as_floating_point,
-                                // seconds::period
-
-//#include <cstddef>              // size_t
-//#include <stdexcept>            // runtime_error
-//#include <new>                  // bad_alloc
-//#include <system_error>         // system_error, error_code
+//#include <__type_traits/decay.h>  // for std::__decay_t
+#include <chrono>                 // for std::chrono::duration, std::chrono:...
+#include <cstddef>                // for size_t, std::size_t
+#include "acpphint_kernels.h"     // for KernelResults
+class ClkInfo;
 
 extern 
 #if 201611L <= __cpp_lib_to_chars

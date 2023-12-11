@@ -39,23 +39,20 @@
 //
 
 #include "acpphint_kernelrunners.h"
-#include "sys_cpubinding.h" // RestrictThreadToCpu
+//#include <__chrono/duration.h>    // for std::chrono::operator-, std::chrono...
+//#include <__chrono/time_point.h>  // for std::chrono::operator-
+//#include <__compare/ordering.h>   // for std::operator<
+#include <algorithm>              // for std::nth_element
+#include <climits>                // for ULONG_MAX, UINT_MAX, ULLONG_MAX
+#include <compare>                // for std::strong_ordering
+#include <future>                 // for std::packaged_task, std::future
+#include <new>                    // for std::bad_alloc
+#include <stdexcept>              // for std::runtime_error
+#include <thread>                 // for std::thread
+#include <vector>                 // for std::vector
+#include "cpp_clockinfo.h"        // for ClkInfo, HwConcurrencyCount
+#include "sys_cpubinding.h"       // for RestrictThreadToCpu
 
-#include <stdexcept>    // runtime_error
-
-#include <future>       // packaged_task, future
-#include <utility>      // move (for packaged_task and future use)
-#include <thread>       // thread (clang++ 16 + -stdlib=libc++ work on openSUSE Tumblweed)
-                        // (clang++ 16 + 15's system libc++ did not in FreeBSD main)
-                        // (jthread still not present in LLVM16 materials)
-
-#include <algorithm>    // std::nth_element
-
-#include <new>          // bad_alloc
-
-//#include <system_error> // system_error
-
-#include <climits>     // ULONG_MAX, UINT_MAX, ULLONG_MAX
 
 template<typename DSIZE, typename ISIZE>
 using TrialCount = typename std::vector<KernelRunnerResults<DSIZE,ISIZE>>::size_type;

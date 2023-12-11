@@ -56,22 +56,20 @@
 // Thus some combinations may have no data to plot.
 //
 
-#include "acpphint_kernelsamplers.h"
-#include "sys_cpubinding.h" // ConcurrencyCountForInDomains
-
-#include <string>       // string
-
-#include <iostream>     // cout and related
-#include <ostream>      // flush
+#include <algorithm>                  // for std::max
+#include <cerrno>                     // for ERANGE, errno
+#include <climits>                    // for ULONG_MAX, UINT_MAX, ULLONG_MAX
+#include <cstdlib>                    // for strtoul, std::strtoul
+#include <exception>                  // for std::exception
+#include <iostream>                   // for std::__1::operator<<, std::basi...
 #include <fstream>      // open and related.
-
-#include <exception>    // exception
-
-#include <cstdlib>      // strtoul
-#include <cerrno>       // errno, ERANGE
-#include <limits>       // numeric_limits<>::max()
-
-#include <climits>     // ULONG_MAX, UINT_MAX, ULLONG_MAX
+#include <limits>                     // for std::numeric_limits
+#include <stdexcept>                  // for std::runtime_error
+#include <string>                     // for std::char_traits, std::allocator
+#include "acpphint_kernels.h"         // for PrimaryKernelInputs, KernelResults
+#include "acpphint_kernelsamplers.h"  // for KernelSampler
+#include "cpp_clockinfo.h"            // for HwConcurrencyCount, ClkInfo
+#include "sys_cpubinding.h"           // for ConcurrencyCountForInDomains
 
 template<typename DSIZE,typename ISIZE>
 static void report_samples  ( std::string                       const& filename

@@ -41,9 +41,10 @@
 #ifndef acpphint_kernels_guard
 #define acpphint_kernels_guard
 
-#include <cstddef>  // size_t
-
-//#include <stdexcept>    // runtime_error
+#include <algorithm>  // for std::max
+#include <cstddef>    // for size_t, std::size_t
+#include <limits>     // for std::numeric_limits
+#include <vector>     // for std::vector
 
 using HwConcurrencyCount = unsigned int; // Matching C++
 
@@ -86,9 +87,6 @@ struct PrimaryKernelInputs
     
     PrimaryKernelInputs(HwConcurrencyCount const threads);
 }; // PrimaryKernelInputs
-
-#include <vector>   // vector and related
-#include <limits>   // numeric_limits<>::is_integer, numeric_limits<>::max
 
 template<typename DSIZE, typename ISIZE>
 struct KernelVectors

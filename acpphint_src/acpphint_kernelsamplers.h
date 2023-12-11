@@ -42,16 +42,11 @@
 #ifndef acpphint_kernelsamplers_guard
 #define acpphint_kernelsamplers_guard
 
-#include "acpphint_kernelsurveyors.h"
-//#include "acpphint_kernelrunners.h"
-//#include "acpphint_kernels.h"
-//#include <cstddef>    // size_t
-//#include "cpp_clockinfo.h"
-
-#include <string>   // string and related
-
-//#include <stdexcept>    // runtime_error
-//#include <system_error> // system_error, error_code
+#include <string>                    // for std::basic_string, std::string
+#include <vector>                    // for std::vector
+#include "acpphint_kernelrunners.h"  // for KernelRunnerResults
+class ClkInfo;
+template <typename DSIZE, typename ISIZE> struct PrimaryKernelInputs;
 
 template<typename DSIZE, typename ISIZE>
 struct KernelSamplerResults

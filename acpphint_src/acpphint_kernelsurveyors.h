@@ -42,14 +42,9 @@
 #ifndef acpphint_kernelsurveyors_guard
 #define acpphint_kernelsurveyors_guard
 
-#include "acpphint_kernelrunners.h"
-
-//#include "acpphint_kernels.h"
-//#Include "cpp_clockinfo.h"
-
-//#include <stdexcept>    // runtime_error
-//#include <new>          // bad_alloc
-//#include <system_error> // system_error, error_code
+#include "acpphint_kernelrunners.h"  // for KernelRunnerResults
+#include "acpphint_kernels.h"        // for NMIN
+class ClkInfo;
 
 template<typename DSIZE, typename ISIZE>
 struct KernelSurveyorResults

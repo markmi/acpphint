@@ -40,20 +40,12 @@
 //
 
 #include "acpphint_kernels.h"
-
-#include <stdexcept>    // runtime_error
-
-#include <cmath>        // trunc
-
-#include <version>      // __cpp_lib_integer_comparison_functions
-
-#include <climits>     // ULONG_MAX, UINT_MAX, ULLONG_MAX
-
-#if 202002L <= __cpp_lib_integer_comparison_functions
-#include <utility>      // cmp_less_equal
-#else
-#include <type_traits>  // std::make_unsigned_t<. . .>
-#endif
+#include <algorithm>    // for std::max
+#include <climits>      // for ULONG_MAX, UINT_MAX, ULLONG_MAX
+#include <cmath>        // for trunc
+#include <stdexcept>    // for std::runtime_error
+#include <type_traits>  // for std::is_floating_point
+#include <utility>      // for std::cmp_less_equal
 
 template<typename DSIZE, typename ISIZE>
 PrimaryKernelInputs<DSIZE,ISIZE>::PrimaryKernelInputs
@@ -141,17 +133,10 @@ PrimaryKernelInputs<DSIZE,ISIZE>::PrimaryKernelInputs
 
     ISIZE imax;
 
-#if 202002L <= __cpp_lib_integer_comparison_functions
     if constexpr ( std::cmp_less_equal( std::numeric_limits<ISIZE>::max()
                                       , std::numeric_limits<std::size_t>::max()
                                       )
                  )
-#else
-    if constexpr ( static_cast<std::make_unsigned_t<ISIZE>>
-                            (std::numeric_limits<ISIZE>::max())
-                    <= std::numeric_limits<std::size_t>::max()
-                 )
-#endif
         imax= std::numeric_limits<ISIZE>::max();
     else
         imax= std::numeric_limits<std::size_t>::max();
@@ -190,10 +175,6 @@ PrimaryKernelInputs<DSIZE,ISIZE>::PrimaryKernelInputs
         }
     }
 }
-
-//#include <stdexcept>  // runtime_error
-
-#include <algorithm>    // std::max
 
 template<typename DSIZE, typename ISIZE>
 auto Kernel ( HwConcurrencyCount                const   iproc

@@ -35,29 +35,25 @@
 //
 
 #include "cpp_clockinfo.h"
-
-//#include <ratio>
-//#include <chrono>       // {steady,system,high_resolution}_clock's & related,
-                          // timepoint, duration, nanoseconds,
-                          // treat_as_floating_point
-                          // (All prior in std::chrono::)
-
-#include <system_error> // system_error, code,
-                        // errc::resource_unavailable_try_again
-
-//#include <vector>     // vector
-
-//#include <iostream>   // cerr and related
-
-#include <algorithm>    // sort, min, max
-
-#include <string>       // string
-
-#include <stdexcept>    // runtime_error
-//#include <new>          // bad_alloc
-//#include <exception>    // exception
-
-//#include <memory>       // allocator (implicit)
+//#include <__chrono/duration.h>          // for std::chrono::operator<=>, std...
+//#include <__chrono/time_point.h>        // for std::chrono::operator<=>, std...
+//#include <__compare/ordering.h>         // for std::operator<, std::operator<=
+//#include <__iterator/access.h>          // for std::__1::begin, std::__1::end
+//#include <__system_error/error_code.h>  // for std::__1::operator==
+//#include <__type_traits/decay.h>        // for std::__decay_t
+//#include <__utility/move.h>             // for std::move
+#include <algorithm>                    // for std::max, std::sort, std::min
+#include <chrono>                       // for std::chrono::duration, std::c...
+#include <compare>                      // for std::strong_ordering
+#include <future>                       // for std::future, std::packaged_task
+#include <iostream>                     // for std::basic_ostream, std::__1:...
+#include <iterator>                     // for std::next
+#include <ratio>                        // for std::ratio
+#include <stdexcept>                    // for std::runtime_error
+#include <string>                       // for std::char_traits, std::allocator
+#include <system_error>                 // for std::system_error, std::errc
+#include <thread>                       // for std::thread
+#include "cpp_thousandslocale.h"        // for CppThousandsLocale
 
 // Definitions for ClkInfo . . .
 
@@ -324,13 +320,6 @@ void ClkInfo::Merge(const ClkInfo& OtherClkInfoExample)
     Durations{observed_durations}.swap(observed_durations);
 }
 
-
-#include "cpp_thousandslocale.h"
-
-// Support for converting durations to ns based output. . .
-
-#include <sstream>      // ostringsteam (and related)
-
 auto ClkInfo::nsFormatted(Duration const& d) -> std::string
 {
     std::ostringstream out{};
@@ -340,16 +329,6 @@ auto ClkInfo::nsFormatted(Duration const& d) -> std::string
 
     return out.str();
 }
-
-#include <future>       // packaged_task, future
-#include <utility>      // move (for packaged_task and future use)
-#include <thread>       // thread (clang++ 16 + -stdlib=libc++ work on openSUSE Tumblweed)
-                        // (clang++ 16 + 15's libc++ does not in FreeBSD main [so: FBSD 14])
-                        // (jthread still not present in LLVM16 materials)
-                        // thread::hardware_concurrency
-
-#include <system_error> // system_error, errc::resource_unavailable_try_again
-
 
 auto ClkInfoFromThreads( ClkInfo::DurationsStatus durations_status
                        , HwConcurrencyCount requested_threads // 0u: get from c++

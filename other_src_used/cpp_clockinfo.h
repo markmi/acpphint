@@ -37,18 +37,9 @@
 #ifndef cpp_clockinfo_guard
 #define cpp_clockinfo_guard
 
-#include <ratio>
-#include <chrono>       // {steady,system,high_resolution}_clock's and related,
-                        // duration. (All prior in std::chrono::)
-
-#include <vector>       // vector and related
-#include <string>       // string and related
-
-#include <iostream>     // cerr and related
-
-#include <system_error> // system_error, code, errc
-#include <stdexcept>    // runtime_error
-#include <new>          // bad_alloc
+#include <chrono>  // for std::chrono::high_resolution_clock, std::chrono::s...
+#include <string>  // for std::string
+#include <vector>  // for std::vector
 
 class ClkInfo
 {

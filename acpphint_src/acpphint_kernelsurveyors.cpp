@@ -40,8 +40,8 @@
 //
 
 #include "acpphint_kernelsurveyors.h"
-
-#include <climits>     // ULONG_MAX, UINT_MAX, ULLONG_MAX
+#include <climits>          // for ULONG_MAX, UINT_MAX, ULLONG_MAX
+#include "cpp_clockinfo.h"  // for ClkInfo
 
 template<typename DSIZE, typename ISIZE>
 auto KernelSurveyor ( ClkInfo                           const&  clock_info

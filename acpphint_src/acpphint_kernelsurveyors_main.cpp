@@ -56,16 +56,14 @@
 // does not have enough room for nscout<initial_dx to fit.
 //
 
-#include "acpphint_kernelsurveyors.h"
-#include "sys_cpubinding.h" // ConcurrencyCountForInDomains
-#include "cpp_thousandslocale.h"
-
-#include <iostream>     // cout and related
-#include <ostream>      // flush
-
-#include <exception>    // exception
-
-#include <climits>     // ULONG_MAX, UINT_MAX, ULLONG_MAX
+#include <climits>                     // for ULONG_MAX, UINT_MAX, ULLONG_MAX
+#include <exception>                   // for std::exception
+#include <iostream>                    // for std::__1::operator<<, std::bas...
+#include "acpphint_kernels.h"          // for KernelResults, KernelVectors
+#include "acpphint_kernelsurveyors.h"  // for KernelSurveyor
+#include "cpp_clockinfo.h"             // for ClkInfo, HwConcurrencyCount
+#include "cpp_thousandslocale.h"       // for CppThousandsLocale
+#include "sys_cpubinding.h"            // for ConcurrencyCountForInDomains
 
 template<typename DSIZE,typename ISIZE>
 static void report_survey(ClkInfo const& clock_info)

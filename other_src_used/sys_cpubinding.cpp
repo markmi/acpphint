@@ -26,8 +26,8 @@
 //
 
 #include "sys_cpubinding.h"
-
-#include <thread>       // thread::hardware_concurrency
+#include <stdexcept>  // for std::runtime_error
+#include <thread>     // for std::thread
 
 #if defined(__FreeBSD__) && defined(WANT_CPU_LOCKDOWN)
 #include <sys/param.h>

@@ -28,8 +28,6 @@
 #ifndef sys_cpubinding_guard
 #define sys_cpubinding_guard
 
-#include <stdexcept>    // runtime_error
-
 // No claim that this interface could be used to deal well with
 // variable numbers of "cpus" per memory domain. But also there
 // is no hook for detecting such conditions either.
