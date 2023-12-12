@@ -85,6 +85,15 @@ examples.) That code's license in turn sets the overall license to also be GLPv2
 (no earlier, no later), despite OpenBSD-vintage-ISC licensed source in
 `other_src_used/` also being built and linked in.
 ##### Changelog . . .
+###### [0.1.37] 2023-Dec-11          . . . 202?-???-?? (final)
+Changes
+- Update handling of includes, generally following
+  include-what-you-use . No functional change intended.
+
+Additions
+- Add 7950X3D makefile.*'s for libstdc++ use (via g++13 for
+  now).
+
 ###### [0.1.37] 2023-Dec-10          . . . 202?-???-?? (final)
 Changes
 - Use long double with std::to_chars when:
