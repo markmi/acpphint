@@ -91,6 +91,12 @@ Additions
   (avoiding SMT pair use) for the 7950X3D vs. the ThreadRipper
   1950X. The 1950X data are from an older context.
 
+Later Changes
+- Adjust that *.pg to show log-QUIPS y-axis scaling.
+
+More Additions
+- Add some other such \*.gp files for comparison/contrast use.
+
 ###### [0.1.37] 2023-Dec-11          . . . 202?-???-?? (final)
 Changes
 - Update handling of includes, generally following
