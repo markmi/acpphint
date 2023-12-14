@@ -1,5 +1,7 @@
 reset session
 GNUTERM = "x11"
+COMPILERLIBRARY5="clang++_16_O3lto-libc++-cpulockdown"
+FNAME5PREFIX=    "HoneyComb-FBSD/acpphint-HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_n264334_215bab7924f6_64bit-" . COMPILERLIBRARY5
 COMPILERLIBRARY4="clang++_16_O3lto_CA78C-libc++-cpulockdown"
 FNAME4PREFIX=    "WDK23_CA78C-FBSD/acpphint-WDK23_CA78C-32768MiB-threads_8-LP64-FreeBSD_main_n264334_215bab7924f6_64bit-" . COMPILERLIBRARY4
 COMPILERLIBRARY3="g++_11_O3lto-libc++-cpulockdown"
@@ -15,7 +17,8 @@ QUIPSUPPERBOUND= 1e12
 TIMELOWERBOUND=  1e-8
 TIMEUPPERBOUND=  10
 set title "Compared QUIPs vs. kernel vectors total bytes, process under cpuset, cpulockdown also avoids repeated thread migrations within cpuset\n" . \
-          "FNAME4PREFIX= " . FNAME4PREFIX . "\nFNAME3PREFIX= " . FNAME3PREFIX . "\nFNAME2PREFIX= " . FNAME2PREFIX . "\nFNAMEPREFIX= " . FNAMEPREFIX noenhanced
+          "FNAME5PREFIX= " . FNAME5PREFIX . "\nFNAME4PREFIX= " . FNAME4PREFIX . "\nFNAME3PREFIX= " . FNAME3PREFIX \
+        . "\nFNAME2PREFIX= " . FNAME2PREFIX . "\nFNAMEPREFIX= " . FNAMEPREFIX noenhanced
 set ylabel "QUality ImProvement/sec"
 set logscale y 10
 set ytics border mirror
@@ -30,7 +33,13 @@ set xtics border mirror in RAMLOGSCALE rotate by -45
 set mxtics RAMLOGSCALE-1
 set grid xtics mxtics ytics mytics
 plot [RAMLOWERBOUND:RAMUPPERBOUND][QUIPSLOWERBOUND:QUIPSUPPERBOUND] \
- FNAME4PREFIX . "-DSIZE_ull-ISIZE_ull-using_8_threads-cpus_0_1_2_3_4_5_6_7.txt"  using 4:2 with linespoints linecolor rgb "light-red" \
+ FNAME5PREFIX . "-DSIZE_ull-ISIZE_ull-using_8_threads-cpus_kx4p1_kx4p2_1_14.txt"     using 4:2 with linespoints linecolor rgb "dark-red" \
+,FNAME5PREFIX . "-DSIZE_ul-ISIZE_ul-using_8_threads-cpus_kx4p1_kx4p2_1_14.txt"       using 4:2 with linespoints linecolor rgb "dark-red" \
+,FNAME5PREFIX . "-DSIZE_ull-ISIZE_ull-using_8_threads-cpus_kx4p2_kx4p3_2_15.txt"     using 4:2 with linespoints linecolor rgb "dark-red" \
+,FNAME5PREFIX . "-DSIZE_ul-ISIZE_ul-using_8_threads-cpus_kx4p2_kx4p3_2_15.txt"       using 4:2 with linespoints linecolor rgb "dark-red" \
+,FNAME5PREFIX . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_6.txt"  using 4:2 with linespoints linecolor rgb "dark-magenta" \
+,FNAME5PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_6.txt"    using 4:2 with linespoints linecolor rgb "dark-magenta" \
+,FNAME4PREFIX . "-DSIZE_ull-ISIZE_ull-using_8_threads-cpus_0_1_2_3_4_5_6_7.txt"  using 4:2 with linespoints linecolor rgb "light-red" \
 ,FNAME4PREFIX . "-DSIZE_ul-ISIZE_ul-using_8_threads-cpus_0_1_2_3_4_5_6_7.txt"    using 4:2 with linespoints linecolor rgb "light-red" \
 ,FNAME4PREFIX . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_4.txt"  using 4:2 with linespoints linecolor rgb "magenta" \
 ,FNAME4PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_4.txt"    using 4:2 with linespoints linecolor rgb "magenta" \
