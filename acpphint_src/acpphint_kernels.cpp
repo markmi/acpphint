@@ -2,7 +2,7 @@
 //  acpphint_kernels.cpp
 //  acpphint (a C++ variation on the old HINT benchmark)
 //
-//  Copyright (c) 2015-2021 Mark Millard
+//  Copyright (c) 2015-2023 Mark Millard
 //  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
 //
 //  Note: Any acpphint*.{h,cpp} code or makefile code
@@ -256,7 +256,7 @@ auto Kernel ( HwConcurrencyCount                const   iproc
         
         at_nchnk.alo= at_nchnk.frl * at_nchnk.dx;
         
-		if (at_nchnk.ahi < at_nchnk.alo)
+        if (at_nchnk.ahi < at_nchnk.alo)
             throw std::runtime_error("at_nchnk's ahi<alo while processing");
         
         {
@@ -618,7 +618,7 @@ char copyright_and_license_for_acpphint_kernels[]
 {
     "Context for this Copyright: acpphint_kernels\n"
     "\n"
-    "Copyright (c) 2015-2021 Mark Millard\n"
+    "Copyright (c) 2015-2023 Mark Millard\n"
     "Copyright (C) 1994 by Iowa State University Research Foundation, Inc.\n"
     "\n"
     "Note: Any acpphint*.{h,cpp} code  or makefile code\n"

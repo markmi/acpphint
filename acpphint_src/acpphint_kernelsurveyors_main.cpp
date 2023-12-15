@@ -2,7 +2,7 @@
 //  acpphint_kernelsurveyors_main.cpp
 //  acpphint (a C++ variation on the old HINT benchmark)
 //
-//  Copyright (c) 2015-2019 Mark Millard
+//  Copyright (c) 2015-2023 Mark Millard
 //  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
 //
 //  Note: Any acpphint*.{h,cpp} code or makefile code
@@ -413,7 +413,7 @@ char copyright_and_license_for_acpphint_kernelsurveyors_main[]
 {
     "Context for this Copyright: acpphint_kernelsurveyors_main\n"
     "\n"
-    "Copyright (c) 2015-2019 Mark Millard\n"
+    "Copyright (c) 2015-2023 Mark Millard\n"
     "Copyright (C) 1994 by Iowa State University Research Foundation, Inc.\n"
     "\n"
     "Note: Any acpphint*.{h,cpp} code  or makefile code\n"

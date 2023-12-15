@@ -2,7 +2,7 @@
 //  acpphint_kernelsamplers.h
 //  acpphint (a C++ variation on the old HINT benchmark)
 //
-//  Copyright (c) 2015-2019 Mark Millard
+//  Copyright (c) 2015-2023 Mark Millard
 //  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
 //
 //  Note: Any acpphint*.{h,cpp} code or makefile code

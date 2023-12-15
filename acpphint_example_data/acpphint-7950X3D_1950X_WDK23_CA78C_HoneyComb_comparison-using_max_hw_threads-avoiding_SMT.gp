@@ -33,10 +33,10 @@ set xtics border mirror in RAMLOGSCALE rotate by -45
 set mxtics RAMLOGSCALE-1
 set grid xtics mxtics ytics mytics
 plot [RAMLOWERBOUND:RAMUPPERBOUND][QUIPSLOWERBOUND:QUIPSUPPERBOUND] \
- FNAME5PREFIX . "-DSIZE_ull-ISIZE_ull-using_8_threads-cpus_kx4p1_kx4p2_1_14.txt"     using 4:2 with linespoints linecolor rgb "dark-red" \
-,FNAME5PREFIX . "-DSIZE_ul-ISIZE_ul-using_8_threads-cpus_kx4p1_kx4p2_1_14.txt"       using 4:2 with linespoints linecolor rgb "dark-red" \
-,FNAME5PREFIX . "-DSIZE_ull-ISIZE_ull-using_8_threads-cpus_kx4p2_kx4p3_2_15.txt"     using 4:2 with linespoints linecolor rgb "dark-red" \
-,FNAME5PREFIX . "-DSIZE_ul-ISIZE_ul-using_8_threads-cpus_kx4p2_kx4p3_2_15.txt"       using 4:2 with linespoints linecolor rgb "dark-red" \
+ FNAME5PREFIX . "-DSIZE_ull-ISIZE_ull-using_16_threads.txt"                          using 4:2 with linespoints linecolor rgb "dark-red" \
+,FNAME5PREFIX . "-DSIZE_ul-ISIZE_ul-using_16_threads.txt"                            using 4:2 with linespoints linecolor rgb "dark-red" \
+,FNAME5PREFIX . "-DSIZE_ull-ISIZE_ull-using_16_threads-cpus_kp1_0_15.txt"            using 4:2 with linespoints linecolor rgb "dark-red" \
+,FNAME5PREFIX . "-DSIZE_ul-ISIZE_ul-using_16_threads-cpus_kp1_0_15.txt"              using 4:2 with linespoints linecolor rgb "dark-red" \
 ,FNAME5PREFIX . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_6.txt"  using 4:2 with linespoints linecolor rgb "dark-magenta" \
 ,FNAME5PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_6.txt"    using 4:2 with linespoints linecolor rgb "dark-magenta" \
 ,FNAME4PREFIX . "-DSIZE_ull-ISIZE_ull-using_8_threads-cpus_0_1_2_3_4_5_6_7.txt"  using 4:2 with linespoints linecolor rgb "light-red" \
@@ -45,27 +45,20 @@ plot [RAMLOWERBOUND:RAMUPPERBOUND][QUIPSLOWERBOUND:QUIPSUPPERBOUND] \
 ,FNAME4PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_4.txt"    using 4:2 with linespoints linecolor rgb "magenta" \
 ,FNAME4PREFIX . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpus_1.txt"  using 4:2 with linespoints linecolor rgb "magenta" \
 ,FNAME4PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpus_1.txt"    using 4:2 with linespoints linecolor rgb "magenta" \
-,FNAME3PREFIX . "-DSIZE_ull-ISIZE_ull-using_8_threads-cpus_kx2s_0_14.txt" using 4:2 with linespoints linecolor rgb "light-green" \
-,FNAME3PREFIX . "-DSIZE_ul-ISIZE_ul-using_8_threads-cpus_kx2s_0_14.txt"   using 4:2 with linespoints linecolor rgb "light-green" \
-,FNAME3PREFIX . "-DSIZE_ull-ISIZE_ull-using_8_threads-cpus_kx2s_0_6_16_22.txt" using 4:2 with linespoints linecolor rgb "light-green" \
-,FNAME3PREFIX . "-DSIZE_ul-ISIZE_ul-using_8_threads-cpus_kx2s_0_6_16_22.txt"   using 4:2 with linespoints linecolor rgb "light-green" \
+,FNAME3PREFIX . "-DSIZE_ull-ISIZE_ull-using_32_threads.txt" using 4:2 with linespoints linecolor rgb "light-green" \
+,FNAME3PREFIX . "-DSIZE_ul-ISIZE_ul-using_32_threads.txt"   using 4:2 with linespoints linecolor rgb "light-green" \
 ,FNAME3PREFIX . "-DSIZE_ull-ISIZE_ull-using_1_threads.txt" using 4:2 with linespoints linecolor rgb "light-blue" \
 ,FNAME3PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads.txt"   using 4:2 with linespoints linecolor rgb "light-blue" \
-,FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_8_threads-cpus_kx2s_0_14.txt" using 4:2 with linespoints linecolor rgb "dark-goldenrod" \
-,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_8_threads-cpus_kx2s_0_14.txt"   using 4:2 with linespoints linecolor rgb "dark-goldenrod" \
-,FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_8_threads-cpus_kx2s_16_18_28_30.txt" using 4:2 with linespoints linecolor rgb "dark-pink" \
-,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_8_threads-cpus_kx2s_16_18_28_30.txt"   using 4:2 with linespoints linecolor rgb "dark-pink" \
+,FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_32_threads.txt" using 4:2 with linespoints linecolor rgb "dark-goldenrod" \
+,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_32_threads.txt"   using 4:2 with linespoints linecolor rgb "dark-goldenrod" \
 ,FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_1_threads.txt" using 4:2 with linespoints linecolor rgb "dark-grey" \
 ,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads.txt"   using 4:2 with linespoints linecolor rgb "dark-grey" \
 ,FNAME2PREFIX . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpu_16.txt" using 4:2 with linespoints linecolor rgb "dark-grey" \
 ,FNAME2PREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpu_16.txt"   using 4:2 with linespoints linecolor rgb "dark-grey" \
-,FNAMEPREFIX . "-DSIZE_ull-ISIZE_ull-using_8_threads-cpus_kx2s_0_14.txt" using 4:2 with linespoints linecolor rgb "light-goldenrod" \
-,FNAMEPREFIX . "-DSIZE_ul-ISIZE_ul-using_8_threads-cpus_kx2s_0_14.txt"   using 4:2 with linespoints linecolor rgb "light-goldenrod" \
-,FNAMEPREFIX . "-DSIZE_ull-ISIZE_ull-using_8_threads-cpus_kx2s_16_18_28_30.txt" using 4:2 with linespoints linecolor rgb "light-pink" \
-,FNAMEPREFIX . "-DSIZE_ul-ISIZE_ul-using_8_threads-cpus_kx2s_16_18_28_30.txt"   using 4:2 with linespoints linecolor rgb "light-pink" \
+,FNAMEPREFIX . "-DSIZE_ull-ISIZE_ull-using_32_threads.txt" using 4:2 with linespoints linecolor rgb "light-goldenrod" \
+,FNAMEPREFIX . "-DSIZE_ul-ISIZE_ul-using_32_threads.txt"   using 4:2 with linespoints linecolor rgb "light-goldenrod" \
 ,FNAMEPREFIX . "-DSIZE_ull-ISIZE_ull-using_1_threads.txt" using 4:2 with linespoints linecolor rgb "light-grey" \
 ,FNAMEPREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads.txt"   using 4:2 with linespoints linecolor rgb "light-grey" \
 ,FNAMEPREFIX . "-DSIZE_ull-ISIZE_ull-using_1_threads-cpu_16.txt" using 4:2 with linespoints linecolor rgb "light-grey" \
 ,FNAMEPREFIX . "-DSIZE_ul-ISIZE_ul-using_1_threads-cpu_16.txt"   using 4:2 with linespoints linecolor rgb "light-grey"
 #    EOF
-

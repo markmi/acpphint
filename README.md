@@ -85,7 +85,7 @@ examples.) That code's license in turn sets the overall license to also be GLPv2
 (no earlier, no later), despite OpenBSD-vintage-ISC licensed source in
 `other_src_used/` also being built and linked in.
 ##### Changelog . . .
-###### [0.1.37] 2023-Dec-13          . . . 202?-???-?? (final)
+###### [0.1.37] 2023-Dec-13/14       . . . 202?-???-?? (final)
 Additions
 - Add a \*.pg file for comparing/contrasting using 8 threads
   (avoiding SMT pair use) for the 7950X3D vs. the ThreadRipper
@@ -93,6 +93,10 @@ Additions
 
 Later Changes
 - Adjust that *.pg to show log-QUIPS y-axis scaling.
+
+- Modernize varous *.[hc]* file copyright notice date-range
+  ends. Also fix a couple of lines that had leading tabs
+  instead of leading spaces.
 
 More Additions
 - Add some other such \*.gp files for comparison/contrast use.
