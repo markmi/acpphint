@@ -25,6 +25,8 @@ set grid xtics mxtics ytics mytics
 plot [RAMLOWERBOUND:RAMUPPERBOUND][0:QUIPSUPPERBOUND] \
  FNAMEPREFIX . "-DSIZE_ull-ISIZE_ull-using_8_threads-cpus_kx2s_16_18_28_30.txt" using 4:2 with linespoints linecolor rgb "dark-green" \
 ,FNAMEPREFIX . "-DSIZE_ul-ISIZE_ul-using_8_threads-cpus_kx2s_16_18_28_30.txt"   using 4:2 with linespoints linecolor rgb "dark-green" \
+,FNAMEPREFIX . "-DSIZE_ull-ISIZE_ull-using_8_threads-cpus_kx4p1s_1_29.txt" using 4:2 with linespoints linecolor rgb "grey" \
+,FNAMEPREFIX . "-DSIZE_ul-ISIZE_ul-using_8_threads-cpus_kx4p1s_1_29.txt"   using 4:2 with linespoints linecolor rgb "grey" \
 ,FNAMEPREFIX . "-DSIZE_ull-ISIZE_ull-using_8_threads-cpus_kx2s_0_14.txt" using 4:2 with linespoints linecolor rgb "dark-goldenrod" \
 ,FNAMEPREFIX . "-DSIZE_ul-ISIZE_ul-using_8_threads-cpus_kx2s_0_14.txt"   using 4:2 with linespoints linecolor rgb "dark-goldenrod" \
 ,FNAMEPREFIX . "-DSIZE_ull-ISIZE_ull-using_8_threads-cpus_kx2s_0_6_16_22.txt" using 4:2 with linespoints linecolor rgb "dark-blue" \

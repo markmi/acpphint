@@ -25,8 +25,12 @@ set grid xtics mxtics ytics mytics
 plot [RAMLOWERBOUND:RAMUPPERBOUND][0:QUIPSUPPERBOUND] \
  FNAMEPREFIX . "-DSIZE_ull-ISIZE_ull-using_16_threads_creation_untimed-cpus_kx2s_0_30.txt" using 4:2 with linespoints linecolor rgb "dark-green" \
 ,FNAMEPREFIX . "-DSIZE_ul-ISIZE_ul-using_16_threads_creation_untimed-cpus_kx2s_0_30.txt"   using 4:2 with linespoints linecolor rgb "dark-green" \
+,FNAMEPREFIX . "-DSIZE_ull-ISIZE_ull-using_16_threads_creation_untimed-cpus_kx2p1s_1_31.txt" using 4:2 with linespoints linecolor rgb "grey" \
+,FNAMEPREFIX . "-DSIZE_ul-ISIZE_ul-using_16_threads_creation_untimed-cpus_kx2p1s_1_31.txt"   using 4:2 with linespoints linecolor rgb "grey" \
 ,FNAMEPREFIX . "-DSIZE_ull-ISIZE_ull-using_16_threads-cpus_kx2s_0_30.txt" using 4:2 with linespoints linecolor rgb "light-green" \
 ,FNAMEPREFIX . "-DSIZE_ul-ISIZE_ul-using_16_threads-cpus_kx2s_0_30.txt"   using 4:2 with linespoints linecolor rgb "light-green" \
+,FNAMEPREFIX . "-DSIZE_ull-ISIZE_ull-using_16_threads-cpus_kx2p1s_1_31.txt" using 4:2 with linespoints linecolor rgb "black" \
+,FNAMEPREFIX . "-DSIZE_ul-ISIZE_ul-using_16_threads-cpus_kx2p1s_1_31.txt"   using 4:2 with linespoints linecolor rgb "black" \
 ,FNAMEPREFIX . "-DSIZE_ull-ISIZE_ull-using_32_threads_creation_untimed.txt" using 4:2 with linespoints linecolor rgb "dark-green" \
 ,FNAMEPREFIX . "-DSIZE_ul-ISIZE_ul-using_32_threads_creation_untimed.txt"   using 4:2 with linespoints linecolor rgb "dark-green" \
 ,FNAMEPREFIX . "-DSIZE_ull-ISIZE_ull-using_32_threads.txt" using 4:2 with linespoints linecolor rgb "light-green" \
