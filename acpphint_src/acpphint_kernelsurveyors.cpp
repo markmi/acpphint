@@ -2,7 +2,7 @@
 //  acpphint_kernelsurveyors.cpp
 //  acpphint (a C++ variation on the old HINT benchmark)
 //
-//  Copyright (c) 2015-2023 Mark Millard
+//  Copyright (c) 2015-2024 Mark Millard
 //  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
 //
 //  Note: Any acpphint*.{h,cpp} code or makefile code
@@ -43,7 +43,7 @@
 #include <climits>          // for ULONG_MAX, UINT_MAX, ULLONG_MAX
 #include "cpp_clockinfo.h"  // for ClkInfo
 
-template<typename DSIZE, typename ISIZE>
+template<typename DSIZE, typename ISIZE, bool want_parallel_thread_creation_time_included>
 auto KernelSurveyor ( ClkInfo                           const&  clock_info
                     , PrimaryKernelInputs<DSIZE,ISIZE>  const&  ki
                     ) -> KernelSurveyorResults<DSIZE,ISIZE>
@@ -54,15 +54,16 @@ auto KernelSurveyor ( ClkInfo                           const&  clock_info
     auto constexpr NOERROR{KernelResults<DSIZE,ISIZE>::EFlag::normal};
 
     KernelSurveyorResults<DSIZE,ISIZE> survey_result{ki};
-    
+
     while (static_cast<DSIZE>(survey_result.nscout)<ki.initial_dx)
     {
         auto const run_result
-            {KernelRunner<DSIZE,ISIZE>  ( clock_info
-                                        , laps
-                                        , survey_result.nscout
-                                        , ki
-                                        )
+            {KernelRunner<DSIZE,ISIZE,want_parallel_thread_creation_time_included>
+                ( clock_info
+                , laps
+                , survey_result.nscout
+                , ki
+                )
             };
 
         if (NOERROR!=run_result.kernel_result.eflag)
@@ -73,14 +74,14 @@ auto KernelSurveyor ( ClkInfo                           const&  clock_info
         }
 
         survey_result.krr= run_result; // No longer STILL_UNKNOWN.
-        
+
         if  (  clock_info.TargetApproxMinDuration()
              < run_result.median_mean_sec_per_lap
             )
             break; // Directly good result.
-        
+
         survey_result.nscout*= 2;
-        
+
         // Without the = below, ki.initial_dx==survey_result.nscout
         // results in using a run result for a smaller
         // survey_result.nscout value. The original pthread HINT
@@ -105,13 +106,26 @@ auto KernelSurveyor ( ClkInfo                           const&  clock_info
 // DSIZE=short: // Always included
 
 template
-auto KernelSurveyor<short,short>
+auto KernelSurveyor<short,short,TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<short,short>      const&  ki
                     ) -> KernelSurveyorResults<short,short>;
 
 template
-auto KernelSurveyor<short,unsigned short>
+auto KernelSurveyor<short,short,!TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs<short,short>      const&  ki
+                    ) -> KernelSurveyorResults<short,short>;
+
+template
+auto KernelSurveyor<short,unsigned short,TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs<short,unsigned short>
+                                                            const&  ki
+                    ) -> KernelSurveyorResults<short,unsigned short>;
+
+template
+auto KernelSurveyor<short,unsigned short,!TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<short,unsigned short>
                                                             const&  ki
@@ -120,14 +134,28 @@ auto KernelSurveyor<short,unsigned short>
 // DSIZE=unsigned short: // Always included
 
 template
-auto KernelSurveyor<unsigned short,short>
+auto KernelSurveyor<unsigned short,short,TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<unsigned short,short>
                                                             const&  ki
                     ) -> KernelSurveyorResults<unsigned short,short>;
 
 template
-auto KernelSurveyor<unsigned short,unsigned short>
+auto KernelSurveyor<unsigned short,short,!TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs<unsigned short,short>
+                                                            const&  ki
+                    ) -> KernelSurveyorResults<unsigned short,short>;
+
+template
+auto KernelSurveyor<unsigned short,unsigned short,TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs<unsigned short,unsigned short>
+                                                            const&  ki
+                    ) -> KernelSurveyorResults<unsigned short,unsigned short>;
+
+template
+auto KernelSurveyor<unsigned short,unsigned short,!TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<unsigned short,unsigned short>
                                                             const&  ki
@@ -137,17 +165,32 @@ auto KernelSurveyor<unsigned short,unsigned short>
 // DSIZE=unsigned int:
 
 template
-auto KernelSurveyor<unsigned int,unsigned int>
+auto KernelSurveyor<unsigned int,unsigned int,TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs<unsigned int,unsigned int>
+                                                            const&  ki
+                    ) -> KernelSurveyorResults<unsigned int,unsigned int>;
+
+template
+auto KernelSurveyor<unsigned int,unsigned int,!TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<unsigned int,unsigned int>
                                                             const&  ki
                     ) -> KernelSurveyorResults<unsigned int,unsigned int>;
 #endif
-                    
-// DSIZE=unsigned long: // Always included
 
 template
-auto KernelSurveyor<unsigned long,unsigned long>
+auto KernelSurveyor<unsigned long,unsigned long,TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs   < unsigned long
+                                            , unsigned long
+                                            >               const&  ki
+                    ) -> KernelSurveyorResults  < unsigned long
+                                                , unsigned long
+                                                >;
+
+template
+auto KernelSurveyor<unsigned long,unsigned long,!TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs   < unsigned long
                                             , unsigned long
@@ -160,7 +203,17 @@ auto KernelSurveyor<unsigned long,unsigned long>
 // DSIZE=unsigned long long:
 
 template
-auto KernelSurveyor<unsigned long long,unsigned long long>
+auto KernelSurveyor<unsigned long long,unsigned long long,TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs   < unsigned long long
+                                            , unsigned long long
+                                            >               const&  ki
+                    ) -> KernelSurveyorResults  < unsigned long long
+                                                , unsigned long long
+                                                >;
+
+template
+auto KernelSurveyor<unsigned long long,unsigned long long,!TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs   < unsigned long long
                                             , unsigned long long
@@ -173,20 +226,40 @@ auto KernelSurveyor<unsigned long long,unsigned long long>
 // DSIZE=float:
 
 template
-auto KernelSurveyor<float,short>
+auto KernelSurveyor<float,short,TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<float,short>      const&  ki
                     ) -> KernelSurveyorResults<float,short>;
 
 template
-auto KernelSurveyor<float,unsigned short>
+auto KernelSurveyor<float,short,!TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs<float,short>      const&  ki
+                    ) -> KernelSurveyorResults<float,short>;
+
+template
+auto KernelSurveyor<float,unsigned short,TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<float,unsigned short>
                                                             const&  ki
                     ) -> KernelSurveyorResults<float,unsigned short>;
-                    
+
 template
-auto KernelSurveyor<float,unsigned int>
+auto KernelSurveyor<float,unsigned short,!TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs<float,unsigned short>
+                                                            const&  ki
+                    ) -> KernelSurveyorResults<float,unsigned short>;
+
+template
+auto KernelSurveyor<float,unsigned int,TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs<float,unsigned int>
+                                                            const&  ki
+                    ) -> KernelSurveyorResults<float,unsigned int>;
+
+template
+auto KernelSurveyor<float,unsigned int,!TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<float,unsigned int>
                                                             const&  ki
@@ -194,23 +267,44 @@ auto KernelSurveyor<float,unsigned int>
 
 #ifdef DSIZE_ALL_ISIZE_ALL
 // DSIZE=double:
-            
+
 template
-auto KernelSurveyor<double,unsigned int>
+auto KernelSurveyor<double,unsigned int,TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<double,unsigned int>
                                                             const&  ki
                     ) -> KernelSurveyorResults<double,unsigned int>;
 
 template
-auto KernelSurveyor<double,unsigned long>
+auto KernelSurveyor<double,unsigned int,!TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs<double,unsigned int>
+                                                            const&  ki
+                    ) -> KernelSurveyorResults<double,unsigned int>;
+
+template
+auto KernelSurveyor<double,unsigned long,TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<double,unsigned long>
                                                             const&  ki
                     ) -> KernelSurveyorResults<double,unsigned long>;
 
 template
-auto KernelSurveyor<double,unsigned long long>
+auto KernelSurveyor<double,unsigned long,!TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs<double,unsigned long>
+                                                            const&  ki
+                    ) -> KernelSurveyorResults<double,unsigned long>;
+
+template
+auto KernelSurveyor<double,unsigned long long,TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs<double,unsigned long long>
+                                                            const&  ki
+                    ) -> KernelSurveyorResults<double,unsigned long long>;
+
+template
+auto KernelSurveyor<double,unsigned long long,!TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<double,unsigned long long>
                                                             const&  ki
@@ -219,14 +313,28 @@ auto KernelSurveyor<double,unsigned long long>
 // DSIZE=long double:
 
 template
-auto KernelSurveyor<long double,unsigned long>
+auto KernelSurveyor<long double,unsigned long,TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<long double,unsigned long>
                                                             const&  ki
                     ) -> KernelSurveyorResults<long double,unsigned long>;
 
 template
-auto KernelSurveyor<long double,unsigned long long>
+auto KernelSurveyor<long double,unsigned long,!TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs<long double,unsigned long>
+                                                            const&  ki
+                    ) -> KernelSurveyorResults<long double,unsigned long>;
+
+template
+auto KernelSurveyor<long double,unsigned long long,TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs<long double,unsigned long long>
+                                                            const&  ki
+                    ) -> KernelSurveyorResults<long double,unsigned long long>;
+
+template
+auto KernelSurveyor<long double,unsigned long long,!TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<long double,unsigned long long>
                                                             const&  ki
@@ -238,7 +346,7 @@ char copyright_and_license_for_acpphint_kernelsurveyors[]
 {
     "Context for this Copyright: acpphint_kernelsurveyors\n"
     "\n"
-    "Copyright (c) 2015-2023 Mark Millard\n"
+    "Copyright (c) 2015-2024 Mark Millard\n"
     "Copyright (C) 1994 by Iowa State University Research Foundation, Inc.\n"
     "\n"
     "Note: Any acpphint*.{h,cpp} code  or makefile code\n"

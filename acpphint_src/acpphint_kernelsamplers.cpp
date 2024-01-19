@@ -2,7 +2,7 @@
 //  acpphint_kernelsamplers.cpp
 //  acpphint (a C++ variation on the old HINT benchmark)
 //
-//  Copyright (c) 2015-2023 Mark Millard
+//  Copyright (c) 2015-2024 Mark Millard
 //  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
 //
 //  Note: Any acpphint*.{h,cpp} code or makefile code
@@ -50,12 +50,12 @@
 #include <string>                      // for std::to_string, std::operator+
 #include <string_view>                 // for std::basic_string_view, std::s...
 #include <system_error>                // for std::errc
-#include "acpphint_kernelrunners.h"    // for approx_answer_floating_form
+#include "acpphint_kernelrunners.h"    // for approx_answer_floating_form, TIME_PARALLEL_THREAD_CREATION_TOO
 #include "acpphint_kernels.h"          // for KernelResults, NMIN
 #include "acpphint_kernelsurveyors.h"  // for KernelSurveyor
 #include "cpp_clockinfo.h"             // for ClkInfo
 
-template<typename DSIZE, typename ISIZE>
+template<typename DSIZE, typename ISIZE, bool want_parallel_thread_creation_time_included>
 auto KernelSampler  ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<DSIZE,ISIZE>      const&  ki
                     ) -> KernelSamplerResultsVect<DSIZE,ISIZE>
@@ -67,7 +67,9 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
 
     KernelSamplerResultsVect<DSIZE,ISIZE>   qdata{};
 
-    auto const k_surveyor_result{KernelSurveyor<DSIZE,ISIZE>(clock_info,ki)};
+    auto const k_surveyor_result{KernelSurveyor<DSIZE,ISIZE,want_parallel_thread_creation_time_included>
+                                     (clock_info,ki)
+                                };
 
     if  (  NOERROR != k_surveyor_result.krr.kernel_result.eflag
         || ki.initial_dx <= static_cast<DSIZE>(k_surveyor_result.nscout)
@@ -82,13 +84,13 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
 
     using sec_floating_form
         = typename KernelRunnerResults<DSIZE,ISIZE>::SecFloatingForm;
-    
+
     using floating_type
         = typename KernelSamplerResults<DSIZE,ISIZE>::FloatingType;
-    
+
     using num_samples
         = typename KernelSamplerResultsVect<DSIZE,ISIZE>::size_type;
-    
+
     // The below two liklely both change together, likely:
     // smaller ADVANCE_factor <=> larger NSAMP if one wants
     // about the same range of n values covered.
@@ -106,7 +108,7 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
 #endif
     long double         constexpr ADVANCE_factor{1.258925411794167L};
                                                 // Approx.: 10th root of 10.
-                                                
+
     // Edit as needed, the next 3 (in original HINTs too):
     sec_floating_form   const     RUNTM{clock_info.TargetApproxMinDuration()};
 #ifndef STOPTM_ALT
@@ -151,11 +153,11 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
 
     ISIZE                               n{NMIN<ISIZE>(ki.nproc)};
     DSIZE                               DSIZE_n= n;
-    
+
     KernelRunnerResults<DSIZE,ISIZE>    run_result{};
 
     qdata.reserve(NSAMP);
-    
+
     while   (  qdata.size() < NSAMP
             && DSIZE_n < ki.initial_dx
             )   // STOPTM check is where median_mean_sec_per_lap is known.
@@ -165,14 +167,15 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
         sec_floating_form   const tscout_scaled{n*k_surveyor_result.tscout()};
         floating_type       const truncated_ratio
                                     {std::trunc(runtm_scaled/tscout_scaled)};
-        
+
         LapsCount laps= std::max(truncated_ratio,floating_type_1);
 
-        run_result= KernelRunner<DSIZE,ISIZE>   ( clock_info
-                                                , laps
-                                                , n
-                                                , ki
-                                                );
+        run_result= KernelRunner<DSIZE,ISIZE,want_parallel_thread_creation_time_included>
+                        ( clock_info
+                        , laps
+                        , n
+                        , ki
+                        );
 
         // The original HINTs did not rescale laps until time progressed
         // sufficiently.
@@ -182,15 +185,16 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
               )
         {
             laps *= 2;
-            run_result= KernelRunner<DSIZE,ISIZE>   ( clock_info
-                                                    , laps
-                                                    , n
-                                                    , ki
-                                                    );
+            run_result= KernelRunner<DSIZE,ISIZE,want_parallel_thread_creation_time_included>
+                            ( clock_info
+                            , laps
+                            , n
+                            , ki
+                            );
         }
 
         quality_improvement_per_sec quips;
-        
+
         if  (  NOERROR  == run_result.kernel_result.eflag
             && zero_sec <  run_result.median_mean_sec_per_lap
             )
@@ -198,17 +202,17 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
             DSIZE const gamut=  run_result.kernel_result.result_bounds.HI
                               - run_result.kernel_result.result_bounds.LO;
             floating_type const one_over_gamut= floating_type_1/gamut;
-    
+
             // Calculate QUIPS. We must add one to dmax, but do it in steps.
             // This to avoid overflow of dmax.
-    
+
             floating_type const delq
                     {static_cast<floating_type>(ki.dmax)/gamut - floating_type_1};
-    
+
             // delq is an incomplete estimate of the full change
             // in the quality: there is another 1/gamut (rational
             // viewpoint) that helps avoid overflow/truncation/rounding.
-    
+
             quips=          (delq/run_result.median_mean_sec_per_lap.count())
                 + (one_over_gamut/run_result.median_mean_sec_per_lap.count());
         }
@@ -227,7 +231,7 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
 
         if (STOPTM <= run_result.median_mean_sec_per_lap)
             break;
-            
+
         if (VECTS_BYTES_LIMIT <= run_result.vectors_total_bytes)
             break;
 
@@ -235,23 +239,23 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
             && quips_to_peak_ratio<STOPRT
             )
             break;
-        
+
         ISIZE const potential_n_by_increment=   n+1;
         ISIZE const potential_n_by_factor=      ADVANCE_factor*n;
-        
+
         n=          std::max(potential_n_by_increment,potential_n_by_factor);
         DSIZE_n=    n;
     }
-        
+
     // The original HINTs attempted to eliminate reporting
     // examples of less work taking more time. This variation
     // reports instead such results when the median_mean_sec_per_lap
     // works out that way for the quips value. (The resulting
     // linespoints graph need not be of a [single-valued] function
     // when the x-axis is for median_mean_sec_per_lap .)
-    
+
     if (qdata.empty()) return qdata;
-        
+
     if (STOPTM <= run_result.median_mean_sec_per_lap)
         qdata.back().how_stopped_notes
             +=  " median_mean_sec_per_lap:  stopped for "
@@ -260,7 +264,7 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
               + "median_mean_sec_per_lap == "
                 + std::to_string(run_result.median_mean_sec_per_lap.count())
               + "\n";
-    
+
     if (VECTS_BYTES_LIMIT <= run_result.vectors_total_bytes)
         qdata.back().how_stopped_notes
             +=  " vectors_total_bytes:      stopped for "
@@ -269,7 +273,7 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
               + "vectors_total_bytes == "
                 + std::to_string(run_result.vectors_total_bytes)
               + "\n";
-                    
+
     if  (quips_to_peak_ratio < STOPRT)
         qdata.back().how_stopped_notes
             +=  " quips_to_peak_ratio:      stopped for "
@@ -287,7 +291,7 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
               + " <= "
               + "(next n) == " + std::to_string(DSIZE_n)
               + "\n";
-    
+
     if (NSAMP <= qdata.size())
         qdata.back().how_stopped_notes
             +=  " qdata.size():             stopped for "
@@ -317,7 +321,7 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
               + " < "
               + "STOPTM == " + std::to_string(STOPTM.count())
               + "\n";
-    
+
     if (run_result.vectors_total_bytes < VECTS_BYTES_LIMIT)
         qdata.back().how_stopped_notes
             +=  " vectors_total_bytes:      stopped with "
@@ -326,7 +330,7 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
               + " < "
               + "VECTS_BYTES_LIMIT == " + std::to_string(VECTS_BYTES_LIMIT)
               + "\n";
-                    
+
     if  (STOPRT <= quips_to_peak_ratio)
         qdata.back().how_stopped_notes
             +=  " quips_to_peak_ratio:      stopped with "
@@ -344,7 +348,7 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
               + " < "
               + "initial_dx == " + std::to_string(ki.initial_dx)
               + "\n";
-    
+
     if (qdata.size() < NSAMP)
         qdata.back().how_stopped_notes
             +=  " qdata.size():             stopped with "
@@ -396,7 +400,7 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
         );
 
     std::array<char, 128> scale_factor; // For HI's context then reused for LO's.
-    
+
     qdata.back().how_stopped_notes += " HI/(scx*scy) == ? * approx. lower bound: ";
     auto const [after_scale_hi_chars, scale_hi_err_code]
         ( std::to_chars( scale_factor.data(), scale_factor.data() + scale_factor.size()
@@ -446,13 +450,26 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
 // DSIZE=short:
 
 template
-auto KernelSampler<short,short>
+auto KernelSampler<short,short,TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<short,short>      const&  ki
                     ) -> KernelSamplerResultsVect<short,short>;
 
 template
-auto KernelSampler<short,unsigned short>
+auto KernelSampler<short,short,!TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs<short,short>      const&  ki
+                    ) -> KernelSamplerResultsVect<short,short>;
+
+template
+auto KernelSampler<short,unsigned short,TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs<short,unsigned short>
+                                                            const&  ki
+                    ) -> KernelSamplerResultsVect<short,unsigned short>;
+
+template
+auto KernelSampler<short,unsigned short,!TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<short,unsigned short>
                                                             const&  ki
@@ -461,7 +478,7 @@ auto KernelSampler<short,unsigned short>
 // DSIZE=unsigned short:
 
 template
-auto KernelSampler<unsigned short,short>
+auto KernelSampler<unsigned short,short,TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<unsigned short,short>
                                                             const&  ki
@@ -469,7 +486,23 @@ auto KernelSampler<unsigned short,short>
                                             <unsigned short,short>;
 
 template
-auto KernelSampler<unsigned short,unsigned short>
+auto KernelSampler<unsigned short,short,!TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs<unsigned short,short>
+                                                            const&  ki
+                    ) -> KernelSamplerResultsVect
+                                            <unsigned short,short>;
+
+template
+auto KernelSampler<unsigned short,unsigned short,TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs<unsigned short,unsigned short>
+                                                            const&  ki
+                    ) -> KernelSamplerResultsVect
+                                            <unsigned short,unsigned short>;
+
+template
+auto KernelSampler<unsigned short,unsigned short,!TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<unsigned short,unsigned short>
                                                             const&  ki
@@ -486,11 +519,18 @@ auto KernelSampler<unsigned int,unsigned int>
                                                             const&  ki
                     ) -> KernelSamplerResultsVect<unsigned int,unsigned int>;
 #endif
-                    
+
 // DSIZE=unsigned long: // Always included
 
 template
-auto KernelSampler<unsigned long,unsigned long>
+auto KernelSampler<unsigned long,unsigned long,TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs<unsigned long,unsigned long>
+                                                            const&  ki
+                    ) -> KernelSamplerResultsVect<unsigned long,unsigned long>;
+
+template
+auto KernelSampler<unsigned long,unsigned long,!TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<unsigned long,unsigned long>
                                                             const&  ki
@@ -500,7 +540,17 @@ auto KernelSampler<unsigned long,unsigned long>
 // DSIZE=unsigned long long:
 
 template
-auto KernelSampler<unsigned long long,unsigned long long>
+auto KernelSampler<unsigned long long,unsigned long long,TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs       < unsigned long long
+                                                , unsigned long long
+                                                >           const&  ki
+                    ) -> KernelSamplerResultsVect   < unsigned long long
+                                                    , unsigned long long
+                                                    >;
+
+template
+auto KernelSampler<unsigned long long,unsigned long long,!TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs       < unsigned long long
                                                 , unsigned long long
@@ -513,20 +563,40 @@ auto KernelSampler<unsigned long long,unsigned long long>
 // DSIZE=float:
 
 template
-auto KernelSampler<float,short>
+auto KernelSampler<float,short,TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<float,short>      const&  ki
                     ) -> KernelSamplerResultsVect<float,short>;
 
 template
-auto KernelSampler<float,unsigned short>
+auto KernelSampler<float,short,!TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs<float,short>      const&  ki
+                    ) -> KernelSamplerResultsVect<float,short>;
+
+template
+auto KernelSampler<float,unsigned short,TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<float,unsigned short>
                                                             const&  ki
                     ) -> KernelSamplerResultsVect<float,unsigned short>;
-                    
+
 template
-auto KernelSampler<float,unsigned int>
+auto KernelSampler<float,unsigned short,!TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs<float,unsigned short>
+                                                            const&  ki
+                    ) -> KernelSamplerResultsVect<float,unsigned short>;
+
+template
+auto KernelSampler<float,unsigned int,TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs<float,unsigned int>
+                                                            const&  ki
+                    ) -> KernelSamplerResultsVect<float,unsigned int>;
+
+template
+auto KernelSampler<float,unsigned int,!TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<float,unsigned int>
                                                             const&  ki
@@ -534,23 +604,44 @@ auto KernelSampler<float,unsigned int>
 
 #ifdef DSIZE_ALL_ISIZE_ALL
 // DSIZE=double:
-            
+
 template
-auto KernelSampler<double,unsigned int>
+auto KernelSampler<double,unsigned int,TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<double,unsigned int>
                                                             const&  ki
                     ) -> KernelSamplerResultsVect<double,unsigned int>;
 
 template
-auto KernelSampler<double,unsigned long>
+auto KernelSampler<double,unsigned int,!TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs<double,unsigned int>
+                                                            const&  ki
+                    ) -> KernelSamplerResultsVect<double,unsigned int>;
+
+template
+auto KernelSampler<double,unsigned long,TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<double,unsigned long>
                                                             const&  ki
                     ) -> KernelSamplerResultsVect<double,unsigned long>;
 
 template
-auto KernelSampler<double,unsigned long long>
+auto KernelSampler<double,unsigned long,!TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs<double,unsigned long>
+                                                            const&  ki
+                    ) -> KernelSamplerResultsVect<double,unsigned long>;
+
+template
+auto KernelSampler<double,unsigned long long,TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs<double,unsigned long long>
+                                                            const&  ki
+                    ) -> KernelSamplerResultsVect<double,unsigned long long>;
+
+template
+auto KernelSampler<double,unsigned long long,!TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<double,unsigned long long>
                                                             const&  ki
@@ -559,14 +650,31 @@ auto KernelSampler<double,unsigned long long>
 // DSIZE=long double:
 
 template
-auto KernelSampler<long double,unsigned long>
+auto KernelSampler<long double,unsigned long,TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<long double,unsigned long>
                                                             const&  ki
                     ) -> KernelSamplerResultsVect<long double,unsigned long>;
 
 template
-auto KernelSampler<long double,unsigned long long>
+auto KernelSampler<long double,unsigned long,!TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs<long double,unsigned long>
+                                                            const&  ki
+                    ) -> KernelSamplerResultsVect<long double,unsigned long>;
+
+template
+auto KernelSampler<long double,unsigned long long,TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs       < long double
+                                                , unsigned long long
+                                                >           const&  ki
+                    ) -> KernelSamplerResultsVect   < long double
+                                                    , unsigned long long
+                                                    >;
+
+template
+auto KernelSampler<long double,unsigned long long,!TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs       < long double
                                                 , unsigned long long
@@ -580,7 +688,7 @@ char copyright_and_license_for_acpphint_kernelsamplers[]
 {
     "Context for this Copyright: acpphint_kernelsamplers\n"
     "\n"
-    "Copyright (c) 2015-2023 Mark Millard\n"
+    "Copyright (c) 2015-2024 Mark Millard\n"
     "Copyright (C) 1994 by Iowa State University Research Foundation, Inc.\n"
     "\n"
     "Note: Any acpphint*.{h,cpp} code  or makefile code\n"

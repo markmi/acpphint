@@ -2,7 +2,7 @@
 //  acpphint_kernels.cpp
 //  acpphint (a C++ variation on the old HINT benchmark)
 //
-//  Copyright (c) 2015-2023 Mark Millard
+//  Copyright (c) 2015-2024 Mark Millard
 //  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
 //
 //  Note: Any acpphint*.{h,cpp} code or makefile code
@@ -61,7 +61,7 @@ PrimaryKernelInputs<DSIZE,ISIZE>::PrimaryKernelInputs
 
     ISIZE scatter_unit= ISIZE_nproc*nchunk;
     DSIZE DSIZE_scatter_unit= scatter_unit;
-    
+
     if constexpr (std::is_floating_point<DSIZE>::value)
     {
         // Find the largest associative DSIZE whole number, dmax.
@@ -75,7 +75,7 @@ PrimaryKernelInputs<DSIZE,ISIZE>::PrimaryKernelInputs
             tm2=    tm2+tm2;
             tm1=    tm2+1;
         }
-        
+
         // Use a grid of dmax + 1 squares, but this might overflow,
         // so back off 1.
         // Indexing may later limit this to a smaller value.
@@ -91,7 +91,7 @@ PrimaryKernelInputs<DSIZE,ISIZE>::PrimaryKernelInputs
             else if (quot<mid)  high= mid;
             else                low= high= mid;
         }
-        
+
         initial_dx= std::trunc(high/DSIZE_scatter_unit);
         DSIZE p2{1u};
         while (2*p2<=initial_dx) p2*=2;
@@ -99,13 +99,13 @@ PrimaryKernelInputs<DSIZE,ISIZE>::PrimaryKernelInputs
         // initial_dx is now an integral power of 2.
         scx= initial_dx * DSIZE_scatter_unit;
         scy= high; // Can make rectangular grid cells.
-        
+
         dmax= (scy-1)*scx + (scx-1);
     }
     else // if constexpr (std::is_integral<DSIZE>::value)
     {
         dmax= std::numeric_limits<DSIZE>::max();
-        
+
         DSIZE low{1u};
         DSIZE high{dmax};
         while (1<high-low)
@@ -116,7 +116,7 @@ PrimaryKernelInputs<DSIZE,ISIZE>::PrimaryKernelInputs
             else if (quot<mid)  high= mid;
             else                low= high= mid;
         }
-        
+
         initial_dx= high/DSIZE_scatter_unit;
         DSIZE next_dx= initial_dx & (initial_dx-1); // remove least 1 bit
         while (next_dx!=0)
@@ -127,7 +127,7 @@ PrimaryKernelInputs<DSIZE,ISIZE>::PrimaryKernelInputs
         // initial_dx is now an integral power of 2.
         scx=  initial_dx*DSIZE_scatter_unit;
         scy=  high; // Can make rectangular grid cells.
-        
+
         dmax= (scy-1)*scx + (scx-1);
     }
 
@@ -144,10 +144,10 @@ PrimaryKernelInputs<DSIZE,ISIZE>::PrimaryKernelInputs
     if (imax<=std::numeric_limits<DSIZE>::max())
     {
         DSIZE DSIZE_imax= imax;
-            
+
         if (DSIZE_imax<=dmax)
         {
-            
+
             ISIZE low{1u};
             ISIZE high{imax};
             while (1<high-low)
@@ -158,7 +158,7 @@ PrimaryKernelInputs<DSIZE,ISIZE>::PrimaryKernelInputs
                 else if (quot<mid)  high= mid;
                 else                low= high= mid;
             }
-            
+
             ISIZE ISIZE_initial_dx= high/scatter_unit;
             ISIZE next_dx= ISIZE_initial_dx & (ISIZE_initial_dx-1); // drop a 1
             while (next_dx!=0)
@@ -170,7 +170,7 @@ PrimaryKernelInputs<DSIZE,ISIZE>::PrimaryKernelInputs
             // initial_dx is now an integral power of 2.
             scx= initial_dx * DSIZE_scatter_unit;
             scy= high; // Can make rectangular grid cells.
-            
+
             dmax= (scy-1)*scx + (scx-1);
         }
     }
@@ -191,12 +191,12 @@ auto Kernel ( HwConcurrencyCount                const   iproc
 
     DSIZE sh{0}; // Sum of areas, high bound
     DSIZE sl{0}; // Sum of areas, low bound
-    
+
     ISIZE const NCHUNK_ISIZE{NCHUNK<ISIZE>(ki.nproc)};
         // for 1==ki.nproc: 1==NCHUNK (not adjustable!)
 
     DSIZE const NCHUNK_DSIZE= NCHUNK_ISIZE;
-    
+
     ISIZE const mcnt_bnd= kv.rect.size() - NCHUNK_ISIZE;
                                                 // The original did the
                                                 // analogous subtraction in the
@@ -209,7 +209,7 @@ auto Kernel ( HwConcurrencyCount                const   iproc
     for (ISIZE nchnk{0u}; nchnk < NCHUNK_ISIZE; ++nchnk, ++DSIZE_nchnk)
     {
         auto& at_nchnk{kv.rect[nchnk]}; // .at(nchnk)
-        
+
         at_nchnk.dx=    ki.initial_dx;
         at_nchnk.xl=    ((ki.scx / NCHUNK_DSIZE) * DSIZE_iproc) / DSIZE_nproc
                             + ( DSIZE_nchnk
@@ -253,12 +253,12 @@ auto Kernel ( HwConcurrencyCount                const   iproc
         at_nchnk.ahi= (1u==ki.nproc)
                                 ? ki.dmax // like old serial HINT.
                                 : at_nchnk.flh * at_nchnk.dx;
-        
+
         at_nchnk.alo= at_nchnk.frl * at_nchnk.dx;
-        
+
         if (at_nchnk.ahi < at_nchnk.alo)
             throw std::runtime_error("at_nchnk's ahi<alo while processing");
-        
+
         {
             DSIZE const tm= at_nchnk.ahi - at_nchnk.alo;
 
@@ -275,16 +275,16 @@ auto Kernel ( HwConcurrencyCount                const   iproc
             kv.errs[i]= tm;     // .at(i)
             kv.ixes[i]= nchnk;  // .at(i)
         }
-        
+
         sh+= at_nchnk.ahi; // for 1u==nproc ahi is slight underestimate.
         sl+= at_nchnk.alo;
-        
+
         if (sh < sl)
             throw std::runtime_error("nchnk's sh<sl while processing");
     }
 
     ISIZE iq= NCHUNK_ISIZE-1; // last entry in queue.
-    
+
     KernelResults<DSIZE,ISIZE> kr{iq};
 
     ISIZE it{0u};
@@ -301,7 +301,7 @@ auto Kernel ( HwConcurrencyCount                const   iproc
         auto& at_ma{kv.rect[ma]};   // .at(ma)
         auto& at_io{kv.rect[io]};   // .at(io)
         auto& at_jo{kv.rect[jo]};   // .at(jo)
-        
+
         // .dx is required to be a integral (non-negative) power of 2.
         // So initial_dx needs to be set up that way, even when
         // nproc*NCHUNK (the scatter unit) is not such a power of 2.
@@ -310,21 +310,21 @@ auto Kernel ( HwConcurrencyCount                const   iproc
 
         if (std::trunc(at_io.dx) != at_io.dx)
             throw std::runtime_error( "std::trunc(at_io.dx) != at_io.dx");
-        
+
         if (std::trunc(at_jo.dx) != at_jo.dx)
             throw std::runtime_error( "std::trunc(at_jo.dx) != at_jo.dx");
 
         // Right child gets right boundary.
         at_jo.xr= at_ma.xr;
-        
+
         // New point in about the middle is shared by child subintervals
         at_io.xr= at_io.xl + at_io.dx;
         at_jo.xl= at_io.xr;
-        
+
         // Right child gets right f value upper and lower bounds
         at_jo.frl= at_ma.frl;
         at_jo.frh= at_ma.frh;
-        
+
         // Note that the left child simply inherits much of its info from ma.
 
         // This is the function evaluation.
@@ -342,7 +342,7 @@ auto Kernel ( HwConcurrencyCount                const   iproc
             at_jo.fll= at_io.frl;
             at_jo.flh= at_io.frh;
         }
-        
+
         {
             // Compute the left daughter error. Allow for DSIZE unsigned.
             DSIZE tmio{0u};
@@ -352,7 +352,7 @@ auto Kernel ( HwConcurrencyCount                const   iproc
                 tmio= (at_io.frh - at_io.fll) * (DSIZE_2 - at_io.dx);
             else
                 {} // tmio==0u
-                
+
             DSIZE const errio=      ( at_io.flh - at_io.frh
                                     + at_io.fll - at_io.frl
                                     )
@@ -367,7 +367,7 @@ auto Kernel ( HwConcurrencyCount                const   iproc
                 tmjo= (at_io.frh - at_io.fll) * (DSIZE_2 - at_jo.dx);
             else
                 {} // tmjo==0u
-                
+
             DSIZE const errjo=      ( at_jo.flh - at_jo.frh
                                     + at_jo.fll - at_jo.frl
                                     )
@@ -384,7 +384,7 @@ auto Kernel ( HwConcurrencyCount                const   iproc
             kv.errs[iq+jnc]= errjo; // .at(iq+jnc)
             kv.ixes[iq+jnc]= jo;    // .at(iq+jnc)
         }
-            
+
         kr.ixes_errs_maxiq= std::max    ( kr.ixes_errs_maxiq
                                         , static_cast<ISIZE>(iq+2)
                                         ); // acpphint memory tracking
@@ -408,7 +408,7 @@ auto Kernel ( HwConcurrencyCount                const   iproc
             sh-= tm;
             sh+= at_io.ahi + at_jo.ahi;
         }
-        
+
         if (sh < sl)
         {
             throw std::runtime_error("highbound<lowbound while processing");
@@ -618,7 +618,7 @@ char copyright_and_license_for_acpphint_kernels[]
 {
     "Context for this Copyright: acpphint_kernels\n"
     "\n"
-    "Copyright (c) 2015-2023 Mark Millard\n"
+    "Copyright (c) 2015-2024 Mark Millard\n"
     "Copyright (C) 1994 by Iowa State University Research Foundation, Inc.\n"
     "\n"
     "Note: Any acpphint*.{h,cpp} code  or makefile code\n"

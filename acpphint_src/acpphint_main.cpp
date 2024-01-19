@@ -2,7 +2,7 @@
 //  acpphint_main.cpp
 //  acpphint (a C++ variation on the old HINT benchmark)
 //
-//  Copyright (c) 2015-2023 Mark Millard
+//  Copyright (c) 2015-2024 Mark Millard
 //  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
 //
 //  Note: Any acpphint*.{h,cpp} code or makefile code
@@ -67,11 +67,11 @@
 #include <stdexcept>                  // for std::runtime_error
 #include <string>                     // for std::char_traits, std::allocator
 #include "acpphint_kernels.h"         // for PrimaryKernelInputs, KernelResults
-#include "acpphint_kernelsamplers.h"  // for KernelSampler
+#include "acpphint_kernelsamplers.h"  // for KernelSampler, (indirectly) dsize_all_isize_all
 #include "cpp_clockinfo.h"            // for HwConcurrencyCount, ClkInfo
 #include "sys_cpubinding.h"           // for ConcurrencyCountForInDomains
 
-template<typename DSIZE,typename ISIZE>
+template<typename DSIZE,typename ISIZE, bool want_parallel_thread_creation_time_included>
 static void report_samples  ( std::string                       const& filename
                             , ClkInfo                           const& clock_info
                             , PrimaryKernelInputs<DSIZE,ISIZE>  const& ki
@@ -79,9 +79,10 @@ static void report_samples  ( std::string                       const& filename
 {
     std::cout
         << "generating: " << filename << "\n" <<std::flush;
-        
-    auto const ks_result{KernelSampler(clock_info,ki)};
-    
+
+    auto const ks_result{KernelSampler<DSIZE,ISIZE,want_parallel_thread_creation_time_included>
+                             (clock_info,ki)};
+
     if (ks_result.empty())
     {
         std::cout
@@ -102,20 +103,20 @@ static void report_samples  ( std::string                       const& filename
         std::cout << ks_result.back().how_stopped_notes << std::flush;
 
         std::ofstream gnuplot_data(filename);
-        
+
         if (gnuplot_data.fail())
         {
         	throw std::runtime_error("unable to open: "+filename);
     	    return;
         }
-        
+
         std::cout
             << "writing:    " << filename << "\n" <<std::flush;
 
         gnuplot_data    << "# filename: " << filename << "\n"
                         << "# acpphint_main version: " ACPPHINT_VERS "\n"
                         << "\n" << std::flush;
-        
+
         for (auto const& ksr : ks_result)
         {
             if (0 == ksr.quips)
@@ -134,7 +135,7 @@ static void report_samples  ( std::string                       const& filename
                        * ksr.quips
                         << " "
                     << ksr.run_result.vectors_total_bytes << "\n";
-                
+
                 if  (   KernelResults<DSIZE,ISIZE>::EFlag::DISCRET
                      == ksr.run_result.kernel_result.eflag
                     )
@@ -204,7 +205,7 @@ static void report_varying_threading
 {
     std::string longer_filename_prefix
             {filename_prefix+"-"+DSIZE_text<DSIZE>+"-"+ISIZE_text<ISIZE>+"-"};
-            
+
     std::string filename    {  longer_filename_prefix
                              + "using_1_threads"
                              + filename_suffix
@@ -214,29 +215,35 @@ static void report_varying_threading
     { // Deliberately deal with single-thread first.
         PrimaryKernelInputs<DSIZE,ISIZE> const ki_serial(1u);
 
-        report_samples<DSIZE,ISIZE>(filename,clock_info,ki_serial);
+        report_samples<DSIZE,ISIZE,!TIME_PARALLEL_THREAD_CREATION_TOO>(filename,clock_info,ki_serial);
     }
 
     HwConcurrencyCount thread_count{ConcurrencyCountForInDomains()};
-    
+
     if (thread_count<1u) return;
-    
+
     HwConcurrencyCount min_threads{3u};
     if (0u!=min_requested_threads)
         min_threads= std::max(2u,min_requested_threads); // 1u already handled.
-    
+
     if (0u!=max_requested_threads)
         thread_count= max_requested_threads;
-    
+
     while (min_threads<=thread_count) {
+        PrimaryKernelInputs<DSIZE,ISIZE> ki_parallel(thread_count);
+
         filename=     longer_filename_prefix
                     + "using_"+std::to_string(thread_count)+"_threads"
                     + filename_suffix;
 
-        PrimaryKernelInputs<DSIZE,ISIZE> ki_parallel(thread_count);
+        report_samples<DSIZE,ISIZE,TIME_PARALLEL_THREAD_CREATION_TOO>(filename,clock_info,ki_parallel);
 
-        report_samples<DSIZE,ISIZE>(filename,clock_info,ki_parallel);
-    
+        filename=     longer_filename_prefix
+                    + "using_"+std::to_string(thread_count)+"_threads_creation_untimed"
+                    + filename_suffix;
+
+        report_samples<DSIZE,ISIZE,!TIME_PARALLEL_THREAD_CREATION_TOO>(filename,clock_info,ki_parallel);
+
         thread_count/= 2u; // No alternate policy for this.
     }
 }
@@ -255,12 +262,12 @@ try
         << argv[0u] << " . . .\n"
         << "acpphint_main version: " ACPPHINT_VERS "\n"
         << "\n" << std::flush;
-    
+
     if (1<argc && nullptr!=argv[1])
     {
         filename_suffix= argv[1]; // replaces ".txt"
     }
-    
+
     if (2<argc && nullptr!=argv[2] && '\0'!=*argv[2])
     {
         auto temp{std::strtoul(argv[2],nullptr,10)};
@@ -273,12 +280,12 @@ try
                 << "argv[2] could not be converted to positive thread count\n";
             return 1;
         }
-        
+
         min_requested_threads= temp;    // controls report_varying_threading
                                         // if argv[2] makes it positive.
         max_requested_threads= min_requested_threads; // default
     }
-    
+
     if (3<argc && nullptr!=argv[3] && '\0'!=*argv[3])
     {
         auto temp{std::strtoul(argv[3],nullptr,10)};
@@ -291,7 +298,7 @@ try
                 << "argv[3] could not be converted to positive thread count\n";
             return 1;
         }
-        
+
         max_requested_threads= temp;    // controls report_varying_threading
                                         // if argv[3] makes it positive.
 
@@ -311,49 +318,49 @@ try
     std::string const filename_prefix{argv[0]};
 
     ClkInfo clock_info{};
-    
+
     // Edit as needed to add more alternatives (or disable some):
-    
-#ifdef DSIZE_ALL_ISIZE_ALL
-    report_varying_threading<short,short>         (filename_prefix,clock_info);
-    report_varying_threading<short,unsigned short>(filename_prefix,clock_info);
-    
-    report_varying_threading<unsigned short,short>(filename_prefix,clock_info);
-    report_varying_threading<unsigned short,unsigned short>
+
+    if constexpr (dsize_all_isize_all) {
+        report_varying_threading<short,short>         (filename_prefix,clock_info);
+        report_varying_threading<short,unsigned short>(filename_prefix,clock_info);
+
+        report_varying_threading<unsigned short,short>(filename_prefix,clock_info);
+        report_varying_threading<unsigned short,unsigned short>
+                                                      (filename_prefix,clock_info);
+
+        report_varying_threading<float,short>         (filename_prefix,clock_info);
+        report_varying_threading<float,unsigned short>(filename_prefix,clock_info);
+        report_varying_threading<float,unsigned int>  (filename_prefix,clock_info);
+    }
+
+    if constexpr (ULONG_MAX == UINT_MAX || dsize_all_isize_all) {
+        report_varying_threading<unsigned int,unsigned int>
                                                   (filename_prefix,clock_info);
-                                                  
-    report_varying_threading<float,short>         (filename_prefix,clock_info);
-    report_varying_threading<float,unsigned short>(filename_prefix,clock_info);
-    report_varying_threading<float,unsigned int>  (filename_prefix,clock_info);
-#endif
-    
-#if ULONG_MAX == UINT_MAX || defined(DSIZE_ALL_ISIZE_ALL)
-    report_varying_threading<unsigned int,unsigned int>
-                                                  (filename_prefix,clock_info);
-#endif
-    
-#ifdef DSIZE_ALL_ISIZE_ALL
-    report_varying_threading<double,unsigned int> (filename_prefix,clock_info);
-    report_varying_threading<double,unsigned long>(filename_prefix,clock_info);
-    report_varying_threading<double,unsigned long long>
-                                                  (filename_prefix,clock_info);
-#endif
+    }
+
+    if constexpr (dsize_all_isize_all) {
+        report_varying_threading<double,unsigned int> (filename_prefix,clock_info);
+        report_varying_threading<double,unsigned long>(filename_prefix,clock_info);
+        report_varying_threading<double,unsigned long long>
+                                                      (filename_prefix,clock_info);
+    }
 
     // Always included
     report_varying_threading<unsigned long,unsigned long>
                                                   (filename_prefix,clock_info);
-    
-#if ULONG_MAX == ULLONG_MAX || defined(DSIZE_ALL_ISIZE_ALL)
-    report_varying_threading<unsigned long long,unsigned long long>
-                                                  (filename_prefix,clock_info);
-#endif
 
-#ifdef DSIZE_ALL_ISIZE_ALL
-    report_varying_threading<long double,unsigned long>
+    if constexpr (ULONG_MAX == ULLONG_MAX || dsize_all_isize_all) {
+        report_varying_threading<unsigned long long,unsigned long long>
                                                   (filename_prefix,clock_info);
-    report_varying_threading<long double,unsigned long long>
+    }
+
+    if constexpr (dsize_all_isize_all) {
+        report_varying_threading<long double,unsigned long>
                                                   (filename_prefix,clock_info);
-#endif
+        report_varying_threading<long double,unsigned long long>
+                                                  (filename_prefix,clock_info);
+    }
 }
 catch(std::exception& e)
 {
@@ -371,7 +378,7 @@ char copyright_and_license_for_acpphint_main[]
 {
     "Context for this Copyright: acpphint_main\n"
     "\n"
-    "Copyright (c) 2015-2023 Mark Millard\n"
+    "Copyright (c) 2015-2024 Mark Millard\n"
     "Copyright (C) 1994 by Iowa State University Research Foundation, Inc.\n"
     "\n"
     "Note: Any acpphint*.{h,cpp} code  or makefile code\n"

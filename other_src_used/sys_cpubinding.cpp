@@ -1,7 +1,7 @@
 //
 //  sys_cpubinding.cpp (c++20 currently)
 //
-//  Copyright (c) 2019-2023 Mark Millard
+//  Copyright (c) 2019-2024 Mark Millard
 //
 //  Permission to use, copy, modify, and distribute this software for any
 //  purpose with or without fee is hereby granted, provided that the above
@@ -52,7 +52,7 @@ struct sys_cpubinding
 
     unsigned int domain_count{0u};
     unsigned int concurrency_count_for_in_domains{0u}; // Matching c++ type
-    
+
     sys_cpubinding()
     {
         if (0 != cpuset(&cpusetid))
@@ -77,7 +77,7 @@ struct sys_cpubinding
         std::cout << "os PID (not NUMA domain) affinity #cpus: "
                   << std::to_string(CPU_COUNT(&cpu_set))
                   << "\n";
-        
+
         if  (0 != cpuset_getdomain  ( CPU_LEVEL_WHICH
                                     , CPU_WHICH_PID
                                     , id_t{-1} // current process
@@ -87,7 +87,7 @@ struct sys_cpubinding
                                     )
             )
             throw std::runtime_error("Failed to identify memory domains");
-        
+
         for (id_t d{0u}; d<DOMAINSET_SETSIZE; ++d)
         {
             if (DOMAINSET_ISSET(d,&dom_set))
@@ -108,7 +108,7 @@ struct sys_cpubinding
                 CPU_AND(&filtered_dcpu_set, &filtered_dcpu_set, &cpu_set);
 
                 unsigned int domain_concurrency_count= CPU_COUNT(&filtered_dcpu_set);
-                
+
                 if (0u == domain_concurrency_count) continue;
 
                 // Positive domain_concurrency_count . . .
@@ -144,7 +144,7 @@ struct sys_cpubinding
         if (concurrency_count_for_in_domains < 1u)
             concurrency_count_for_in_domains
                                         = std::thread::hardware_concurrency();
-                                            
+
         if (concurrency_count_for_in_domains < 1u)
             concurrency_count_for_in_domains= 1u;
 
@@ -161,13 +161,13 @@ struct sys_cpubinding
                 domain_num= (domain_num+1u)%domain_count;
                 cpu_ffs=    CPU_FFS(&domain_info[domain_num].cpu_set);
             }
-            
+
             unsigned int const cpu_id= cpu_ffs-1u;
             CPU_CLR(cpu_id,&domain_info[domain_num].cpu_set);
 
             cpuset_t cpu_as_set{};
             CPU_SETOF(cpu_id,&cpu_as_set);
-            
+
             singleton_sets.emplace_back
                             ( cpu_and_domain_sets
                                 {cpu_as_set,domain_info[domain_num].domain_set}
@@ -252,7 +252,7 @@ struct sys_cpubinding
     std::vector<cpuset_t*> singleton_sets{}; // Indexed by cpu_num.
 
     unsigned int concurrency_count{0u}; // Matching c++ type
-    
+
     sys_cpubinding()
     {
         if (!cpu_set)
@@ -292,13 +292,13 @@ struct sys_cpubinding
 
             if      (-1 == cpu_status) break;
             else if ( 0 == cpu_status) continue;
-            
+
             cpuset_t* cpu_as_set{cpuset_create()};
             if (!cpu_as_set)
                 throw std::runtime_error("cpuset_create failed.");
 
             cpuset_set(cpu_id, cpu_as_set);
-            
+
             singleton_sets.emplace_back(cpu_as_set);
 
             std::cout << "Program's cpu_num: "
@@ -405,7 +405,7 @@ char copyright_and_license_for_sys_cpubinding[]
 {
     "Context for this Copyright: sys_cpubinding\n"
     "\n"
-    "Copyright (c) 2019-2023 Mark Millard\n"
+    "Copyright (c) 2019-2024 Mark Millard\n"
     "\n"
     "Permission to use, copy, modify, and distribute this software for any\n"
     "purpose with or without fee is hereby granted, provided that the above\n"

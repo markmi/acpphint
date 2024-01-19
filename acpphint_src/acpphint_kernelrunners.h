@@ -4,7 +4,7 @@
 //
 //  Started by Mark Millard on 2015-04-28.
 //
-//  Copyright (c) 2015-2023 Mark Millard
+//  Copyright (c) 2015-2024 Mark Millard
 //  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
 //
 //  Note: Any acpphint*.{h,cpp} code or makefile code
@@ -50,6 +50,14 @@
 #include "acpphint_kernels.h"     // for KernelResults
 class ClkInfo;
 
+constexpr bool dsize_all_isize_all{
+#ifdef DSIZE_ALL_ISIZE_ALL
+                                      true
+#else
+                                      false
+#endif
+                                  };
+
 extern 
 #if 201611L <= __cpp_lib_to_chars
 long
@@ -68,15 +76,15 @@ struct KernelRunnerResults
 
     SecFloatingForm             total_sec_for_laps_for_median{};
     SecFloatingForm             median_mean_sec_per_lap{};
-    
+
     std::size_t                 vectors_total_bytes{};
-    
+
     KernelRunnerResults (typename KernelResults<DSIZE,ISIZE>::EFlag eflag)
                         : kernel_result{eflag}
     {} // Likely NOMEM up front problem.
-    
+
     KernelRunnerResults() {}
-    
+
     KernelRunnerResults ( KernelResults<DSIZE,ISIZE> const& kr
                         , SecFloatingForm                   total_duration
                         , SecFloatingForm                   mean_duration
@@ -99,7 +107,9 @@ using LapsCount = int;  // Deliberately signed for allowing signed/signed
                         // int for minimizing overhead while still having a
                         // large range of non-negative values.
 
-template<typename DSIZE, typename ISIZE>
+constexpr bool TIME_PARALLEL_THREAD_CREATION_TOO{true}; // Also avoid later join and such.
+
+template<typename DSIZE, typename ISIZE, bool want_parallel_thread_creation_time_included>
 auto KernelRunner   ( ClkInfo                           const&  clock_info
                     , LapsCount                         const   laps
                     , ISIZE                             const   memry

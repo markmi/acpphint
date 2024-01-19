@@ -1,7 +1,7 @@
 //
 //  cpp_thousandslocale.cpp (c++20 currently)
 //
-//  Copyright (c) 2019-2021 Mark Millard
+//  Copyright (c) 2019-2024 Mark Millard
 //
 //  Permission to use, copy, modify, and distribute this software for any
 //  purpose with or without fee is hereby granted, provided that the above
@@ -51,7 +51,7 @@ namespace
 
 auto CppThousandsLocale() -> std::locale
 {
-    
+
     static std::locale const cpp_locale{std::locale(), new cpp_numpunct<char>{}};
     return cpp_locale;
 }
@@ -60,7 +60,7 @@ char copyright_and_license_for_cpp_thousandslocale[]
 {
     "Context for this Copyright: cpp_thousandslocale\n"
     "\n"
-    "Copyright (c) 2019-2021 Mark Millard\n"
+    "Copyright (c) 2019-2024 Mark Millard\n"
     "\n"
     "Permission to use, copy, modify, and distribute this software for any\n"
     "purpose with or without fee is hereby granted, provided that the above\n"

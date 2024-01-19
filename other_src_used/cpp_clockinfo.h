@@ -1,7 +1,7 @@
 //
 //  cpp_clockinfo.h (c++20 currently)
 //
-//  Copyright (c) 2019-2021 Mark Millard
+//  Copyright (c) 2019-2024 Mark Millard
 //
 //  Permission to use, copy, modify, and distribute this software for any
 //  purpose with or without fee is hereby granted, provided that the above
@@ -55,49 +55,49 @@ public:
 
     explicit ClkInfo(DurationsStatus status= DurationsStatus::Forget);
                     // Can throw runtime_error bad_alloc system_error . . .?
-    
+
     ~ClkInfo()                                  = default;
-    
+
     ClkInfo(ClkInfo const&)                     = delete;
     ClkInfo(ClkInfo&&)                          = default;
-    
+
     auto operator=(ClkInfo const&) -> ClkInfo&  = delete;
     auto operator=(ClkInfo&&)      -> ClkInfo&  = delete;
 
 
     using UsedClk   = SteadyClk; // Edit as needed.
-    
-        
+
+
     auto Now() const -> auto { return UsedClk::now(); }
 
-    
+
     using Duration  = typename UsedClk::duration;
-    
+
     auto ZeroDurationObserved() const -> bool
                             { return zero_duration_observed; }
     // If observed, such zeros are avoided by spinning.
-    
+
     auto DurationOverhead() const -> Duration
                             { return duration_overhead; }
     // Zero only if ZeroDurationObserved(), otherwise positive.
-                            
+
     auto TargetApproxMinDuration() const -> Duration
                             { return target_approx_min_duration; }
 
     // Other information for the curious:
-    
+
     auto SmallScaleDurationVariability() const -> Duration
                             { return small_scale_duration_variability; }
-                            
+
     auto LargestDuration() const -> Duration
                             { return largest_duration; }
 
     using Durations         = std::vector<Duration>;
     using DurationsCount    = typename Durations::size_type;
-                            
+
     auto NumDurationsSampled() const -> DurationsCount
                             { return num_durations_sampled; }
-                            
+
     void Merge(const ClkInfo& OtherClkInfoExample);
         // Merge is partial:
         // Effectively changes the status to DurationsStatus::Forget.
@@ -108,11 +108,11 @@ public:
                             { return observed_durations; }
                             // Empty unless DurationsStatus::Keep was used
                             // and there was no Merge use.
-                            
+
     static auto constexpr IsSteady{UsedClk::is_steady};
-    
+
     static auto nsFormatted(Duration const& d) -> std::string;
-                           
+
 private:
     Durations observed_durations;
 
@@ -124,7 +124,7 @@ private:
     Duration target_approx_min_duration;
 
     Duration largest_duration;
-    
+
     DurationsCount num_durations_sampled;
 
     // Edit as needed, the 4 following:

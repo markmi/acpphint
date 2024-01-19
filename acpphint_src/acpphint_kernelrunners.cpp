@@ -1,7 +1,7 @@
 //  acpphint_kernelrunners.cpp
 //  acpphint (a C++ variation on the old HINT benchmark)
 //
-//  Copyright (c) 2015-2023 Mark Millard
+//  Copyright (c) 2015-2024 Mark Millard
 //  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
 //
 //  Note: Any acpphint*.{h,cpp} code or makefile code
@@ -45,6 +45,8 @@
 #include <algorithm>              // for std::nth_element
 #include <climits>                // for ULONG_MAX, UINT_MAX, ULLONG_MAX
 #include <compare>                // for std::strong_ordering
+#include <latch>                  // for std::latch
+#include <barrier>                // for std::barrier
 #include <future>                 // for std::packaged_task, std::future
 #include <new>                    // for std::bad_alloc
 #include <stdexcept>              // for std::runtime_error
@@ -80,7 +82,7 @@ static auto serial_kernel_runner
     {
         throw std::runtime_error("SerialKernelRunner used for 1!=nproc");
     }
-    
+
     std::vector<KernelRunnerResults<DSIZE,ISIZE>>   krrs{};
 
     try
@@ -112,33 +114,31 @@ static auto serial_kernel_runner
             {[&clock_info,laps,&ki,&kvs,&krrs]()
                     {
                         RestrictThreadToCpu(0u,1u); // if built for such
-                        
+
                         for ( auto trials_left{NTRIAL<DSIZE,ISIZE>}
                             ; 0u<trials_left
                             ; --trials_left
                             )
                         {
                             auto const start{clock_info.Now()};
-                
+
                             auto result{Kernel(0u, ki, kvs)};   // 0u for iproc
                             for ( auto lap_count_down{laps}
                                 ; 1<lap_count_down
                                 ; --lap_count_down
                                 )
                                 result= Kernel(0u, ki, kvs);    // 0u for iproc
-                
-                            auto const finish{clock_info.Now()};
-                
-                            auto const measured_laps_duration{finish-start};
+
+                            auto const measured_laps_duration{clock_info.Now()-start};
                             auto const measurement_overhead
                                             {clock_info.DurationOverhead()};
-                
+
                             if  (measured_laps_duration<measurement_overhead)
                                 throw std::runtime_error
                                             ( "measured duration less than "
                                               "previously-measured overhead"
                                             );
-                
+
                             auto const laps_duration
                                         {  measured_laps_duration
                                          - measurement_overhead
@@ -149,7 +149,7 @@ static auto serial_kernel_runner
                                              ::SecFloatingForm(laps_duration)
                                          / laps
                                         };
-                
+
                             krrs.emplace_back   ( result
                                                 , laps_duration
                                                 , sec_per_lap
@@ -173,7 +173,7 @@ static auto serial_kernel_runner
     return krrs;
 } // SerialKernelRunner
 
-template<typename DSIZE, typename ISIZE>
+template<typename DSIZE, typename ISIZE, bool want_thread_creation_time_included>
 static auto parallel_kernel_runner
                         ( ClkInfo                           const&  clock_info
                         , LapsCount                         const   laps
@@ -185,13 +185,13 @@ static auto parallel_kernel_runner
     {
         throw std::runtime_error("ParallelKernelRunner used for nproc<1");
     }
-    
+
     std::vector<KernelRunnerResults<DSIZE,ISIZE>>   krrs{};
 
     try
     {
         std::vector<KernelVectors<DSIZE,ISIZE>>     threads_kvs{};
-    
+
         for (HwConcurrencyCount thread{0u}; thread<ki.nproc; ++thread)
         {
             // Possibly distribute allocations over the potential NUMA memory domains:
@@ -213,17 +213,6 @@ static auto parallel_kernel_runner
         krrs.reserve(NTRIAL<DSIZE,ISIZE>);
 
         // bad_alloc not expected after the KernelVectors constructions.
-    
-        auto parallel_code
-            {[&ki,&threads_kvs](HwConcurrencyCount thread)
-                {
-                    RestrictThreadToCpu(thread,ki.nproc); // if built for such
-                    return Kernel<DSIZE,ISIZE>( thread
-                                              , ki
-                                              , threads_kvs[thread]
-                                              );
-                }
-            };
 
         std::vector<std::future<KernelResults<DSIZE,ISIZE>>> parallel_tasks_future{};
         parallel_tasks_future.reserve(ki.nproc);
@@ -231,20 +220,43 @@ static auto parallel_kernel_runner
         std::vector<std::thread> parallel_tasks_thread{};
         // Use std::jthread when clang allows it.
         parallel_tasks_thread.reserve(ki.nproc);
-        
+
         for ( auto trials_left{NTRIAL<DSIZE,ISIZE>} // 0u<NTRIAL required.
             ; 0u<trials_left
             ; --trials_left
             )
         {
-            auto const start{clock_info.Now()};
-    
+            auto start{clock_info.Now()}; // Replaced if thread startup is to be untimed.
+
+            auto replace_start_at_barrier_completion = [&start,&clock_info]() noexcept
+            {
+                start= clock_info.Now();
+            };
+            std::barrier sync_then_set_start(ki.nproc,replace_start_at_barrier_completion);
+
+            auto measured_laps_duration{start-start}; // zero of right type.
+
             KernelResults<DSIZE,ISIZE> result{};
             for ( auto lap_count_down{laps}
                 ; 0<lap_count_down
                 ; --lap_count_down
                 )
             {
+                auto parallel_code
+                    {[&ki,&threads_kvs,&sync_then_set_start](HwConcurrencyCount thread)
+                        {
+                            RestrictThreadToCpu(thread,ki.nproc); // if built for such
+
+                            if (!want_thread_creation_time_included)
+                                sync_then_set_start.arrive_and_wait();
+
+                            return Kernel<DSIZE,ISIZE>( thread
+                                              , ki
+                                              , threads_kvs[thread]
+                                              );
+                        }
+                    };
+
                 for(auto threads_left{ki.nproc}; 0u<threads_left; --threads_left)
                 {
                     std::packaged_task parallel_task{parallel_code};
@@ -254,45 +266,48 @@ static auto parallel_kernel_runner
                     parallel_tasks_thread.emplace_back(std::move(parallel_task),ki.nproc-threads_left);
                 }
                 KernelResults<DSIZE,ISIZE> lap_result{};
-    
+
                 for(auto& thread_result : parallel_tasks_future)
                 {
                     lap_result.Merge(thread_result.get());
                 }
 
+                result= lap_result; // Using the last lap's result
+
+                if constexpr (!want_thread_creation_time_included)
+                    measured_laps_duration+= clock_info.Now()-start;
+
                 for(auto& thread : parallel_tasks_thread)
                 {
                     thread.join();
                 }
-                
-                result= lap_result; // Using the last lap's result
 
                 parallel_tasks_thread.clear();
                 parallel_tasks_future.clear();
             }
-        
-            auto const finish{clock_info.Now()};
-            
-            auto const measured_laps_duration{finish-start};
+
+            if constexpr (want_thread_creation_time_included)
+                measured_laps_duration+= clock_info.Now()-start;
+
             auto const measurement_overhead{clock_info.DurationOverhead()};
-            
+
             if  (measured_laps_duration<measurement_overhead)
             {
                 throw std::runtime_error
                 ("measured duration less than previously-measured overhead");
             }
-            
+
             auto const laps_duration{measured_laps_duration-measurement_overhead};
             auto const sec_per_lap  {   typename KernelRunnerResults<DSIZE,ISIZE>
                                         ::SecFloatingForm(laps_duration) / laps
                                     };
-                                    
+
             std::size_t vectors_total_bytes{0u};
             for (auto const& kvs : threads_kvs)
             {
                 vectors_total_bytes+= kvs.VectorsTotalBytes();
             }
-        
+
             krrs.emplace_back   ( result
                                 , laps_duration
                                 , sec_per_lap
@@ -304,11 +319,11 @@ static auto parallel_kernel_runner
     {
         // Empty krrs indicates NOMEM.
     }
-    
+
     return krrs;
 }
 
-template<typename DSIZE, typename ISIZE>
+template<typename DSIZE, typename ISIZE, bool want_parallel_thread_creation_time_included>
 auto KernelRunner   ( ClkInfo                           const&  clock_info
                     , LapsCount                         const   laps
                     , ISIZE                             const   memry
@@ -319,28 +334,30 @@ auto KernelRunner   ( ClkInfo                           const&  clock_info
         ( 0x1u == (NTRIAL<DSIZE,ISIZE>&0x1u)
         , "NTRIAL not odd (so no exact median position after sorting)"
         );
-    
+
     if (laps<=0)
     {
         throw std::runtime_error("laps was not positive");
     }
-    
+
     if (memry<2)
     {
         throw std::runtime_error("memry<2");
     }
 
     std::vector<KernelRunnerResults<DSIZE,ISIZE>> krrs{};
-    
+
     if (1u==ki.nproc)
     {
+        // Implicitly/always want_thread_creation_time_included==false :
         krrs= serial_kernel_runner<DSIZE,ISIZE>(clock_info,laps,memry,ki);
     }
     else
     {
-        krrs= parallel_kernel_runner<DSIZE,ISIZE>(clock_info,laps,memry,ki);
+        krrs= parallel_kernel_runner<DSIZE,ISIZE,want_parallel_thread_creation_time_included>
+                  (clock_info,laps,memry,ki);
     }
-    
+
     if (krrs.empty()) // Upfront NOMEM problem.
     {
         return KernelRunnerResults<DSIZE,ISIZE>
@@ -356,19 +373,19 @@ auto KernelRunner   ( ClkInfo                           const&  clock_info
                                 < right.median_mean_sec_per_lap;
                         }
                     );
-    
+
     if  ( median_duration_pos->kernel_result.result_bounds.HI
         <= median_duration_pos->kernel_result.result_bounds.LO
         )
     {
         throw std::runtime_error("result_bounds.HI <= result_bounds.LO");
     }
-                    
+
     auto approx_answer_on_LO_HI_scale
                                 {(approx_answer_floating_form*ki.scx)*ki.scy};
             // Unsure if this under or over estimates relative to higher
             // accuracy.
-    
+
     // Crude check on the result's LO
     if  ( 1.001L*approx_answer_on_LO_HI_scale
         < median_duration_pos->kernel_result.result_bounds.LO
@@ -376,7 +393,7 @@ auto KernelRunner   ( ClkInfo                           const&  clock_info
     {
         throw std::runtime_error("result_bounds.LO appearently to large");
     }
-     
+
     // Crude check on the result's HI
     if  ( median_duration_pos->kernel_result.result_bounds.HI
         < 0.999L*approx_answer_on_LO_HI_scale
@@ -384,7 +401,7 @@ auto KernelRunner   ( ClkInfo                           const&  clock_info
     {
         throw std::runtime_error("result_bounds.HI appearently to small");
     }
-   
+
     return *median_duration_pos;
 }
 
@@ -394,7 +411,7 @@ auto KernelRunner   ( ClkInfo                           const&  clock_info
 // DSIZE=short:
 
 template
-auto KernelRunner<short,short>
+auto KernelRunner<short,short,TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , LapsCount                             const   laps
                     , short                                 const   memry
@@ -402,7 +419,24 @@ auto KernelRunner<short,short>
                     ) -> KernelRunnerResults<short,short>;
 
 template
-auto KernelRunner<short,unsigned short>
+auto KernelRunner<short,short,!TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , LapsCount                             const   laps
+                    , short                                 const   memry
+                    , PrimaryKernelInputs<short,short>      const   ki
+                    ) -> KernelRunnerResults<short,short>;
+
+template
+auto KernelRunner<short,unsigned short,TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , LapsCount                             const   laps
+                    , unsigned short                        const   memry
+                    , PrimaryKernelInputs<short,unsigned short>
+                                                            const   ki
+                    ) -> KernelRunnerResults<short,unsigned short>;
+
+template
+auto KernelRunner<short,unsigned short,!TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , LapsCount                             const   laps
                     , unsigned short                        const   memry
@@ -413,7 +447,7 @@ auto KernelRunner<short,unsigned short>
 // DSIZE=unsigned short:
 
 template
-auto KernelRunner<unsigned short,short>
+auto KernelRunner<unsigned short,short,TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , LapsCount                             const   laps
                     , short                                 const   memry
@@ -422,7 +456,25 @@ auto KernelRunner<unsigned short,short>
                     ) -> KernelRunnerResults<unsigned short,short>;
 
 template
-auto KernelRunner<unsigned short,unsigned short>
+auto KernelRunner<unsigned short,short,!TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , LapsCount                             const   laps
+                    , short                                 const   memry
+                    , PrimaryKernelInputs<unsigned short,short>
+                                                            const   ki
+                    ) -> KernelRunnerResults<unsigned short,short>;
+
+template
+auto KernelRunner<unsigned short,unsigned short,TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , LapsCount                             const   laps
+                    , unsigned short                        const   memry
+                    , PrimaryKernelInputs<unsigned short,unsigned short>
+                                                            const   ki
+                    ) -> KernelRunnerResults<unsigned short,unsigned short>;
+
+template
+auto KernelRunner<unsigned short,unsigned short,!TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , LapsCount                             const   laps
                     , unsigned short                        const   memry
@@ -434,7 +486,16 @@ auto KernelRunner<unsigned short,unsigned short>
 // DSIZE=unsigned int:
 
 template
-auto KernelRunner<unsigned int,unsigned int>
+auto KernelRunner<unsigned int,unsigned int,TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , LapsCount                             const   laps
+                    , unsigned int                          const   memry
+                    , PrimaryKernelInputs<unsigned int,unsigned int>
+                                                            const   ki
+                    ) -> KernelRunnerResults<unsigned int,unsigned int>;
+
+template
+auto KernelRunner<unsigned int,unsigned int,!TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , LapsCount                             const   laps
                     , unsigned int                          const   memry
@@ -446,7 +507,16 @@ auto KernelRunner<unsigned int,unsigned int>
 // DSIZE=unsigned long: // Always included
 
 template
-auto KernelRunner<unsigned long,unsigned long>
+auto KernelRunner<unsigned long,unsigned long,TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , LapsCount                             const   laps
+                    , unsigned long                         const   memry
+                    , PrimaryKernelInputs<unsigned long,unsigned long>
+                                                            const   ki
+                    ) -> KernelRunnerResults<unsigned long,unsigned long>;
+
+template
+auto KernelRunner<unsigned long,unsigned long,!TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , LapsCount                             const   laps
                     , unsigned long                         const   memry
@@ -455,10 +525,22 @@ auto KernelRunner<unsigned long,unsigned long>
                     ) -> KernelRunnerResults<unsigned long,unsigned long>;
 
 #if ULONG_MAX == ULLONG_MAX || defined(DSIZE_ALL_ISIZE_ALL)
-// DSIZE=unsigned long long:
+// DSIZE=unsigned long long:      
 
-template
-auto KernelRunner<unsigned long long,unsigned long long>
+template 
+auto KernelRunner<unsigned long long,unsigned long long,TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , LapsCount                             const   laps
+                    , unsigned long long                    const   memry
+                    , PrimaryKernelInputs   < unsigned long long
+                                            , unsigned long long
+                                            >               const   ki
+                    ) -> KernelRunnerResults< unsigned long long
+                                            , unsigned long long
+                                            >;
+
+template 
+auto KernelRunner<unsigned long long,unsigned long long,!TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , LapsCount                             const   laps
                     , unsigned long long                    const   memry
@@ -473,7 +555,7 @@ auto KernelRunner<unsigned long long,unsigned long long>
 // DSIZE=float:
 
 template
-auto KernelRunner<float,short>
+auto KernelRunner<float,short,TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , LapsCount                             const   laps
                     , short                                 const   memry
@@ -481,7 +563,15 @@ auto KernelRunner<float,short>
                     ) -> KernelRunnerResults<float,short>;
 
 template
-auto KernelRunner<float,unsigned short>
+auto KernelRunner<float,short,!TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , LapsCount                             const   laps
+                    , short                                 const   memry
+                    , PrimaryKernelInputs<float,short>      const   ki
+                    ) -> KernelRunnerResults<float,short>;
+
+template
+auto KernelRunner<float,unsigned short,TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , LapsCount                             const   laps
                     , unsigned short                        const   memry
@@ -490,7 +580,25 @@ auto KernelRunner<float,unsigned short>
                     ) -> KernelRunnerResults<float,unsigned short>;
 
 template
-auto KernelRunner<float,unsigned int>
+auto KernelRunner<float,unsigned short,!TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , LapsCount                             const   laps
+                    , unsigned short                        const   memry
+                    , PrimaryKernelInputs<float,unsigned short>
+                                                            const   ki
+                    ) -> KernelRunnerResults<float,unsigned short>;
+
+template
+auto KernelRunner<float,unsigned int,TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , LapsCount                             const   laps
+                    , unsigned int                          const   memry
+                    , PrimaryKernelInputs<float,unsigned int>
+                                                            const   ki
+                    ) -> KernelRunnerResults<float,unsigned int>;
+
+template
+auto KernelRunner<float,unsigned int,!TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , LapsCount                             const   laps
                     , unsigned int                          const   memry
@@ -500,9 +608,9 @@ auto KernelRunner<float,unsigned int>
 
 #ifdef DSIZE_ALL_ISIZE_ALL
 // DSIZE=double:
-            
+
 template
-auto KernelRunner<double,unsigned int>
+auto KernelRunner<double,unsigned int,TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , LapsCount                             const   laps
                     , unsigned int                          const   memry
@@ -511,7 +619,16 @@ auto KernelRunner<double,unsigned int>
                     ) -> KernelRunnerResults<double,unsigned int>;
 
 template
-auto KernelRunner<double,unsigned long>
+auto KernelRunner<double,unsigned int,!TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , LapsCount                             const   laps
+                    , unsigned int                          const   memry
+                    , PrimaryKernelInputs<double,unsigned int>
+                                                            const   ki
+                    ) -> KernelRunnerResults<double,unsigned int>;
+
+template
+auto KernelRunner<double,unsigned long,TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , LapsCount                             const   laps
                     , unsigned long                         const   memry
@@ -520,7 +637,25 @@ auto KernelRunner<double,unsigned long>
                     ) -> KernelRunnerResults<double,unsigned long>;
 
 template
-auto KernelRunner<double,unsigned long long>
+auto KernelRunner<double,unsigned long,!TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , LapsCount                             const   laps
+                    , unsigned long                         const   memry
+                    , PrimaryKernelInputs<double,unsigned long>
+                                                            const   ki
+                    ) -> KernelRunnerResults<double,unsigned long>;
+
+template
+auto KernelRunner<double,unsigned long long,TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , LapsCount                             const   laps
+                    , unsigned long long                    const   memry
+                    , PrimaryKernelInputs<double,unsigned long long>
+                                                            const   ki
+                    ) -> KernelRunnerResults<double,unsigned long long>;
+
+template
+auto KernelRunner<double,unsigned long long,!TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , LapsCount                             const   laps
                     , unsigned long long                    const   memry
@@ -531,7 +666,7 @@ auto KernelRunner<double,unsigned long long>
 // DSIZE=long double:
 
 template
-auto KernelRunner<long double,unsigned long>
+auto KernelRunner<long double,unsigned long,TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , LapsCount                             const   laps
                     , unsigned long                         const   memry
@@ -540,7 +675,25 @@ auto KernelRunner<long double,unsigned long>
                     ) -> KernelRunnerResults<long double,unsigned long>;
 
 template
-auto KernelRunner<long double,unsigned long long>
+auto KernelRunner<long double,unsigned long,!TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , LapsCount                             const   laps
+                    , unsigned long                         const   memry
+                    , PrimaryKernelInputs<long double,unsigned long>
+                                                            const   ki
+                    ) -> KernelRunnerResults<long double,unsigned long>;
+
+template
+auto KernelRunner<long double,unsigned long long,TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , LapsCount                             const   laps
+                    , unsigned long long                    const   memry
+                    , PrimaryKernelInputs<long double,unsigned long long>
+                                                            const   ki
+                    ) -> KernelRunnerResults<long double,unsigned long long>;
+
+template
+auto KernelRunner<long double,unsigned long long,!TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , LapsCount                             const   laps
                     , unsigned long long                    const   memry
@@ -554,7 +707,7 @@ char copyright_and_license_for_acpphint_kernelrunners[]
 {
     "Context for this Copyright: acpphint_kernelrunners\n"
     "\n"
-    "Copyright (c) 2015-2023 Mark Millard\n"
+    "Copyright (c) 2015-2024 Mark Millard\n"
     "Copyright (C) 1994 by Iowa State University Research Foundation, Inc.\n"
     "\n"
     "Note: Any acpphint*.{h,cpp} code  or makefile code\n"

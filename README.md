@@ -85,6 +85,15 @@ examples.) That code's license in turn sets the overall license to also be GLPv2
 (no earlier, no later), despite OpenBSD-vintage-ISC licensed source in
 `other_src_used/` also being built and linked in.
 ##### Changelog . . .
+###### [0.1.38] 2024-Jan-03          . . . 202?-???-?? (final)
+Changes
+- Add based on timing of parallel threads only once they complete
+  a barrier and only until there is a result (not wating for join
+  and such). This allows getting an idea of the thread creation
+  and destruction overhead consequnces. Adds
+  \*_thread_creation_untimed\*.txt data files to what is generated,
+  an addition vs. the original \*_thread\*.txt named files.
+
 ###### [0.1.37] 2023-Dec-13/14       . . . 202?-???-?? (final)
 Additions
 - Add a \*.pg file for comparing/contrasting using 8 threads

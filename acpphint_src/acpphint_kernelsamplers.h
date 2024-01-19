@@ -2,7 +2,7 @@
 //  acpphint_kernelsamplers.h
 //  acpphint (a C++ variation on the old HINT benchmark)
 //
-//  Copyright (c) 2015-2023 Mark Millard
+//  Copyright (c) 2015-2024 Mark Millard
 //  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
 //
 //  Note: Any acpphint*.{h,cpp} code or makefile code
@@ -44,7 +44,7 @@
 
 #include <string>                    // for std::basic_string, std::string
 #include <vector>                    // for std::vector
-#include "acpphint_kernelrunners.h"  // for KernelRunnerResults
+#include "acpphint_kernelrunners.h"  // for KernelRunnerResults, TIME_PARALLEL_THREAD_CREATION_TOO
 class ClkInfo;
 template <typename DSIZE, typename ISIZE> struct PrimaryKernelInputs;
 
@@ -56,13 +56,13 @@ struct KernelSamplerResults
 
     // Note: quality improvement == run_result.median_mean_sec_per_lap*quips
     //       (up to floating point based approximations and such)
-    
+
     KernelRunnerResults<DSIZE,ISIZE>    run_result{};
 
     QualityImprovementPerSec            quips{};
-                    
+
     ISIZE                               n{}; // size count, not an index
-    
+
     std::string                         how_stopped_notes{};
 
         // Notes (working from the goal quips to what contributes and how) . . .
@@ -169,7 +169,7 @@ template<typename DSIZE, typename ISIZE>
 using KernelSamplerResultsVect // sorted by strictly increasing n
         = std::vector<KernelSamplerResults<DSIZE,ISIZE>>;
 
-template<typename DSIZE, typename ISIZE>
+template<typename DSIZE, typename ISIZE, bool want_parallel_thread_creation_time_included>
 auto KernelSampler  ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<DSIZE,ISIZE>      const&  ki
                     ) -> KernelSamplerResultsVect<DSIZE,ISIZE>;

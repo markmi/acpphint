@@ -2,7 +2,7 @@
 //  acpphint_kernels.h
 //  acpphint (a C++ variation on the old HINT benchmark)
 //
-//  Copyright (c) 2015-2023 Mark Millard
+//  Copyright (c) 2015-2024 Mark Millard
 //  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
 //
 //  Note: Any acpphint*.{h,cpp} code or makefile code
@@ -80,11 +80,11 @@ struct PrimaryKernelInputs
     DSIZE               dmax;   // == scx*scy - 1
                                             // helps avoid overflow
                                             // or other such issues.
-                                            
+
     DSIZE               initial_dx; // scx/NCHUNK(nproc)/nproc
 
     PrimaryKernelInputs() = delete;
-    
+
     PrimaryKernelInputs(HwConcurrencyCount const threads);
 }; // PrimaryKernelInputs
 
@@ -95,7 +95,7 @@ struct KernelVectors
     {
         // grid size == scx*scy == dmax+1 so scx*(scy-1)+(scx-1) == dmax.
         // Using dmax directly can help avoid overflow/truncation/rounding.
-    
+
         DSIZE   ahi, // Upper bound via rectangle areas for scx by scy breakdown
                 alo, // Lower bound via rectangle areas for scx by scy breakdown
                 dx,  // Interval widths, SEE NOTES BELOW.
@@ -105,7 +105,7 @@ struct KernelVectors
                 frl, // Function values of right coordinates, low
                 xl,  // Left  x-coordinates of subintervals
                 xr;  // Right x-coordinates of subintervals
-    
+
         // dx notes:
         //
         // The scatter decomposition starts with dx == scx/NCHUNK/nproc where
@@ -133,29 +133,29 @@ struct KernelVectors
         // (A "Real Number" name for the arbitrary-accuracy calculation
         // relationship is: 2*ln(2) - 1.)
     }; // RECT
-    
+
     using RECTVector = std::vector<RECT>;    
     using ErrsVector = std::vector<DSIZE>;
-    
+
     using IxesVector = std::vector<ISIZE>;
             // Holds indexes into rect and errs.
 
     RECTVector  rect;
     ErrsVector  errs;
     IxesVector  ixes; // indexes into rect and errs.
-    
+
     KernelVectors() = delete;
-    
+
     KernelVectors(ISIZE memry) : rect(memry), errs(memry*2), ixes(memry*2)
     {}
-    
+
     auto VectorsTotalBytes() const -> auto // Counts capacity overhead
     { return  sizeof(KernelVectors)
             + rect.size()*sizeof(RECT) 
             + errs.size()*sizeof(DSIZE) 
             + ixes.size()*sizeof(ISIZE);
     }
-                        
+
     static auto VectorsUsedBytes  
         ( std::size_t rect_used
         , std::size_t errs_ixes_used_each
@@ -210,13 +210,13 @@ struct KernelResults
     struct IntegrationResultBounds
     {
         // Taken from one of the trials . . .
-    
+
         // grid size == scx*scy == dmax+1 so scx*(scy-1)+(scx-1) == dmax.
         // Using dmax directly can help avoid overflow/truncation/rounding.
-    
+
         DSIZE HI;
         DSIZE LO;
-    
+
         // When the HI, LO pair is for "over all .dx intervals":
         //
         //      LO/(dmax+1) < 2*ln(2) - 1 < HI/(dmax+1)
@@ -240,7 +240,7 @@ struct KernelResults
     //
     // The original pthread HINT sources do not explicitly
     // track the above 2 memory usage items, or the below 2.
-    
+
     // The following are element counts,  not Bytes:
     std::size_t             RECT_total_used{};  // Memory use tracking
     std::size_t             ixes_errs_used_each{};  // Mem use tracking
@@ -260,19 +260,19 @@ struct KernelResults
     }
 
     KernelResults() {} // Used to start combining thread info: Use with Merge
-    
+
     void Merge(KernelResults const& chunk_results) // For combining thread info
     {
         result_bounds.HI+= chunk_results.result_bounds.HI;
         result_bounds.LO+= chunk_results.result_bounds.LO;
 
         eflag=              std::max(eflag,chunk_results.eflag);
-            
+
         RECT_maxjo=         std::max(RECT_maxjo,chunk_results.RECT_maxjo);
         ixes_errs_maxiq=    std::max( ixes_errs_maxiq
                                     , chunk_results.ixes_errs_maxiq
                                     );
-        
+
         RECT_total_used+=       chunk_results.RECT_total_used;
         ixes_errs_used_each+=   chunk_results.ixes_errs_used_each; 
     }

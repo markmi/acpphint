@@ -1,7 +1,7 @@
 #
 # acpphint's makefile.common_part (as of requiring c++20 or later)
 #
-#  Copyright (c) 2015-2023 Mark Millard
+#  Copyright (c) 2015-2024 Mark Millard
 #  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
 #
 #  Note: Any acpphint*.{h,cpp} code or makefile code
@@ -35,7 +35,7 @@
 # Edit ACPPHINT_VERS's definition to update the version number
 # that the 4 ACPPHINT_FILENAME_INFO related programs report on
 # their 2nd std::cout line.
-ACPPHINT_VERS=                  0.1.37
+ACPPHINT_VERS=                  0.1.38
 CPPCLOCKINFO_VERS=              acpphint_${ACPPHINT_VERS}
 ACPPHINTKERNELSURVEYORS_VERS=   ${ACPPHINT_VERS}
 ACPPHINTKERNELSAMPLERS_VERS=    ${ACPPHINT_VERS}
@@ -126,10 +126,10 @@ CPP_CLOCKINFO_HEADERS=              ${CPP_THOUSANDSLOCALE_HEADERS} \
                                     ../other_src_used/cpp_clockinfo.h
 
 SYS_CPUBINDING_HEADERS=            ../other_src_used/sys_cpubinding.h
-                                
+
 ACPPHINT_KERNELS_HEADERS=           ${CPP_CLOCKINFO_HEADERS} \
                                     acpphint_kernels.h
-                                
+
 ACPPHINT_KERNELRUNNERS_HEADERS=     ${ACPPHINT_KERNELS_HEADERS} \
                                     ${SYS_CPUBINDING_HEADERS} \
                                     acpphint_kernelrunners.h
@@ -139,7 +139,7 @@ ACPPHINT_KERNELSURVEYORS_HEADERS=   ${ACPPHINT_KERNELRUNNERS_HEADERS} \
 
 ACPPHINT_KERNELSAMPLERS_HEADERS=    ${ACPPHINT_SURVEYORS_HEADERS} \
                                     acpphint_kernelsamplers.h
-                                
+
 #
 # Objects usage . . .
 #
@@ -229,7 +229,7 @@ build-cpp_clockinfo_main: ../cpp_clockinfo_main-${ACPPHINT_FILENAME_INFO}
 	       -DACPPHINTKERNELSURVEYORS_VERS='"${ACPPHINTKERNELSURVEYORS_VERS}"' \
                        acpphint_kernelsurveyors_main.cpp
 	chmod a+x $@
-	
+
 # cpp_thousandslocale and cpp_clockinfo in ../objs/ covered earlier.
 
 ../objs/sys_cpubinding-${COMPILER_LIBRARY}${SUFFIX}.o: \
@@ -269,7 +269,7 @@ build-cpp_clockinfo_main: ../cpp_clockinfo_main-${ACPPHINT_FILENAME_INFO}
 	       -DACPPHINTKERNELSAMPLERS_VERS='"${ACPPHINTKERNELSAMPLERS_VERS}"' \
                        acpphint_kernelsamplers_main.cpp
 	chmod a+x $@
-	
+
 # cpp_thousandslocale, cpp_clockinfo, and sys_cpubinding covered earlier.
 # acpphint_kernels, acpphint_kernelrunners, and acpphint_kernelsurveyors
 # covered earlier.
@@ -309,7 +309,7 @@ build-cpp_clockinfo_main: ../cpp_clockinfo_main-${ACPPHINT_FILENAME_INFO}
 #
 clean:
 	${RM} ../objs/*.o ../*.dSYM
-	
+
 clean-programs:
 	${RM} ${INVESTIGATIVE_PROGRAMS} \
           ${ACPPHINT_BENCHMARK}

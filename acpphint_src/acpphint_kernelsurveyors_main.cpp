@@ -2,7 +2,7 @@
 //  acpphint_kernelsurveyors_main.cpp
 //  acpphint (a C++ variation on the old HINT benchmark)
 //
-//  Copyright (c) 2015-2023 Mark Millard
+//  Copyright (c) 2015-2024 Mark Millard
 //  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
 //
 //  Note: Any acpphint*.{h,cpp} code or makefile code
@@ -60,12 +60,13 @@
 #include <exception>                   // for std::exception
 #include <iostream>                    // for std::__1::operator<<, std::bas...
 #include "acpphint_kernels.h"          // for KernelResults, KernelVectors
-#include "acpphint_kernelsurveyors.h"  // for KernelSurveyor
+#include "acpphint_kernelsurveyors.h"  // for KernelSurveyor, (indirectly) dsize_all_isize_all,
+                                       // (indirectly) TIME_PARALLEL_THREAD_CREATION_TOO,
 #include "cpp_clockinfo.h"             // for ClkInfo, HwConcurrencyCount
 #include "cpp_thousandslocale.h"       // for CppThousandsLocale
 #include "sys_cpubinding.h"            // for ConcurrencyCountForInDomains
 
-template<typename DSIZE,typename ISIZE>
+template<typename DSIZE,typename ISIZE,bool want_parallel_thread_creation_time_included>
 static void report_survey(ClkInfo const& clock_info)
 {
     std::cout
@@ -73,7 +74,7 @@ static void report_survey(ClkInfo const& clock_info)
         << "\n" << std::flush;
 
     PrimaryKernelInputs<DSIZE,ISIZE> const ki_serial(1u);
-    
+
     std::cout
         << "nproc:      " << ki_serial.nproc << "\n"
         << "scx:        " << ki_serial.scx << "\n"
@@ -82,8 +83,10 @@ static void report_survey(ClkInfo const& clock_info)
         << "initial_dx: " << ki_serial.initial_dx << "\n"
         << "\n" << std::flush;
 
-    auto const ks_serial_result{KernelSurveyor(clock_info,ki_serial)};
-    
+    auto const ks_serial_result{KernelSurveyor<DSIZE,ISIZE,!TIME_PARALLEL_THREAD_CREATION_TOO>
+                                    (clock_info,ki_serial)
+                               };
+
     if  (   KernelResults<DSIZE,ISIZE>::EFlag::NOMEM
          == ks_serial_result.krr.kernel_result.eflag
         )
@@ -143,17 +146,17 @@ static void report_survey(ClkInfo const& clock_info)
     }
 
     HwConcurrencyCount const thread_count{ConcurrencyCountForInDomains()};
-    
+
     if (thread_count<2u) return;
-    
+
     // Edit as needed: thread_count for what to try.
-     
+
     std::cout
         << "threaded. . .\n"
         << "\n" << std::flush;
 
     PrimaryKernelInputs<DSIZE,ISIZE> ki_parallel(thread_count);
-   
+
     std::cout
         << "nproc:          " << ki_parallel.nproc << "\n"
         << "scx:            " << ki_parallel.scx << "\n"
@@ -170,7 +173,9 @@ static void report_survey(ClkInfo const& clock_info)
             << "\n"
         << "\n" << std::flush;
 
-    auto const ks_parallel_result{KernelSurveyor(clock_info,ki_parallel)};
+    auto const ks_parallel_result{KernelSurveyor<DSIZE,ISIZE,want_parallel_thread_creation_time_included>
+                                      (clock_info,ki_parallel)
+                                 };
 
     if  (   KernelResults<DSIZE,ISIZE>::EFlag::NOMEM
          == ks_parallel_result.krr.kernel_result.eflag
@@ -282,120 +287,120 @@ try
     ClkInfo clock_info{};
 
     // Edit as needed to add more alternatives (or disable some):
-    
-#ifdef DSIZE_ALL_ISIZE_ALL
-    std::cout
-        << "DSIZE=long double, ISIZE=unsigned long long:\n"
-        << "\n";
-    
-    report_survey<long double,unsigned long long>(clock_info);
-    
-    std::cout
-        << "DSIZE=long double, ISIZE=unsigned long:\n"
-        << "\n";
-    
-    report_survey<long double,unsigned long>(clock_info);
-#endif
 
- 
-#if ULONG_MAX == ULLONG_MAX || defined(DSIZE_ALL_ISIZE_ALL)
-    std::cout
-        << "DSIZE=unsigned long long, ISIZE=unsigned long long:\n"
-        << "\n";
-    
-    report_survey<unsigned long long,unsigned long long>(clock_info);
-#endif
+    if constexpr (dsize_all_isize_all) {
+        std::cout
+            << "DSIZE=long double, ISIZE=unsigned long long:\n"
+            << "\n";
+
+        report_survey<long double,unsigned long long,TIME_PARALLEL_THREAD_CREATION_TOO>(clock_info);
+
+        std::cout
+            << "DSIZE=long double, ISIZE=unsigned long:\n"
+            << "\n";
+
+        report_survey<long double,unsigned long,TIME_PARALLEL_THREAD_CREATION_TOO>(clock_info);
+    }
+
+
+    if constexpr (ULONG_MAX == ULLONG_MAX || dsize_all_isize_all) {
+        std::cout
+            << "DSIZE=unsigned long long, ISIZE=unsigned long long:\n"
+            << "\n";
+
+        report_survey<unsigned long long,unsigned long long,TIME_PARALLEL_THREAD_CREATION_TOO>(clock_info);
+    }
 
 
     // Always included
     std::cout
         << "DSIZE=unsigned long, ISIZE=unsigned long:\n"
         << "\n";
-    
-    report_survey<unsigned long,unsigned long>(clock_info);
+
+    report_survey<unsigned long,unsigned long,TIME_PARALLEL_THREAD_CREATION_TOO>(clock_info);
 
 
-#ifdef DSIZE_ALL_ISIZE_ALL
-    std::cout
-        << "DSIZE=double, ISIZE=unsigned long long:\n"
-        << "\n";
-    
-    report_survey<double,unsigned long long>(clock_info);
+    if constexpr (dsize_all_isize_all) {
+        std::cout
+            << "DSIZE=double, ISIZE=unsigned long long:\n"
+            << "\n";
+
+        report_survey<double,unsigned long long,TIME_PARALLEL_THREAD_CREATION_TOO>(clock_info);
 
 
-    std::cout
-        << "DSIZE=double, ISIZE=unsigned long:\n"
-        << "\n";
-    
-    report_survey<double,unsigned long>(clock_info);
+        std::cout
+            << "DSIZE=double, ISIZE=unsigned long:\n"
+            << "\n";
+
+        report_survey<double,unsigned long,TIME_PARALLEL_THREAD_CREATION_TOO>(clock_info);
 
 
-    std::cout
-        << "DSIZE=double, ISIZE=unsigned int:\n"
-        << "\n";
-    
-    report_survey<double,unsigned int>(clock_info);
-#endif
+        std::cout
+            << "DSIZE=double, ISIZE=unsigned int:\n"
+            << "\n";
+
+        report_survey<double,unsigned int,TIME_PARALLEL_THREAD_CREATION_TOO>(clock_info);
+    }
 
 
-#if ULONG_MAX == UINT_MAX || defined(DSIZE_ALL_ISIZE_ALL)
-    std::cout
-        << "DSIZE=unsigned int, ISIZE=unsigned int:\n"
-        << "\n";
-    
-    report_survey<unsigned int,unsigned int>(clock_info);
-#endif
+    if constexpr (ULONG_MAX == UINT_MAX || dsize_all_isize_all) {
+        std::cout
+            << "DSIZE=unsigned int, ISIZE=unsigned int:\n"
+            << "\n";
+
+        report_survey<unsigned int,unsigned int,TIME_PARALLEL_THREAD_CREATION_TOO>(clock_info);
+    }
 
 
-#ifdef DSIZE_ALL_ISIZE_ALL
-    std::cout
-        << "DSIZE=float, ISIZE=unsigned int:\n"
-        << "\n";
-    
-    report_survey<float,unsigned int>(clock_info);
+    if constexpr (dsize_all_isize_all) {
+        std::cout
+            << "DSIZE=float, ISIZE=unsigned int:\n"
+            << "\n";
+
+        report_survey<float,unsigned int,TIME_PARALLEL_THREAD_CREATION_TOO>(clock_info);
 
 
-    std::cout
-        << "DSIZE=float, ISIZE=unsigned short:\n"
-        << "\n";
-    
-    report_survey<float,unsigned short>(clock_info);
+        std::cout
+            << "DSIZE=float, ISIZE=unsigned short:\n"
+            << "\n";
+
+        report_survey<float,unsigned short,TIME_PARALLEL_THREAD_CREATION_TOO>(clock_info);
 
 
-    std::cout
-        << "DSIZE=float, ISIZE=short:\n"
-        << "\n";
-    
-    report_survey<float,short>(clock_info);
+        std::cout
+            << "DSIZE=float, ISIZE=short:\n"
+            << "\n";
+
+        report_survey<float,short,TIME_PARALLEL_THREAD_CREATION_TOO>(clock_info);
 
 
-    std::cout
-        << "DSIZE=unsigned short, ISIZE=unsigned short:\n"
-        << "\n";
-    
-    report_survey<unsigned short,unsigned short>(clock_info);
+        std::cout
+            << "DSIZE=unsigned short, ISIZE=unsigned short:\n"
+            << "\n";
+
+        report_survey<unsigned short,unsigned short,TIME_PARALLEL_THREAD_CREATION_TOO>(clock_info);
 
 
-    std::cout
-        << "DSIZE=unsigned short, ISIZE=short:\n"
-        << "\n";
-    
-    report_survey<unsigned short,short>(clock_info);
+        std::cout
+            << "DSIZE=unsigned short, ISIZE=short:\n"
+            << "\n";
+
+        report_survey<unsigned short,short,TIME_PARALLEL_THREAD_CREATION_TOO>(clock_info);
 
 
-    std::cout
-        << "DSIZE=short, ISIZE=unsigned short:\n"
-        << "\n";
-    
-    report_survey<short,unsigned short>(clock_info);
+        std::cout
+            << "DSIZE=short, ISIZE=unsigned short:\n"
+            << "\n";
+
+        report_survey<short,unsigned short,TIME_PARALLEL_THREAD_CREATION_TOO>(clock_info);
 
 
-    std::cout
-        << "DSIZE=short, ISIZE=short:\n"
-        << "\n";
-    
-    report_survey<short,short>(clock_info);
-#endif
+        std::cout
+            << "DSIZE=short, ISIZE=short:\n"
+            << "\n";
+
+        report_survey<short,short,TIME_PARALLEL_THREAD_CREATION_TOO>(clock_info);
+    }
 }
 catch(std::exception& e)
 {
@@ -413,7 +418,7 @@ char copyright_and_license_for_acpphint_kernelsurveyors_main[]
 {
     "Context for this Copyright: acpphint_kernelsurveyors_main\n"
     "\n"
-    "Copyright (c) 2015-2023 Mark Millard\n"
+    "Copyright (c) 2015-2024 Mark Millard\n"
     "Copyright (C) 1994 by Iowa State University Research Foundation, Inc.\n"
     "\n"
     "Note: Any acpphint*.{h,cpp} code  or makefile code\n"

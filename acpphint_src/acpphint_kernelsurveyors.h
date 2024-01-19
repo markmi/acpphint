@@ -2,7 +2,7 @@
 //  acpphint_kernelsurveyors.h
 //  acpphint (a C++ variation on the old HINT benchmark)
 //
-//  Copyright (c) 2015-2023 Mark Millard
+//  Copyright (c) 2015-2024 Mark Millard
 //  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
 //
 //  Note: Any acpphint*.{h,cpp} code or makefile code
@@ -42,7 +42,7 @@
 #ifndef acpphint_kernelsurveyors_guard
 #define acpphint_kernelsurveyors_guard
 
-#include "acpphint_kernelrunners.h"  // for KernelRunnerResults
+#include "acpphint_kernelrunners.h"  // for KernelRunnerResults, TIME_PARALLEL_THREAD_CREATION_TOO
 #include "acpphint_kernels.h"        // for NMIN
 class ClkInfo;
 
@@ -50,13 +50,13 @@ template<typename DSIZE, typename ISIZE>
 struct KernelSurveyorResults
 {
     ISIZE nscout;
-    
+
     KernelRunnerResults<DSIZE,ISIZE> krr;
             // krr.median_mean_sec_per_lap holds the closest thing
             // to what the original HINT benchmarks call tscout. The
             // detailed time measurement techniques are not the
             // same.
-            
+
     auto tscout() const -> auto { return krr.median_mean_sec_per_lap; };
             // Mostly here to provide name from original HINT variants.
 
@@ -66,7 +66,7 @@ struct KernelSurveyorResults
     {}
 }; // KernelSurveyorResults
 
-template<typename DSIZE, typename ISIZE>
+template<typename DSIZE, typename ISIZE, bool want_parallel_thread_creation_time_included>
 auto KernelSurveyor ( ClkInfo                           const&  clock_info
                     , PrimaryKernelInputs<DSIZE,ISIZE>  const&  ki
                     ) -> KernelSurveyorResults<DSIZE,ISIZE>;

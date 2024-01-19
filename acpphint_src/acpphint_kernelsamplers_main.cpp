@@ -2,7 +2,7 @@
 //  acpphint_kernelsamplers_main.cpp
 //  acpphint (a C++ variation on the old HINT benchmark)
 //
-//  Copyright (c) 2015-2023 Mark Millard
+//  Copyright (c) 2015-2024 Mark Millard
 //  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
 //
 //  Note: Any acpphint*.{h,cpp} code or makefile code
@@ -62,7 +62,7 @@
 #include <exception>                  // for std::exception
 #include <iostream>                   // for std::__1::operator<<, std::basi...
 #include "acpphint_kernels.h"         // for PrimaryKernelInputs
-#include "acpphint_kernelsamplers.h"  // for KernelSampler
+#include "acpphint_kernelsamplers.h"  // for KernelSampler, (indirectly) dsize_all_isize_all
 #include "cpp_clockinfo.h"            // for ClkInfo, HwConcurrencyCount
 #include "cpp_thousandslocale.h"      // for CppThousandsLocale
 #include "sys_cpubinding.h"           // for ConcurrencyCountForInDomains
@@ -75,7 +75,7 @@ static void report_sampler(ClkInfo const& clock_info)
         << "\n" << std::flush;
 
     PrimaryKernelInputs<DSIZE,ISIZE> const ki_serial(1u);
-    
+
     std::cout
         << "nproc:      " << ki_serial.nproc << "\n"
         << "scx:        " << ki_serial.scx << "\n"
@@ -84,8 +84,9 @@ static void report_sampler(ClkInfo const& clock_info)
         << "initial_dx: " << ki_serial.initial_dx << "\n"
         << "\n" << std::flush;
 
-    auto const ks_serial_result{KernelSampler(clock_info,ki_serial)};
-    
+    auto const ks_serial_result{KernelSampler<DSIZE,ISIZE,TIME_PARALLEL_THREAD_CREATION_TOO>
+                                    (clock_info,ki_serial)};
+
     for (auto const& ksr : ks_serial_result)
     {
         if (0 == ksr.quips)
@@ -114,18 +115,18 @@ static void report_sampler(ClkInfo const& clock_info)
             << ks_serial_result.back().how_stopped_notes << std::flush;
 
     HwConcurrencyCount thread_count{ConcurrencyCountForInDomains()};
-    
+
     if (thread_count<2u) return;
-    
+
     if (3u<thread_count) thread_count= 3u;
-     
+
     std::cout
         << "\n"
         << "threaded. . .\n"
         << "\n" << std::flush;
 
     PrimaryKernelInputs<DSIZE,ISIZE> ki_parallel(thread_count);
-   
+
     std::cout
         << "nproc:          " << ki_parallel.nproc << "\n"
         << "scx:            " << ki_parallel.scx << "\n"
@@ -142,7 +143,8 @@ static void report_sampler(ClkInfo const& clock_info)
             << "\n"
         << "\n" << std::flush;
 
-    auto const ks_parallel_result{KernelSampler(clock_info,ki_parallel)};
+    auto const ks_parallel_result{KernelSampler<DSIZE,ISIZE,TIME_PARALLEL_THREAD_CREATION_TOO>
+                                      (clock_info,ki_parallel)};
 
     for (auto const& ksr : ks_parallel_result)
     {
@@ -190,7 +192,7 @@ try
 
 
     std::cout.imbue(CppThousandsLocale());
-    
+
     std::cout
         << argv[0u] << " . . .\n"
         << "\n";
@@ -198,85 +200,84 @@ try
     ClkInfo clock_info{};
 
 // Edit as needed to add more alternatives (or disable some):
-#if 0
-#ifdef DSIZE_ALL_ISIZE_ALL
-    std::cout
-        << "\n"
-        << "DSIZE=long double, ISIZE=unsigned long long:\n"
-        << "\n";
-    
-    report_sampler<long double,unsigned long long>(clock_info);
-    
-    std::cout
-        << "\n"
-        << "DSIZE=long double, ISIZE=unsigned long:\n"
-        << "\n";
-    
-    report_sampler<long double,unsigned long>(clock_info);
+    if constexpr (false)
+        if constexpr (dsize_all_isize_all) {
+            std::cout
+                << "\n"
+                << "DSIZE=long double, ISIZE=unsigned long long:\n"
+                << "\n";
 
- 
-    std::cout
-        << "\n"
-        << "DSIZE=unsigned long long, ISIZE=unsigned long long:\n"
-        << "\n";
-    
-    report_sampler<unsigned long long,unsigned long long>(clock_info);
+            report_sampler<long double,unsigned long long>(clock_info);
+
+            std::cout
+                << "\n"
+                << "DSIZE=long double, ISIZE=unsigned long:\n"
+                << "\n";
+
+            report_sampler<long double,unsigned long>(clock_info);
 
 
-    std::cout
-        << "\n"
-        << "DSIZE=unsigned long, ISIZE=unsigned long:\n"
-        << "\n";
-    
-    report_sampler<unsigned long,unsigned long>(clock_info);
+            std::cout
+                << "\n"
+                << "DSIZE=unsigned long long, ISIZE=unsigned long long:\n"
+                << "\n";
+
+            report_sampler<unsigned long long,unsigned long long>(clock_info);
 
 
-    std::cout
-        << "\n"
-        << "DSIZE=double, ISIZE=unsigned long long:\n"
-        << "\n";
-    
-    report_sampler<double,unsigned long long>(clock_info);
+            std::cout
+                << "\n"
+                << "DSIZE=unsigned long, ISIZE=unsigned long:\n"
+                << "\n";
+
+            report_sampler<unsigned long,unsigned long>(clock_info);
 
 
-    std::cout
-        << "\n"
-        << "DSIZE=double, ISIZE=unsigned long:\n"
-        << "\n";
-    
-    report_sampler<double,unsigned long>(clock_info);
+            std::cout
+                << "\n"
+                << "DSIZE=double, ISIZE=unsigned long long:\n"
+                << "\n";
+
+            report_sampler<double,unsigned long long>(clock_info);
 
 
-    std::cout
-        << "\n"
-        << "DSIZE=double, ISIZE=unsigned int:\n"
-        << "\n";
-    
-    report_sampler<double,unsigned int>(clock_info);
+            std::cout
+                << "\n"
+                << "DSIZE=double, ISIZE=unsigned long:\n"
+                << "\n";
+
+            report_sampler<double,unsigned long>(clock_info);
 
 
-    std::cout
-        << "\n"
-        << "DSIZE=unsigned int, ISIZE=unsigned int:\n"
-        << "\n";
-    
-    report_sampler<unsigned int,unsigned int>(clock_info);
+            std::cout
+                << "\n"
+                << "DSIZE=double, ISIZE=unsigned int:\n"
+                << "\n";
+
+            report_sampler<double,unsigned int>(clock_info);
 
 
-    std::cout
-        << "\n"
-        << "DSIZE=float, ISIZE=unsigned int:\n"
-        << "\n";
-    
-    report_sampler<float,unsigned int>(clock_info);
-#endif
-#endif
- 
+            std::cout
+                << "\n"
+                << "DSIZE=unsigned int, ISIZE=unsigned int:\n"
+                << "\n";
+
+            report_sampler<unsigned int,unsigned int>(clock_info);
+
+
+            std::cout
+                << "\n"
+                << "DSIZE=float, ISIZE=unsigned int:\n"
+                << "\n";
+
+            report_sampler<float,unsigned int>(clock_info);
+        }
+
     std::cout
         << "\n"
         << "DSIZE=float, ISIZE=unsigned short:\n"
         << "\n";
-    
+
     report_sampler<float,unsigned short>(clock_info);
 
 
@@ -284,7 +285,7 @@ try
         << "\n"
         << "DSIZE=float, ISIZE=short:\n"
         << "\n";
-    
+
     report_sampler<float,short>(clock_info);
 
 
@@ -292,7 +293,7 @@ try
         << "\n"
         << "DSIZE=unsigned short, ISIZE=unsigned short:\n"
         << "\n";
-    
+
     report_sampler<unsigned short,unsigned short>(clock_info);
 
 
@@ -300,7 +301,7 @@ try
         << "\n"
         << "DSIZE=unsigned short, ISIZE=short:\n"
         << "\n";
-    
+
     report_sampler<unsigned short,short>(clock_info);
 
 
@@ -308,7 +309,7 @@ try
         << "\n"
         << "DSIZE=short, ISIZE=unsigned short:\n"
         << "\n";
-    
+
     report_sampler<short,unsigned short>(clock_info);
 
 
@@ -316,7 +317,7 @@ try
         << "\n"
         << "DSIZE=short, ISIZE=short:\n"
         << "\n";
-    
+
     report_sampler<short,short>(clock_info);
 }
 catch(std::exception& e)
@@ -335,7 +336,7 @@ char copyright_and_license_for_acpphintkernelsurveyors_main[]
 {
     "Context for this Copyright: acpphint_kernelsurveyors_main\n"
     "\n"
-    "Copyright (c) 2015-2023 Mark Millard\n"
+    "Copyright (c) 2015-2024 Mark Millard\n"
     "Copyright (C) 1994 by Iowa State University Research Foundation, Inc.\n"
     "\n"
     "Note: Any acpphint*.{h,cpp} code  or makefile code\n"
