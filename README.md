@@ -94,6 +94,14 @@ Changes
   \*_thread_creation_untimed\*.txt data files to what is generated,
   an addition vs. the original \*_thread\*.txt named files.
 
+- 2024-Jan-26: adjust a \*.gp file's details.
+
+Additions (2024-Jan-26)
+- Add 2 RPi5 FreeBSD makefile.\* 's. Add the RPi5-FBSD/ example
+  data directory and the contained prelimiary cpulockdown \*.txt
+  files. Add 2 \*.gp files that involve use of the RPi5 \*.txt
+  files.
+
 ###### [0.1.37] 2023-Dec-13/14       . . . 202?-???-?? (final)
 Additions
 - Add a \*.pg file for comparing/contrasting using 8 threads
@@ -101,9 +109,9 @@ Additions
   1950X. The 1950X data are from an older context.
 
 Later Changes
-- Adjust that *.pg to show log-QUIPS y-axis scaling.
+- Adjust that \*.pg to show log-QUIPS y-axis scaling.
 
-- Modernize varous *.[hc]* file copyright notice date-range
+- Modernize varous \*.[hc]\* file copyright notice date-range
   ends. Also fix a couple of lines that had leading tabs
   instead of leading spaces.
 
@@ -116,7 +124,7 @@ Changes
   include-what-you-use . No functional change intended.
 
 Additions
-- Add 7950X3D makefile.*'s for libstdc++ use (via g++13 for
+- Add 7950X3D makefile.\*'s for libstdc++ use (via g++13 for
   now).
 
 ###### [0.1.37] 2023-Dec-10          . . . 202?-???-?? (final)
