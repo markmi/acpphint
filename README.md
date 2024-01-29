@@ -102,6 +102,14 @@ Additions (2024-Jan-26)
   files. Add 2 \*.gp files that involve use of the RPi5 \*.txt
   files.
 
+Additions (2024-Jan-28)
+- Add 1 RPi5 RasPiOS64 for 2712 makefile.\* . Add the
+  RPi5-RasPiOS64_2712/ example data directory and the
+  contained prelimiary cpulockdown \*.txt files. Add 1
+  \*.gp file for comparison to FreeBSD, based on not
+  timing the thread creation/join times in order to
+  avoid the extra source of varaibility.
+
 ###### [0.1.37] 2023-Dec-13/14       . . . 202?-???-?? (final)
 Additions
 - Add a \*.pg file for comparing/contrasting using 8 threads
