@@ -1,5 +1,5 @@
 #
-# acpphint's makefile.HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_64bit-clang++_16_O3lto-libc++
+# acpphint's makefile.HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_64bit-clang++_16_O3lto-libc++-cpulockdown
 # example (as of requiring C++20 or later)
 #
 #  Copyright (c) 2015-2023 Mark Millard
@@ -35,7 +35,7 @@
 .POSIX:
 .SUFFIXES:
 
-THE_MAKEFILE= makefile.HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_64bit-clang++_16_O3lto-libc++
+THE_MAKEFILE= makefile.HoneyComb-65536MiB-threads_16-LP64-FreeBSD_main_64bit-clang++_16_O3lto-libc++-cpulockdown
 
 #
 # acpphint's makefile.*'s are very tailored to my use but may be
