@@ -35,7 +35,7 @@
 # Edit ACPPHINT_VERS's definition to update the version number
 # that the 4 ACPPHINT_FILENAME_INFO related programs report on
 # their 2nd std::cout line.
-ACPPHINT_VERS=                  0.1.38
+ACPPHINT_VERS=                  0.1.39
 CPPCLOCKINFO_VERS=              acpphint_${ACPPHINT_VERS}
 ACPPHINTKERNELSURVEYORS_VERS=   ${ACPPHINT_VERS}
 ACPPHINTKERNELSAMPLERS_VERS=    ${ACPPHINT_VERS}
@@ -216,6 +216,13 @@ build-cpp_clockinfo_main: ../cpp_clockinfo_main-${ACPPHINT_FILENAME_INFO}
                     ../other_src_used/cpp_clockinfo.cpp
 	${CXX} ${CXXFLAGS} -c -o $@ ../other_src_used/cpp_clockinfo.cpp
 
+TIDY_CHECKS= bugprone-*,cert-*,clang-analyzer-*,concurrency-*,cppcoreguidelines-*,hicpp-*,misc-*,modernize-*,performance-*,portability-*,readability-*
+
+check-cpp_clockinfo_main:
+	${CLANG-TIDY} -checks="${TIDY_CHECKS}" ../other_src_used/cpp_clockinfo.cpp       -- ${CXX:[2..-1]} ${CXXFLAGS}
+	${CLANG-TIDY} -checks="${TIDY_CHECKS}" ../other_src_used/cpp_thousandslocale.cpp -- ${CXX:[2..-1]} ${CXXFLAGS}
+	${CLANG-TIDY} -checks="${TIDY_CHECKS}" ../other_src_used/cpp_clockinfo_main.cpp  -- ${CXX:[2..-1]} ${CXXFLAGS} -DCPPCLOCKINFO_VERS='"${CPPCLOCKINFO_VERS}"'
+
 #
 # acpphint_kernelsurveyors_main and related
 #   A supporting program for exploring kernel surveyor results
@@ -256,6 +263,13 @@ build-cpp_clockinfo_main: ../cpp_clockinfo_main-${ACPPHINT_FILENAME_INFO}
                     acpphint_kernelsurveyors.cpp
 	${CXX} ${CXXFLAGS} -c -o $@ acpphint_kernelsurveyors.cpp
 
+check-acpphint_kernelsurveyors_main:
+	${CLANG-TIDY} -checks="${TIDY_CHECKS}" ../other_src_used/sys_cpubinding.cpp -- ${CXX:[2..-1]} ${CXXFLAGS}
+	${CLANG-TIDY} -checks="${TIDY_CHECKS}" acpphint_kernels.cpp                 -- ${CXX:[2..-1]} ${CXXFLAGS}
+	${CLANG-TIDY} -checks="${TIDY_CHECKS}" acpphint_kernelrunners.cpp           -- ${CXX:[2..-1]} ${CXXFLAGS}
+	${CLANG-TIDY} -checks="${TIDY_CHECKS}" acpphint_kernelsurveyors.cpp         -- ${CXX:[2..-1]} ${CXXFLAGS}
+	${CLANG-TIDY} -checks="${TIDY_CHECKS}" acpphint_kernelsurveyors_main.cpp    -- ${CXX:[2..-1]} ${CXXFLAGS} -DACPPHINTKERNELSURVEYORS_VERS='"${ACPPHINTKERNELSURVEYORS_VERS}"'
+
 #
 # acpphint_kernelsamplers_main and related
 #   A supporting program for exploring kernel sampler results
@@ -281,6 +295,10 @@ build-cpp_clockinfo_main: ../cpp_clockinfo_main-${ACPPHINT_FILENAME_INFO}
 	${CXX} ${CXXFLAGS} ${KERNELSAMPLERS_OVERRIDES} \
 	       -c -o $@ acpphint_kernelsamplers.cpp
 
+check-acpphint_kernelsamplers_main:
+	${CLANG-TIDY} -checks="${TIDY_CHECKS}" acpphint_kernelsamplers.cpp      -- ${CXX:[2..-1]} ${CXXFLAGS}
+	${CLANG-TIDY} -checks="${TIDY_CHECKS}" acpphint_kernelsamplers_main.cpp -- ${CXX:[2..-1]} ${CXXFLAGS} -DACPPHINTKERNELSAMPLERS_VERS='"${ACPPHINTKERNELSAMPLERS_VERS}"'
+
 #
 # acpphint and related
 #   The benchmark, generates files for gnuplot.
@@ -300,6 +318,9 @@ build-cpp_clockinfo_main: ../cpp_clockinfo_main-${ACPPHINT_FILENAME_INFO}
 # cpp_thousandslocale, cpp_clockinfo, and sys_cpubinding covered earlier.
 # acpphint_kernels, acpphint_kernelrunners, acpphint_kernelsurveyors,
 # and acpphint_kernelsamplers covered earlier.
+
+check-acpphint_main:
+	${CLANG-TIDY} -checks="${TIDY_CHECKS}" acpphint_main.cpp -- ${CXX:[2..-1]} ${CXXFLAGS} -DACPPHINT_VERS='"${ACPPHINT_VERS}"'
 
 #
 # clean and clean-programs

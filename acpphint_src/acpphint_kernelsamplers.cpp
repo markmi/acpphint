@@ -45,19 +45,21 @@
 #include <charconv>                    // for std::chars_format, std::to_chars
 #include <climits>                     // for ULONG_MAX, UINT_MAX, ULLONG_MAX
 #include <cmath>                       // for pow, nexttoward, std::nexttoward
-#include <cstddef>                     // for size_t, std::size_t
+#include <cstddef>                     // for std::size_t
 #include <limits>                      // for std::numeric_limits
 #include <string>                      // for std::to_string, std::operator+
 #include <string_view>                 // for std::basic_string_view, std::s...
 #include <system_error>                // for std::errc
+#include <memory>                      // for std::addressof
 #include "acpphint_kernelrunners.h"    // for approx_answer_floating_form, TIME_PARALLEL_THREAD_CREATION_TOO
 #include "acpphint_kernels.h"          // for KernelResults, NMIN
 #include "acpphint_kernelsurveyors.h"  // for KernelSurveyor
 #include "cpp_clockinfo.h"             // for ClkInfo
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 template<typename DSIZE, typename ISIZE, bool want_parallel_thread_creation_time_included>
 auto KernelSampler  ( ClkInfo                               const&  clock_info
-                    , PrimaryKernelInputs<DSIZE,ISIZE>      const&  ki
+                    , PrimaryKernelInputs<DSIZE,ISIZE>      const&  ki // NOLINT(readability-identifier-length)
                     ) -> KernelSamplerResultsVect<DSIZE,ISIZE>
 {
     using quality_improvement_per_sec
@@ -98,11 +100,11 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
     // For the 1.258925411794167L factor: 4 is the smallest n
     // for which n<trunc(ADVANCE_factor*n) so 0..4 end up
     // handled via n+1 instead, leaving 65 values of n based on
-    // ADVANCE_factor directly when NSAMP==70u.
+    // ADVANCE_factor directly when NSAMP==70U.
     //
     // Edit as needed, the next 2 (in original HINTs too):
 #ifndef NSAMP_ALT
-    num_samples         constexpr NSAMP{80u};
+    num_samples         constexpr NSAMP{80U};
 #else
     num_samples         constexpr NSAMP{NSAMP_ALT};
 #endif
@@ -112,7 +114,7 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
     // Edit as needed, the next 3 (in original HINTs too):
     sec_floating_form   const     RUNTM{clock_info.TargetApproxMinDuration()};
 #ifndef STOPTM_ALT
-    sec_floating_form   constexpr STOPTM{1u}; // seconds
+    sec_floating_form   constexpr STOPTM{1U}; // seconds
 #else
     sec_floating_form   constexpr STOPTM{STOPTM_ALT}; // seconds
 #endif
@@ -127,7 +129,7 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
 #endif
 
     // Edit as needed, the next 3 (new ones):
-    ISIZE               constexpr STOPRT_GRID_SIZE_THRESHOLD{0u};
+    ISIZE               constexpr STOPRT_GRID_SIZE_THRESHOLD{0U};
     LapsCount           constexpr LAPS_STOP
                                   {std::numeric_limits<LapsCount>::max()/2};
     std::size_t         constexpr VECTS_BYTES_LIMIT
@@ -147,11 +149,11 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
 
     floating_type       constexpr floating_type_1{1};
 
-    quality_improvement_per_sec quips_peak{0u};
+    quality_improvement_per_sec quips_peak{0U};
     floating_type               quips_to_peak_ratio{floating_type_1};
 
 
-    ISIZE                               n{NMIN<ISIZE>(ki.nproc)};
+    ISIZE                               n{NMIN<ISIZE>(ki.nproc)}; // Original HINT realted naming // NOLINT(readability-identifier-length)
     DSIZE                               DSIZE_n= n;
 
     KernelRunnerResults<DSIZE,ISIZE>    run_result{};
@@ -224,21 +226,21 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
         qdata.emplace_back(run_result,quips,n);
 
         if (NOERROR != run_result.kernel_result.eflag)
-            break;
+            { break; }
 
         quips_peak=             std::max(quips_peak,quips);
         quips_to_peak_ratio=    quips/quips_peak;
 
         if (STOPTM <= run_result.median_mean_sec_per_lap)
-            break;
+            { break; }
 
         if (VECTS_BYTES_LIMIT <= run_result.vectors_total_bytes)
-            break;
+            { break; }
 
         if  (  STOPRT_GRID_SIZE_THRESHOLD<n // Threshold not in original HINTs
             && quips_to_peak_ratio<STOPRT
             )
-            break;
+            { break; }
 
         ISIZE const potential_n_by_increment=   n+1;
         ISIZE const potential_n_by_factor=      ADVANCE_factor*n;
@@ -254,28 +256,30 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
     // linespoints graph need not be of a [single-valued] function
     // when the x-axis is for median_mean_sec_per_lap .)
 
-    if (qdata.empty()) return qdata;
+    if (qdata.empty()) { return qdata; }
 
     if (STOPTM <= run_result.median_mean_sec_per_lap)
-        qdata.back().how_stopped_notes
+        { qdata.back().how_stopped_notes
             +=  " median_mean_sec_per_lap:  stopped for "
               + std::to_string(STOPTM.count()) + " == STOPTM"
               + " <= "
               + "median_mean_sec_per_lap == "
                 + std::to_string(run_result.median_mean_sec_per_lap.count())
               + "\n";
+        }
 
     if (VECTS_BYTES_LIMIT <= run_result.vectors_total_bytes)
-        qdata.back().how_stopped_notes
+        { qdata.back().how_stopped_notes
             +=  " vectors_total_bytes:      stopped for "
               + std::to_string(VECTS_BYTES_LIMIT) + " == VECTS_BYTES_LIMIT"
               + " <= "
               + "vectors_total_bytes == "
                 + std::to_string(run_result.vectors_total_bytes)
               + "\n";
+        }
 
     if  (quips_to_peak_ratio < STOPRT)
-        qdata.back().how_stopped_notes
+        { qdata.back().how_stopped_notes
             +=  " quips_to_peak_ratio:      stopped for "
               + std::to_string(quips_to_peak_ratio)
               + " == " + std::to_string(qdata.back().quips) + "/" + std::to_string(quips_peak)
@@ -283,56 +287,63 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
               + " < "
               + "STOPRT == " + std::to_string(STOPRT)
               + "\n";
+        }
 
     if (ki.initial_dx <= DSIZE_n) // DSIZE_n here is after last n used.
-        qdata.back().how_stopped_notes
+        { qdata.back().how_stopped_notes
             +=  " n:                        stopped for "
               + std::to_string(ki.initial_dx) + " == initial_dx"
               + " <= "
               + "(next n) == " + std::to_string(DSIZE_n)
               + "\n";
+        }
 
     if (NSAMP <= qdata.size())
-        qdata.back().how_stopped_notes
+        { qdata.back().how_stopped_notes
             +=  " qdata.size():             stopped for "
               + std::to_string(NSAMP) + " == NSAMP"
               + " <= "
               + " qdata.size() == " + std::to_string(qdata.size())
               + "\n";
+        }
 
     if (NOERROR != run_result.kernel_result.eflag)
-        qdata.back().how_stopped_notes
+        { qdata.back().how_stopped_notes
             +=  " eflag:                    "
                 "stopped for/with eflag not normal ("
               + std::to_string(static_cast<int>(run_result.kernel_result.eflag))
               + ")\n";
+        }
     else
-        qdata.back().how_stopped_notes
+        { qdata.back().how_stopped_notes
             +=  " eflag:                    "
                 "stopped with eflag normal ("
               + std::to_string(static_cast<int>(run_result.kernel_result.eflag))
               + ")\n";
+        }
 
     if (run_result.median_mean_sec_per_lap < STOPTM)
-        qdata.back().how_stopped_notes
+        { qdata.back().how_stopped_notes
             +=  " median_mean_sec_per_lap:  stopped with "
               + std::to_string(run_result.median_mean_sec_per_lap.count())
                 + " == median_mean_sec_per_lap"
               + " < "
               + "STOPTM == " + std::to_string(STOPTM.count())
               + "\n";
+        }
 
     if (run_result.vectors_total_bytes < VECTS_BYTES_LIMIT)
-        qdata.back().how_stopped_notes
+        { qdata.back().how_stopped_notes
             +=  " vectors_total_bytes:      stopped with "
               + std::to_string(run_result.vectors_total_bytes)
                 + " == vectors_total_bytes"
               + " < "
               + "VECTS_BYTES_LIMIT == " + std::to_string(VECTS_BYTES_LIMIT)
               + "\n";
+        }
 
     if  (STOPRT <= quips_to_peak_ratio)
-        qdata.back().how_stopped_notes
+        { qdata.back().how_stopped_notes
             +=  " quips_to_peak_ratio:      stopped with "
               + std::to_string(STOPRT) + " == STOPRT"
               + " <= "
@@ -340,22 +351,25 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
               + " == " + std::to_string(qdata.back().quips) + "/" + std::to_string(quips_peak)
               + " == " + std::to_string(quips_to_peak_ratio)
               + "\n";
+        }
 
     if (DSIZE_n < ki.initial_dx) // DSIZE_n here is after last n used.
-        qdata.back().how_stopped_notes
+        { qdata.back().how_stopped_notes
             +=  " n:                        stopped with "
               + std::to_string(DSIZE_n) + " == (next n)"
               + " < "
               + "initial_dx == " + std::to_string(ki.initial_dx)
               + "\n";
+        }
 
     if (qdata.size() < NSAMP)
-        qdata.back().how_stopped_notes
+        { qdata.back().how_stopped_notes
             +=  " qdata.size():             stopped with "
               + std::to_string(qdata.size()) + " == qdata.size()"
               + " < "
               + "NSAMP == " + std::to_string(NSAMP)
               + "\n";
+        }
 
     qdata.back().how_stopped_notes
         +=  " vectors_total_bytes/median_mean_sec_per_lap == "
@@ -386,24 +400,26 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
          / answer_upper_bound_floating_form
         );
 
-    std::array<char, 128> lower_approx;
+    constexpr auto to_chars_buffer_size{128U};
+
+    std::array<char, to_chars_buffer_size> lower_approx{};
     auto const [after_lower_approx_chars, lower_approx_err_code]
-        ( std::to_chars( lower_approx.data(), lower_approx.data() + lower_approx.size()
+        ( std::to_chars( lower_approx.data(), std::addressof(*lower_approx.end())
                        , answer_lower_bound_floating_form, std::chars_format::fixed
                        )
         );
-    std::array<char, 128> upper_approx;
+    std::array<char, to_chars_buffer_size> upper_approx{};
     auto const [after_upper_approx_chars, upper_approx_err_code]
-        ( std::to_chars( upper_approx.data(), upper_approx.data() + upper_approx.size()
+        ( std::to_chars( upper_approx.data(), std::addressof(*upper_approx.end())
                        , answer_upper_bound_floating_form, std::chars_format::fixed
                        )
         );
 
-    std::array<char, 128> scale_factor; // For HI's context then reused for LO's.
+    std::array<char, to_chars_buffer_size> scale_factor{}; // For HI's context then reused for LO's.
 
     qdata.back().how_stopped_notes += " HI/(scx*scy) == ? * approx. lower bound: ";
     auto const [after_scale_hi_chars, scale_hi_err_code]
-        ( std::to_chars( scale_factor.data(), scale_factor.data() + scale_factor.size()
+        ( std::to_chars( scale_factor.data(), std::addressof(*scale_factor.end())
                        , scale_factor_for_hi, std::chars_format::fixed
                        )
         );
@@ -416,14 +432,15 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
             += std::string_view(lower_approx.data(), after_lower_approx_chars);
     }
     else
-        qdata.back().how_stopped_notes
+        { qdata.back().how_stopped_notes
             +=  std::to_string(scale_factor_for_hi)
               + " * " + std::to_string(answer_lower_bound_floating_form);
+        }
     qdata.back().how_stopped_notes += "\n";
 
     qdata.back().how_stopped_notes += " LO/(scx*scy) == ? * approx. upper bound: ";
     auto [after_scale_lo_chars, scale_lo_err_code]
-        ( std::to_chars( scale_factor.data(), scale_factor.data() + scale_factor.size()
+        ( std::to_chars( scale_factor.data(), std::addressof(*scale_factor.end())
                        , scale_factor_for_lo, std::chars_format::fixed
                        )
         );
@@ -436,16 +453,19 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
             += std::string_view(upper_approx.data(), after_upper_approx_chars);
     }
     else
-        qdata.back().how_stopped_notes
+        { qdata.back().how_stopped_notes
             +=  std::to_string(scale_factor_for_lo)
               + " * " + std::to_string(answer_upper_bound_floating_form);
+        }
     qdata.back().how_stopped_notes += "\n";
 
     return qdata;
 }
-
+// NOLINTEND(readability-function-cognitive-complexity)
 
 // Edit as needed to add more alternatives (or disable some):
+
+// NOLINTBEGIN(readability-identifier-length)
 
 // DSIZE=short:
 
@@ -683,8 +703,9 @@ auto KernelSampler<long double,unsigned long long,!TIME_PARALLEL_THREAD_CREATION
                                                     , unsigned long long
                                                     >;
 #endif
+// NOLINTEND(readability-identifier-length)
 
-char copyright_and_license_for_acpphint_kernelsamplers[]
+extern "C" char const copyright_and_license_for_acpphint_kernelsamplers[]
 {
     "Context for this Copyright: acpphint_kernelsamplers\n"
     "\n"

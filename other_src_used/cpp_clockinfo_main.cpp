@@ -32,8 +32,6 @@
 //                                                      cpp_clockinfo_main.cpp
 //
 
-//#include <__chrono/duration.h>    // for std::chrono::operator-, std::chrono...
-//#include <__type_traits/decay.h>  // for std::__decay_t
 #include <cerrno>                 // for ERANGE, errno
 #include <chrono>                 // for std::chrono::duration
 #include <cstdlib>                // for strtoul, std::strtoul
@@ -41,31 +39,33 @@
 #include <iomanip>                // for std::__1::operator<<, std::setw
 #include <iostream>               // for std::__1::operator<<, std::basic_os...
 #include <limits>                 // for std::numeric_limits
-#include <string>                 // for std::basic_string
 #include <vector>                 // for std::vector
+#include <span>                   // for std::span
 #include "cpp_clockinfo.h"        // for ClkInfo, ClkInfoFromThreads, HwConc...
 #include "cpp_thousandslocale.h"  // for CppThousandsLocale
 
-static HwConcurrencyCount requested_threads{0u}; // 0u: get from c++
-                                    // controls threads used for threaded test
-                                    // if optional argv[1] makes it positive.
-
-int main(int argc, const char* argv[])
+auto main(int argc, char const* argv[]) -> int
 try
 {
-    if (0==argc || nullptr==argv[0] || '\0'==*argv[0])
+    std::span const args_span(argv,argc);
+    if (args_span.empty() || nullptr==args_span[0U] || '\0'==*args_span[0U])
     {
         std::cout
             << "argv[0] does not provide program name\n";
         return 1;
     }
 
-    if (1<argc && nullptr!=argv[1] && '\0'!=*argv[1])
+    HwConcurrencyCount requested_threads{0U}; // 0U means: get value from c++.
+                                    // Controls threads used for threaded test
+                                    // if optional argv[1] makes it positive.
+
+    if (1U<args_span.size() && nullptr!=args_span[1U] && '\0'!=*args_span[1U])
     {
-        auto temp{std::strtoul(argv[1],nullptr,10)};
+        constexpr int base_10{10};
+        auto temp{std::strtoul(args_span[1U],nullptr,base_10)};
         if  (  ERANGE==errno
             || std::numeric_limits<HwConcurrencyCount>::max()<temp
-            || 0u==temp
+            || 0U==temp
             )
         {
             std::cout
@@ -80,15 +80,84 @@ try
     std::cout.imbue(CppThousandsLocale());
 
     std::cout
-        << argv[0u] << " . . .\n"
+        << args_span[0U] << " . . .\n"
         << "cpp_clockinfo_main version: " CPPCLOCKINFO_VERS "\n"
         << "\n"
         << "NOTE: Producing the below output did NOT involve any INTERNAL CPU-lock-down activity.\n"
         << std::flush;
 
-    auto clock_info_report
+    ClkInfo clock_info{ClkInfo::DurationsStatus::Keep}; // Initially: just main thread
+
+    std::cout
+        << "\n"
+        << "is_steady:                           "
+        << std::boolalpha << ClkInfo::IsSteady
+        << "\n"
+        << "period 'resolution' : "
+        << ClkInfo::nsFormatted(ClkInfo::Duration{1})
+        << " ns\n"
+        << "duration max        : "
+        << ClkInfo::nsFormatted(ClkInfo::Duration::max())
+        << " ns\n"
+        << "now (from epoch)    : "
+        << ClkInfo::nsFormatted(clock_info.Now().time_since_epoch())
+        << " ns\n"
+        << "\n"
+        << "\n"
+        << "main thread by itself:\n";
+
+    auto const durations_report
     {
-        [](const ClkInfo& test_clock_info) -> void
+        []( auto const durations
+          , auto const end_durations
+          , double const percent99_of_end_durations
+          ) -> void
+        {
+            auto const last_durations   {end_durations-1U};
+            ClkInfo::DurationsCount distinct_value_pos{0U};
+            ClkInfo::DurationsCount idx{0U};
+            while (idx<end_durations)
+            {
+                ClkInfo::DurationsCount value_count{1};
+                while(idx<last_durations && durations[idx]==durations[idx+1])
+                {
+                    ++value_count;
+                    ++idx;
+                }
+
+                constexpr int value_pos_or_count_width{10};
+                constexpr int nsFormatted_width       {14};
+                constexpr int duration_width          {10};
+                constexpr int duration_precision       {8};
+                std::cout
+                <<        std::setw(value_pos_or_count_width) << distinct_value_pos
+                << " " << std::setw(value_pos_or_count_width) << value_count
+                << " " << std::setw(nsFormatted_width) << ClkInfo::nsFormatted(durations.at(idx))
+                << " " << std::setw(duration_width)
+                       << std::setprecision(duration_precision) << std::fixed
+                       << double(idx+1) / static_cast<double>(end_durations)
+                      << std::defaultfloat
+                << "\n";
+
+                constexpr ClkInfo::DurationsCount value_count_threashold{10};
+                if (  value_count<value_count_threashold
+                   && percent99_of_end_durations < double(idx+1)
+                   && idx+1 < end_durations
+                   )
+                {
+                    std::cout << "(" << end_durations-idx-1 << " examples not summarized)\n";
+                    break;
+                }
+
+                ++distinct_value_pos;
+                ++idx;
+            }
+        }
+    };
+
+    auto const clock_info_report
+    {
+        [&durations_report](const ClkInfo& test_clock_info) -> void
         {
             std::cout
                 << "\n";
@@ -106,9 +175,10 @@ try
                     << "no zero durations observed.\n";
             }
 
+            constexpr int durations_width{0};
             std::cout
-                << "\n"
-                << "Of " << std::setw(0) << test_clock_info.NumDurationsSampled()
+                << "\n" << std::setw(durations_width)
+                << "Of " << test_clock_info.NumDurationsSampled()
                 << " near 'back to back now()' durations:\n"
                 << "\n"
                 << "minimum duration                     : "
@@ -145,7 +215,7 @@ try
             auto const durations
                 {test_clock_info.ObservedDurationsSortedWeaklyIncreasing()};
             auto const end_durations    {durations.size()};
-            auto const percent99_of_end_durations {0.99*end_durations};
+            auto const percent99_of_end_durations {0.99*static_cast<double>(end_durations)};
 
             if (1<end_durations)
             {
@@ -156,63 +226,13 @@ try
       list  #Examples       duration   fraction\n\
   position  of durat.           (ns)    with <=\n\n";
 
-                auto const last_durations   {end_durations-1u};
-                ClkInfo::DurationsCount distinct_value_pos{0u};
-                for(ClkInfo::DurationsCount i{0u}; i<end_durations; ++i)
-                {        
-                    ClkInfo::DurationsCount value_count{1};
-                    while(i<last_durations && durations[i]==durations[i+1])
-                    {
-                        ++value_count;
-                        ++i;
-                    }
-
-                    std::cout
-                    <<        std::setw(10) << distinct_value_pos
-                    << " " << std::setw(10) << value_count
-                    << " " << std::setw(14) << ClkInfo::nsFormatted(durations.at(i))
-                    << " " << std::setw(10) << std::setprecision(8) << std::fixed
-                           << double(i+1) / end_durations
-                           << std::defaultfloat
-                    << "\n";
-
-                    if (  value_count<10
-                       && percent99_of_end_durations < double(i+1)
-                       && i+1 < end_durations
-                       )
-                    {
-                        std::cout << "(" << end_durations-i-1 << " examples not summarized)\n";
-                        break;
-                    }
-
-                    ++distinct_value_pos;
-                 }
+                durations_report(durations, end_durations, percent99_of_end_durations);
             }
 
             std::cout.flush();
         }
 
     };
-
-    ClkInfo clock_info{ClkInfo::DurationsStatus::Keep}; // Initially: just main thread
-
-    std::cout
-        << "\n"
-        << "is_steady:                           "
-        << std::boolalpha << clock_info.IsSteady
-        << "\n"
-        << "period 'resolution' : "
-        << ClkInfo::nsFormatted(ClkInfo::Duration{1})
-        << " ns\n"
-        << "duration max        : "
-        << ClkInfo::nsFormatted(ClkInfo::Duration::max())
-        << " ns\n"
-        << "now (from epoch)    : "
-        << ClkInfo::nsFormatted(clock_info.Now().time_since_epoch())
-        << " ns\n"
-        << "\n"
-        << "\n"
-        << "main thread by itself:\n";
 
     clock_info_report(clock_info); // Main thread
 
@@ -248,7 +268,7 @@ catch(...)
     return 1;
 }
 
-char copyright_and_license_for_cpp_clockinfo_main[]
+extern "C" char const copyright_and_license_for_cpp_clockinfo_main[]
 {
     "Context for this Copyright: cpp_clockinfo_main\n"
     "\n"

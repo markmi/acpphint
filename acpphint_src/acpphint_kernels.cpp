@@ -46,7 +46,11 @@
 #include <stdexcept>    // for std::runtime_error
 #include <type_traits>  // for std::is_floating_point
 #include <utility>      // for std::cmp_less_equal
+#include <limits>       // for std::numeric_limits
+#include <cstddef>      // for std::size_t
 
+// NOTE: Various identifiers track the use in the original HINT benchmark code.
+// NOLINTBEGIN(readability-identifier-length,readability-function-cognitive-complexity)
 template<typename DSIZE, typename ISIZE>
 PrimaryKernelInputs<DSIZE,ISIZE>::PrimaryKernelInputs
                                             (HwConcurrencyCount const threads)
@@ -55,7 +59,7 @@ PrimaryKernelInputs<DSIZE,ISIZE>::PrimaryKernelInputs
     // Unlike the old pthread HINT code, work to have the scx value be a
     // power of 2 times the scatter unit.
 
-    ISIZE nchunk= NCHUNK<ISIZE>(nproc);
+    auto nchunk= NCHUNK<ISIZE>(nproc);
 
     ISIZE ISIZE_nproc= nproc;
 
@@ -65,11 +69,11 @@ PrimaryKernelInputs<DSIZE,ISIZE>::PrimaryKernelInputs
     if constexpr (std::is_floating_point<DSIZE>::value)
     {
         // Find the largest associative DSIZE whole number, dmax.
-        DSIZE tm{1u};
+        DSIZE tm{1U};
 
         DSIZE volatile tm2= tm + tm; // try to prevent floating register use.
         DSIZE volatile tm1= tm2 + 1; // try to prevent floating register use.
-        while (DSIZE{1u}==tm1-tm2)
+        while (DSIZE{1U}==tm1-tm2)
         {
             tm=     tm2;
             tm2=    tm2+tm2;
@@ -81,20 +85,20 @@ PrimaryKernelInputs<DSIZE,ISIZE>::PrimaryKernelInputs
         // Indexing may later limit this to a smaller value.
         dmax = tm + (tm - 1); // Maximum such associative whole number
 
-        DSIZE low{1u};
+        DSIZE low{1U};
         DSIZE high{dmax};
         while (1<high-low)
         {
             DSIZE mid=low + std::trunc((high-low)/2);
             DSIZE quot= dmax/mid;
-            if      (mid<quot)  low= mid;
-            else if (quot<mid)  high= mid;
-            else                low= high= mid;
+            if      (mid<quot)  { low= mid; }
+            else if (quot<mid)  { high= mid; }
+            else                { low= high= mid; }
         }
 
         initial_dx= std::trunc(high/DSIZE_scatter_unit);
-        DSIZE p2{1u};
-        while (2*p2<=initial_dx) p2*=2;
+        DSIZE p2{1U};
+        while (2*p2<=initial_dx) { p2*=2; }
         initial_dx= p2;
         // initial_dx is now an integral power of 2.
         scx= initial_dx * DSIZE_scatter_unit;
@@ -106,23 +110,23 @@ PrimaryKernelInputs<DSIZE,ISIZE>::PrimaryKernelInputs
     {
         dmax= std::numeric_limits<DSIZE>::max();
 
-        DSIZE low{1u};
+        DSIZE low{1U};
         DSIZE high{dmax};
         while (1<high-low)
         {
             DSIZE mid=low + (high-low)/2;
             DSIZE quot= dmax/mid;
-            if      (mid<quot)  low= mid;
-            else if (quot<mid)  high= mid;
-            else                low= high= mid;
+            if      (mid<quot)  { low= mid; }
+            else if (quot<mid)  { high= mid; }
+            else                { low= high= mid; }
         }
 
         initial_dx= high/DSIZE_scatter_unit;
-        DSIZE next_dx= initial_dx & (initial_dx-1); // remove least 1 bit
+        DSIZE next_dx= initial_dx & (initial_dx-1); // remove least signficant 1 bit // NOLINT(hicpp-signed-bitwise)
         while (next_dx!=0)
         {
             initial_dx= next_dx;
-            next_dx= initial_dx & (initial_dx-1); // remove least signficant 1
+            next_dx= initial_dx & (initial_dx-1);   // remove least signficant 1 bit // NOLINT(hicpp-signed-bitwise)
         }
         // initial_dx is now an integral power of 2.
         scx=  initial_dx*DSIZE_scatter_unit;
@@ -137,9 +141,9 @@ PrimaryKernelInputs<DSIZE,ISIZE>::PrimaryKernelInputs
                                       , std::numeric_limits<std::size_t>::max()
                                       )
                  )
-        imax= std::numeric_limits<ISIZE>::max();
+        { imax= std::numeric_limits<ISIZE>::max(); }
     else
-        imax= std::numeric_limits<std::size_t>::max();
+        { imax= std::numeric_limits<std::size_t>::max(); }
 
     if (imax<=std::numeric_limits<DSIZE>::max())
     {
@@ -148,23 +152,23 @@ PrimaryKernelInputs<DSIZE,ISIZE>::PrimaryKernelInputs
         if (DSIZE_imax<=dmax)
         {
 
-            ISIZE low{1u};
+            ISIZE low{1U};
             ISIZE high{imax};
             while (1<high-low)
             {
                 ISIZE mid=low + (high-low)/2;
                 ISIZE quot= imax/mid;
-                if      (mid<quot)  low= mid;
-                else if (quot<mid)  high= mid;
-                else                low= high= mid;
+                if      (mid<quot)  { low= mid; }
+                else if (quot<mid)  { high= mid; }
+                else                { low= high= mid; }
             }
 
             ISIZE ISIZE_initial_dx= high/scatter_unit;
-            ISIZE next_dx= ISIZE_initial_dx & (ISIZE_initial_dx-1); // drop a 1
+            ISIZE next_dx= ISIZE_initial_dx & (ISIZE_initial_dx-1); // remove least signficant 1 bit // NOLINT(hicpp-signed-bitwise)
             while (next_dx!=0)
             {
                 ISIZE_initial_dx= next_dx;
-                next_dx= ISIZE_initial_dx & (ISIZE_initial_dx-1); // drop a 1
+                next_dx= ISIZE_initial_dx & (ISIZE_initial_dx-1); // remove least signficant 1 bit // NOLINT(hicpp-signed-bitwise)
             }
             initial_dx= ISIZE_initial_dx;
             // initial_dx is now an integral power of 2.
@@ -182,9 +186,9 @@ auto Kernel ( HwConcurrencyCount                const   iproc
             , KernelVectors<DSIZE,ISIZE>&               kv
             ) -> KernelResults<DSIZE,ISIZE>
 {
-    DSIZE constexpr DSIZE_0{0u};
-    DSIZE constexpr DSIZE_1{1u};
-    DSIZE constexpr DSIZE_2{2u};
+    DSIZE constexpr DSIZE_0{0U};
+    DSIZE constexpr DSIZE_1{1U};
+    DSIZE constexpr DSIZE_2{2U};
 
     DSIZE DSIZE_iproc= iproc;
     DSIZE DSIZE_nproc= ki.nproc;
@@ -205,8 +209,8 @@ auto Kernel ( HwConcurrencyCount                const   iproc
     // Initialize the first NCHUNK intervals for the scatter decomposition
     // (or the 1==NCHUNK for serial).
 
-    DSIZE DSIZE_nchnk{0u};
-    for (ISIZE nchnk{0u}; nchnk < NCHUNK_ISIZE; ++nchnk, ++DSIZE_nchnk)
+    DSIZE DSIZE_nchnk{0U};
+    for (ISIZE nchnk{0U}; nchnk < NCHUNK_ISIZE; ++nchnk)
     {
         auto& at_nchnk{kv.rect[nchnk]}; // .at(nchnk)
 
@@ -248,16 +252,16 @@ auto Kernel ( HwConcurrencyCount                const   iproc
                                     );
         }
 
-        // For 1u==nproc: avoid overflow: underestimate ki.scx*ki.scy by 1
-        // For  1u<nproc: no overflow is possible so use normal code.
-        at_nchnk.ahi= (1u==ki.nproc)
+        // For 1U==nproc: avoid overflow: underestimate ki.scx*ki.scy by 1
+        // For  1U<nproc: no overflow is possible so use normal code.
+        at_nchnk.ahi= (1U==ki.nproc)
                                 ? ki.dmax // like old serial HINT.
                                 : at_nchnk.flh * at_nchnk.dx;
 
         at_nchnk.alo= at_nchnk.frl * at_nchnk.dx;
 
         if (at_nchnk.ahi < at_nchnk.alo)
-            throw std::runtime_error("at_nchnk's ahi<alo while processing");
+            { throw std::runtime_error("at_nchnk's ahi<alo while processing"); }
 
         {
             DSIZE const tm= at_nchnk.ahi - at_nchnk.alo;
@@ -276,18 +280,20 @@ auto Kernel ( HwConcurrencyCount                const   iproc
             kv.ixes[i]= nchnk;  // .at(i)
         }
 
-        sh+= at_nchnk.ahi; // for 1u==nproc ahi is slight underestimate.
+        sh+= at_nchnk.ahi; // for 1U==nproc ahi is slight underestimate.
         sl+= at_nchnk.alo;
 
         if (sh < sl)
-            throw std::runtime_error("nchnk's sh<sl while processing");
+            { throw std::runtime_error("nchnk's sh<sl while processing"); }
+
+        ++DSIZE_nchnk;
     }
 
     ISIZE iq= NCHUNK_ISIZE-1; // last entry in queue.
 
     KernelResults<DSIZE,ISIZE> kr{iq};
 
-    ISIZE it{0u};
+    ISIZE it{0U};
     for (; (it < mcnt_bnd) && (it <= iq); ++it)
     {
         ISIZE const ma{kv.ixes[it]};        // Index of parent; // .at(it)
@@ -309,10 +315,10 @@ auto Kernel ( HwConcurrencyCount                const   iproc
         at_jo.dx= at_io.dx=  at_ma.dx / DSIZE_2;
 
         if (std::trunc(at_io.dx) != at_io.dx)
-            throw std::runtime_error( "std::trunc(at_io.dx) != at_io.dx");
+            { throw std::runtime_error( "std::trunc(at_io.dx) != at_io.dx"); }
 
         if (std::trunc(at_jo.dx) != at_jo.dx)
-            throw std::runtime_error( "std::trunc(at_jo.dx) != at_jo.dx");
+            { throw std::runtime_error( "std::trunc(at_jo.dx) != at_jo.dx"); }
 
         // Right child gets right boundary.
         at_jo.xr= at_ma.xr;
@@ -345,13 +351,13 @@ auto Kernel ( HwConcurrencyCount                const   iproc
 
         {
             // Compute the left daughter error. Allow for DSIZE unsigned.
-            DSIZE tmio{0u};
+            DSIZE tmio{0U};
             if (at_io.frh <= at_io.fll && DSIZE_2 <= at_io.dx)
-                tmio= (at_io.fll - at_io.frh) * (at_io.dx - DSIZE_2);
+                { tmio= (at_io.fll - at_io.frh) * (at_io.dx - DSIZE_2); }
             else if (at_io.fll <= at_io.frh && at_io.dx <= DSIZE_2)
-                tmio= (at_io.frh - at_io.fll) * (DSIZE_2 - at_io.dx);
+                { tmio= (at_io.frh - at_io.fll) * (DSIZE_2 - at_io.dx); }
             else
-                {} // tmio==0u
+                {} // tmio==0U
 
             DSIZE const errio=      ( at_io.flh - at_io.frh
                                     + at_io.fll - at_io.frl
@@ -360,13 +366,13 @@ auto Kernel ( HwConcurrencyCount                const   iproc
                                   - tmio;
 
             // Repeat for the right daughter. Allow for DSIZE unsigned.
-            DSIZE tmjo{0u};
+            DSIZE tmjo{0U};
             if (at_jo.frh <= at_jo.fll && DSIZE_2 <= at_jo.dx)
-                tmjo= (at_jo.fll - at_jo.frh) * (at_jo.dx - DSIZE_2);
+                { tmjo= (at_jo.fll - at_jo.frh) * (at_jo.dx - DSIZE_2); }
             else if (at_jo.fll <= at_jo.frh && at_jo.dx <= DSIZE_2)
-                tmjo= (at_io.frh - at_io.fll) * (DSIZE_2 - at_jo.dx);
+                { tmjo= (at_io.frh - at_io.fll) * (DSIZE_2 - at_jo.dx); }
             else
-                {} // tmjo==0u
+                {} // tmjo==0U
 
             DSIZE const errjo=      ( at_jo.flh - at_jo.frh
                                     + at_jo.fll - at_jo.frl
@@ -410,9 +416,7 @@ auto Kernel ( HwConcurrencyCount                const   iproc
         }
 
         if (sh < sl)
-        {
-            throw std::runtime_error("highbound<lowbound while processing");
-        }
+            { throw std::runtime_error("highbound<lowbound while processing"); }
     }
 
     kr.result_bounds.HI= sh;
@@ -426,6 +430,7 @@ auto Kernel ( HwConcurrencyCount                const   iproc
 
     return kr;
 }
+// NOLINTEND(readability-identifier-length,readability-function-cognitive-complexity)
 
 // Edit as needed to add more alternatives (or disable some):
 
@@ -614,7 +619,7 @@ auto Kernel<long double,unsigned long long>
 #endif
 
 
-char copyright_and_license_for_acpphint_kernels[]
+extern "C" char const copyright_and_license_for_acpphint_kernels[]
 {
     "Context for this Copyright: acpphint_kernels\n"
     "\n"

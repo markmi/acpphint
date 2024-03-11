@@ -51,19 +51,19 @@ using HwConcurrencyCount = unsigned int; // Matching C++
 template<typename ISIZE>
 constexpr auto NCHUNK(HwConcurrencyCount nproc) -> ISIZE
 {
-    return (1u==nproc) ?ISIZE{1u} :ISIZE{4u};
+    return (1U==nproc) ?ISIZE{1U} :ISIZE{4U};
     // for 1==nproc: 1==NCHUNK (not adjustable!)
     // For 1<nproc case:
     // Number of chunks for scatter decomposition. Larger numbers
     // increase time to first result (latency) but sample domain more
-    // evenly, minimum 2u.
+    // evenly, minimum 2U.
 }
 
 template<typename ISIZE>
 constexpr auto NMIN(HwConcurrencyCount nproc) -> ISIZE
 {
     ISIZE nchunk{NCHUNK<ISIZE>(nproc)};
-    return (ISIZE{1u}==nchunk) ?ISIZE{2u} :nchunk;
+    return (ISIZE{1U}==nchunk) ?ISIZE{2U} :nchunk;
 }
 
 template<typename DSIZE,typename ISIZE>
@@ -72,7 +72,7 @@ struct PrimaryKernelInputs
     // Using dmax directly in places can help avoid
     // overflow/truncation/rounding.
 
-    HwConcurrencyCount  nproc; // # threads, 1u for serial.
+    HwConcurrencyCount  nproc; // # threads, 1U for serial.
 
     DSIZE               scx;
     DSIZE               scy;
@@ -249,7 +249,7 @@ struct KernelResults
     {} // No more activity intended, likely NOMEM context.
 
     KernelResults(ISIZE pos) // Do not use with Merge: serial kernel use
-                                : result_bounds{1u,0u} // Replaced later
+                                : result_bounds{1U,0U} // Replaced later
                                 , RECT_maxjo{pos}
                                 , ixes_errs_maxiq{pos}
                                 , RECT_total_used(pos)

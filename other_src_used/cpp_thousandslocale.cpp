@@ -30,6 +30,7 @@
 
 #include "cpp_thousandslocale.h"
 #include <string>  // for std::basic_string, std::string
+#include <locale>  // for std::numpunct
 namespace { template <typename T> class cpp_numpunct; }
 
 namespace
@@ -37,12 +38,12 @@ namespace
     template<>
     class cpp_numpunct<char> : public std::numpunct<char>
     {
-        auto do_thousands_sep() const -> char           override
+        [[nodiscard]] auto do_thousands_sep() const -> char           override
         {
             return '\'';
         }
 
-        auto do_grouping()      const -> std::string    override
+        [[nodiscard]] auto do_grouping()      const -> std::string    override
         {
             return {3};
         }
@@ -56,7 +57,7 @@ auto CppThousandsLocale() -> std::locale
     return cpp_locale;
 }
 
-char copyright_and_license_for_cpp_thousandslocale[]
+extern "C" char const copyright_and_license_for_cpp_thousandslocale[]
 {
     "Context for this Copyright: cpp_thousandslocale\n"
     "\n"

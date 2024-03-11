@@ -2,7 +2,7 @@
 # acpphint's makefile.2018macMiniVM-49152MiB-Threads_11-LP64-Fedora_37_64bit-g++_12_O3lto-libstdc++-cpulockdown
 # example (as of requiring C++20 or later)
 #
-#  Copyright (c) 2015-2022 Mark Millard
+#  Copyright (c) 2015-2024 Mark Millard
 #  Copyright (C) 1994 by Iowa State University Research Foundation, Inc.
 #
 #  Note: Any acpphint*.{h,cpp} code or makefile code
@@ -70,7 +70,7 @@ OPT=            -O3 -flto
 #CPULOCKDOWN_OPT=
 CPULOCKDOWN_OPT=        -DWANT_CPU_LOCKDOWN
 # Not used for FreeBSD but used for Linux:
-CPULOCKDOWN_OPT+=       -DSMT_FACTOR=1u
+CPULOCKDOWN_OPT+=       -DSMT_FACTOR=1U
 # Note for FreeBSD: WANT_NUMA_TOO is implicit/automatic; not so for Linux
 #CPULOCKDOWN_OPT+=       -DWANT_NUMA_TOO
 # The below is for other_src_used/sys_cpubinding_lgplv2_1_okay.cpp that I do not

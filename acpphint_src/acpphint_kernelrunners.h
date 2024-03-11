@@ -44,7 +44,6 @@
 #ifndef acpphint_kernelrunners_guard
 #define acpphint_kernelrunners_guard
 
-//#include <__type_traits/decay.h>  // for std::__decay_t
 #include <chrono>                 // for std::chrono::duration, std::chrono:...
 #include <cstddef>                // for size_t, std::size_t
 #include "acpphint_kernels.h"     // for KernelResults

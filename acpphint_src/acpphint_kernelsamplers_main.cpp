@@ -61,123 +61,131 @@
 
 #include <exception>                  // for std::exception
 #include <iostream>                   // for std::__1::operator<<, std::basi...
+#include <span>                       // for std::span
 #include "acpphint_kernels.h"         // for PrimaryKernelInputs
+#include "acpphint_kernelrunners.h"   // for TIME_PARALLEL_THREAD_CREATION_TOO
 #include "acpphint_kernelsamplers.h"  // for KernelSampler, (indirectly) dsize_all_isize_all
 #include "cpp_clockinfo.h"            // for ClkInfo, HwConcurrencyCount
 #include "cpp_thousandslocale.h"      // for CppThousandsLocale
 #include "sys_cpubinding.h"           // for ConcurrencyCountForInDomains
 
-template<typename DSIZE,typename ISIZE>
-static void report_sampler(ClkInfo const& clock_info)
+namespace
 {
-    std::cout
+    template<typename DSIZE,typename ISIZE>
+    void report_sampler(ClkInfo const& clock_info)
+    {
+        std::cout
         << "serial. . .\n"
         << "\n" << std::flush;
 
-    PrimaryKernelInputs<DSIZE,ISIZE> const ki_serial(1u);
+        PrimaryKernelInputs<DSIZE,ISIZE> const ki_serial(1U);
 
-    std::cout
-        << "nproc:      " << ki_serial.nproc << "\n"
-        << "scx:        " << ki_serial.scx << "\n"
-        << "scy:        " << ki_serial.scy << "\n"
-        << "dmax:       " << ki_serial.dmax << "\n"
-        << "initial_dx: " << ki_serial.initial_dx << "\n"
-        << "\n" << std::flush;
+        std::cout
+            << "nproc:      " << ki_serial.nproc << "\n"
+            << "scx:        " << ki_serial.scx << "\n"
+            << "scy:        " << ki_serial.scy << "\n"
+            << "dmax:       " << ki_serial.dmax << "\n"
+            << "initial_dx: " << ki_serial.initial_dx << "\n"
+            << "\n" << std::flush;
 
-    auto const ks_serial_result{KernelSampler<DSIZE,ISIZE,TIME_PARALLEL_THREAD_CREATION_TOO>
+        auto const ks_serial_result{KernelSampler<DSIZE,ISIZE,TIME_PARALLEL_THREAD_CREATION_TOO>
                                     (clock_info,ki_serial)};
 
-    for (auto const& ksr : ks_serial_result)
-    {
-        if (0 == ksr.quips)
-            std::cout
-                << "\n"
-                << "stopped with, n:                    " << ksr.n << "\n"
-                << "ksr.kernel_result.eflag:            "
+        for (auto const& ksr : ks_serial_result)
+        {
+            if (0 == ksr.quips)
+                { std::cout
+                    << "\n"
+                    << "stopped with, n:                    " << ksr.n << "\n"
+                    << "ksr.kernel_result.eflag:            "
                     << static_cast<int>(ksr.run_result.kernel_result.eflag)
                     << "\n"
-                << "\n" << std::flush;
-        else
-        {
-            std::cout
-                << ksr.run_result.median_mean_sec_per_lap.count() << " "
-                << ksr.quips << " "
-                <<       ksr.run_result.median_mean_sec_per_lap.count()
+                    << "\n" << std::flush;
+                }
+            else
+                { std::cout
+                    << ksr.run_result.median_mean_sec_per_lap.count() << " "
+                    << ksr.quips << " "
+                    <<       ksr.run_result.median_mean_sec_per_lap.count()
                        * ksr.quips
                     << " "
-                << ksr.run_result.vectors_total_bytes << "\n";
+                    << ksr.run_result.vectors_total_bytes << "\n";
+            }
         }
-    }
 
-    if (!ks_serial_result.empty())
+        if (!ks_serial_result.empty())
+            { std::cout
+                << "\n"
+                << ks_serial_result.back().how_stopped_notes << std::flush;
+            }
+
+        HwConcurrencyCount thread_count{ConcurrencyCountForInDomains()};
+
+        if (thread_count<2U) { return; }
+
+        if (3U<thread_count) { thread_count= 3U; }
+
         std::cout
             << "\n"
-            << ks_serial_result.back().how_stopped_notes << std::flush;
+            << "threaded. . .\n"
+            << "\n" << std::flush;
 
-    HwConcurrencyCount thread_count{ConcurrencyCountForInDomains()};
+        PrimaryKernelInputs<DSIZE,ISIZE> const ki_parallel(thread_count);
 
-    if (thread_count<2u) return;
+        std::cout
+            << "nproc:          " << ki_parallel.nproc << "\n"
+            << "cx:            " << ki_parallel.scx << "\n"
+            << "scy:            " << ki_parallel.scy << "\n"
+            << "dmax:           " << ki_parallel.dmax << "\n"
+            << "initial_dx:     " << ki_parallel.initial_dx << "\n"
+            << "\n" << std::flush;
 
-    if (3u<thread_count) thread_count= 3u;
-
-    std::cout
-        << "\n"
-        << "threaded. . .\n"
-        << "\n" << std::flush;
-
-    PrimaryKernelInputs<DSIZE,ISIZE> ki_parallel(thread_count);
-
-    std::cout
-        << "nproc:          " << ki_parallel.nproc << "\n"
-        << "scx:            " << ki_parallel.scx << "\n"
-        << "scy:            " << ki_parallel.scy << "\n"
-        << "dmax:           " << ki_parallel.dmax << "\n"
-        << "initial_dx:     " << ki_parallel.initial_dx << "\n"
-        << "\n" << std::flush;
-
-    std::cout
-        << "NCHUNK(nproc):  "
+        std::cout
+            << "NCHUNK(nproc):  "
             <<    static_cast<long double>(ki_parallel.scx)
                 / static_cast<long double>(ki_parallel.nproc)
                 / static_cast<long double>(ki_parallel.initial_dx)
             << "\n"
-        << "\n" << std::flush;
+            << "\n" << std::flush;
 
-    auto const ks_parallel_result{KernelSampler<DSIZE,ISIZE,TIME_PARALLEL_THREAD_CREATION_TOO>
+        auto const ks_parallel_result{KernelSampler<DSIZE,ISIZE,TIME_PARALLEL_THREAD_CREATION_TOO>
                                       (clock_info,ki_parallel)};
 
-    for (auto const& ksr : ks_parallel_result)
-    {
-        if (0 == ksr.quips)
-            std::cout
-                << "\n"
-                << "stopped with, n:                    " << ksr.n << "\n"
-                << "ksr.kernel_result.eflag:            "
-                    << static_cast<int>(ksr.run_result.kernel_result.eflag)
-                    << "\n"
-                << "\n" << std::flush;
-        else
+        for (auto const& ksr : ks_parallel_result)
         {
-            std::cout
-                << ksr.run_result.median_mean_sec_per_lap.count() << " "
-                << ksr.quips << " "
-                <<       ksr.run_result.median_mean_sec_per_lap.count()
-                       * ksr.quips
-                    << " "
-                << ksr.run_result.vectors_total_bytes << "\n";
+            if (0 == ksr.quips)
+                { std::cout
+                    << "\n"
+                    << "stopped with, n:                    " << ksr.n << "\n"
+                    << "ksr.kernel_result.eflag:            "
+                        << static_cast<int>(ksr.run_result.kernel_result.eflag)
+                        << "\n"
+                    << "\n" << std::flush;
+                }
+            else
+                { std::cout
+                    << ksr.run_result.median_mean_sec_per_lap.count() << " "
+                    << ksr.quips << " "
+                    <<       ksr.run_result.median_mean_sec_per_lap.count()
+                           * ksr.quips
+                        << " "
+                    << ksr.run_result.vectors_total_bytes << "\n";
+                }
         }
+
+        if (!ks_parallel_result.empty())
+            { std::cout
+                << "\n"
+                << ks_parallel_result.back().how_stopped_notes << std::flush;
+            }
     }
+};
 
-    if (!ks_parallel_result.empty())
-        std::cout
-            << "\n"
-            << ks_parallel_result.back().how_stopped_notes << std::flush;
-}
-
-int main(int argc, const char* argv[])
+auto main(int argc, const char* argv[]) -> int
 try
 {
-    if (0==argc || nullptr==argv[0] || '\0'==*argv[0])
+    std::span const args_span(argv,argc);
+    if (args_span.empty() || nullptr==args_span[0U] || '\0'==*args_span[0U])
     {
         std::cout
             << "argv[0] does not provide program name\n";
@@ -185,7 +193,7 @@ try
     }
 
     std::cout
-        << argv[0u] << " . . .\n"
+        << args_span[0U] << " . . .\n"
         << "acpphint_kernelsamplers_main version: "
            ACPPHINTKERNELSAMPLERS_VERS "\n"
         << "\n" << std::flush;
@@ -194,14 +202,16 @@ try
     std::cout.imbue(CppThousandsLocale());
 
     std::cout
-        << argv[0u] << " . . .\n"
+        << args_span[0U] << " . . .\n"
         << "\n";
 
     ClkInfo clock_info{};
 
 // Edit as needed to add more alternatives (or disable some):
-    if constexpr (false)
-        if constexpr (dsize_all_isize_all) {
+    if constexpr (false) // NOLINT(readability-simplify-boolean-expr)
+    {
+        if constexpr (dsize_all_isize_all)
+        {
             std::cout
                 << "\n"
                 << "DSIZE=long double, ISIZE=unsigned long long:\n"
@@ -272,6 +282,7 @@ try
 
             report_sampler<float,unsigned int>(clock_info);
         }
+    }
 
     std::cout
         << "\n"
@@ -332,7 +343,7 @@ catch(...)
 }
 
 
-char copyright_and_license_for_acpphintkernelsurveyors_main[]
+extern "C" char const copyright_and_license_for_acpphintkernelsurveyors_main[]
 {
     "Context for this Copyright: acpphint_kernelsurveyors_main\n"
     "\n"

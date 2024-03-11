@@ -36,11 +36,11 @@ auto ConcurrencyCountForInDomains() -> unsigned int; // matching c++ type
 // This is a total across NUMA memory domains,
 // thinking of non-NUMA as 1 memory domain.
 
-void RestrictThreadToCpu(unsigned int cpu_num, unsigned int num_cpu_used);
+void RestrictThreadToCpu(unsigned int cpu_num, unsigned int num_cpus_used);
 // Includes assigning a "interleave policy" to try to
 // memory in a way allowing more bandwidth.
 //
-// cpu_num: 0u <= cpu_num < #cpus is a caller side
+// cpu_num: 0U <= cpu_num < #cpus is a caller side
 // numbering, not necessarily a system numbering.
 
 #endif // sys_cpubinding_guard

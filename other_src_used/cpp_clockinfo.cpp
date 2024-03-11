@@ -35,24 +35,18 @@
 //
 
 #include "cpp_clockinfo.h"
-//#include <__chrono/duration.h>          // for std::chrono::operator<=>, std...
-//#include <__chrono/time_point.h>        // for std::chrono::operator<=>, std...
-//#include <__compare/ordering.h>         // for std::operator<, std::operator<=
-//#include <__iterator/access.h>          // for std::__1::begin, std::__1::end
-//#include <__system_error/error_code.h>  // for std::__1::operator==
-//#include <__type_traits/decay.h>        // for std::__decay_t
-//#include <__utility/move.h>             // for std::move
 #include <algorithm>                    // for std::max, std::sort, std::min
 #include <chrono>                       // for std::chrono::duration, std::c...
-#include <compare>                      // for std::strong_ordering
 #include <future>                       // for std::future, std::packaged_task
 #include <iostream>                     // for std::basic_ostream, std::__1:...
 #include <iterator>                     // for std::next
-#include <ratio>                        // for std::ratio
 #include <stdexcept>                    // for std::runtime_error
 #include <string>                       // for std::char_traits, std::allocator
 #include <system_error>                 // for std::system_error, std::errc
 #include <thread>                       // for std::thread
+#include <vector>                       // for std::vector
+#include <sstream>                      // for std::ostringstream
+#include <utility>                      // for std::move
 #include "cpp_thousandslocale.h"        // for CppThousandsLocale
 
 // Definitions for ClkInfo . . .
@@ -72,8 +66,15 @@ ClkInfo::ClkInfo(DurationsStatus durations_status)
 
     struct end_scope_cleaner
     {
-        end_scope_cleaner(decltype(cleaner) const& c) : clean_with(c) {}
-        ~end_scope_cleaner()                            { clean_with(); }
+        explicit end_scope_cleaner(decltype(cleaner) const& clnr) : clean_with(clnr) {}
+        ~end_scope_cleaner()                                          { clean_with(); }
+
+        end_scope_cleaner()                                             = delete;
+        end_scope_cleaner(end_scope_cleaner&&)                          = delete;
+        auto operator=(const end_scope_cleaner&&) -> end_scope_cleaner& = delete;
+        end_scope_cleaner(const end_scope_cleaner&)                     = delete;
+        auto operator=(const end_scope_cleaner&)  -> end_scope_cleaner& = delete;
+
     private:
         decltype(cleaner) const& clean_with;
     } const end_scope_clean_with{cleaner};
@@ -140,7 +141,7 @@ ClkInfo::ClkInfo(DurationsStatus durations_status)
         }
     };
 
-    observed_durations.reserve(back_to_back_tps.size()-1u);
+    observed_durations.reserve(back_to_back_tps.size()-1U);
 
     auto const find_and_sort_deltas
     {
@@ -187,11 +188,11 @@ ClkInfo::ClkInfo(DurationsStatus durations_status)
         , "now() did not produce all-non-negative preliminary back_to_back_tps deltas"
         );
 
-    zero_duration_observed= observed_durations.at(0u) == Duration::zero();
+    zero_duration_observed= observed_durations.at(0U) == Duration::zero();
 
     back_to_back_tps    .clear();
     observed_durations  .clear();
-    back_to_back_tps    .reserve(num_durations_sampled_per_instance+1u);
+    back_to_back_tps    .reserve(num_durations_sampled_per_instance+1U);
     observed_durations  .reserve(num_durations_sampled_per_instance);
 
     auto const progress_failure_test
@@ -216,7 +217,7 @@ ClkInfo::ClkInfo(DurationsStatus durations_status)
                 , "now() did not produce all-positive deltas for back_to_back_tps"
                 );
 
-            duration_overhead= observed_durations.at(0u);
+            duration_overhead= observed_durations.at(0U);
         }
         catch (const std::runtime_error& e)
         {
@@ -236,7 +237,7 @@ ClkInfo::ClkInfo(DurationsStatus durations_status)
         {            
             auto new_tp{Now()};
             while (new_tp == prev_tp)
-                new_tp= Now();
+                { new_tp= Now(); }
 
             back_to_back_tps.emplace_back(prev_tp);
             prev_tp = new_tp;
@@ -251,14 +252,14 @@ ClkInfo::ClkInfo(DurationsStatus durations_status)
     }
 
     auto large_percentile_at
-        {(large_percentile*(observed_durations.size()-1u))/percentile_scale};
+        {(large_percentile*(observed_durations.size()-1U))/percentile_scale};
 
     duration_spanning_large_percentile
                                 = observed_durations.at(large_percentile_at);
 
-    // Avoid odd 0u == small_scale_duration_variability if we can:
+    // Avoid odd 0U == small_scale_duration_variability if we can:
     while (  duration_spanning_large_percentile == duration_overhead
-          && large_percentile_at < observed_durations.size()-1u
+          && large_percentile_at < observed_durations.size()-1U
           )
         {
             large_percentile_at++;
@@ -280,7 +281,7 @@ ClkInfo::ClkInfo(DurationsStatus durations_status)
     if (DurationsStatus::Forget == durations_status)
     {
         observed_durations.clear();
-        Durations{observed_durations}.swap(observed_durations);
+        observed_durations.shrink_to_fit();
     }
 }
 
@@ -317,25 +318,25 @@ void ClkInfo::Merge(const ClkInfo& OtherClkInfoExample)
     // In other words: ObservedDurationsSortedWeaklyIncreasing()
     // then returns an empty Durations value.
     observed_durations.clear();
-    Durations{observed_durations}.swap(observed_durations);
+    observed_durations.shrink_to_fit();
 }
 
-auto ClkInfo::nsFormatted(Duration const& d) -> std::string
+auto ClkInfo::nsFormatted(Duration const& dur) -> std::string
 {
     std::ostringstream out{};
     out.imbue(CppThousandsLocale());
 
-    out << std::chrono::duration_cast<std::chrono::nanoseconds>(d).count();
+    out << std::chrono::duration_cast<std::chrono::nanoseconds>(dur).count();
 
     return out.str();
 }
 
 auto ClkInfoFromThreads( ClkInfo::DurationsStatus durations_status
-                       , HwConcurrencyCount requested_threads // 0u: get from c++
+                       , HwConcurrencyCount requested_threads // 0U: get from c++
                        ) -> std::vector<ClkInfo>
 {
-    if (0u == requested_threads)
-        requested_threads= std::thread::hardware_concurrency();
+    if (0U == requested_threads)
+        { requested_threads= std::thread::hardware_concurrency(); }
 
     auto parallel_code{[durations_status](){return ClkInfo{durations_status};}};
 
@@ -346,7 +347,7 @@ auto ClkInfoFromThreads( ClkInfo::DurationsStatus durations_status
     // Use std::jthread when clang allows it.
     parallel_tasks_thread.reserve(requested_threads);
 
-    for(auto threads_to_do{requested_threads}; 0u<threads_to_do; --threads_to_do)
+    for(auto threads_to_do{requested_threads}; 0U<threads_to_do; --threads_to_do)
     {
         try
         {
@@ -358,7 +359,8 @@ auto ClkInfoFromThreads( ClkInfo::DurationsStatus durations_status
         }
         catch(std::system_error& e)
         {
-            if (e.code() == std::errc::resource_unavailable_try_again) break;
+            if (e.code() == std::errc::resource_unavailable_try_again)
+                { break; }
 
             for(auto& parallel_task_thread : parallel_tasks_thread)
             {
@@ -389,7 +391,7 @@ auto ClkInfoFromThreads( ClkInfo::DurationsStatus durations_status
     return threads_clock_infos;
 }
 
-char copyright_and_license_for_cpp_clockinfo[]
+extern "C" char const copyright_and_license_for_cpp_clockinfo[]
 {
     "Context for this Copyright: cpp_clockinfo\n"
     "\n"

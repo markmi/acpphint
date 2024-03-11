@@ -30,13 +30,15 @@
 #include <thread>     // for std::thread
 
 #if defined(__FreeBSD__) && defined(WANT_CPU_LOCKDOWN)
-#include <sys/param.h>
-#include <sys/domainset.h>
-#include <strings.h> // for ffsl and such that cpuset.h causes to be involved.
-#include <sys/cpuset.h>
+#include <sys/types.h>      // for cpusetid_t, id_t
+#include <sys/_domainset.h> // for domainset_t
+#include <sys/domainset.h>  // for DOMAINSET_* macro-based operations and such
+#include <sys/_cpuset.h>    // for cpuset_t
+#include <sys/cpuset.h>     // for CPU_* macro-based operations and such
 
 #include <vector>
 #include <iostream>
+#include <string>
 
 struct cpu_and_domain_sets
 {
@@ -46,123 +48,77 @@ struct cpu_and_domain_sets
 
 struct sys_cpubinding
 {
+// NOTE: Only instance is const after construction
+// NOLINTBEGIN(misc-non-private-member-variables-in-classes)
     cpusetid_t cpusetid{};
 
-    std::vector<cpu_and_domain_sets> singleton_sets{}; // Indexed by cpu_num.
+    std::vector<cpu_and_domain_sets> singleton_sets{}; // Indexed by cpu_num. // NOLINT(readability-redundant-member-init)
 
-    unsigned int domain_count{0u};
-    unsigned int concurrency_count_for_in_domains{0u}; // Matching c++ type
+    unsigned int domain_count{0U};
+    unsigned int concurrency_count_for_in_domains{0U}; // Matching c++ type
+// NOLINTEND(misc-non-private-member-variables-in-classes)
 
-    sys_cpubinding()
+private:
+// NOLINTBEGIN(readability-function-cognitive-complexity)
+    auto domains_and_domain_cpu_sets(auto const& dom_set,auto const& cpu_set,auto& domain_info) -> void
     {
-        if (0 != cpuset(&cpusetid))
-            throw std::runtime_error("cpuset failed.");
-
-        domainset_t dom_set;
-        int memdom_policy;
-
-        std::vector<cpu_and_domain_sets> domain_info{};
-
-        cpuset_t cpu_set;
-
-        if  (0 != cpuset_getaffinity( CPU_LEVEL_WHICH
-                                    , CPU_WHICH_PID
-                                    , id_t{-1} // current process
-                                    , sizeof(cpu_set)
-                                    , &cpu_set
-                                    )
-            )
-            throw std::runtime_error("failed to identify an affinity");
-
-        std::cout << "os PID (not NUMA domain) affinity #cpus: "
-                  << std::to_string(CPU_COUNT(&cpu_set))
-                  << "\n";
-
-        if  (0 != cpuset_getdomain  ( CPU_LEVEL_WHICH
-                                    , CPU_WHICH_PID
-                                    , id_t{-1} // current process
-                                    , sizeof(dom_set)
-                                    , &dom_set
-                                    , &memdom_policy
-                                    )
-            )
-            throw std::runtime_error("Failed to identify memory domains");
-
-        for (id_t d{0u}; d<DOMAINSET_SETSIZE; ++d)
+        for (id_t dnum{0U}; dnum<DOMAINSET_SETSIZE; ++dnum)
         {
-            if (DOMAINSET_ISSET(d,&dom_set))
+            if (DOMAINSET_ISSET(dnum,&dom_set))
             {
                 cpuset_t dcpu_set;
 
                 if  (0 != cpuset_getaffinity( CPU_LEVEL_WHICH
                                             , CPU_WHICH_DOMAIN
-                                            , d
+                                            , dnum
                                             , sizeof(dcpu_set)
                                             , &dcpu_set
                                             )
                     )
-                    throw std::runtime_error("failed to identify an affinity");
+                    { throw std::runtime_error("failed to identify an affinity"); }
 
                 cpuset_t filtered_dcpu_set;
                 CPU_COPY(&dcpu_set, &filtered_dcpu_set);
                 CPU_AND(&filtered_dcpu_set, &filtered_dcpu_set, &cpu_set);
 
-                unsigned int domain_concurrency_count= CPU_COUNT(&filtered_dcpu_set);
+                unsigned int const domain_concurrency_count= CPU_COUNT(&filtered_dcpu_set);
 
-                if (0u == domain_concurrency_count) continue;
+                if (0U == domain_concurrency_count) { continue; }
 
                 // Positive domain_concurrency_count . . .
 
                 concurrency_count_for_in_domains+= domain_concurrency_count;
 
-                std::cout << "os domain " << std::to_string(d) << " filtered affinity #cpus: "
+                std::cout << "os domain " << std::to_string(dnum) << " filtered affinity #cpus: "
                           << std::to_string(domain_concurrency_count)
                           << "\n";
 
                 domainset_t domain_as_set{};
-                DOMAINSET_SETOF(d,&domain_as_set);
+                DOMAINSET_SETOF(dnum,&domain_as_set);
 
                 domain_info.emplace_back
                             (cpu_and_domain_sets{filtered_dcpu_set,domain_as_set});
             }
         }
+    }
 
-        domain_count= domain_info.size();
-
-        if (0u == domain_count)
-        {
-            concurrency_count_for_in_domains= CPU_COUNT(&cpu_set);
-
-            domainset_t domain_as_set{};
-            DOMAINSET_ZERO(&domain_as_set);
-
-            domain_info.emplace_back
-                        (cpu_and_domain_sets{cpu_set,domain_as_set});
-        }
-
-
-        if (concurrency_count_for_in_domains < 1u)
-            concurrency_count_for_in_domains
-                                        = std::thread::hardware_concurrency();
-
-        if (concurrency_count_for_in_domains < 1u)
-            concurrency_count_for_in_domains= 1u;
-
+    auto prog_cpunum_to_os_cpuid(auto& domain_info) -> void
+    {
         // Number cpus going across domains first:
-        unsigned int domain_num{0u};
-        for ( unsigned int cpu_num{0u}
+        unsigned int domain_num{0U};
+        for ( unsigned int cpu_num{0U}
             ; cpu_num<concurrency_count_for_in_domains
             ; ++cpu_num
             )
         {
             unsigned int cpu_ffs= CPU_FFS(&domain_info[domain_num].cpu_set);
-            while (0u == cpu_ffs)   // Avoid assuming all domains have
+            while (0U == cpu_ffs)   // Avoid assuming all domains have
             {                       // the same count of cpus.
-                domain_num= (domain_num+1u)%domain_count;
+                domain_num= (domain_num+1U)%domain_count;
                 cpu_ffs=    CPU_FFS(&domain_info[domain_num].cpu_set);
             }
 
-            unsigned int const cpu_id= cpu_ffs-1u;
+            unsigned int const cpu_id= cpu_ffs-1U;
             CPU_CLR(cpu_id,&domain_info[domain_num].cpu_set);
 
             cpuset_t cpu_as_set{};
@@ -180,9 +136,74 @@ struct sys_cpubinding
                       << "\n";
         }
     }
+// NOLINTEND(readability-function-cognitive-complexity)
+
+public:
+    sys_cpubinding()
+    {
+        if (0 != cpuset(&cpusetid))
+            { throw std::runtime_error("cpuset failed."); }
+
+        domainset_t dom_set;
+        int memdom_policy{};
+
+        std::vector<cpu_and_domain_sets> domain_info{};
+
+        cpuset_t cpu_set;
+
+        if  (0 != cpuset_getaffinity( CPU_LEVEL_WHICH
+                                    , CPU_WHICH_PID
+                                    , id_t{-1} // current process
+                                    , sizeof(cpu_set)
+                                    , &cpu_set
+                                    )
+            )
+            { throw std::runtime_error("failed to identify an affinity"); }
+
+        std::cout << "os PID (not NUMA domain) affinity #cpus: "
+                  << std::to_string(CPU_COUNT(&cpu_set))
+                  << "\n";
+
+        if  (0 != cpuset_getdomain  ( CPU_LEVEL_WHICH
+                                    , CPU_WHICH_PID
+                                    , id_t{-1} // current process
+                                    , sizeof(dom_set)
+                                    , &dom_set
+                                    , &memdom_policy
+                                    )
+            )
+            { throw std::runtime_error("Failed to identify memory domains"); }
+
+        domains_and_domain_cpu_sets(dom_set,cpu_set,domain_info);
+
+        domain_count= domain_info.size();
+
+        if (0U == domain_count)
+        {
+            concurrency_count_for_in_domains= CPU_COUNT(&cpu_set);
+
+            domainset_t domain_as_set{};
+            DOMAINSET_ZERO(&domain_as_set);
+
+            domain_info.emplace_back
+                        (cpu_and_domain_sets{cpu_set,domain_as_set});
+        }
+
+
+        if (concurrency_count_for_in_domains < 1U)
+            { concurrency_count_for_in_domains
+                                        = std::thread::hardware_concurrency();
+            }
+
+        if (concurrency_count_for_in_domains < 1U)
+            { concurrency_count_for_in_domains= 1U; }
+
+        prog_cpunum_to_os_cpuid(domain_info);
+    }
 };
 
-static struct sys_cpubinding const cpus_info{};
+static struct sys_cpubinding const cpus_info{}; // NOLINT(cert-err58-cpp)
+// NOTE: The unlikely throws need not be caught for constructing a static.
 
 auto ConcurrencyCountForInDomains() -> unsigned int // matching c++ type
 {
@@ -191,22 +212,24 @@ auto ConcurrencyCountForInDomains() -> unsigned int // matching c++ type
 
 void RestrictThreadToCpu(unsigned int cpu_num, unsigned int num_cpus_used)
 {
-    unsigned int num_cpus= cpus_info.singleton_sets.size();
+    unsigned int const num_cpus= cpus_info.singleton_sets.size();
 
     if (num_cpus < num_cpus_used)
-        throw     std::runtime_error(std::string("#cpus vs. #cpus_used: ")
+        { throw   std::runtime_error(std::string("#cpus vs. #cpus_used: ")
                 + std::to_string(num_cpus) + " == #cpus"
                 + " < "
                 + "#cpu_used == " + std::to_string(num_cpus_used));
+        }
 
     if (num_cpus_used <= cpu_num)
-        throw std::runtime_error("#cpus_used vs. cpu#: "
+        { throw   std::runtime_error("#cpus_used vs. cpu#: "
                 + std::to_string(num_cpus_used) + " == #cpus_used"
                 + " <= "
                 + "cpu# == " + std::to_string(cpu_num));
+        }
 
-    unsigned int c{cpu_num*(num_cpus/num_cpus_used)};
-        // 'c' skips cpus when a fraction are in use.
+    unsigned int const c_at{cpu_num*(num_cpus/num_cpus_used)};
+        // 'c_at' skips cpus when a fraction are in use.
         // This can tend to avoid hyperthreads or other
         // such with extra shared-resource constraints.
         //
@@ -217,25 +240,25 @@ void RestrictThreadToCpu(unsigned int cpu_num, unsigned int num_cpus_used)
     if  (0 != cpuset_setaffinity( CPU_LEVEL_WHICH
                                 , CPU_WHICH_TID
                                 , id_t{-1} // current thread
-                                , sizeof(cpus_info.singleton_sets.at(c).cpu_set)
-                                , &cpus_info.singleton_sets.at(c).cpu_set
+                                , sizeof(cpus_info.singleton_sets.at(c_at).cpu_set)
+                                , &cpus_info.singleton_sets.at(c_at).cpu_set
                                 )
         )
-        throw std::runtime_error("failed to set cpu");
+        { throw std::runtime_error("failed to set cpu"); }
 
     // Has the thread migrated by here?
 
-    if (cpus_info.domain_count < 2u) return; // Nothing more to do
+    if (cpus_info.domain_count < 2U) { return; } // Nothing more to do
 
     if  (0 != cpuset_setdomain  ( CPU_LEVEL_WHICH
                                 , CPU_WHICH_TID
                                 , id_t{-1} // current thread
-                                , sizeof(cpus_info.singleton_sets.at(c).domain_set)
-                                , &cpus_info.singleton_sets.at(c).domain_set
+                                , sizeof(cpus_info.singleton_sets.at(c_at).domain_set)
+                                , &cpus_info.singleton_sets.at(c_at).domain_set
                                 , DOMAINSET_POLICY_INTERLEAVE
                                 )
         )
-        throw std::runtime_error("Failed to set numa memory domain");
+        { throw std::runtime_error("Failed to set numa memory domain"); }
 }
 
 #elif defined(__NetBSD__) && defined(WANT_CPU_LOCKDOWN)
@@ -251,21 +274,21 @@ struct sys_cpubinding
 
     std::vector<cpuset_t*> singleton_sets{}; // Indexed by cpu_num.
 
-    unsigned int concurrency_count{0u}; // Matching c++ type
+    unsigned int concurrency_count{0U}; // Matching c++ type
 
     sys_cpubinding()
     {
         if (!cpu_set)
-            throw std::runtime_error("cpuset_create failed.");
+            { throw std::runtime_error("cpuset_create failed."); }
 
         if  (0 != pthread_getaffinity_np( pthread_self()
                                         , cpuset_size(cpu_set)
                                         , cpu_set
                                         )
             )
-            throw std::runtime_error("failed to identify an affinity");
+            { throw std::runtime_error("failed to identify an affinity"); }
 
-        cpuid_t upper_bound_cpus{8u*cpuset_size(cpu_set)};
+        cpuid_t upper_bound_cpus{8U*cpuset_size(cpu_set)};
         cpuid_t cpu_id{0};
         for (; cpu_id < upper_bound_cpus; ++cpu_id) {
             int const cpu_status{cpuset_isset(cpu_id, cpu_set)};
@@ -278,14 +301,14 @@ struct sys_cpubinding
 
         upper_bound_cpus= cpu_id;
 
-        if (concurrency_count < 1u) {
+        if (concurrency_count < 1U) {
             concurrency_count = std::thread::hardware_concurrency();
             cpu_id = upper_bound_cpus = concurrency_count;
             while (0<cpu_id)
                 cpuset_set(--cpu_id, cpu_set);
         }
 
-        cpu_id= 0u;
+        cpu_id= 0U;
         for (; cpu_id<upper_bound_cpus; ++cpu_id)
         {
             int const cpu_status{cpuset_isset(cpu_id, cpu_set)};
@@ -295,21 +318,21 @@ struct sys_cpubinding
 
             cpuset_t* cpu_as_set{cpuset_create()};
             if (!cpu_as_set)
-                throw std::runtime_error("cpuset_create failed.");
+                { throw std::runtime_error("cpuset_create failed."); }
 
             cpuset_set(cpu_id, cpu_as_set);
 
             singleton_sets.emplace_back(cpu_as_set);
 
             std::cout << "Program's cpu_num: "
-                      << std::to_string(singleton_sets.size()-1u)
+                      << std::to_string(singleton_sets.size()-1U)
                       << " has operating system cpu_id: "
                       << std::to_string(cpu_id)
                       << "\n";
         }
 
-        if (0u == singleton_sets.size())
-            throw std::runtime_error("failed to identify any cpus");
+        if (0U == singleton_sets.size())
+            { throw std::runtime_error("failed to identify any cpus"); }
     }
 
     ~sys_cpubinding()
@@ -336,28 +359,30 @@ void RestrictThreadToCpu(unsigned int cpu_num, unsigned int num_cpus_used)
     unsigned int num_cpus= cpus_info.singleton_sets.size();
 
     if (num_cpus < num_cpus_used)
-        throw     std::runtime_error(std::string("#cpus vs. #cpus_used: ")
+        { throw   std::runtime_error(std::string("#cpus vs. #cpus_used: ")
                 + std::to_string(num_cpus) + " == #cpus"
                 + " < "
                 + "#cpu_used == " + std::to_string(num_cpus_used));
+        }
 
     if (num_cpus_used <= cpu_num)
-        throw std::runtime_error("#cpus_used vs. cpu#: "
+        { throw   std::runtime_error("#cpus_used vs. cpu#: "
                 + std::to_string(num_cpus_used) + " == #cpus_used"
                 + " <= "
                 + "cpu# == " + std::to_string(cpu_num));
+        }
 
-    unsigned int c{cpu_num*(num_cpus/num_cpus_used)};
-        // 'c' skips cpus when a fraction are in use.
+    unsigned int c_at{cpu_num*(num_cpus/num_cpus_used)};
+        // 'c_at' skips cpus when a fraction are in use.
         // This can tend to avoid hyperthreads or other
         // such with extra shared-resource constraints.
 
     if  (0 != pthread_setaffinity_np( pthread_self()
-                                    , cpuset_size(cpus_info.singleton_sets.at(c))
-                                    , cpus_info.singleton_sets.at(c)
+                                    , cpuset_size(cpus_info.singleton_sets.at(c_at))
+                                    , cpus_info.singleton_sets.at(c_at)
                                     )
         )
-        throw std::runtime_error("failed to set cpu");
+        { throw std::runtime_error("failed to set cpu"); }
 
     // Has the thread migrated by here?
 }
@@ -383,7 +408,7 @@ void RestrictThreadToCpu(unsigned int cpu_num, unsigned int num_cpus_used)
 auto ConcurrencyCountForInDomains() -> unsigned int // matching c++ type
 {
     unsigned int concurrency{std::thread::hardware_concurrency()};
-    return (concurrency<1u) ? 1u : concurrency;
+    return (concurrency<1U) ? 1U : concurrency;
 }
 
 void RestrictThreadToCpu(unsigned int cpu_num, unsigned int num_cpus_used)
@@ -391,17 +416,17 @@ void RestrictThreadToCpu(unsigned int cpu_num, unsigned int num_cpus_used)
     auto const num_cpus= ConcurrencyCountForInDomains();
 
     if (num_cpus < num_cpus_used)
-        throw std::runtime_error("#cpu_used: #cpus<#cpu_used");
+        { throw std::runtime_error("#cpu_used: #cpus<#cpu_used"); }
 
     if (num_cpus_used <= cpu_num)
-        throw std::runtime_error("cpu_num: #cpu_used<=cpu_num");
+        { throw std::runtime_error("cpu_num: #cpu_used<=cpu_num"); }
 
     // Nothing to do
 }
 
 #endif // of alternatives for handling WANT_CPU_LOCKDOWN
 
-char copyright_and_license_for_sys_cpubinding[]
+extern "C" char const copyright_and_license_for_sys_cpubinding[]
 {
     "Context for this Copyright: sys_cpubinding\n"
     "\n"

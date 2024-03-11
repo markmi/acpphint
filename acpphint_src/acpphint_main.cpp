@@ -56,202 +56,214 @@
 // Thus some combinations may have no data to plot.
 //
 
-#include <algorithm>                  // for std::max
-#include <cerrno>                     // for ERANGE, errno
-#include <climits>                    // for ULONG_MAX, UINT_MAX, ULLONG_MAX
-#include <cstdlib>                    // for strtoul, std::strtoul
-#include <exception>                  // for std::exception
-#include <iostream>                   // for std::__1::operator<<, std::basi...
-#include <fstream>      // open and related.
-#include <limits>                     // for std::numeric_limits
-#include <stdexcept>                  // for std::runtime_error
-#include <string>                     // for std::char_traits, std::allocator
-#include "acpphint_kernels.h"         // for PrimaryKernelInputs, KernelResults
-#include "acpphint_kernelsamplers.h"  // for KernelSampler, (indirectly) dsize_all_isize_all
-#include "cpp_clockinfo.h"            // for HwConcurrencyCount, ClkInfo
-#include "sys_cpubinding.h"           // for ConcurrencyCountForInDomains
+#include <algorithm>                 // for std::max
+#include <cerrno>                    // for ERANGE, errno
+#include <climits>                   // for ULONG_MAX, UINT_MAX, ULLONG_MAX
+#include <cstdlib>                   // for strtoul, std::strtoul
+#include <exception>                 // for std::exception
+#include <iostream>                  // for std::__1::operator<<, std::basi...
+#include <fstream>                   // open and related.
+#include <limits>                    // for std::numeric_limits
+#include <stdexcept>                 // for std::runtime_error
+#include <string>                    // for std::char_traits, std::allocator
+#include <span>                      // for std::span
+#include "acpphint_kernels.h"        // for PrimaryKernelInputs, KernelResults
+#include "acpphint_kernelrunners.h"  // for TIME_PARALLEL_THREAD_CREATION_TOO
+#include "acpphint_kernelsamplers.h" // for KernelSampler, (indirectly) dsize_all_isize_all
+#include "cpp_clockinfo.h"           // for HwConcurrencyCount, ClkInfo
+#include "sys_cpubinding.h"          // for ConcurrencyCountForInDomains
 
-template<typename DSIZE,typename ISIZE, bool want_parallel_thread_creation_time_included>
-static void report_samples  ( std::string                       const& filename
-                            , ClkInfo                           const& clock_info
-                            , PrimaryKernelInputs<DSIZE,ISIZE>  const& ki
-                            )
+namespace
 {
-    std::cout
-        << "generating: " << filename << "\n" <<std::flush;
-
-    auto const ks_result{KernelSampler<DSIZE,ISIZE,want_parallel_thread_creation_time_included>
-                             (clock_info,ki)};
-
-    if (ks_result.empty())
+    template<typename DSIZE,typename ISIZE, bool want_parallel_thread_creation_time_included>
+    void report_samples  ( std::string                       const& filename
+                                , ClkInfo                           const& clock_info
+                                , PrimaryKernelInputs<DSIZE,ISIZE>  const& ki // NOLINT(readability-identifier-length)
+                                )
     {
         std::cout
-            << "empty result for "+filename+" so no file.\n" << std::flush;
-    }
-    else if (0 == ks_result.front().quips)
-    {
-        std::cout
-            << "empty result for "+filename+" so no file.\n"
-            << "note: ksr.kernel_result.eflag: "
-                << static_cast<int>
-                            (ks_result.front().run_result.kernel_result.eflag)
-                << "\n"
-            << "\n" << std::flush;
-    }
-    else
-    {
-        std::cout << ks_result.back().how_stopped_notes << std::flush;
+            << "generating: " << filename << "\n" <<std::flush;
 
-        std::ofstream gnuplot_data(filename);
+        auto const ks_result{KernelSampler<DSIZE,ISIZE,want_parallel_thread_creation_time_included>
+                                 (clock_info,ki)};
 
-        if (gnuplot_data.fail())
+        if (ks_result.empty())
         {
-        	throw std::runtime_error("unable to open: "+filename);
-    	    return;
+            std::cout
+                << "empty result for "+filename+" so no file.\n" << std::flush;
         }
-
-        std::cout
-            << "writing:    " << filename << "\n" <<std::flush;
-
-        gnuplot_data    << "# filename: " << filename << "\n"
-                        << "# acpphint_main version: " ACPPHINT_VERS "\n"
-                        << "\n" << std::flush;
-
-        for (auto const& ksr : ks_result)
+        else if (0 == ks_result.front().quips)
         {
-            if (0 == ksr.quips)
-                std::cout
-                    << "stopped with, n:                    " << ksr.n << "\n"
-                    << "ksr.kernel_result.eflag:            "
-                        << static_cast<int>(ksr.run_result.kernel_result.eflag)
-                        << "\n"
-                    << "\n" << std::flush;
-            else
+            std::cout
+                << "empty result for "+filename+" so no file.\n"
+                << "note: ksr.kernel_result.eflag: "
+                    << static_cast<int>
+                                (ks_result.front().run_result.kernel_result.eflag)
+                    << "\n"
+                << "\n" << std::flush;
+        }
+        else
+        {
+            std::cout << ks_result.back().how_stopped_notes << std::flush;
+
+            std::ofstream gnuplot_data(filename);
+
+            if (gnuplot_data.fail())
             {
-                gnuplot_data
-                    << ksr.run_result.median_mean_sec_per_lap.count() << " "
-                    << ksr.quips << " "
-                    <<   ksr.run_result.median_mean_sec_per_lap.count()
-                       * ksr.quips
-                        << " "
-                    << ksr.run_result.vectors_total_bytes << "\n";
+                throw std::runtime_error("unable to open: "+filename);
+                return;
+            }
 
-                if  (   KernelResults<DSIZE,ISIZE>::EFlag::DISCRET
-                     == ksr.run_result.kernel_result.eflag
-                    )
+            std::cout
+                << "writing:    " << filename << "\n" <<std::flush;
+
+            gnuplot_data    << "# filename: " << filename << "\n"
+                            << "# acpphint_main version: " ACPPHINT_VERS "\n"
+                            << "\n" << std::flush;
+
+            for (auto const& ksr : ks_result)
+            {
+                if (0 == ksr.quips)
+                    { std::cout
+                        << "stopped with, n:                    " << ksr.n << "\n"
+                        << "ksr.kernel_result.eflag:            "
+                            << static_cast<int>(ksr.run_result.kernel_result.eflag)
+                            << "\n"
+                        << "\n" << std::flush;
+                    }
+                else
                 {
-                    std::cout
-                        << "stopped with, n:                    " << ksr.n
-                        << "\n"
-                        << "ksr.kernel_result.eflag:            DISCRET ("
-                        << std::to_string(static_cast<int>(ksr.run_result.kernel_result.eflag))
-                        << ")\n" << std::flush;
+                    gnuplot_data
+                        << ksr.run_result.median_mean_sec_per_lap.count() << " "
+                        << ksr.quips << " "
+                        <<   ksr.run_result.median_mean_sec_per_lap.count()
+                           * ksr.quips
+                            << " "
+                        << ksr.run_result.vectors_total_bytes << "\n";
 
+                    if  (   KernelResults<DSIZE,ISIZE>::EFlag::DISCRET
+                         == ksr.run_result.kernel_result.eflag
+                        )
+                    {
+                        std::cout
+                            << "stopped with, n:                    " << ksr.n
+                            << "\n"
+                            << "ksr.kernel_result.eflag:            DISCRET ("
+                            << std::to_string(static_cast<int>(ksr.run_result.kernel_result.eflag))
+                            << ")\n" << std::flush;
+
+                    }
                 }
             }
         }
     }
-}
 
-template<typename DSIZE>
-static char const * DSIZE_text{"DSIZE_unknown"};
+    // NOLINTBEGIN(clang-diagnostic-unused-const-variable)
+    template<typename DSIZE>
+    char const * const DSIZE_text{"DSIZE_unknown"};
 
-// Edit as needed (add more?):
-template<> char const * DSIZE_text<short>                {"DSIZE_s"};
-template<> char const * DSIZE_text<unsigned short>       {"DSIZE_us"};
-template<> char const * DSIZE_text<int>                  {"DSIZE_i"};
-template<> char const * DSIZE_text<unsigned int>         {"DSIZE_ui"};
-template<> char const * DSIZE_text<long>                 {"DSIZE_l"};
-template<> char const * DSIZE_text<unsigned long>        {"DSIZE_ul"};
-template<> char const * DSIZE_text<long long>            {"DSIZE_ll"};
-template<> char const * DSIZE_text<unsigned long long>   {"DSIZE_ull"};
-template<> char const * DSIZE_text<float>                {"DSIZE_f"};
-template<> char const * DSIZE_text<double>               {"DSIZE_d"};
-template<> char const * DSIZE_text<long double>          {"DSIZE_ld"};
+    // Edit as needed (add more?):
+    template<> char const * const DSIZE_text<short>                {"DSIZE_s"};
+    template<> char const * const DSIZE_text<unsigned short>       {"DSIZE_us"};
+    template<> char const * const DSIZE_text<int>                  {"DSIZE_i"};
+    template<> char const * const DSIZE_text<unsigned int>         {"DSIZE_ui"};
+    template<> char const * const DSIZE_text<long>                 {"DSIZE_l"};
+    template<> char const * const DSIZE_text<unsigned long>        {"DSIZE_ul"};
+    template<> char const * const DSIZE_text<long long>            {"DSIZE_ll"};
+    template<> char const * const DSIZE_text<unsigned long long>   {"DSIZE_ull"};
+    template<> char const * const DSIZE_text<float>                {"DSIZE_f"};
+    template<> char const * const DSIZE_text<double>               {"DSIZE_d"};
+    template<> char const * const DSIZE_text<long double>          {"DSIZE_ld"};
 
-template<typename ISIZE>
-static char const * ISIZE_text{"ISIZE_unknown"};
+    template<typename ISIZE>
+    char const * const ISIZE_text{"ISIZE_unknown"};
 
-// Edit as needed (add more?):
-template<> char const * ISIZE_text<short>                {"ISIZE_s"};
-template<> char const * ISIZE_text<unsigned short>       {"ISIZE_us"};
-template<> char const * ISIZE_text<int>                  {"ISIZE_i"};
-template<> char const * ISIZE_text<unsigned int>         {"ISIZE_ui"};
-template<> char const * ISIZE_text<long>                 {"ISIZE_l"};
-template<> char const * ISIZE_text<unsigned long>        {"ISIZE_ul"};
-template<> char const * ISIZE_text<long long>            {"ISIZE_ll"};
-template<> char const * ISIZE_text<unsigned long long>   {"ISIZE_ull"};
+    // Edit as needed (add more?):
+    template<> char const * const ISIZE_text<short>                {"ISIZE_s"};
+    template<> char const * const ISIZE_text<unsigned short>       {"ISIZE_us"};
+    template<> char const * const ISIZE_text<int>                  {"ISIZE_i"};
+    template<> char const * const ISIZE_text<unsigned int>         {"ISIZE_ui"};
+    template<> char const * const ISIZE_text<long>                 {"ISIZE_l"};
+    template<> char const * const ISIZE_text<unsigned long>        {"ISIZE_ul"};
+    template<> char const * const ISIZE_text<long long>            {"ISIZE_ll"};
+    template<> char const * const ISIZE_text<unsigned long long>   {"ISIZE_ull"};
+    // NOLINTEND(clang-diagnostic-unused-const-variable)
 
-static std::string filename_suffix{".txt"};
-                                    // controls file name suffix.
-                                    // optional argv[1] can change it.
+    // NOLINTBEGIN(cppcoreguidelines-avoid-non-const-global-variables)
+    std::string filename_suffix{".txt"}; // NOLINT(cert-err58-cpp)
+                                         // controls file name suffix.
+                                         // optional argv[1] can change it.
+    // NOTE: The unlikely throws need not be caught for constructing it.
 
-static HwConcurrencyCount min_requested_threads{0u};
-                                    // controls report_varying_threading
-                                    // if optional argv[2] makes it positive.
+    HwConcurrencyCount min_requested_threads{0U};
+                                        // controls report_varying_threading
+                                        // if optional argv[2] makes it positive.
 
-static HwConcurrencyCount max_requested_threads{0u};
-                                    // controls report_varying_threading
-                                    // if optional argv[3] makes it no less
-                                    // than min_requested_threads.
-                                    // Defaults to min_requested_threads
-                                    // when that is positive.
+    HwConcurrencyCount max_requested_threads{0U};
+                                        // controls report_varying_threading
+                                        // if optional argv[3] makes it no less
+                                        // than min_requested_threads.
+                                        // Defaults to min_requested_threads
+                                        // when that is positive.
+    // NOLINTEND(cppcoreguidelines-avoid-non-const-global-variables)
 
-template<typename DSIZE,typename ISIZE>
-static void report_varying_threading
-                            ( std::string const&    filename_prefix
-                            , ClkInfo const&        clock_info
-                            )
-{
-    std::string longer_filename_prefix
-            {filename_prefix+"-"+DSIZE_text<DSIZE>+"-"+ISIZE_text<ISIZE>+"-"};
+    template<typename DSIZE,typename ISIZE>
+    void report_varying_threading
+                                ( std::string const&    filename_prefix
+                                , ClkInfo const&        clock_info
+                                )
+    {
+        std::string const longer_filename_prefix
+                {filename_prefix+"-"+DSIZE_text<DSIZE>+"-"+ISIZE_text<ISIZE>+"-"};
 
-    std::string filename    {  longer_filename_prefix
-                             + "using_1_threads"
-                             + filename_suffix
-                            };
+        std::string filename    {  longer_filename_prefix
+                                 + "using_1_threads"
+                                 + filename_suffix
+                                };
 
-    if (min_requested_threads<2u) // includes 0u (for unspecified)
-    { // Deliberately deal with single-thread first.
-        PrimaryKernelInputs<DSIZE,ISIZE> const ki_serial(1u);
+        if (min_requested_threads<2U) // includes 0U (for unspecified)
+        { // Deliberately deal with single-thread first.
+            PrimaryKernelInputs<DSIZE,ISIZE> const ki_serial(1U);
 
-        report_samples<DSIZE,ISIZE,!TIME_PARALLEL_THREAD_CREATION_TOO>(filename,clock_info,ki_serial);
+            report_samples<DSIZE,ISIZE,!TIME_PARALLEL_THREAD_CREATION_TOO>(filename,clock_info,ki_serial);
+        }
+
+        HwConcurrencyCount thread_count{ConcurrencyCountForInDomains()};
+
+        if (thread_count<1U) { return; }
+
+        HwConcurrencyCount min_threads{3U};
+        if (0U!=min_requested_threads)
+            { min_threads= std::max(2U,min_requested_threads); } // 1U already handled.
+
+        if (0U!=max_requested_threads)
+            { thread_count= max_requested_threads; }
+
+        while (min_threads<=thread_count) {
+            PrimaryKernelInputs<DSIZE,ISIZE> const ki_parallel(thread_count);
+
+            filename=  longer_filename_prefix;
+            filename+= "using_"+std::to_string(thread_count)+"_threads";
+            filename+= filename_suffix;
+
+            report_samples<DSIZE,ISIZE,TIME_PARALLEL_THREAD_CREATION_TOO>(filename,clock_info,ki_parallel);
+
+            filename=  longer_filename_prefix;
+            filename+= "using_"+std::to_string(thread_count)+"_threads_creation_untimed";
+            filename+= filename_suffix;
+
+            report_samples<DSIZE,ISIZE,!TIME_PARALLEL_THREAD_CREATION_TOO>(filename,clock_info,ki_parallel);
+
+            thread_count/= 2U; // No alternate policy for this.
+        }
     }
+};
 
-    HwConcurrencyCount thread_count{ConcurrencyCountForInDomains()};
-
-    if (thread_count<1u) return;
-
-    HwConcurrencyCount min_threads{3u};
-    if (0u!=min_requested_threads)
-        min_threads= std::max(2u,min_requested_threads); // 1u already handled.
-
-    if (0u!=max_requested_threads)
-        thread_count= max_requested_threads;
-
-    while (min_threads<=thread_count) {
-        PrimaryKernelInputs<DSIZE,ISIZE> ki_parallel(thread_count);
-
-        filename=     longer_filename_prefix
-                    + "using_"+std::to_string(thread_count)+"_threads"
-                    + filename_suffix;
-
-        report_samples<DSIZE,ISIZE,TIME_PARALLEL_THREAD_CREATION_TOO>(filename,clock_info,ki_parallel);
-
-        filename=     longer_filename_prefix
-                    + "using_"+std::to_string(thread_count)+"_threads_creation_untimed"
-                    + filename_suffix;
-
-        report_samples<DSIZE,ISIZE,!TIME_PARALLEL_THREAD_CREATION_TOO>(filename,clock_info,ki_parallel);
-
-        thread_count/= 2u; // No alternate policy for this.
-    }
-}
-
-int main(int argc, const char* argv[])
+auto main(int argc, const char* argv[]) -> int
 try
 {
-    if (0==argc || nullptr==argv[0] || '\0'==*argv[0])
+    std::span const args_span(argv,argc);
+    if (args_span.empty() || nullptr==args_span[0U] || '\0'==*args_span[0U])
     {
         std::cout
             << "argv[0] did not provide a program name\n";
@@ -259,21 +271,23 @@ try
     }
 
     std::cout
-        << argv[0u] << " . . .\n"
+        << args_span[0U] << " . . .\n"
         << "acpphint_main version: " ACPPHINT_VERS "\n"
         << "\n" << std::flush;
 
-    if (1<argc && nullptr!=argv[1])
+    if (1<args_span.size() && nullptr!=args_span[1U])
     {
-        filename_suffix= argv[1]; // replaces ".txt"
+        filename_suffix= args_span[1U]; // replaces ".txt"
     }
 
-    if (2<argc && nullptr!=argv[2] && '\0'!=*argv[2])
+    constexpr int requested_threads_base{10};
+
+    if (2<args_span.size() && nullptr!=args_span[2U] && '\0'!=*args_span[2U])
     {
-        auto temp{std::strtoul(argv[2],nullptr,10)};
+        auto temp{std::strtoul(args_span[2U],nullptr,requested_threads_base)};
         if  (  ERANGE==errno
             || std::numeric_limits<HwConcurrencyCount>::max()<temp
-            || 0u==temp
+            || 0U==temp
             )
         {
             std::cout
@@ -286,12 +300,12 @@ try
         max_requested_threads= min_requested_threads; // default
     }
 
-    if (3<argc && nullptr!=argv[3] && '\0'!=*argv[3])
+    if (3<args_span.size() && nullptr!=args_span[3U] && '\0'!=*args_span[3U])
     {
-        auto temp{std::strtoul(argv[3],nullptr,10)};
+        auto temp{std::strtoul(args_span[3U],nullptr,requested_threads_base)};
         if  (  ERANGE==errno
             || std::numeric_limits<HwConcurrencyCount>::max()<temp
-            || 0u==temp
+            || 0U==temp
             )
         {
             std::cout
@@ -311,11 +325,11 @@ try
     }
 
     std::cout
-        << argv[0u]
+        << args_span[0U]
             << " [alternate-filename-suffix [min threads [max threads]]]\n"
         << "\n";
 
-    std::string const filename_prefix{argv[0]};
+    std::string const filename_prefix{args_span[0U]};
 
     ClkInfo clock_info{};
 
@@ -374,7 +388,7 @@ catch(...)
 }
 
 
-char copyright_and_license_for_acpphint_main[]
+extern "C" char const copyright_and_license_for_acpphint_main[]
 {
     "Context for this Copyright: acpphint_main\n"
     "\n"

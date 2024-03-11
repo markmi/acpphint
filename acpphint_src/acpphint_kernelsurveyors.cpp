@@ -40,16 +40,18 @@
 //
 
 #include "acpphint_kernelsurveyors.h"
-#include <climits>          // for ULONG_MAX, UINT_MAX, ULLONG_MAX
-#include "cpp_clockinfo.h"  // for ClkInfo
+#include "acpphint_kernels.h"         // for PrimaryKernelInputs, KernelResults
+#include "acpphint_kernelrunners.h"   // for LapsCount
+#include <climits>                    // for ULONG_MAX, UINT_MAX, ULLONG_MAX
+#include "cpp_clockinfo.h"            // for ClkInfo
 
 template<typename DSIZE, typename ISIZE, bool want_parallel_thread_creation_time_included>
 auto KernelSurveyor ( ClkInfo                           const&  clock_info
-                    , PrimaryKernelInputs<DSIZE,ISIZE>  const&  ki
+                    , PrimaryKernelInputs<DSIZE,ISIZE>  const&  ki // NOLINT(readability-identifier-length)
                     ) -> KernelSurveyorResults<DSIZE,ISIZE>
 {
     // Edit as needed, VALUE in laps{VALUE} below:
-    LapsCount constexpr laps{3u};
+    LapsCount constexpr laps{3U};
 
     auto constexpr NOERROR{KernelResults<DSIZE,ISIZE>::EFlag::normal};
 
@@ -78,7 +80,7 @@ auto KernelSurveyor ( ClkInfo                           const&  clock_info
         if  (  clock_info.TargetApproxMinDuration()
              < run_result.median_mean_sec_per_lap
             )
-            break; // Directly good result.
+            { break; } // Directly good result.
 
         survey_result.nscout*= 2;
 
@@ -342,7 +344,7 @@ auto KernelSurveyor<long double,unsigned long long,!TIME_PARALLEL_THREAD_CREATIO
 #endif
 
 
-char copyright_and_license_for_acpphint_kernelsurveyors[]
+extern "C" char const copyright_and_license_for_acpphint_kernelsurveyors[]
 {
     "Context for this Copyright: acpphint_kernelsurveyors\n"
     "\n"

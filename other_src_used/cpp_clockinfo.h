@@ -118,18 +118,18 @@ private:
 
     bool zero_duration_observed;
 
-    Duration duration_overhead;
-    Duration duration_spanning_large_percentile;
-    Duration small_scale_duration_variability;
-    Duration target_approx_min_duration;
+    Duration duration_overhead{Duration::zero()}; // Useful value.
+    Duration duration_spanning_large_percentile{Duration::zero()}; // Value always ignored & replaced in constructor body.
+    Duration small_scale_duration_variability  {Duration::zero()}; // Value always ignored & replaced in constructor body.
+    Duration target_approx_min_duration        {Duration::zero()}; // Value always ignored & replaced in constructor body.
 
-    Duration largest_duration;
+    Duration largest_duration                  {Duration::zero()}; // Value always ignored & replaced in constructor body.
 
     DurationsCount num_durations_sampled;
 
     // Edit as needed, the 4 following:
-    static auto constexpr percentile_scale{10u}; // Indicates 100%.
-    static auto constexpr large_percentile{9u};  // So 90% covered.
+    static auto constexpr percentile_scale{10U}; // Indicates 100%.
+    static auto constexpr large_percentile{9U};  // So 90% covered.
     static auto constexpr scale_factor_for_activity_target  {100};
 
     // The general structucture is:
@@ -148,12 +148,12 @@ private:
     // ==   scale_factor_for_activity_target * small_scale_duration_variability
 
                                     // Edit as needed: Should not be small.
-    static DurationsCount constexpr num_durations_sampled_per_instance{2'000'000u};
+    static DurationsCount constexpr num_durations_sampled_per_instance{2'000'000U};
 };
 
 using HwConcurrencyCount = unsigned int; // Matching c++
 extern auto ClkInfoFromThreads( ClkInfo::DurationsStatus durations_status
-                              , HwConcurrencyCount requested_threads // 0u: get from c++
+                              , HwConcurrencyCount requested_threads // 0U: get from c++
                               ) -> std::vector<ClkInfo>;
 
 #endif // cpp_clockinfo_guard
