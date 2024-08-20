@@ -54,7 +54,7 @@
 #include "acpphint_kernelrunners.h"    // for approx_answer_floating_form, TIME_PARALLEL_THREAD_CREATION_TOO
 #include "acpphint_kernels.h"          // for KernelResults, NMIN
 #include "acpphint_kernelsurveyors.h"  // for KernelSurveyor
-#include "cpp_clockinfo.h"             // for ClkInfo
+#include "../other_src_used/cpp_clockinfo.h"             // for ClkInfo
 
 // NOLINTBEGIN(readability-function-cognitive-complexity)
 template<typename DSIZE, typename ISIZE, bool want_parallel_thread_creation_time_included>
@@ -404,13 +404,13 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
 
     std::array<char, to_chars_buffer_size> lower_approx{};
     auto const [after_lower_approx_chars, lower_approx_err_code]
-        ( std::to_chars( lower_approx.data(), std::addressof(*lower_approx.end())
+        ( std::to_chars( lower_approx.data(), lower_approx.data()+lower_approx.size()
                        , answer_lower_bound_floating_form, std::chars_format::fixed
                        )
         );
     std::array<char, to_chars_buffer_size> upper_approx{};
     auto const [after_upper_approx_chars, upper_approx_err_code]
-        ( std::to_chars( upper_approx.data(), std::addressof(*upper_approx.end())
+        ( std::to_chars( upper_approx.data(), upper_approx.data()+upper_approx.size()
                        , answer_upper_bound_floating_form, std::chars_format::fixed
                        )
         );
@@ -419,7 +419,7 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
 
     qdata.back().how_stopped_notes += " HI/(scx*scy) == ? * approx. lower bound: ";
     auto const [after_scale_hi_chars, scale_hi_err_code]
-        ( std::to_chars( scale_factor.data(), std::addressof(*scale_factor.end())
+        ( std::to_chars( scale_factor.data(), scale_factor.data()+scale_factor.size()
                        , scale_factor_for_hi, std::chars_format::fixed
                        )
         );
@@ -440,7 +440,7 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
 
     qdata.back().how_stopped_notes += " LO/(scx*scy) == ? * approx. upper bound: ";
     auto [after_scale_lo_chars, scale_lo_err_code]
-        ( std::to_chars( scale_factor.data(), std::addressof(*scale_factor.end())
+        ( std::to_chars( scale_factor.data(), scale_factor.data()+scale_factor.size()
                        , scale_factor_for_lo, std::chars_format::fixed
                        )
         );
@@ -533,7 +533,14 @@ auto KernelSampler<unsigned short,unsigned short,!TIME_PARALLEL_THREAD_CREATION_
 // DSIZE=unsigned int:
 
 template
-auto KernelSampler<unsigned int,unsigned int>
+auto KernelSampler<unsigned int,unsigned int, TIME_PARALLEL_THREAD_CREATION_TOO>
+                    ( ClkInfo                               const&  clock_info
+                    , PrimaryKernelInputs<unsigned int,unsigned int>
+                                                            const&  ki
+                    ) -> KernelSamplerResultsVect<unsigned int,unsigned int>;
+
+template
+auto KernelSampler<unsigned int,unsigned int, !TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
                     , PrimaryKernelInputs<unsigned int,unsigned int>
                                                             const&  ki
@@ -556,8 +563,7 @@ auto KernelSampler<unsigned long,unsigned long,!TIME_PARALLEL_THREAD_CREATION_TO
                                                             const&  ki
                     ) -> KernelSamplerResultsVect<unsigned long,unsigned long>;
 
-#if ULONG_MAX == ULLONG_MAX || defined(DSIZE_ALL_ISIZE_ALL)
-// DSIZE=unsigned long long:
+// DSIZE=unsigned long long: // Always included
 
 template
 auto KernelSampler<unsigned long long,unsigned long long,TIME_PARALLEL_THREAD_CREATION_TOO>
@@ -578,7 +584,6 @@ auto KernelSampler<unsigned long long,unsigned long long,!TIME_PARALLEL_THREAD_C
                     ) -> KernelSamplerResultsVect   < unsigned long long
                                                     , unsigned long long
                                                     >;
-#endif
 
 // DSIZE=float:
 
@@ -608,6 +613,7 @@ auto KernelSampler<float,unsigned short,!TIME_PARALLEL_THREAD_CREATION_TOO>
                                                             const&  ki
                     ) -> KernelSamplerResultsVect<float,unsigned short>;
 
+#ifdef DSIZE_ALL_ISIZE_ALL
 template
 auto KernelSampler<float,unsigned int,TIME_PARALLEL_THREAD_CREATION_TOO>
                     ( ClkInfo                               const&  clock_info
@@ -622,7 +628,6 @@ auto KernelSampler<float,unsigned int,!TIME_PARALLEL_THREAD_CREATION_TOO>
                                                             const&  ki
                     ) -> KernelSamplerResultsVect<float,unsigned int>;
 
-#ifdef DSIZE_ALL_ISIZE_ALL
 // DSIZE=double:
 
 template

@@ -219,7 +219,7 @@ ClkInfo::ClkInfo(DurationsStatus durations_status)
 
             duration_overhead= observed_durations.at(0U);
         }
-        catch (const std::runtime_error& e)
+        catch (const std::runtime_error&)
         {
             back_to_back_tps    .clear();
             observed_durations  .clear();
@@ -268,8 +268,8 @@ ClkInfo::ClkInfo(DurationsStatus durations_status)
 
         }
 
-    small_scale_duration_variability=  duration_spanning_large_percentile
-                                     - duration_overhead;
+    small_scale_duration_variability
+        = duration_spanning_large_percentile-duration_overhead;
 
     target_approx_min_duration
         =  scale_factor_for_activity_target

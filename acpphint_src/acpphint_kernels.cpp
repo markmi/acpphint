@@ -506,8 +506,7 @@ auto Kernel<unsigned long,unsigned long>
             , KernelVectors<unsigned long,unsigned long>&               kv
             ) -> KernelResults<unsigned long,unsigned long>;
 
-#if ULONG_MAX == ULLONG_MAX || defined(DSIZE_ALL_ISIZE_ALL)
-// DSIZE=unsigned long long:
+// DSIZE=unsigned long long: // Always included
 
 template
 PrimaryKernelInputs<unsigned long long,unsigned long long>::PrimaryKernelInputs
@@ -520,7 +519,6 @@ auto Kernel<unsigned long long,unsigned long long>
                                                                     const& ki
             , KernelVectors<unsigned long long,unsigned long long>&        kv
             ) -> KernelResults<unsigned long long,unsigned long long>;
-#endif
 
 // DSIZE=float:
 

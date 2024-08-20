@@ -62,7 +62,7 @@ public:
     ClkInfo(ClkInfo&&)                          = default;
 
     auto operator=(ClkInfo const&) -> ClkInfo&  = delete;
-    auto operator=(ClkInfo&&)      -> ClkInfo&  = delete;
+    auto operator=(ClkInfo&&)      -> ClkInfo&  = default;
 
 
     using UsedClk   = SteadyClk; // Edit as needed.

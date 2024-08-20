@@ -49,8 +49,8 @@
 #include <thread>                 // for std::thread
 #include <vector>                 // for std::vector
 #include <cstddef>                // for std::size_t
-#include "cpp_clockinfo.h"        // for ClkInfo, HwConcurrencyCount
-#include "sys_cpubinding.h"       // for RestrictThreadToCpu
+#include "../other_src_used/cpp_clockinfo.h"        // for ClkInfo, HwConcurrencyCount
+#include "../other_src_used/sys_cpubinding.h"       // for RestrictThreadToCpu
 
 
 template<typename DSIZE, typename ISIZE>
@@ -167,7 +167,7 @@ namespace
              sequential_task_future.wait();
              sequential_task_thread.join();
         }
-        catch(std::bad_alloc const& e) // NOLINT(bugprone-empty-catch)
+        catch(std::bad_alloc const&) // NOLINT(bugprone-empty-catch)
         { } // Empty krrs indicates NOMEM up front.
 
         return krrs;
@@ -315,7 +315,7 @@ namespace
                                     );
             }
         }
-        catch(std::bad_alloc const& e) // NOLINT(bugprone-empty-catch)
+        catch(std::bad_alloc const&) // NOLINT(bugprone-empty-catch)
         { } // Empty krrs indicates NOMEM.
 
         return krrs;
@@ -364,7 +364,7 @@ auto KernelRunner   ( ClkInfo                           const&  clock_info
                                     {KernelResults<DSIZE,ISIZE>::EFlag::NOMEM};
     }
 
-    auto median_duration_pos{krrs.begin()+krrs.size()/2};
+    auto median_duration_pos{krrs.begin()+krrs.size()/2u};
                                             // For odd NTRIAL [==krrs.size()]
 
     std::nth_element( krrs.begin(), median_duration_pos, krrs.end()
@@ -526,8 +526,7 @@ auto KernelRunner<unsigned long,unsigned long,!TIME_PARALLEL_THREAD_CREATION_TOO
                                                             const   ki
                     ) -> KernelRunnerResults<unsigned long,unsigned long>;
 
-#if ULONG_MAX == ULLONG_MAX || defined(DSIZE_ALL_ISIZE_ALL)
-// DSIZE=unsigned long long:      
+// DSIZE=unsigned long long: // Always included
 
 template 
 auto KernelRunner<unsigned long long,unsigned long long,TIME_PARALLEL_THREAD_CREATION_TOO>
@@ -552,7 +551,6 @@ auto KernelRunner<unsigned long long,unsigned long long,!TIME_PARALLEL_THREAD_CR
                     ) -> KernelRunnerResults< unsigned long long
                                             , unsigned long long
                                             >;
-#endif
 
 // DSIZE=float:
 

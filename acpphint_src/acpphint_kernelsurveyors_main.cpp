@@ -64,9 +64,9 @@
 #include "acpphint_kernelrunners.h"    // for TIME_PARALLEL_THREAD_CREATION_TOO
 #include "acpphint_kernelsurveyors.h"  // for KernelSurveyor, (indirectly) dsize_all_isize_all,
                                        // (indirectly) TIME_PARALLEL_THREAD_CREATION_TOO,
-#include "cpp_clockinfo.h"             // for ClkInfo, HwConcurrencyCount
-#include "cpp_thousandslocale.h"       // for CppThousandsLocale
-#include "sys_cpubinding.h"            // for ConcurrencyCountForInDomains
+#include "../other_src_used/cpp_clockinfo.h"             // for ClkInfo, HwConcurrencyCount
+#include "../other_src_used/cpp_thousandslocale.h"       // for CppThousandsLocale
+#include "../other_src_used/sys_cpubinding.h"            // for ConcurrencyCountForInDomains
 
 namespace
 {

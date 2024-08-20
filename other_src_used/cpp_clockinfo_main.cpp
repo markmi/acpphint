@@ -47,7 +47,7 @@
 auto main(int argc, char const* argv[]) -> int
 try
 {
-    std::span const args_span(argv,argc);
+    std::span const args_span(argv,static_cast<unsigned int>(argc));
     if (args_span.empty() || nullptr==args_span[0U] || '\0'==*args_span[0U])
     {
         std::cout
@@ -186,7 +186,7 @@ try
                 << " ns\n"
                 << "(to be subtracted out from activity durations)\n"
                 << "\n"
-                << "target approx. min actvity duration  : "
+                << "target approx. min activity duration  : "
                 << ClkInfo::nsFormatted
                         (test_clock_info.TargetApproxMinDuration())
                 << " ns\n"

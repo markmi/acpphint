@@ -43,7 +43,7 @@
 #include "acpphint_kernels.h"         // for PrimaryKernelInputs, KernelResults
 #include "acpphint_kernelrunners.h"   // for LapsCount
 #include <climits>                    // for ULONG_MAX, UINT_MAX, ULLONG_MAX
-#include "cpp_clockinfo.h"            // for ClkInfo
+#include "../other_src_used/cpp_clockinfo.h"            // for ClkInfo
 
 template<typename DSIZE, typename ISIZE, bool want_parallel_thread_creation_time_included>
 auto KernelSurveyor ( ClkInfo                           const&  clock_info
@@ -201,8 +201,7 @@ auto KernelSurveyor<unsigned long,unsigned long,!TIME_PARALLEL_THREAD_CREATION_T
                                                 , unsigned long
                                                 >;
 
-#if ULONG_MAX == ULLONG_MAX || defined(DSIZE_ALL_ISIZE_ALL)
-// DSIZE=unsigned long long:
+// DSIZE=unsigned long long: // Always included
 
 template
 auto KernelSurveyor<unsigned long long,unsigned long long,TIME_PARALLEL_THREAD_CREATION_TOO>
@@ -223,7 +222,6 @@ auto KernelSurveyor<unsigned long long,unsigned long long,!TIME_PARALLEL_THREAD_
                     ) -> KernelSurveyorResults  < unsigned long long
                                                 , unsigned long long
                                                 >;
-#endif
 
 // DSIZE=float:
 

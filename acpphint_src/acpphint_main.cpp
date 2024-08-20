@@ -70,19 +70,19 @@
 #include "acpphint_kernels.h"        // for PrimaryKernelInputs, KernelResults
 #include "acpphint_kernelrunners.h"  // for TIME_PARALLEL_THREAD_CREATION_TOO
 #include "acpphint_kernelsamplers.h" // for KernelSampler, (indirectly) dsize_all_isize_all
-#include "cpp_clockinfo.h"           // for HwConcurrencyCount, ClkInfo
-#include "sys_cpubinding.h"          // for ConcurrencyCountForInDomains
+#include "../other_src_used/cpp_clockinfo.h"           // for HwConcurrencyCount, ClkInfo
+#include "../other_src_used/sys_cpubinding.h"          // for ConcurrencyCountForInDomains
 
 namespace
 {
     template<typename DSIZE,typename ISIZE, bool want_parallel_thread_creation_time_included>
     void report_samples  ( std::string                       const& filename
-                                , ClkInfo                           const& clock_info
-                                , PrimaryKernelInputs<DSIZE,ISIZE>  const& ki // NOLINT(readability-identifier-length)
-                                )
+                         , ClkInfo                           const& clock_info
+                         , PrimaryKernelInputs<DSIZE,ISIZE>  const& ki // NOLINT(readability-identifier-length)
+                         )
     {
         std::cout
-            << "generating: " << filename << "\n" <<std::flush;
+            << "generating: " << filename << "\n" << std::flush;
 
         auto const ks_result{KernelSampler<DSIZE,ISIZE,want_parallel_thread_creation_time_included>
                                  (clock_info,ki)};
@@ -115,7 +115,7 @@ namespace
             }
 
             std::cout
-                << "writing:    " << filename << "\n" <<std::flush;
+                << "writing:    " << filename << "\n" << std::flush;
 
             gnuplot_data    << "# filename: " << filename << "\n"
                             << "# acpphint_main version: " ACPPHINT_VERS "\n"
@@ -124,13 +124,14 @@ namespace
             for (auto const& ksr : ks_result)
             {
                 if (0 == ksr.quips)
-                    { std::cout
+                {
+                    std::cout
                         << "stopped with, n:                    " << ksr.n << "\n"
                         << "ksr.kernel_result.eflag:            "
                             << static_cast<int>(ksr.run_result.kernel_result.eflag)
                             << "\n"
                         << "\n" << std::flush;
-                    }
+                }
                 else
                 {
                     gnuplot_data
@@ -364,10 +365,8 @@ try
     report_varying_threading<unsigned long,unsigned long>
                                                   (filename_prefix,clock_info);
 
-    if constexpr (ULONG_MAX == ULLONG_MAX || dsize_all_isize_all) {
         report_varying_threading<unsigned long long,unsigned long long>
                                                   (filename_prefix,clock_info);
-    }
 
     if constexpr (dsize_all_isize_all) {
         report_varying_threading<long double,unsigned long>

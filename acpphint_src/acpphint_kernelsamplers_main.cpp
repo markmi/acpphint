@@ -65,9 +65,9 @@
 #include "acpphint_kernels.h"         // for PrimaryKernelInputs
 #include "acpphint_kernelrunners.h"   // for TIME_PARALLEL_THREAD_CREATION_TOO
 #include "acpphint_kernelsamplers.h"  // for KernelSampler, (indirectly) dsize_all_isize_all
-#include "cpp_clockinfo.h"            // for ClkInfo, HwConcurrencyCount
-#include "cpp_thousandslocale.h"      // for CppThousandsLocale
-#include "sys_cpubinding.h"           // for ConcurrencyCountForInDomains
+#include "../other_src_used/cpp_clockinfo.h"            // for ClkInfo, HwConcurrencyCount
+#include "../other_src_used/cpp_thousandslocale.h"      // for CppThousandsLocale
+#include "../other_src_used/sys_cpubinding.h"           // for ConcurrencyCountForInDomains
 
 namespace
 {
@@ -184,7 +184,7 @@ namespace
 auto main(int argc, const char* argv[]) -> int
 try
 {
-    std::span const args_span(argv,argc);
+    std::span const args_span(argv,static_cast<unsigned int>(argc));
     if (args_span.empty() || nullptr==args_span[0U] || '\0'==*args_span[0U])
     {
         std::cout

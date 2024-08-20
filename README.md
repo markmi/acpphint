@@ -85,6 +85,12 @@ examples.) That code's license in turn sets the overall license to also be GLPv2
 (no earlier, no later), despite OpenBSD-vintage-ISC licensed source in
 `other_src_used/` also being built and linked in.
 ##### Changelog . . .
+###### [0.1.40] 2024-Aug-19          . . . 202?-???-?? (final)
+Changes
+- Visual Studio experiments inspired C++ source code adjustments,
+  not that Visual Studio is supported for how I want things to
+  work as far as builds go.
+
 ###### [0.1.39] 2024-Mar-10          . . . 202?-???-?? (final)
 Changes
 - clang-tidy inspired adjustments.
