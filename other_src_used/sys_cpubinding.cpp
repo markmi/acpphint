@@ -30,6 +30,7 @@
 #include <thread>     // for std::thread
 
 #if defined(__FreeBSD__) && defined(WANT_CPU_LOCKDOWN)
+#include <strings.h>        // for ffsl(. . .)'s implict use in CPU_FFS(. . .)
 #include <sys/types.h>      // for cpusetid_t, id_t
 #include <sys/_domainset.h> // for domainset_t
 #include <sys/domainset.h>  // for DOMAINSET_* macro-based operations and such

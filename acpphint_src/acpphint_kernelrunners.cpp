@@ -46,7 +46,7 @@
 #include <future>                 // for std::packaged_task, std::future
 #include <new>                    // for std::bad_alloc
 #include <stdexcept>              // for std::runtime_error
-#include <thread>                 // for std::thread
+#include <thread>                 // for std::jthread
 #include <vector>                 // for std::vector
 #include <cstddef>                // for std::size_t
 #include "../other_src_used/cpp_clockinfo.h"        // for ClkInfo, HwConcurrencyCount
@@ -99,12 +99,9 @@ namespace
             };
             std::packaged_task alloc_vect_task{alloc_vect_code};
             auto alloc_vect_future{alloc_vect_task.get_future()};
-            std::thread alloc_vect_task_thread{std::move(alloc_vect_task)};
-            // Use std::jthread when clang allows it.
+            std::jthread alloc_vect_task_thread{std::move(alloc_vect_task)};
 
             KernelVectors<DSIZE,ISIZE> kvs{alloc_vect_future.get()};
-
-            alloc_vect_task_thread.join();
 
             krrs.reserve(NTRIAL<DSIZE,ISIZE>);
 
@@ -162,10 +159,8 @@ namespace
 
              std::packaged_task sequential_task{sequential_code};  // used for potential cpu lock down
              auto sequential_task_future{sequential_task.get_future()};
-             std::thread sequential_task_thread{std::move(sequential_task)};
-             // Use std::jthread when clang allows it.
+             std::jthread sequential_task_thread{std::move(sequential_task)};
              sequential_task_future.wait();
-             sequential_task_thread.join();
         }
         catch(std::bad_alloc const&) // NOLINT(bugprone-empty-catch)
         { } // Empty krrs indicates NOMEM up front.
@@ -204,10 +199,8 @@ namespace
                     };
                 std::packaged_task memalloc_task{memalloc_code};
                 auto memalloc_task_future{memalloc_task.get_future()};
-                std::thread memalloc_task_thread{std::move(memalloc_task)};
-                // Use std::jthread when clang allows it.
+                std::jthread memalloc_task_thread{std::move(memalloc_task)};
                 memalloc_task_future.wait();
-                memalloc_task_thread.join();
             }
 
             krrs.reserve(NTRIAL<DSIZE,ISIZE>);
@@ -217,8 +210,7 @@ namespace
             std::vector<std::future<KernelResults<DSIZE,ISIZE>>> parallel_tasks_future{};
             parallel_tasks_future.reserve(ki.nproc);
 
-            std::vector<std::thread> parallel_tasks_thread{};
-            // Use std::jthread when clang allows it.
+            std::vector<std::jthread> parallel_tasks_thread{};
             parallel_tasks_thread.reserve(ki.nproc);
 
             for ( auto trials_left{NTRIAL<DSIZE,ISIZE>} // 0U<NTRIAL required.
@@ -276,11 +268,6 @@ namespace
 
                     if constexpr (!want_thread_creation_time_included)
                         { measured_laps_duration+= clock_info.Now()-start; }
-
-                    for(auto& thread : parallel_tasks_thread)
-                    {
-                        thread.join();
-                    }
 
                     parallel_tasks_thread.clear();
                     parallel_tasks_future.clear();

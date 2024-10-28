@@ -85,6 +85,29 @@ examples.) That code's license in turn sets the overall license to also be GLPv2
 (no earlier, no later), despite OpenBSD-vintage-ISC licensed source in
 `other_src_used/` also being built and linked in.
 ##### Changelog . . .
+###### [0.1.41] 2024-Oct-27          . . . 202?-???-?? (final)
+Changes
+- Update C++ source to use std::jthread.
+
+- Have `other_src_used/sys_cpubinding.cpp` make sure ffsl is
+  declared for FreeBSD. Implicit use was via CPU_FFS(. . .).
+
+Additions
+- Add a 7950X3D makefile pair for use of clang++ 19 on FreeBSD
+  ( -fexperimental-library needed for the jthread use ). Output
+  files from running the result added as well. Also add gcc14
+  stdlibc++ based makefile pair. (Note: gcc14 does not have
+  -fexperimental-library for libc++ jthread enablement.) Also
+  add the related output files. (Makefile pairs are one for
+  "cpulockdown" and one that is for not doing internal
+  lockdown control. The later just uses the standard C++
+  library facilities in its source code.)
+
+- Add Windows Dev Kit 2023 FreeBSD makefile pairs for clang++
+  19 and for gcc14.
+
+- Add a RPi5 FreeBSD makefile pair for clang++ 19.
+
 ###### [0.1.40] 2024-Aug-19          . . . 202?-???-?? (final)
 Changes
 - Visual Studio experiments inspired C++ source code adjustments,
