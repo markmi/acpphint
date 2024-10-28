@@ -1,0 +1,115 @@
+os PID (not NUMA domain) affinity #cpus: 4
+os domain 0 filtered affinity #cpus: 4
+Program's cpu_num: 0 has operating system cpu_id: 0
+Program's cpu_num: 1 has operating system cpu_id: 1
+Program's cpu_num: 2 has operating system cpu_id: 2
+Program's cpu_num: 3 has operating system cpu_id: 3
+./acpphint_kernelsurveyors_main-RPi5-8192MiB-threads_4-LP64-FreeBSD_main_n273201_e4ac0183a1a8_64bit-clang++_19_O3lto-libc++-cpulockdown . . .
+acpphint_kernelsurveyors_main version: 0.1.41
+
+./acpphint_kernelsurveyors_main-RPi5-8192MiB-threads_4-LP64-FreeBSD_main_n273201_e4ac0183a1a8_64bit-clang++_19_O3lto-libc++-cpulockdown . . .
+
+DSIZE=unsigned long long, ISIZE=unsigned long long:
+
+serial. . .
+
+nproc:      1
+scx:        4'294'967'296
+scy:        4'294'967'296
+dmax:       18'446'744'073'709'551'615
+initial_dx: 4'294'967'296
+
+nscout:                                 256
+krr.kernel_result.result_bounds.HI:     7'161'937'200'509'091'840
+krr.kernel_result.result_bounds.LO:     7'089'879'602'209'751'040
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           255
+krr.kernel_result.ixes_errs_maxiq:      510
+krr.kernel_result.RECT_total_used:      256
+krr.kernel_result.ixes_errs_used_each:  511
+krr.total_sec_for_laps_for_median:      1.7704e-05
+krr.tscout():                           5.90133e-06
+krr.vectors_total_bytes:                26'696
+VectorsUsedBytes:                       26'680
+
+approx HI normal scale:     0.388249
+approx LO normal scale:     0.384343
+
+threaded. . .
+
+nproc:          4
+scx:            4'294'967'296
+scy:            4'294'967'296
+dmax:           18'446'744'073'709'551'615
+initial_dx:     268'435'456
+
+NCHUNK(nproc):  4
+
+nscout:                                 4
+krr.kernel_result.result_bounds.HI:     7'711'336'780'884'082'688
+krr.kernel_result.result_bounds.LO:     6'558'415'272'519'139'328
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           3
+krr.kernel_result.ixes_errs_maxiq:      3
+krr.kernel_result.RECT_total_used:      16
+krr.kernel_result.ixes_errs_used_each:  16
+krr.total_sec_for_laps_for_median:      0.00017465
+krr.tscout():                           5.82167e-05
+krr.vectors_total_bytes:                1'952
+VectorsUsedBytes:                       1'480
+
+approx HI normal scale: 0.418032
+approx LO normal scale: 0.355532
+
+DSIZE=unsigned long, ISIZE=unsigned long:
+
+serial. . .
+
+nproc:      1
+scx:        4'294'967'296
+scy:        4'294'967'296
+dmax:       18'446'744'073'709'551'615
+initial_dx: 4'294'967'296
+
+nscout:                                 256
+krr.kernel_result.result_bounds.HI:     7'161'937'200'509'091'840
+krr.kernel_result.result_bounds.LO:     7'089'879'602'209'751'040
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           255
+krr.kernel_result.ixes_errs_maxiq:      510
+krr.kernel_result.RECT_total_used:      256
+krr.kernel_result.ixes_errs_used_each:  511
+krr.total_sec_for_laps_for_median:      1.7704e-05
+krr.tscout():                           5.90133e-06
+krr.vectors_total_bytes:                26'696
+VectorsUsedBytes:                       26'680
+
+approx HI normal scale:     0.388249
+approx LO normal scale:     0.384343
+
+threaded. . .
+
+nproc:          4
+scx:            4'294'967'296
+scy:            4'294'967'296
+dmax:           18'446'744'073'709'551'615
+initial_dx:     268'435'456
+
+NCHUNK(nproc):  4
+
+nscout:                                 4
+krr.kernel_result.result_bounds.HI:     7'711'336'780'884'082'688
+krr.kernel_result.result_bounds.LO:     6'558'415'272'519'139'328
+krr.kernel_result.eflag:                1
+krr.kernel_result.RECT_maxjo:           3
+krr.kernel_result.ixes_errs_maxiq:      3
+krr.kernel_result.RECT_total_used:      16
+krr.kernel_result.ixes_errs_used_each:  16
+krr.total_sec_for_laps_for_median:      0.000160465
+krr.tscout():                           5.34883e-05
+krr.vectors_total_bytes:                1'952
+VectorsUsedBytes:                       1'480
+
+approx HI normal scale: 0.418032
+approx LO normal scale: 0.355532
+
