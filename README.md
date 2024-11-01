@@ -108,6 +108,9 @@ Additions
 
 - Add a RPi5 FreeBSD makefile pair for clang++ 19.
 
+- ADDED LATER (2024-Oct-31): various *.gp gnuplot files using
+  the new data files.
+
 ###### [0.1.40] 2024-Aug-19          . . . 202?-???-?? (final)
 Changes
 - Visual Studio experiments inspired C++ source code adjustments,
