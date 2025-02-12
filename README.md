@@ -85,6 +85,19 @@ examples.) That code's license in turn sets the overall license to also be GLPv2
 (no earlier, no later), despite OpenBSD-vintage-ISC licensed source in
 `other_src_used/` also being built and linked in.
 ##### Changelog . . .
+###### [0.1.42] 2025-Feb-11          . . . 202?-???-?? (final)
+Changes
+- Update NSAMP from 80 to 84 so MBP_M4Max single threaded
+  eventually takes more than a second for mean time per lap.
+
+Additions
+- Add makefile pair for MBP_M4MAX_Parallels. (But testing
+  shows cpuset is ineffective under Parallels, so keep no
+  results for the cpulockdown makefile.) For non-cpulockdown,
+  do not bother with explicit cpuset explorations.
+
+- Add the non-cpulockdown output files.
+
 ###### [0.1.41] 2024-Oct-27          . . . 202?-???-?? (final)
 Changes
 - Update C++ source to use std::jthread.

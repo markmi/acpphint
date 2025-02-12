@@ -104,7 +104,7 @@ auto KernelSampler  ( ClkInfo                               const&  clock_info
     //
     // Edit as needed, the next 2 (in original HINTs too):
 #ifndef NSAMP_ALT
-    num_samples         constexpr NSAMP{80U};
+    num_samples         constexpr NSAMP{84U};
 #else
     num_samples         constexpr NSAMP{NSAMP_ALT};
 #endif
